@@ -443,8 +443,8 @@ public class NetApi {
      * @param callback
      * @param photo  排序修改后的分类  json类型的字符串
      */
-    public static void getUserPhotoUpdate(PasserbyClient.HttpCallback callback,String photo) {
-        String url = String.format(Constants.URL_USER_PHOTO_UPLOAD) + getToken() + "&photo=" + photo;
+    public static void getUserPhotoUpdate(PasserbyClient.HttpCallback callback,File photo,String type) {
+        String url = String.format(Constants.URL_USER_PHOTO_UPLOAD) + getToken() + "&photo=" + photo+ "&type=" + type;
         LogUtil.e("url=" + url);
         PasserbyClient.get(url, callback);
     }

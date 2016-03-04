@@ -26,6 +26,7 @@ import com.android.linglan.utils.CameraUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
+import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.StorageManager;
 import com.android.linglan.utils.ToastUtil;
 import com.roc.actionsheet.ActionSheet;
@@ -347,19 +348,28 @@ public class ProfileActivity extends BaseActivity {
             e1.printStackTrace();
         }
 
-//        NetApi.uploadAvatar(croppedFile, new PasserbyClient.HttpCallback() {
-//            @Override
-//            public void onSuccess(String result) {
+        NetApi.getUserPhotoUpdate(new PasserbyClient.HttpCallback() {
+            @Override
+            public void onSuccess(String result) {
+                LogUtil.e("getUserPhotoUpdate????????????result=" + result);
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                    return;
+                }
+
+//                SharedPreferencesUtil.saveString("avatar",
+//                            avatar.headpath.W180);
+//                        LogUtil.e("getUserPhotoUpdate????????????result=" + result);
 //                Avatar avatar = JsonUtil.json2Bean(result, Avatar.class);
 //                if (avatar != null && "1".equals(avatar.code)) {
 //                    SharedPreferencesUtil.saveString("avatar",
 //                            avatar.headpath.W180);
 //                }
-//            }
-//
-//            @Override
-//            public void onFailure(String message) {}
-//        });
+            }
+
+            @Override
+            public void onFailure(String message) {
+            }
+        }, croppedFile,"jpg");
     }
 
     private void startPhotoZoom(Uri uri) {

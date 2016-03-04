@@ -13,11 +13,13 @@ import android.widget.TextView;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.AllArticleClassifyListBean;
+import com.android.linglan.http.bean.CommonProtocol;
 import com.android.linglan.http.bean.HomepageRecommendBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.homepage.ArticleDetailsActivity;
 import com.android.linglan.ui.homepage.SubjectDetailsActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
 
@@ -45,7 +47,7 @@ public class RecycleHomeRecommendAdapter extends
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ( (ArticleViewHolder)holder).bindData(homepageRecommend.get(position));
+        ( (ArticleViewHolder)holder).bindData(homepageRecommend.get(position),position);
     }
 
     @Override
@@ -99,7 +101,7 @@ public class RecycleHomeRecommendAdapter extends
             img_item_article_delete = (ImageView) rootView.findViewById(R.id.img_item_article_delete);
 
         }
-        public void bindData(final HomepageRecommendBean.HomepageRecommendBeanData recommendArticle) {
+        public void bindData(final HomepageRecommendBean.HomepageRecommendBeanData recommendArticle, final int position) {
             this.recommendArticle = recommendArticle;
             if(edit){
                 img_item_article_delete.setVisibility(View.VISIBLE);
@@ -107,11 +109,11 @@ public class RecycleHomeRecommendAdapter extends
                 img_item_article_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ToastUtil.show("删除成功");
+//                        ToastUtil.show("删除成功");
                         if (recommendArticle.type.equals("4")) {
-                            getSubjectCancleCollect(recommendArticle.specialid,"1");
+                            getSubjectCancleCollect(position,recommendArticle.specialid,"1");
                         } else if (recommendArticle.type.equals("0")) {
-                            getArticleCancleCollect(recommendArticle.articleid,"1");
+                            getArticleCancleCollect(position,recommendArticle.articleid,"1");
                         }
                     }
                 });
@@ -155,7 +157,7 @@ public class RecycleHomeRecommendAdapter extends
         }
     }
     //取消专题收藏
-    private void getSubjectCancleCollect(String specialid,String iscancel){
+    private void getSubjectCancleCollect(final int position,String specialid,String iscancel){
         NetApi.getDetailsSubjectCollect(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
@@ -163,7 +165,10 @@ public class RecycleHomeRecommendAdapter extends
                 if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
                     return;
                 }
-                ToastUtil.show(result);
+                CommonProtocol data = JsonUtil.json2Bean(result, CommonProtocol.class);
+                homepageRecommend.remove(position);
+                notifyDataSetChanged();
+                ToastUtil.show("删除" + data.msg);
             }
 
             @Override
@@ -174,7 +179,7 @@ public class RecycleHomeRecommendAdapter extends
     }
 
     //取消文章收藏
-    private void getArticleCancleCollect(String articleid,String iscancel){
+    private void getArticleCancleCollect(final int position,String articleid,String iscancel){
         NetApi.getDetailsArticleCollect(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
@@ -183,7 +188,11 @@ public class RecycleHomeRecommendAdapter extends
                 if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
                     return;
                 }
-                ToastUtil.show(result);
+                CommonProtocol data = JsonUtil.json2Bean(result, CommonProtocol.class);
+                ToastUtil.show("删除" + data.msg);
+                homepageRecommend.remove(position);
+                notifyDataSetChanged();
+//                ToastUtil.show(result);
             }
 
             @Override
