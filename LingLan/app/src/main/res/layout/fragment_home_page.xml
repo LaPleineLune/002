@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:paddingLeft="@dimen/dp16"
+        android:background="@color/light_gray"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/rl_home_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_home_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                android:text="推荐"
+                android:textColor="@color/carminum"
+                android:textSize="@dimen/sp18" />
+
+            <ImageView
+                android:id="@+id/img_home_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp2"
+                android:gravity="center"
+                android:layout_alignBottom="@+id/tv_home_recommend"
+                android:background="@color/carminum" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_home_article"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_home_article"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                android:text="文章"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/sp18" />
+
+            <ImageView
+                android:id="@+id/img_home_article"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp2"
+                android:gravity="center"
+                android:layout_alignBottom="@+id/tv_home_article"
+                android:background="@color/light_gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_home_subject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_home_subject"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                android:text="专题"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/sp18" />
+
+            <ImageView
+                android:id="@+id/img_home_subject"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp2"
+                android:gravity="center"
+                android:layout_alignBottom="@+id/tv_home_subject"
+                android:background="@color/light_gray" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/img_home_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp16"
+            android:src="@drawable/search1" />
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <!--<FrameLayout
+        android:id="@+id/collect_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp0"
+        android:layout_weight="1" >
+    </FrameLayout>-->
+
+</LinearLayout>

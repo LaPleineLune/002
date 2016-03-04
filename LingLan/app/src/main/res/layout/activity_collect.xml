@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/page_head" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/collect_article"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="文章"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/orange"/>
+
+        <View
+            android:layout_width="@dimen/px1"
+            android:layout_height="match_parent"
+            android:background="@drawable/line_vertical_gray" />
+
+        <TextView
+            android:id="@+id/collect_subject"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="专题"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/no_text_color_fragment_title"/>
+
+        <!--<include
+            layout="@layout/divider_general"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>-->
+
+        <TextView
+            android:id="@+id/collect_test"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="测试"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/no_text_color_fragment_title"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="#999999" />
+
+    <!--<android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />-->
+
+    <FrameLayout
+        android:id="@+id/collect_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp0"
+        android:layout_weight="1" >
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ll_history_search"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/ll_no_history_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp16"
+        android:visibility="visible">
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_item_article_image1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_marginRight="6dp"-->
+            <!--android:src="@drawable/history_search"/>-->
+        <TextView
+            android:id="@+id/tv_no_history_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/history_search"
+            android:text="无历史搜索"
+            android:drawablePadding="@dimen/dp6"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp16" />
+        <View
+            android:id="@+id/view_no_div"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_below="@+id/tv_history_search"
+            android:background="#cccccc" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_history_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp16"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_history_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="历史搜索"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp16" />
+        <View
+            android:id="@+id/view_div"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_below="@+id/tv_history_search"
+            android:background="#cccccc" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rec_history_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/view_div" />
+
+        <TextView
+            android:id="@+id/tv_delete_history_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rec_history_search"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginBottom="@dimen/dp10"
+            android:drawableLeft="@drawable/delete"
+            android:drawablePadding="@dimen/dp4"
+            android:text="清除历史搜索记录"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp16" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_below="@+id/tv_delete_history_search"
+            android:background="#cccccc"
+          />
+    </RelativeLayout>
+
+</LinearLayout>

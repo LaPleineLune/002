@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/dp16"
+    android:paddingRight="@dimen/dp16"
+    android:paddingTop="@dimen/dp10"
+    android:paddingBottom="@dimen/dp10">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp0"
+        android:layout_height="@dimen/dp100"
+        android:layout_weight="1"
+        android:layout_marginRight="@dimen/dp10">
+
+        <ImageView
+            android:id="@+id/iv_item_article_image1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/subject" />
+
+        <TextView
+            android:id="@+id/tv_subject_title"
+            android:layout_width="@dimen/dp136"
+            android:layout_height="@dimen/dp38"
+            android:layout_alignParentBottom="true"
+            android:background="#66333333"
+            android:gravity="center"
+            android:maxLength="7"
+            android:maxLines="1"
+            android:text="糖尿病"
+            android:textSize="@dimen/sp18"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp0"
+        android:layout_height="@dimen/dp100"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/dp10">
+
+        <ImageView
+            android:id="@+id/iv_item_article_image2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/subject" />
+
+        <TextView
+            android:id="@+id/tv_subject_title2"
+            android:layout_width="@dimen/dp136"
+            android:layout_height="@dimen/dp38"
+            android:layout_alignParentBottom="true"
+            android:background="#66333333"
+            android:gravity="center"
+            android:maxLength="7"
+            android:maxLines="1"
+            android:text="糖尿病"
+            android:textSize="@dimen/sp18"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_item_article_image1"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:src="@drawable/subject"/>-->
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_item_article_image2"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:src="@drawable/subject"/>-->
+</LinearLayout>

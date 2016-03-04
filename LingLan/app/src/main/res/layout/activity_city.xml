@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/page_head" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:background="#fafafa">
+
+    <com.android.linglan.widget.sortlistview.ClearEditText
+        android:id="@+id/filter_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp14"
+        android:layout_marginRight="@dimen/dp14"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/search_wire_frame"
+        android:drawableLeft="@drawable/search_bar_icon_normal"
+        android:drawablePadding="@dimen/dp6"
+        android:hint="请输入关键字"
+        android:singleLine="true"
+        android:textSize="@dimen/sp14"  />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_marginLeft="@dimen/dp14"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ListView
+            android:id="@+id/country_lvcountry"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:divider="@null" />
+
+        <TextView
+            android:id="@+id/dialog"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp80"
+            android:layout_gravity="center"
+            android:background="@drawable/show_head_toast_bg"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/sp30"
+            android:visibility="invisible" />
+
+        <com.android.linglan.widget.sortlistview.SideBar
+            android:id="@+id/sidrbar"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right|center" />
+    </FrameLayout>
+
+</LinearLayout>

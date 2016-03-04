@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:layout_width="@dimen/dp136"
+        android:layout_height="@dimen/dp100"
+        android:paddingLeft="@dimen/dp10">
+
+        <ImageView
+            android:id="@+id/iv_subject_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/subject" />
+
+        <TextView
+            android:id="@+id/tv_subject_title"
+            android:layout_width="@dimen/dp136"
+            android:layout_height="@dimen/dp38"
+            android:layout_alignParentBottom="true"
+            android:background="#66333333"
+            android:gravity="center"
+            android:maxLength="7"
+            android:maxLines="1"
+            android:text="糖尿病"
+            android:textSize="@dimen/sp18"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+</RelativeLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="136dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:background="@color/white">-->
+
+    <!--<FrameLayout-->
+    <!--android:layout_width="136dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:paddingLeft="10dp">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_subject"-->
+    <!--android:layout_width="136dp "-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:src="@drawable/subject" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="126dp"-->
+    <!--android:layout_height="34dp"-->
+    <!--android:layout_gravity="bottom"-->
+    <!--android:background="#66333333"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:textSize="16sp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="糖尿病" />-->
+    <!--</FrameLayout>-->
+    <!--</LinearLayout>-->

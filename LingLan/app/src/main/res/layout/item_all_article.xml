@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:paddingTop="@dimen/dp10"
+        android:paddingBottom="@dimen/dp10">
+
+        <LinearLayout
+            android:id="@+id/ll_item_article"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ll_item_article_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp10"
+                android:ellipsize="end"
+                android:lineSpacingExtra="@dimen/dp2"
+                android:lineSpacingMultiplier="1.2"
+                android:textSize="@dimen/sp16"
+                android:maxLines="2"
+                android:textColor="@color/text_title_color"
+                android:text="中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的" />
+
+            <TextView
+                android:id="@+id/ll_item_article_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/article"
+                android:drawablePadding="@dimen/dp6"
+                android:lines="1"
+                android:textColor="@color/gray"
+                android:text="56分钟前"
+                android:textSize="@dimen/sp12"/>
+        </LinearLayout>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_item_article_image"-->
+            <!--android:layout_width="@dimen/dp86"-->
+            <!--android:layout_height="@dimen/dp56"-->
+            <!--android:layout_gravity="center_vertical|right"-->
+            <!--android:src="@drawable/subject" />-->
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="#cccccc" />
+</LinearLayout>

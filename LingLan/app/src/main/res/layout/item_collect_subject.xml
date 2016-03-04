@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp10">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp100"
+        android:layout_margin="@dimen/dp6">
+
+        <ImageView
+            android:id="@+id/img_item_subject_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/subject" />
+
+        <TextView
+            android:id="@+id/tv_item_subject_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp38"
+            android:layout_alignParentBottom="true"
+            android:background="#66333333"
+            android:gravity="center"
+            android:maxLength="7"
+            android:maxLines="1"
+            android:text="糖尿病糖尿病"
+            android:textSize="@dimen/sp18"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_item_subject_delete"
+        android:layout_width="@dimen/dp18"
+        android:layout_height="@dimen/dp18"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/delete"
+        android:visibility="gone"/>
+
+</RelativeLayout>

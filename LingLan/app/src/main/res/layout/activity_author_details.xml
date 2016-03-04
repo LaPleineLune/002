@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <!--<include layout="@layout/page_head"/>-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <!--<android.support.v7.widget.RecyclerView
+            android:id="@+id/author_article_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />-->
+
+        <com.android.linglan.widget.swipemenu.SwipeMenuListView
+            android:id="@+id/lv_author_article"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:divider="#cccccc"
+            android:dividerHeight="@dimen/px1"/>
+
+        <LinearLayout
+            android:id="@+id/invis"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dp50"
+            android:background="#ccedc7"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="分类"/>
+            <TextView
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="排序"/>
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="悬浮部分" />-->
+
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

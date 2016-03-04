@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <ListView
+        android:id="@+id/lv_homepage_subject_type"
+        android:layout_width="@dimen/dp112"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp16"
+        android:scrollbars="none"
+        android:background="@color/gainsboro"
+        android:divider="@color/gainsboro"
+        android:dividerHeight="@dimen/px1">
+    </ListView>
+
+</LinearLayout>

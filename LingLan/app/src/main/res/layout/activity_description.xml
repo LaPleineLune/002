@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/page_head" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp130"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:padding="@dimen/dp6"
+        android:background="@drawable/dialog_login_edit_bg">
+
+        <EditText
+            android:id="@+id/description_edt"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dp120"
+            android:gravity="top|left"
+            android:lineSpacingMultiplier="1.2"
+            android:inputType="textMultiLine"
+            android:hint="个人简介,一百字以内"
+            android:textSize="@dimen/sp14"
+            android:textColor="#333333"
+            android:maxLength="100"
+            android:background="#00ffffff"/>
+
+        <TextView
+            android:id="@+id/description_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_alignParentBottom="true"
+            android:text="100"
+            android:textSize="@dimen/sp12"
+            android:textColor="#999999"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

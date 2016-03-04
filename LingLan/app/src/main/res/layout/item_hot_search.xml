@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_hot_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingTop="@dimen/dp16"
+            android:text="热门搜索"
+            android:textColor="#c33c12"
+            android:textSize="@dimen/sp16" />
+
+        <com.android.linglan.widget.flowlayout.TagFlowLayout
+            android:id="@+id/id_flowlayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_hot_search"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,271 @@
+<resources>
+    <string name="app_name">灵兰中医</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="mine">我的</string>
+    <string name="first_page">首页</string>
+    <string name="allarticle">文章</string>
+    <string name="title_text">标题</string>
+
+
+    <string name="subject">推荐专题</string>
+    <string name="all_subject">全部专题</string>
+    <string name="recommend">推荐文章</string>
+    <string name="all_article">文章</string>
+    <string name="more">更多</string>
+
+    <string name="subscribe_more_category">更多频道</string>
+    <string name="subscribe_manager_category_info_2">*长按拖拽排序，点击可进入相应频道</string>
+    <string name="subscribe_my_category">全部频道</string>
+    <string name="drawer_btn_rss">频道管理</string>
+
+    <string name="author_attention">"%1$s人
+关注"</string>
+    <string name="author_article">"%1$s篇
+文章"</string>
+    <string name="author_page_view">"%1$s
+浏览量"</string>
+
+    <string name="gravity_left">left</string>
+    <string name="gravity_center">center</string>
+    <string name="gravity_right">right</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="test">测试</string>
+
+
+
+    <string name="login_text">登录</string>
+    <string name="register_text">注册</string>
+    <string name="input_password_label">输入密码</string>
+    <string name="click_to_reload">网络在旁观，点击重新加载</string>
+    <string name="phone_number_input_hint">请输入手机号</string>
+    <string name="password_input_hint">请输入密码</string>
+    <string name="forget_password_text">忘记密码?</string>
+    <string name="login_by_sns_accounts">更多登录方式</string>
+    <string name="register_at_once_text">没有账号?马上注册></string>
+    <string name="banner_page_count">%1$s/%2$s</string>
+    <string name="project_detail">项目详情</string>
+    <string name="project_end_prompt">项目已停募，请关注其他项目</string>
+    <string name="attention">关注</string>
+    <string name="attended">已关注</string>
+    <string name="donate_ten">支持10元</string>
+    <string name="continue_swiping_to_view_detail">继续滑动，展现更多详情</string>
+    <string name="support_label">我想支持:</string>
+    <string name="organization_label">执行机构:</string>
+    <string name="acceptor_label">善款接收:</string>
+    <string name="comment_label">祝福建议（%1$s）</string>
+    <string name="memory_label">成长映像</string>
+    <string name="organization">执行机构</string>
+    <string name="accepted">善款接收</string>
+    <string name="weixin_account">微信号: %1$s</string>
+    <string name="payment_success">支付成功</string>
+    <string name="payment_complete">支付完成</string>
+    <string name="change_nickname">修改昵称</string>
+    <string name="passerby_name">亲爱的%1$s:</string>
+    <string name="donate_tip">%1$s</string>
+    <string name="appreciation_content">您对“%1$s”的支持，是这公益里程中不可磨灭的印迹</string>
+    <string name="memory_card_preserved">纪念卡已保存到“我的-纪念册”中，成为您公益的脚印</string>
+    <string name="share_prompt">到朋友圈和微博，分享您此刻的感受</string>
+    <string name="share_text">推荐给朋友</string>
+    <string name="share">分享</string>
+    <string name="appreciation_ticket_description">另附答谢券 %1$s 张，请到“发现－答谢中心”中兑换各类企业提供的优惠或服务</string>
+    <string name="back_to_home">首页</string>
+    <string name="skip">跳过</string>
+    <string name="invite_friend">邀请一起支持</string>
+    <string name="following">正在关注...</string>
+    <string name="no_followed_projects">您还没有关注的项目, 快去 “爱更多” 看看吧</string>
+    <string name="looking">去看看</string>
+    <string name="go_supporting">去支持</string>
+    <string name="go_exchanging">去兑换</string>
+    <string name="exchange_immediately">立即兑换</string>
+    <string name="discovery">发现</string>
+    <string name="love_more">爱更多</string>
+    <string name="discover_more_projects">发现更多好的项目</string>
+    <string name="thanks_ticket">答谢中心</string>
+    <string name="get_coupons">兑换各种优惠或服务</string>
+    <string name="moved_story">感动故事</string>
+    <string name="discover_lives">发现正能量</string>
+    <string name="scan">扫一扫</string>
+
+    <string name="my_followed">我的关注</string>
+    <string name="my_collect">我的收藏</string>
+    <string name="my_note">我的笔记</string>
+    <string name="my_coupon">答谢券</string>
+    <string name="album">纪念册</string>
+    <string name="settings">设置</string>
+    <string name="no_supporting">您还没有支持的项目</string>
+    <string name="no_coupons">您还没有获得答谢券</string>
+
+    <string name="search_hint">请输入项目的标题进行搜索</string>
+    <string name="search">搜索</string>
+    <string name="category_text">分类</string>
+
+    <string name="user_protocol">用户协议</string>
+    <string name="user_privacy">隐私协议</string>
+
+    <string name="find_password">找回密码</string>
+    <string name="bind_mobile">绑定手机号</string>
+
+    <string name="back">返回</string>
+    <string name="back_home">返回首页</string>
+    <string name="click_to_sharing">点击分享</string>
+
+    <string name="no_support">您还没有支持的项目,快去“爱更多” 看看吧</string>
+
+    <string name="edit">编辑</string>
+    <string name="cancel">取消</string>
+    <string name="cancel_following">取消关注</string>
+
+    <string name="profile">我的资料</string>
+    <string name="click_to_edit_avatar">点击修改头像</string>
+    <string name="nickname">用户昵称</string>
+    <string name="name">真实姓名</string>
+    <string name="description">个人简介</string>
+    <string name="belonging">所在城市</string>
+    <string name="company">工作单位</string>
+    <string name="characteristics">个人特征</string>
+    <string name="grade">等级和说明</string>
+    <string name="binding">绑定其他平台</string>
+    <string name="birthday">生日</string>
+    <string name="zone">地区</string>
+    <string name="choose_plz">请选择</string>
+
+    <string name="save">保存</string>
+
+    <string name="about">关于我们</string>
+    <string name="contact">联系我们</string>
+    <string name="invite_zone">邀请专区</string>
+    <string name="clean_buffer">清理缓存</string>
+    <string name="text_size">字体大小</string>
+    <string name="feedback">意见反馈</string>
+    <string name="check_update">版本更新</string>
+    <string name="input_invite_code">请输入邀请码</string>
+    <string name="invite_code">输入邀请码</string>
+    <string name="version_string">%1$s</string>
+    <string name="scan_tip">将二维码放入框内，即可自动扫描</string>
+    <string name="thanks_stamp">答谢券</string>
+    <string name="promotion_code">优惠码</string>
+    <string name="promotion_code_copy">复制</string>
+    <string name="new_password">输入新密码</string>
+    <string name="account_and_safety">账号与安全</string>
+    <string name="alter_password">修改密码</string>
+    <string name="no_projects_found">对不起，没有找到相关的项目</string>
+    <string name="payment_channel">请选择捐赠支付方式</string>
+    <string name="payment_protocol_label">支付即表示您同意《<u>捐赠声明</u>》</string>
+    <string name="user_payment_protocol">捐赠声明</string>
+
+    <string name="take_picture">拍照</string>
+    <string name="pick_from_gallery">从相册选择</string>
+
+    <string name="male">男</string>
+    <string name="female">女</string>
+
+    <string name="agreed_as_register">注册即表示您同意《<u>服务条款</u>》</string>
+    <string name="agreed_as_login">登录即表示您同意《服务条款》</string>
+
+    <string name="in_pay">支付中...</string>
+    <string name="pay">支付</string>
+    <string name="default_setting">未设置</string>
+    <string name="empty_coupon">您还没有答谢券，支持项目会赠送您答谢券!</string>
+    <string name="exchange_coupon">您可以在“答谢中心”兑换各类商家提供的优惠或服务</string>
+    <string name="empty_coupon_overdue">"您还没有过期的优惠券"</string>
+    <string name="query_pay_result">支付查询</string>
+    <string name="change_bind_number">更改手机号</string>
+    <string name="sina">新浪微博</string>
+    <string name="weichat">微信</string>
+    <string name="donate_button">"支持%1$s元"</string>
+    <string name="feed_back_email">客服邮箱：support@warmler.com</string>
+    <string name="use">已使用</string>
+    <string name="mark_used">"标记为已使用"</string>
+    <string name="support_count">"您已经为路人甲支持 %1$s 笔,共 %2$s 元"</string>
+    <string name="donate_record">捐赠记录</string>
+    <string name="pay_price">"¥ %1$s"</string>
+    <string name="pay_num">"x%1$s"</string>
+    <string name="pay_again">"再次支持"</string>
+    <string name="support">支持</string>
+    <string name="donate_success">"捐赠成功"</string>
+    <string name="donate_success_num">"捐赠成功( %1$s )"</string>
+    <string name="donate_wait">"等待捐赠"</string>
+    <string name="donate_wait_num">"等待付款( %1$s )"</string>
+    <string name="donate_continue">"去付款"</string>
+    <string name="sure">确定</string>
+    <string name="loading">加载中...</string>
+    <string name="weixin_pay">微信支付</string>
+
+    <string name="app_tip">提示</string>
+    <string name="getting_prepayid">正在获取预支付订单...</string>
+    <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
+    <string name="weixin_pay_fail">支付失败，订单可能已经失效</string>
+    <string name="weixin_pay_cancel"></string>
+    <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
+    <string name="pay_success_tip1">"路人甲携手爱心商家赠送你 "</string>
+    <string name="pay_success_tip2">"%1$s"</string>
+    <string name="pay_success_tip3">" 张答谢券，作为您参与公益的答谢。"</string>
+    <string name="pay_success_coupon_tip">您可以到答谢中心兑换各种商家提供的优惠券或在线服务：</string>
+    <string name="getting">"去领取"</string>
+    <string name="exchange_over">"兑换已结束"</string>
+    <string name="empty_overdue_list">"您还没有过期的优惠券"</string>
+    <string name="empty_used_list">"您还没有添加已使用的优惠券"</string>
+    <string name="current_period_donate_goal">"捐款目标"</string>
+
+    <string name="completed">"已完成"</string>
+    <string name="donate_people">"捐助人数"</string>
+    <string name="current_goal">"本期目标 :"</string>
+    <string name="project_current_goal">"本期目标"</string>
+    <string name="complete_money">"完成金额 :"</string>
+    <string name="activity_time">"本期时间 :"</string>
+    <string name="participate_people">"参与人数 :"</string>
+    <string name="donate_need">" [本期还需%1$s元]"</string>
+    <string name="no_support_project">"您还没有支持的项目"</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="category_all">推荐</string>
+    <string name="category_all_my">推荐</string>
+    <string name="category_society">三高</string>
+    <string name="category_subscribe">订阅</string>
+    <string name="category_video">养生</string>
+    <string name="category_health">更年期</string>
+    <string name="category_sports">体育</string>
+    <string name="category_tech">针灸</string>
+    <string name="category_car">汽车</string>
+    <string name="category_entertainment">心脏病</string>
+    <string name="category_finance">坐骨神经痛</string>
+    <string name="category_military">腰椎间盘突出</string>
+    <string name="category_world">脾胃</string>
+    <string name="category_hot">热点</string>
+    <string name="category_positive">正能量</string>
+    <string name="category_essay_joke">段子</string>
+    <string name="category_image_funny">趣图</string>
+    <string name="category_image_ppmm">肝胆</string>
+    <string name="category_movie">电影</string>
+    <string name="category_digital">数码</string>
+    <string name="category_news_fashion">时尚</string>
+    <string name="category_rumor">辟谣</string>
+    <string name="category_marvel">奇葩</string>
+    <string name="category_news_game">游戏</string>
+    <string name="category_news_travel">旅游</string>
+    <string name="category_news_baby">育儿</string>
+    <string name="category_fitness">减肥</string>
+    <string name="category_news_regimen">养生</string>
+    <string name="category_news_food">美食</string>
+    <string name="category_government">儿科</string>
+    <string name="category_news_history">历史</string>
+    <string name="category_news_discovery">探索</string>
+    <string name="category_news_story">故事</string>
+    <string name="category_news_essay">美文</string>
+    <string name="category_emotion">情感</string>
+    <string name="category_essay_saying">语录</string>
+    <string name="category_image_wonderful">美图</string>
+    <string name="category_news_house">家居</string>
+    <string name="category_news_home">房产</string>
+    <string name="category_funny">搞笑</string>
+    <string name="category_news_astrology">星座</string>
+    <string name="category_news_culture">文化</string>
+    <string name="category_graduate">毕业生</string>
+    <string name="title_activity_search">SearchActivity</string>
+
+</resources>

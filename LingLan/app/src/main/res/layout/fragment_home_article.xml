@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/white">
+
+    <!--android:layout_weight="4"-->
+    <LinearLayout
+        android:layout_width="@dimen/dp94"
+        android:layout_height="match_parent"
+        android:background="@color/light_gray"
+        android:orientation="vertical" >
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_classify_order"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/dp44"-->
+            <!--android:gravity="center"-->
+            <!--android:text="分类排序"-->
+            <!--android:textColor="@color/carminum"-->
+            <!--android:textSize="@dimen/sp14"/>-->
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/px1"-->
+            <!--android:background="@drawable/listitem_divide" />-->
+
+        <ListView
+            android:id="@+id/lv_article_classify"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp0"
+            android:layout_weight="1"
+            android:choiceMode="singleChoice"
+            android:divider="@drawable/listitem_divide"
+            android:dividerHeight="@dimen/px1"
+            android:listSelector="#00000000"
+            android:scrollbars="none">
+        </ListView>
+
+    </LinearLayout>
+
+    <com.android.linglan.widget.CustomPullToRefreshRecyclerView
+        android:id="@+id/article_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="@dimen/dp0"
+        android:scrollbars="none"
+        app:ptrDrawableEnd="@drawable/ptr_rotate"
+        app:ptrDrawableStart="@drawable/ptr_flip"
+        app:ptrMode="both"
+        app:ptr_animation_style_end="rotate"
+        app:ptr_animation_style_start="flip" />
+
+</LinearLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/page_head" />
+
+    <TextView
+        android:id="@+id/tv_font_size_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_bar"
+        android:text="我是字体设置页"
+        android:textSize="@dimen/sp16"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:background="@color/french_grey" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp30"
+            android:layout_marginTop="@dimen/dp6" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp20"
+                android:text="字体大小设置"
+                android:textColor="#676564"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:id="@+id/fontAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView1"
+                android:layout_alignBottom="@+id/textView1"
+                android:layout_toLeftOf="@+id/fontSub"
+                android:text="字号："
+                android:textColor="#676564"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:id="@+id/fontSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/fontAdd"
+                android:layout_alignBottom="@+id/fontAdd"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp20"
+                android:text="16"
+                android:textColor="#676564"
+                android:textSize="@dimen/sp16" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp50"
+            android:layout_marginBottom="@dimen/dp16">
+
+            <ImageView
+                android:id="@+id/img_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp20"
+                android:src="@drawable/font_subtract" />
+
+            <ImageView
+                android:id="@+id/img_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp20"
+                android:src="@drawable/font_add" />
+
+            <SeekBar
+                android:id="@+id/settings_font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_toLeftOf="@id/img_2"
+                android:layout_toRightOf="@id/img_1"
+                android:maxHeight="@dimen/dp8"
+                android:minHeight="@dimen/dp8"
+                android:paddingLeft="@dimen/dp2"
+                android:paddingRight="@dimen/dp2"
+                android:progressDrawable="@drawable/seekbar_style"
+                android:thumb="@drawable/set_font_thumb"
+                android:thumbOffset="@dimen/dp2" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

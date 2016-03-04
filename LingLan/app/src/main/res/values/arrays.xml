@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string-array name="date">
+
+        <item>许昌市</item>
+        <item>漯河市</item>
+        <item>开封市</item>
+        <item>南阳市</item>
+        <item>驻马店市</item>
+        <item>濮阳市</item>
+        <item>安阳市</item>
+        <item>鹤壁市</item>
+        <item>周口市</item>
+        <item>信阳市</item>
+        <item>商丘市</item>
+        <item>焦作市</item>
+        <item>洛阳市</item>
+        <item>郑州市</item>
+        <item>新乡市</item>
+        <item>济源市</item>
+        <item>灵宝市</item>
+        <item>偃师市</item>
+        <item>邓州市</item>
+        <item>登封市</item>
+        <item>三门峡市</item>
+        <item>新郑市</item>
+        <item>禹州市</item>
+        <item>巩义市</item>
+        <item>永城市</item>
+        <item>长葛市</item>
+        <item>义马市</item>
+        <item>林州市</item>
+        <item>项城市</item>
+        <item>汝州市</item>
+        <item>荥阳市</item>
+        <item>平顶山市</item>
+        <item>卫辉市</item>
+        <item>辉县市</item>
+        <item>舞钢市</item>
+        <item>新密市</item>
+        <item>孟州市</item>
+        <item>沁阳市</item>
+        <item>郏县</item>
+        <item>北京市</item>
+        <item>海口市</item>
+        <item>三亚市</item>
+        <item>万宁市</item>
+        <item>文昌市</item>
+        <item>儋州市</item>
+        <item>琼海市</item>
+        <item>东方市</item>
+        <item>五指山市</item>
+
+        <item>沙宝亮</item>
+        <item>宋冬野</item>
+        <item>宋伟</item>
+        <item>袁成杰</item>
+        <item>戚薇</item>
+        <item>齐大友</item>
+        <item>齐天大圣</item>
+        <item>品冠</item>
+        <item>吴克群</item>
+        <item>BOBO</item>
+        <item>Jobs</item>
+        <item>动力火车</item>
+        <item>伍佰</item>
+        <item>#蔡依林</item>
+        <item>$797835344$</item>
+        <item>Jack</item>
+        <item>~夏先生</item>
+        <item>阿妹</item>
+        <item>阿郎</item>
+        <item>陈奕迅</item>
+        <item>周杰伦</item>
+        <item>曾一鸣</item>
+        <item>成龙</item>
+        <item>王力宏</item>
+        <item>汪峰</item>
+        <item>王菲</item>
+        <item>那英</item>
+        <item>张伟</item>
+        <item>张学友</item>
+        <item>李德华</item>
+        <item>郑源</item>
+        <item>白水水</item>
+        <item>白天不亮</item>
+        <item>陈龙</item>
+        <item>陈丽丽</item>
+        <item>哈林</item>
+        <item>高进</item>
+        <item>高雷</item>
+    </string-array>
+
+</resources>

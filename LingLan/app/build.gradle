@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.android.linglan.ui"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile project(':action_sheet_library')
+    compile project(':crop_image_lib')
+    compile project(':pulltorefresh_library')
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.loopj.android:android-async-http:1.4.5'
+    compile 'com.google.code.gson:gson:2.2.1'
+    compile 'com.android.support:design:23.1.1'
+    compile project(':popuphelper')
+    compile 'com.squareup.picasso:picasso:2.4.0'
+    compile project(':social_sdk_library_project')
+}
+android {
+
+    useLibrary 'org.apache.http.legacy'
+
+}
+

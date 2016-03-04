@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_margin="@dimen/dp16" >
+
+    <ImageView
+        android:padding="@dimen/dp4"
+        android:id="@+id/iv_item_article_image1"
+        android:layout_width="@dimen/dp22"
+        android:layout_height="@dimen/dp22"
+        android:src="@drawable/hot_search"
+        android:layout_marginRight="@dimen/dp6"
+        android:background="@drawable/dialog_login_edit_bg"/>
+
+    <TextView
+        android:id="@+id/tv_hot_search_context"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#666666"
+        android:text="Helloworld">
+
+    </TextView>
+
+</LinearLayout>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="作者详情页"
+        android:layout_gravity="center"/>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/start_page_theme_color3"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/author_back"
+                android:layout_width="@dimen/dp50"
+                android:layout_height="@dimen/dp50"
+                android:layout_alignParentLeft="true">
+
+                <ImageView
+                    android:layout_width="@dimen/dp12"
+                    android:layout_height="@dimen/dp24"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/back" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/author_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/title_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp18"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/author_right"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp50"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/add_followed"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/dp10"
+                android:text="关注"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16"/>
+
+        </RelativeLayout>
+
+        <com.android.linglan.widget.imageview.RoundedImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp80"
+            android:background="@drawable/avatar_default"
+            android:scaleType="centerCrop"
+            app:riv_border_width="@dimen/dp0"
+            app:riv_corner_radius="45dip"
+            app:riv_mutate_background="false"
+            app:riv_oval="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16">
+
+            <TextView
+                android:id="@+id/author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="王超"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp18" />
+
+            <TextView
+                android:id="@+id/author_certification"
+                android:layout_width="@dimen/dp64"
+                android:layout_height="@dimen/dp16"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp4"
+                android:layout_toRightOf="@id/author_name"
+                android:background="@drawable/frame_original"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="认证作者"
+                android:textColor="#c33c12"
+                android:textSize="@dimen/sp10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/author_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dp60"
+            android:layout_marginRight="@dimen/dp60"
+            android:layout_marginTop="@dimen/dp16"
+            android:gravity="center_horizontal"
+            android:lineSpacingMultiplier="1.5"
+            android:text="如果你无法简洁的表达你的想法，那只说明你还不够了解他。"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp22"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp22"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/author_attention"
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/author_attention"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:id="@+id/author_article"
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/author_article"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:id="@+id/author_page_view"
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/author_page_view"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="#999999"
+        android:visibility="gone"/>
+
+</LinearLayout>

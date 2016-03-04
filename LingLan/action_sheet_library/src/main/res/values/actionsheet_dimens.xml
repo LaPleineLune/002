@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="actionSheetPadding">10dp</dimen>
+    <dimen name="otherButtonSpacing">0dp</dimen>
+    <dimen name="cancelButtonMarginTop">10dp</dimen>
+    <dimen name="actionSheetTextSize">16sp</dimen>
+</resources>

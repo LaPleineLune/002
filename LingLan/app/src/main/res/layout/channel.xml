@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/subscribe_bg" >
+
+    <!--<include-->
+        <!--android:id="@+id/title_bar"-->
+        <!--layout="@layout/title_bar" />-->
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/page_head"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/title_bar" >
+
+        <LinearLayout
+            android:id="@+id/subscribe_main_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/subscribe_bg"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingBottom="@dimen/dp14" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp14"
+                android:gravity="bottom"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/my_category_text"
+                    style="@style/subscribe_my_tip_text"
+                    android:text="@string/subscribe_my_category" />
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/seperate_line"
+                style="@style/subscribe_seperate_line" />
+
+            <com.android.linglan.widget.DragGrid
+                android:id="@+id/userGridView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/dp2"
+                android:horizontalSpacing="@dimen/dp14"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4"
+                android:scrollbars="vertical"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="@dimen/dp14" />
+
+            <!--<View-->
+                <!--android:id="@+id/seperate_line2"-->
+                <!--style="@style/subscribe_seperate_line" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/more_category_text"-->
+                <!--style="@style/subscribe_more_tip_text"-->
+                <!--android:layout_marginBottom="14.0dip"-->
+                <!--android:layout_marginLeft="10.0dip"-->
+                <!--android:text="@string/subscribe_more_category" />-->
+
+            <!--<com.topnews.view.OtherGridView-->
+                <!--android:id="@+id/otherGridView"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="14dip"-->
+                <!--android:layout_marginRight="14dip"-->
+                <!--android:gravity="center"-->
+                <!--android:horizontalSpacing="14dip"-->
+                <!--android:listSelector="@android:color/transparent"-->
+                <!--android:numColumns="4"-->
+                <!--android:scrollbars="vertical"-->
+                <!--android:stretchMode="columnWidth"-->
+                <!--android:verticalSpacing="14.0px" />-->
+            <TextView
+                android:id="@+id/my_category_tip_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp2"
+                android:layout_marginTop="@dimen/dp24"
+                android:text="@string/subscribe_manager_category_info_2"
+                android:textColor="@color/setting_alt_text_normal"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/category_layout"
+        layout="@layout/channel_item"
+        android:visibility="gone" />
+
+</RelativeLayout>

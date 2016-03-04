@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/colorlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!--<ImageView
+        android:id="@+id/imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="5dip" />-->
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44"
+        android:gravity="center"
+        android:text="sssssss"
+        android:textSize="@dimen/sp14"
+        android:textColor="@color/text_title_color"/>
+    <!--  android:background="@drawable/selector"  自定义listview 样式-->
+</LinearLayout>

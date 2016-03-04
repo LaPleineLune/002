@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp110"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/french_grey" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingTop="@dimen/dp10">
+        <!--android:background="@drawable/input_phone_number"-->
+
+        <TextView
+            android:id="@+id/phone_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号"
+            android:textColor="@color/indicatorColor"
+            android:textSize="@dimen/sp16" />
+
+        <EditText
+            android:id="@+id/input_phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_toRightOf="@id/phone_icon"
+            android:background="#00ffffff"
+            android:hint="请输入您的手机号码"
+            android:maxLength="11"
+            android:numeric="integer"
+            android:singleLine="true"
+            android:textSize="@dimen/sp16" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="@color/gainsboro" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingTop="@dimen/dp10">
+
+        <LinearLayout
+            android:layout_width="@dimen/dp0"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验证码"
+                android:textColor="@color/indicatorColor"
+                android:textSize="@dimen/sp16" />
+
+            <EditText
+                android:id="@+id/input_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:background="#00ffffff"
+                android:hint="请输入验证码"
+                android:maxLength="4"
+                android:numeric="integer"
+                android:singleLine="true"
+                android:textSize="@dimen/sp16" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/request_code"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="@dimen/dp28"
+            android:layout_weight="4"
+            android:background="@drawable/input_phone_number"
+            android:text="获取验证码"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp16" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/french_grey" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp38"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp50"
+        android:background="@drawable/submit_button"
+        android:text="登录"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp16" />
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:autoLink="email"-->
+    <!--android:textColorLink="@color/font_light_color"-->
+    <!--android:textColor="@color/font_light_color"-->
+    <!--android:text="@string/feed_back_email"/>-->
+
+
+</LinearLayout>

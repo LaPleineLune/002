@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <!--<include layout="@layout/page_head" />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:background="@color/light_gray">
+
+
+        <TextView
+            style="@style/title_text_style"
+            android:text="@string/mine" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/px1"
+                android:layout_marginTop="@dimen/dp22"
+                android:background="@color/french_grey" />
+
+            <LinearLayout
+                android:id="@+id/profile_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp28"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <com.android.linglan.widget.imageview.RoundedImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="@dimen/dp70"
+                    android:layout_height="@dimen/dp70"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:background="@drawable/avatar_default"
+                    android:scaleType="centerCrop"
+                    app:riv_border_width="@dimen/dp0"
+                    app:riv_corner_radius="45dip"
+                    app:riv_mutate_background="false"
+                    app:riv_oval="true" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dp18"
+                    android:paddingTop="@dimen/dp18">
+
+                    <TextView
+                        android:id="@+id/phonenum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp0"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="瓦力"
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp20" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp0"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/dp16"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dp22"
+                            android:text="亲情会员"
+                            android:textColor="@color/carminum"
+                            android:textSize="@dimen/sp16" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="认证医生"
+                            android:textColor="@color/carminum"
+                            android:textSize="@dimen/sp16" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    style="@style/me_ImageView_arrow_right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/profile_panel_not_login"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp96"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_marginRight="@dimen/dp10">
+
+                <com.android.linglan.widget.imageview.RoundedImageView
+                    android:id="@+id/avatar_not_login"
+                    android:layout_width="@dimen/dp70"
+                    android:layout_height="@dimen/dp70"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:background="@drawable/avatar_default"
+                    android:scaleType="centerCrop"
+                    app:riv_border_width="@dimen/dp0"
+                    app:riv_corner_radius="45dip"
+                    app:riv_mutate_background="false"
+                    app:riv_oval="true" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dp18"
+                    android:paddingTop="@dimen/dp18">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="注册/登录"
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp20"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:background="@color/french_grey" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:layout_marginTop="@dimen/dp22"
+                android:background="@color/french_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:orientation="vertical">
+
+                <!--<RelativeLayout
+                    android:id="@+id/my_followed"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10">
+
+                    <TextView
+                        android:id="@+id/followed_label"
+                        style="@style/project_detail_item_label_style"
+                        android:layout_marginRight="@dimen/dp0"
+                        android:drawableLeft="@drawable/my_followed"
+                        android:text="@string/my_followed" />
+
+                    <TextView
+                        android:id="@+id/followed_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:layout_toRightOf="@id/followed_label"
+                        android:text=""
+                        android:textSize="@dimen/sp14" />
+
+                    <ImageView
+                        style="@style/me_ImageView_arrow_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />-->
+
+                <RelativeLayout
+                    android:id="@+id/my_collect"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10">
+
+                    <TextView
+                        android:id="@+id/collect_label"
+                        style="@style/project_detail_item_label_style"
+                        android:layout_marginRight="@dimen/dp0"
+                        android:drawableLeft="@drawable/my_collect"
+                        android:text="@string/my_collect" />
+
+                    <TextView
+                        android:id="@+id/collect_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:layout_toRightOf="@id/collect_label"
+                        android:text=""
+                        android:textSize="@dimen/sp14" />
+
+                    <ImageView
+                        android:id="@+id/collect_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/collect_label"
+                        android:layout_toRightOf="@id/collect_count"
+                        android:src="@drawable/message_indicator_icon"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        style="@style/me_ImageView_arrow_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />
+
+                <!--<View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />-->
+
+                <RelativeLayout
+                    android:id="@+id/settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10">
+
+                    <TextView
+                        android:id="@+id/settings_label"
+                        style="@style/project_detail_item_label_style"
+                        android:layout_marginRight="@dimen/dp0"
+                        android:drawableLeft="@drawable/my_settings"
+                        android:text="@string/settings" />
+
+                    <TextView
+                        android:id="@+id/settings_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:layout_toRightOf="@id/settings_label"
+                        android:text=""
+                        android:textSize="@dimen/sp14" />
+
+                    <ImageView
+                        android:id="@+id/settings_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/settings_label"
+                        android:layout_toRightOf="@id/settings_count"
+                        android:src="@drawable/message_indicator_icon"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        style="@style/me_ImageView_arrow_right" />
+                </RelativeLayout>
+
+                <!--<View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />-->
+
+                <!--<RelativeLayout
+                    android:id="@+id/my_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10">
+
+                    <TextView
+                        android:id="@+id/note_label"
+                        style="@style/project_detail_item_label_style"
+                        android:layout_marginRight="@dimen/dp0"
+                        android:drawableLeft="@drawable/my_note"
+                        android:text="@string/my_note" />
+
+                    <TextView
+                        android:id="@+id/note_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:layout_toRightOf="@id/note_label"
+                        android:text=""
+                        android:textSize="@dimen/sp14" />
+
+                    <ImageView
+                        android:id="@+id/note_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/note_label"
+                        android:layout_toRightOf="@id/note_count"
+                        android:src="@drawable/message_indicator_icon"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        style="@style/me_ImageView_arrow_right" />
+                </RelativeLayout>-->
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:background="@color/french_grey" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:layout_marginTop="@dimen/dp22"
+                android:background="@color/french_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/feedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10">
+
+                    <TextView
+                        android:id="@+id/feedback_label"
+                        style="@style/project_detail_item_label_style"
+                        android:layout_marginRight="@dimen/dp0"
+                        android:drawableLeft="@drawable/my_feedback"
+                        android:text="@string/feedback" />
+
+                    <ImageView
+                        android:id="@+id/arrow_right"
+                        style="@style/me_ImageView_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/feedback_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/arrow_right"
+                        android:layout_centerVertical="true"
+                        android:text="期待您的意见"
+                        android:textSize="@dimen/sp14"
+                        android:textColor="@color/french_grey"/>
+
+                    <ImageView
+                        android:id="@+id/feedback_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/feedback_label"
+                        android:layout_toRightOf="@id/feedback_count"
+                        android:src="@drawable/message_indicator_icon"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <!--<View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />
+
+                <RelativeLayout
+                    android:id="@+id/settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10">
+
+                    <TextView
+                        android:id="@+id/settings_label"
+                        style="@style/project_detail_item_label_style"
+                        android:layout_marginRight="@dimen/dp0"
+                        android:drawableLeft="@drawable/my_settings"
+                        android:text="@string/settings" />
+
+                    <TextView
+                        android:id="@+id/settings_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:layout_toRightOf="@id/settings_label"
+                        android:text=""
+                        android:textSize="@dimen/sp14" />
+
+                    <ImageView
+                        android:id="@+id/settings_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/settings_label"
+                        android:layout_toRightOf="@id/settings_count"
+                        android:src="@drawable/message_indicator_icon"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        style="@style/me_ImageView_arrow_right" />
+                </RelativeLayout>-->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />
+
+                <RelativeLayout
+                    android:id="@+id/share"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10">
+
+                    <TextView
+                        android:id="@+id/share_label"
+                        style="@style/project_detail_item_label_style"
+                        android:layout_marginRight="@dimen/dp0"
+                        android:drawableLeft="@drawable/my_share"
+                        android:text="@string/share_text" />
+
+                    <TextView
+                        android:id="@+id/share_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:layout_toRightOf="@id/share_label"
+                        android:text=""
+                        android:textSize="@dimen/sp14" />
+
+                    <ImageView
+                        android:id="@+id/share_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/share_label"
+                        android:layout_toRightOf="@id/share_count"
+                        android:src="@drawable/message_indicator_icon"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        style="@style/me_ImageView_arrow_right" />
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:background="@color/french_grey" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

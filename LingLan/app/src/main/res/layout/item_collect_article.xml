@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/dp16"
+    android:paddingRight="@dimen/dp16"
+    android:paddingTop="@dimen/dp10"
+    android:paddingBottom="@dimen/dp10" >
+
+    <ImageView
+        android:id="@+id/img_item_article_delete"
+        android:layout_width="@dimen/dp18"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dp16"
+        android:src="@drawable/delete"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ll_item_article"
+        android:layout_width="@dimen/dp0"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ll_item_article_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp10"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/dp2"
+            android:maxLines="2"
+            android:text="中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的" />
+
+        <TextView
+            android:id="@+id/ll_item_article_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:text="56分钟前" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_item_article_image"
+        android:layout_width="@dimen/dp86"
+        android:layout_height="@dimen/dp56"
+        android:background="@drawable/subject" />
+</LinearLayout>

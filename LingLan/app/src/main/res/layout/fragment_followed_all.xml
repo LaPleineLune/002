@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!--<include layout="@layout/page_head" />-->
+
+    <ListView
+        android:id="@+id/lv_followed_all"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginLeft="@dimen/dp16"
+        android:scrollbars="none"
+        android:divider="#cccccc"
+        android:dividerHeight="@dimen/px1">
+
+    </ListView>
+
+</LinearLayout>

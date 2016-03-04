@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<include layout="@layout/page_head" />-->
+
+    <com.android.linglan.widget.swipemenu.SwipeMenuListView
+        android:id="@+id/lv_collect_article"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:divider="#cccccc"
+        android:dividerHeight="@dimen/px1">
+    </com.android.linglan.widget.swipemenu.SwipeMenuListView>
+
+</LinearLayout>

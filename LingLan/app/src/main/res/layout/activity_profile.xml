@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/page_head" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/avatar_editor"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp106"
+                android:background="@color/white"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp26"
+                android:paddingRight="@dimen/dp26">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/click_to_edit_avatar"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/sp16" />
+
+                <ImageView
+                    android:id="@+id/avatar_arrow_right"
+                    style="@style/me_ImageView_arrow_right" />
+
+                <com.android.linglan.widget.imageview.RoundedImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="@dimen/dp70"
+                    android:layout_height="@dimen/dp70"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/avatar_arrow_right"
+                    android:background="@drawable/avatar_default"
+                    android:scaleType="centerCrop"
+                    app:riv_border_width="@dimen/dp0"
+                    app:riv_corner_radius="45dip"
+                    app:riv_mutate_background="false"
+                    app:riv_oval="true" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:background="@color/french_grey" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:layout_marginTop="@dimen/dp22"
+                android:background="@color/french_grey" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16">
+
+                <RelativeLayout
+                    android:id="@+id/nickname_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10" >
+
+                    <TextView
+                        android:id="@+id/nickname_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:text="@string/nickname"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp16" />
+
+                    <ImageView
+                        android:id="@+id/nickname_arrow_right"
+                        style="@style/me_ImageView_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/nickname_arrow_right"
+                        android:layout_toRightOf="@id/nickname_label"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="未设置"
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp16" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/gainsboro" />
+
+                <RelativeLayout
+                    android:id="@+id/name_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10" >
+
+                    <TextView
+                        android:id="@+id/name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/name"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp16" />
+
+                    <ImageView
+                        android:id="@+id/name_arrow_right"
+                        style="@style/me_ImageView_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/name_arrow_right"
+                        android:layout_toRightOf="@id/name_label"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="未设置"
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp16" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />
+
+                <RelativeLayout
+                    android:id="@+id/description_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/description"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp16" />
+
+                    <ImageView
+                        android:id="@+id/description_arrow_right"
+                        style="@style/me_ImageView_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/description_arrow_right"
+                        android:text=""
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp16" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />
+
+                <RelativeLayout
+                    android:id="@+id/belonging_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/belonging"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp16" />
+
+                    <ImageView
+                        android:id="@+id/belonging_arrow_right"
+                        style="@style/me_ImageView_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/belonging"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/belonging_arrow_right"
+                        android:text="未设置"
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp16" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />
+
+                <RelativeLayout
+                    android:id="@+id/company_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10" >
+
+                    <TextView
+                        android:id="@+id/company_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/company"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp16" />
+
+                    <ImageView
+                        android:id="@+id/company_arrow_right"
+                        style="@style/me_ImageView_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/company_arrow_right"
+                        android:text="未设置"
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp16"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:background="@color/french_grey" />
+
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:layout_marginTop="@dimen/dp22"
+                android:background="@color/french_grey" />-->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:visibility="gone" >
+
+                <RelativeLayout
+                    android:id="@+id/characteristics_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10" >
+
+                    <TextView
+                        android:id="@+id/characteristics_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:text="@string/characteristics"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp16" />
+
+                    <ImageView
+                        android:id="@+id/characteristics_arrow_right"
+                        style="@style/me_ImageView_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/zone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/characteristics_arrow_right"
+                        android:layout_toRightOf="@id/characteristics_label"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="未设置"
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp16"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />
+
+                <RelativeLayout
+                    android:id="@+id/grade_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10" >
+
+                    <TextView
+                        android:id="@+id/grade_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/grade"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp16" />
+
+                    <ImageView
+                        android:id="@+id/grade_arrow_right"
+                        style="@style/me_ImageView_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/grade_arrow_right"
+                        android:text="未设置"
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp16"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />
+
+                <RelativeLayout
+                    android:id="@+id/binding_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10" >
+
+                    <TextView
+                        android:id="@+id/binding_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/binding"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp16" />
+
+                    <ImageView
+                        android:id="@+id/binding_arrow_right"
+                        style="@style/me_ImageView_arrow_right" />
+
+                    <TextView
+                        android:id="@+id/binding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/binding_arrow_right"
+                        android:background="@color/text_title_color"
+                        android:text="未设置"
+                        android:textSize="@dimen/sp16"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+            </LinearLayout>
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"
+                android:layout_marginBottom="@dimen/dp50"
+                android:background="@color/french_grey" />-->
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

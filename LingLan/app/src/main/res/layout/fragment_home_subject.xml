@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_home_subject"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <!--<ListView-->
+        <!--android:id="@+id/lv_homepage_subject"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:divider="@color/gainsboro"-->
+        <!--android:dividerHeight="@dimen/px1"-->
+        <!--android:paddingLeft="@dimen/dp16"-->
+        <!--android:paddingRight="@dimen/dp16"-->
+        <!--android:scrollbars="none"></ListView>-->
+
+    <com.android.linglan.widget.CustomPullToRefreshRecyclerView
+        android:id="@+id/refresh_more_every"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="@dimen/dp0"
+        android:scrollbars="none"
+        app:ptrDrawableEnd="@drawable/ptr_rotate"
+        app:ptrDrawableStart="@drawable/ptr_flip"
+        app:ptrMode="both"
+        app:ptr_animation_style_end="rotate"
+        app:ptr_animation_style_start="flip" />
+
+    <!--<com.karumi.expandableselector.ExpandableSelector
+        android:id="@+id/es_homepage_subject_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/dp20"
+        android:visibility="invisible"
+        expandable_selector:hide_background_if_collapsed="true"
+        expandable_selector:hide_first_item_on_collapse="true"/>-->
+    <!--<LinearLayout-->
+    <!--android:id="@+id/bt_homepage_subject_type"-->
+    <!--android:layout_width="@dimen/dp62"-->
+    <!--android:layout_height="@dimen/dp62"-->
+    <!--android:clickable="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_gravity="bottom|end"-->
+    <!--android:layout_margin="@dimen/dp20"-->
+    <!--android:orientation="vertical">-->
+    <Button
+        android:id="@+id/bt_homepage_subject_type"
+        style="@style/ExpandableItemStyleHeader"
+        android:layout_width="@dimen/dp36"
+        android:layout_height="@dimen/dp36"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/dp20"
+        android:text="筛选"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp12" />
+    <!--</LinearLayout>-->
+
+
+    <!--<android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_homepage_subject_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/dp16"
+        android:src="@android:drawable/ic_dialog_email"
+        app:backgroundTint="@color/gray"
+        app:borderWidth="0dp" />-->
+    <!--android:src="@android:drawable/ic_dialog_email"-->
+
+
+</RelativeLayout>
