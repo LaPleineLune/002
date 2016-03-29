@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="GB2312"?>
+<root name="地球">
+	<province name="中国">
+		<city name="北京">
+			<area name="北京市" index="1" />
+		</city>
+		<city name="天津">
+			<area name="天津市" index="2" />
+		</city>
+		<city name="河北省">
+			<area name="石家庄市" index="3"/>
+			<area name="唐山市" index="4"/>
+			<area name="秦皇岛市" index="5"/>
+			<area name="邯郸市" index="6"/>
+			<area name="邢台市" index="7"/>
+			<area name="保定市" index="8"/>
+			<area name="张家口市" index="9"/>
+			<area name="承德市" index="10"/>
+			<area name="沧州市" index="11"/>
+			<area name="廊坊市" index="12"/>
+			<area name="衡水市" index="13"/>
+		</city>
+		<city name="山西省">
+			<area name="太原市" index="14"/>
+			<area name="大同市" index="15"/>
+			<area name="阳泉市" index="16"/>
+			<area name="长治市" index="17"/>
+			<area name="晋中市" index="18"/>
+			<area name="朔州市" index="19"/>
+			<area name="忻州市" index="20"/>
+			<area name="吕梁市" index="21"/>
+			<area name="临汾市" index="22"/>
+			<area name="运城市" index="23"/>
+		</city>
+		<city name="内蒙古自治区">
+			<area name="呼和浩特市" index="24"/>
+			<area name="包头市" index="25"/>
+			<area name="乌海市" index="26"/>
+			<area name="赤峰市" index="27"/>
+			<area name="通辽市" index="28"/>
+			<area name="鄂尔多斯市" index="29"/>
+			<area name="呼伦贝尔市" index="30"/>
+			<area name="巴彦淖尔市" index="31"/>
+			<area name="乌兰察布市" index="32"/>
+			<area name="兴安盟" index="33"/>
+			<area name="锡林郭勒盟" index="34"/>
+			<area name="阿拉善盟" index="35"/>
+		</city>
+		<city name="辽宁省">
+			<area name="沈阳市" index="36"/>
+			<area name="大连市" index="37"/>
+			<area name="鞍山市" index="38"/>
+			<area name="抚顺市" index="39"/>
+			<area name="本溪市" index="40"/>
+			<area name="丹东市" index="41"/>
+			<area name="锦州市" index="42"/>
+			<area name="营口市" index="43"/>
+			<area name="阜新市" index="44"/>
+			<area name="辽阳市" index="45"/>
+			<area name="盘锦市" index="46"/>
+			<area name="铁岭市" index="47"/>
+			<area name="朝阳市" index="48"/>
+			<area name="葫芦岛市" index="49"/>
+		</city>
+		<city name="吉林省">
+			<area name="长春市" index="50"/>
+			<area name="吉林市" index="51"/>
+			<area name="四平市" index="52"/>
+			<area name="辽源市" index="53"/>
+			<area name="通化市" index="54"/>
+			<area name="白山市" index="55"/>
+			<area name="松原市" index="56"/>
+			<area name="白城市" index="57"/>
+			<area name="延边朝鲜族自治州" index="58"/>
+		</city>
+		<city name="黑龙江省">
+			<area name="哈尔滨市" index="59"/>
+			<area name="齐齐哈尔市" index="60"/>
+			<area name="鸡西市" index="61"/>
+			<area name="鹤岗市" index="62"/>
+			<area name="双鸭山市" index="63"/>
+			<area name="大庆市" index="64"/>
+			<area name="伊春市" index="65"/>
+			<area name="佳木斯市" index="66"/>
+			<area name="七台河市" index="67"/>
+			<area name="牡丹江市" index="68"/>
+			<area name="黑河市" index="69"/>
+			<area name="绥化市" index="70"/>
+			<area name="大兴安岭地区" index="71"/>
+		</city>
+        <city name="上海">
+            <area name="上海市" index="72"/>
+        </city>
+		<city name="江苏省">
+			<area name="南京市" index="73"/>
+			<area name="无锡市" index="74"/>
+			<area name="徐州市" index="75"/>
+			<area name="常州市" index="76"/>
+			<area name="苏州市" index="77"/>
+			<area name="南通市" index="78"/>
+			<area name="连云港市" index="79"/>
+			<area name="淮安市" index="80"/>
+			<area name="盐城市" index="81"/>
+			<area name="扬州市" index="82"/>
+			<area name="镇江市" index="83"/>
+			<area name="泰州市" index="84"/>
+			<area name="宿迁市" index="85"/>
+		</city>
+		<city name="浙江省">
+			<area name="杭州市" index="86"/>
+			<area name="宁波市" index="87"/>
+			<area name="温州市" index="88"/>
+			<area name="嘉兴市" index="89"/>
+			<area name="湖州市" index="90"/>
+			<area name="绍兴市" index="91"/>
+			<area name="金华市" index="92"/>
+			<area name="衢州市" index="93"/>
+			<area name="舟山市" index="94"/>
+			<area name="台州市" index="95"/>
+			<area name="丽水市" index="96"/>
+		</city>
+		<city name="安徽省">
+			<area name="合肥市" index="97"/>
+			<area name="芜湖市" index="98"/>
+			<area name="蚌埠市" index="99"/>
+			<area name="淮南市" index="100"/>
+			<area name="马鞍山市" index="101"/>
+			<area name="淮北市" index="102"/>
+			<area name="铜陵市" index="103"/>
+			<area name="安庆市" index="104"/>
+			<area name="黄山市" index="105"/>
+			<area name="滁州市" index="106"/>
+			<area name="阜阳市" index="107"/>
+			<area name="宿州市" index="108"/>
+			<area name="巢湖市" index="109"/>
+			<area name="六安市" index="110"/>
+			<area name="池州市" index="111"/>
+			<area name="宣城市" index="112"/>
+		</city>
+		<city name="福建省">
+			<area name="福州市" index="113"/>
+			<area name="厦门市" index="114"/>
+			<area name="宁德市" index="115"/>
+			<area name="莆田市" index="116"/>
+			<area name="泉州市" index="117"/>
+			<area name="漳州市" index="118"/>
+			<area name="龙岩市" index="119"/>
+			<area name="三明市" index="120"/>
+			<area name="南平市" index="121"/>
+		</city>
+        <city name="江西省">
+            <area name="南昌市" index="122"/>
+            <area name="景德镇市" index="123"/>
+            <area name="萍乡市" index="124"/>
+            <area name="九江市" index="125"/>
+            <area name="新余市" index="126"/>
+            <area name="鹰潭市" index="127"/>
+            <area name="赣州市" index="128"/>
+            <area name="宜春市" index="129"/>
+            <area name="上饶市" index="130"/>
+            <area name="吉安市" index="131"/>
+            <area name="抚州市" index="132"/>
+        </city>
+        <city name="山东省">
+			<area name="济南市" index="133"/>
+			<area name="青岛市" index="134"/>
+			<area name="淄博市" index="135"/>
+			<area name="枣庄市" index="136"/>
+			<area name="东营市" index="137"/>
+			<area name="烟台市" index="138"/>
+			<area name="潍坊市" index="139"/>
+			<area name="济宁市" index="140"/>
+			<area name="泰安市" index="141"/>
+			<area name="威海市" index="142"/>
+			<area name="日照市" index="143"/>
+			<area name="莱芜市" index="144"/>
+			<area name="临沂市" index="145"/>
+			<area name="德州市" index="146"/>
+			<area name="聊城市" index="147"/>
+			<area name="滨州市" index="148"/>
+			<area name="菏泽市" index="149"/>
+        </city>
+        <city name="河南省">
+			<area name="郑州市" index="150"/>
+			<area name="开封市" index="151"/>
+			<area name="洛阳市" index="152"/>
+			<area name="平顶山市" index="153"/>
+			<area name="安阳市" index="154"/>
+			<area name="鹤壁市" index="155"/>
+			<area name="新乡市" index="156"/>
+			<area name="焦作市" index="157"/>
+			<area name="濮阳市" index="158"/>
+			<area name="许昌市" index="159"/>
+			<area name="漯河市" index="160"/>
+			<area name="三门峡市" index="161"/>
+			<area name="南阳市" index="162"/>
+			<area name="商丘市" index="163"/>
+			<area name="信阳市" index="164"/>
+			<area name="周口市" index="165"/>
+			<area name="驻马店市" index="166"/>
+			<area name="济源市" index="167"/>
+        </city>
+		<city name="湖北省">
+			<area name="武汉市" index="168"/>
+			<area name="黄石市" index="169"/>
+			<area name="十堰市" index="170"/>
+			<area name="宜昌市" index="171"/>
+			<area name="襄樊市" index="172"/>
+			<area name="鄂州市" index="173"/>
+			<area name="荆门市" index="174"/>
+			<area name="孝感市" index="175"/>
+			<area name="荆州市" index="176"/>
+			<area name="黄冈市" index="177"/>
+			<area name="咸宁市" index="178"/>
+			<area name="随州市" index="179"/>
+			<area name="仙桃市" index="180"/>
+			<area name="潜江市" index="181"/>
+			<area name="天门市" index="182"/>
+			<area name="神农架林区" index="183"/>
+			<area name="恩施土家族苗族自治州" index="184"/>
+		</city>
+		<city name="湖南省">
+			<area name="长沙市" index="185"/>
+			<area name="株洲市" index="186"/>
+			<area name="湘潭市" index="187"/>
+			<area name="衡阳市" index="188"/>
+			<area name="邵阳市" index="189"/>
+			<area name="岳阳市" index="190"/>
+			<area name="常德市" index="191"/>
+			<area name="张家界市" index="192"/>
+			<area name="益阳市" index="193"/>
+			<area name="郴州市" index="194"/>
+			<area name="永州市" index="195"/>
+			<area name="怀化市" index="196"/>
+			<area name="娄底市" index="197"/>
+			<area name="湘西土家族苗族自治州" index="198"/>
+		</city>
+		<city name="广东省">
+			<area name="广州市" index="199"/>
+			<area name="韶关市" index="200"/>
+			<area name="深圳市" index="201"/>
+			<area name="珠海市" index="202"/>
+			<area name="汕头市" index="203"/>
+			<area name="佛山市" index="204"/>
+			<area name="江门市" index="205"/>
+			<area name="湛江市" index="206"/>
+			<area name="茂名市" index="207"/>
+			<area name="肇庆市" index="208"/>
+			<area name="惠州市" index="209"/>
+			<area name="梅州市" index="210"/>
+			<area name="汕尾市" index="211"/>
+			<area name="河源市" index="212"/>
+			<area name="阳江市" index="213"/>
+			<area name="清远市" index="214"/>
+			<area name="潮州市" index="215"/>
+			<area name="揭阳市" index="216"/>
+			<area name="云浮市" index="217"/>
+		</city>
+		<city name="广西壮族自治区">
+			<area name="南宁市" index="218"/>
+			<area name="柳州市" index="219"/>
+			<area name="桂林市" index="220"/>
+			<area name="梧州市" index="221"/>
+			<area name="北海市" index="222"/>
+			<area name="防城港市" index="223"/>
+			<area name="钦州市" index="224"/>
+			<area name="贵港市" index="225"/>
+			<area name="玉林市" index="226"/>
+			<area name="百色市" index="227"/>
+			<area name="贺州市" index="228"/>
+			<area name="河池市" index="229"/>
+			<area name="来宾市" index="230"/>
+			<area name="崇左市" index="231"/> 
+		</city>
+		<city name="海南省">
+			<area name="海口市" index="232"/>
+			<area name="三亚市" index="233"/>
+			<area name="儋州市" index="234"/>
+			<area name="三沙市" index="235"/>
+			<area name="五指山市" index="236"/>
+			<area name="琼海市" index="237"/>
+			<area name="文昌市" index="238"/>
+			<area name="万宁市" index="239"/>
+			<area name="东方市" index="240"/>
+			<area name="定安县" index="241"/>
+			<area name="屯昌县" index="242"/>
+			<area name="澄迈市" index="243"/>
+			<area name="临高市" index="244"/>
+			<area name="白沙黎族自治县" index="245"/>
+			<area name="昌江黎族自治县" index="246"/>
+			<area name="乐东黎族自治县" index="247"/>
+			<area name="陵水黎族自治县" index="248"/>
+			<area name="保亭黎族苗族自治县" index="249"/>
+			<area name="琼中黎族苗族自治县" index="250"/>
+			<area name="西沙群岛" index="251"/>
+			<area name="南沙群岛" index="252"/>
+			<area name="中沙群岛的岛礁及其海域" index="253"/>
+		</city>
+		<city name="重庆">
+			<area name="重庆市" index="254"/>
+		</city>
+		<city name="四川省">
+			<area name="成都市" index="255"/>
+			<area name="自贡市" index="256"/>
+			<area name="攀枝花市" index="257"/>
+			<area name="泸州市" index="258"/>
+			<area name="德阳市" index="259"/>
+			<area name="绵阳市" index="260"/>
+			<area name="广元市" index="261"/>
+			<area name="遂宁市" index="262"/>
+			<area name="内江市" index="263"/>
+			<area name="乐山市" index="264"/>
+			<area name="南充市" index="265"/>
+			<area name="眉山市" index="266"/>
+			<area name="宜宾市" index="267"/>
+			<area name="广安市" index="268"/>
+			<area name="达川市" index="269"/>
+			<area name="雅安市" index="270"/>
+			<area name="巴中市" index="271"/>
+			<area name="资阳市" index="272"/>
+			<area name="阿坝藏族羌族自治州" index="273"/>
+			<area name="甘孜藏族自治州" index="274"/>
+			<area name="凉山彝族自治州" index="275"/>
+		</city>
+		<city name="贵州省">
+			<area name="贵阳市" index="276"/>
+			<area name="六盘水市" index="277"/>
+			<area name="遵义市" index="278"/>
+			<area name="安顺市" index="279"/>
+			<area name="铜仁地区" index="280"/>
+			<area name="黔西南布依族苗族自治州" index="281"/>
+			<area name="毕节地区" index="282"/>
+			<area name="黔东南苗族侗族自治州" index="283"/>
+			<area name="黔南布依族苗族自治州" index="284"/>
+		</city>
+		<city name="云南省">
+			<area name="昆明市" index="285"/>
+			<area name="曲靖市" index="286"/>
+			<area name="玉溪市" index="287"/>
+			<area name="保山市" index="288"/>
+			<area name="昭通市" index="289"/>
+			<area name="丽江市" index="290"/>
+			<area name="普洱市" index="291"/>
+			<area name="临沧市" index="292"/>
+			<area name="思茅市" index="293"/>
+			<area name="楚雄彝族自治州" index="294"/>
+			<area name="红河哈尼族彝族自治州" index="295"/>
+			<area name="文山壮族苗族自治州" index="296"/>
+			<area name="西双版纳傣族自治州" index="297"/>
+			<area name="大理白族自治州" index="298"/>
+			<area name="德宏傣族景颇族自治州" index="299"/>
+			<area name="怒江傈僳族自治州" index="300"/>
+			<area name="迪庆藏族自治州" index="301"/>
+		</city>
+		<city name="西藏自治区">
+			<area name="拉萨市" index="302"/>
+			<area name="昌都地区" index="303"/>
+			<area name="山南地区" index="304"/>
+			<area name="日喀则地区" index="305"/>
+			<area name="那曲地区" index="306"/>
+			<area name="阿里地区" index="307"/>
+			<area name="林芝地区" index="308"/>
+		</city>
+		<city name="陕西省">
+			<area name="西安市" index="309"/>
+			<area name="铜川市" index="310"/>
+			<area name="宝鸡市" index="311"/>
+			<area name="咸阳市" index="312"/>
+			<area name="渭南市" index="313"/>
+			<area name="延安市" index="314"/>
+			<area name="汉中市" index="315"/>
+			<area name="榆林市" index="316"/>
+			<area name="安康市" index="317"/>
+			<area name="商洛市" index="318"/>
+		</city>
+		<city name="甘肃省">
+			<area name="兰州市" index="319"/>
+			<area name="嘉峪关市" index="320"/>
+			<area name="金昌市" index="321"/>
+			<area name="白银市" index="322"/>
+			<area name="天水市" index="323"/>
+			<area name="武威市" index="324"/>
+			<area name="张掖市" index="325"/>
+			<area name="平凉市" index="326"/>
+			<area name="酒泉市" index="327"/>
+			<area name="庆阳市" index="328"/>
+			<area name="定西市" index="329"/>
+			<area name="陇南市" index="330"/>
+			<area name="临夏回族自治州" index="331"/>
+			<area name="甘南藏族自治州" index="332"/>
+		</city>
+		<city name="青海省">
+			<area name="西宁市" index="333"/>
+			<area name="海东地区" index="334"/>
+			<area name="海北藏族自治州" index="335"/>
+			<area name="黄南藏族自治州" index="336"/>
+			<area name="海南藏族自治州" index="337"/>
+			<area name="果洛藏族自治州" index="338"/>
+			<area name="玉树藏族自治州" index="339"/>
+			<area name="海西蒙古族藏族自治州" index="340"/>
+		</city>
+		<city name="宁夏回族自治区">
+			<area name="银川市" index="341"/>
+			<area name="石嘴山市" index="342"/>
+			<area name="吴忠市" index="343"/>
+			<area name="固原市" index="344"/>
+			<area name="中卫市" index="345"/>
+		</city>
+		<city name="新疆维吾尔自治区">
+			<area name="乌鲁木齐市" index="346"/>
+			<area name="克拉玛依市" index="347"/>
+			<area name="吐鲁番地区" index="348"/>
+			<area name="哈密地区" index="349"/>
+			<area name="昌吉回族自治州" index="350"/>
+			<area name="博尔塔拉蒙古自治州" index="351"/>
+			<area name="巴音郭楞蒙古自治州" index="352"/>
+			<area name="阿克苏地区" index="353"/>
+			<area name="克孜勒苏柯尔克孜自治州" index="354"/>
+			<area name="喀什地区" index="355"/>
+			<area name="和田地区" index="356"/>
+			<area name="伊犁哈萨克自治州" index="357"/>
+			<area name="塔城地区" index="358"/>
+			<area name="阿勒泰地区" index="359"/>
+			<area name="石河子" index="360"/>
+			<area name="阿拉尔市" index="361"/>
+			<area name="图木舒克市" index="362"/>
+			<area name="五家渠市" index="363"/>
+		</city>
+		<city name="台湾省">
+			<area name="台北市" index="364"/>
+			<area name="高雄市" index="365"/>
+			<area name="台南市" index="366"/>
+			<area name="台中市" index="367"/>
+			<area name="金门县" index="368"/>
+			<area name="南投县" index="369"/>
+			<area name="基隆市" index="370"/>
+			<area name="新竹市" index="371"/>
+			<area name="九龙" index="372"/>
+			<area name="新界" index="373"/>
+			<area name="嘉义市" index="374"/>
+			<area name="新北市" index="375"/>
+			<area name="宜兰县" index="376"/>
+			<area name="新竹县" index="377"/>
+			<area name="桃园县" index="378"/>
+			<area name="苗栗县" index="379"/>
+			<area name="彰化县" index="380"/>
+			<area name="嘉义县" index="381"/>
+			<area name="云林县" index="382"/>
+			<area name="屏东县" index="383"/>
+			<area name="台东县" index="384"/>
+			<area name="花莲县" index="385"/>
+			<area name="澎湖县" index="386"/>
+			<area name="连江县" index="387"/>
+		</city>
+		<city name="香港特别行政区">
+			<area name="香港岛" index="388"/>
+		</city>
+		<city name="澳门特别行政区">
+			<area name="澳门半岛" index="389"/>
+			<area name="离岛" index="390"/>
+		</city>
+	</province>
+
+	<province name="海外">
+		<city name="阿富汗"/>
+		<city name="阿拉伯联合酋长国"/>
+		<city name="阿曼"/>
+		<city name="阿塞拜疆共和国"/>
+		<city name="巴基斯坦"/>
+		<city name="巴勒斯坦"/>
+		<city name="巴林"/>
+		<city name="不丹"/>
+		<city name="朝鲜"/>
+		<city name="东帝汶"/>
+		<city name="菲律宾"/>
+		<city name="格鲁吉亚"/>
+		<city name="哈萨克斯坦"/>
+		<city name="韩国"/>
+		<city name="吉尔吉斯共和国"/>
+		<city name="柬埔寨"/>
+		<city name="卡塔尔"/>
+		<city name="科威特"/>
+		<city name="老挝"/>
+		<city name="黎巴嫩"/>
+		<city name="马尔代夫"/>
+		<city name="马来西亚"/>
+		<city name="蒙古"/>
+		<city name="孟加拉国"/>
+		<city name="缅甸"/>
+		<city name="尼泊尔"/>
+		<city name="日本"/>
+		<city name="塞浦路斯"/>
+		<city name="沙特阿拉伯"/>
+		<city name="斯里兰卡"/>
+		<city name="塔吉克斯坦"/>
+		<city name="泰国"/>
+		<city name="土耳其"/>
+		<city name="土库曼斯坦"/>
+		<city name="文莱"/>
+		<city name="乌兹别克斯坦"/>
+		<city name="新加坡"/>
+		<city name="叙利亚"/>
+		<city name="亚美尼亚共和国"/>
+		<city name="也门"/>
+		<city name="伊朗"/>
+		<city name="伊拉克"/>
+		<city name="以色列"/>
+		<city name="印度"/>
+		<city name="印度尼西亚"/>
+		<city name="约旦"/>
+		<city name="越南"/>
+		<city name="安道尔"/>
+		<city name="奥地利"/>
+		<city name="阿尔巴尼亚"/>
+		<city name="爱尔兰"/>
+		<city name="爱沙尼亚"/>
+		<city name="冰岛"/>
+		<city name="白俄罗斯"/>
+		<city name="保加利亚"/>
+		<city name="波兰"/>
+		<city name="波斯尼亚和黑塞哥维那"/>
+		<city name="比利时"/>
+		<city name="德国"/>
+		<city name="丹麦"/>
+		<city name="俄罗斯联邦"/>
+		<city name="法国"/>
+		<city name="芬兰"/>
+		<city name="捷克"/>
+		<city name="克罗地亚"/>
+		<city name="拉脱维亚"/>
+		<city name="立陶宛"/>
+		<city name="列支敦士登"/>
+		<city name="罗马尼亚"/>
+		<city name="马其顿"/>
+		<city name="马耳他"/>
+		<city name="卢森堡"/>
+		<city name="摩纳哥"/>
+		<city name="摩尔多瓦"/>
+		<city name="挪威"/>
+		<city name="塞尔维亚和黑山共和国"/>
+		<city name="葡萄牙"/>
+		<city name="瑞典"/>
+		<city name="瑞士"/>
+		<city name="斯洛伐克"/>
+		<city name="斯洛文尼亚"/>
+		<city name="圣马力诺"/>
+		<city name="乌克兰"/>
+		<city name="西班牙"/>
+		<city name="希腊"/>
+		<city name="匈牙利"/>
+		<city name="意大利"/>
+		<city name="英国"/>
+		<city name="加拿大"/>
+		<city name="美国"/>
+		<city name="墨西哥"/>
+		<city name="安提瓜和巴布达"/>
+		<city name="巴巴多斯"/>
+		<city name="多米尼克"/>
+		<city name="古巴共和国"/>
+		<city name="格林纳达"/>
+		<city name="特立尼达和多巴哥"/>
+		<city name="牙买加"/>
+		<city name="巴哈马"/>
+		<city name="阿根廷"/>
+		<city name="玻利维亚"/>
+		<city name="巴西"/>
+		<city name="厄瓜多尔"/>
+		<city name="哥伦比亚"/>
+		<city name="圭亚那"/>
+		<city name="秘鲁"/>
+		<city name="苏里南"/>
+		<city name="圣卢西亚"/>
+		<city name="乌拉圭"/>
+		<city name="委内瑞拉"/>
+		<city name="智利"/>
+		<city name="阿尔及利亚"/>
+		<city name="埃及"/>
+		<city name="埃塞俄比亚"/>
+		<city name="安哥拉"/>
+		<city name="贝宁"/>
+		<city name="博茨瓦纳"/>
+		<city name="布基纳法索"/>
+		<city name="布隆迪"/>
+		<city name="赤道几内亚"/>
+		<city name="多哥"/>
+		<city name="厄立特里亚"/>
+		<city name="佛得角"/>
+		<city name="冈比亚"/>
+		<city name="刚果（布）"/>
+		<city name="刚果（金）"/>
+		<city name="吉布提"/>
+		<city name="几内亚"/>
+		<city name="几内亚比绍"/>
+		<city name="加蓬"/>
+		<city name="加纳"/>
+		<city name="津巴布韦"/>
+		<city name="喀麦隆"/>
+		<city name="科摩罗"/>
+		<city name="科特迪瓦"/>
+		<city name="肯尼亚"/>
+		<city name="莱索托"/>
+		<city name="利比里亚"/>
+		<city name="利比亚"/>
+		<city name="卢旺达"/>
+		<city name="马达加斯加"/>
+		<city name="马里"/>
+		<city name="毛里求斯"/>
+		<city name="毛里塔尼亚"/>
+		<city name="摩洛哥"/>
+		<city name="莫桑比克"/>
+		<city name="纳米比亚"/>
+		<city name="南非"/>
+		<city name="尼日尔"/>
+		<city name="尼日利亚"/>
+		<city name="塞拉利昂"/>
+		<city name="塞内加尔"/>
+		<city name="塞舌尔"/>
+		<city name="圣多美和普林西比"/>
+		<city name="苏丹"/>
+		<city name="索马里"/>
+		<city name="坦桑尼亚"/>
+		<city name="突尼斯"/>
+		<city name="乌干达"/>
+		<city name="赞比亚"/>
+		<city name="乍得"/>
+		<city name="中非"/>
+		<city name="澳大利亚"/>
+		<city name="巴布亚新几内亚"/>
+		<city name="斐济"/>
+		<city name="库克群岛"/>
+		<city name="美属萨摩亚"/>
+		<city name="密克罗尼西亚联邦"/>
+		<city name="瑙鲁"/>
+		<city name="汤加"/>
+		<city name="瓦努阿图"/>
+		<city name="新西兰"/>
+	</province>
+</root> 

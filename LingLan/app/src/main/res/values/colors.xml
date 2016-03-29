@@ -3,118 +3,40 @@
     <color name="text_color_fragment_title">#ffc33c12</color>
     <color name="no_text_color_fragment_title">#666666</color>
     <color name="gainsboro">#cccccc</color>
+    <color name="right_bg_color">#dddddd</color>
     <color name="gray_orange">#c33c12</color>
     <color name="carminum">#a0141a</color>
     <color name="french_grey">#999999</color>
     <color name="gray">#666666</color>
     <color name="light_gray">#F0F0F0</color>
     <color name="text_title_color">#333333</color>
-    <color name="white">#FFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
     <color name="red">#ff0000</color>
     <color name="whitesmoke">#f2f2f2</color>
+    <color name="transparent_black">#22000000</color>
 
-    <color name="bg_row_pressed_start">#ffcccccc</color>
-    <color name="bg_row_pressed_center">#ffcccccc</color>
-    <color name="bg_row_pressed_end">#ffcccccc</color>
-    <color name="bg_row_normal">#ffffffff</color>
-    <color name="bg_password">#ffffffff</color>
-    
-    <item name="bg_row_normal_start" type="color">@color/bg_row_normal</item>
-    <item name="bg_row_normal_center" type="color">@color/bg_row_normal</item>
-    <item name="bg_row_normal_end" type="color">@color/bg_row_normal</item>
-
-    <!--<drawable name="test">@drawable/main_tab_text_color</drawable>-->
-    <drawable name="test">#ff6f42</drawable>
-
-
-    <color name="bg_row_border">#ffcacaca</color>
-    <color name="no_color">#00000000</color>
-    <color name="orange">#ff6f42</color>
-    <!--<color name="blue_light">#09afa5</color>-->
-
-
-
-    <color name="default_square_indicator_fill_color">#FE6829</color>
-    <color name="default_square_indicator_stroke_color">#FE6829</color>
-
-    <color name="start_page_theme_color1">#343434</color>
-    <color name="start_page_theme_color2">#FE6829</color>
-    <color name="start_page_theme_color3">#644956</color>
-    <!--<color name="start_page_theme_color4">#067EBC</color>-->
-
-    <color name="base_color_orange">#FE6829</color>
-    <!--<color name="base_color_green">#09afa5</color>-->
-
-    <color name="font_color">#ADADAD</color>
-    <color name="font_light_color">#808080</color>
-    <color name="font_deep_color">#272727</color>
-
-    <color name="progress_color1">#FE6829</color>
-    <!--<color name="progress_color2">#09afa5</color>-->
-    <color name="progress_color3">#FE6829</color>
-    <!--<color name="progress_color4">#09afa5</color>-->
-
-    <!--<color name="home_list_divider_color1">#83D9D1</color>-->
-    <color name="home_list_divider_color2">#FFB89F</color>
-    <color name="home_list_first_item_divider_color">#f3f3f3</color>
-
-    <color name="home_list_item_background1">#FFFFFF</color>
-    <color name="home_list_item_background2">#F9F9F9</color>
-
-    <color name="project_divider_color">#EBEBEB</color>
-
-    <color name="disable_color">#949494</color>
-    <color name="donate_disable_background_color">#f1f1f1</color>
-    <color name="donate_disable_font_color">#f3f3f3</color>
-    <color name="donate_stroke_color">#949494</color>
-    <color name="donate_background_color">#fff</color>
-
-
-    <color name="text_description_color">#6f6f6f</color>
-    <color name="change_phone_number">#51c84b</color>
-    <color name="avatar_border_color">#B9B9B9</color>
-    <color name="weichat_pay">#6ebc45</color>
-    <color name="alipay_color">#003499</color>
-    <color name="home_color">#fbfbfb</color>
-    <color name="support_count">#ffccb6</color>
     <color name="indicatorColor">#FF666666</color>
-    <color name="pay_success_background">#fdf8f2</color>
-
-    <color name="activity_bg_color">#fffafafa</color>
-    <color name="top_category_bar_background">#ffeeeeee</color>
-    <color name="divider">#ffdddddd</color>
-
-    <color name="category_tab_text">#ff707070</color>
-    <color name="category_tab_text_dark">#fffafafa</color>
-    <color name="category_tab_highlight_text">#fffafafa</color>
-    <color name="category_tab_highlight_text_dark">#ffd43d3d</color>
-    <color name="category_tab_highlight_bg">#ffd43d3d</color>
-    <color name="category_tab_highlight_dark_bg">#fffafafa</color>
-
-    <color name="item_title_disabled">#ff888888</color>
-    <color name="item_title_normal">#ff444444</color>
-
+    <color name="start_page_theme_color3">#644956</color>
+    <color name="project_divider_color">#EBEBEB</color>
+    <color name="font_deep_color">#272727</color>
     <color name="subscribe_item_drag_bg">#fff5f5f5</color>
     <color name="subscribe_item_drag_stroke">#ffd2d2d2</color>
     <color name="subscribe_item_selected_stroke">#ffcc3131</color>
-    <color name="subscribe_item_selected_bg">#ffffffff</color>
     <color name="subscribe_item_disabled_stroke">#ffd9d9d9</color>
     <color name="subscribe_item_disabled_bg">#ffefefef</color>
     <color name="subscribe_item_pressed_stroke">#ffcdcdcd</color>
     <color name="subscribe_item_pressed_bg">#fff9f9f9</color>
     <color name="subscribe_item_normal_stroke">#ffcdcdcd</color>
     <color name="subscribe_item_normal_bg">#fff5f5f5</color>
-    <color name="subscribe_activity_bg">#ffefefef</color>
-    <color name="subscribe_bg">#fff5f5f5</color>
     <color name="subscribe_tip_text">#ff2e2e2e</color>
     <color name="subscribe_seperate_line">#ffcdcdcd</color>
-    <color name="item_abstract_disabled">#ff929292</color>
-    <color name="item_abstract_normal">#ff444444</color>
-    <color name="left_drawer_item_text_pressed">#ff4e4e4e</color>
-    <color name="left_drawer_item_text_normal">#ffd4d4d4</color>
-    <color name="setting_alt_text_selected">#ffff0000</color>
-    <color name="setting_alt_text_normal">#ff666666</color>
-    <color name="subscribe_item_text_color_pressed">#ffb9b9b9</color>
-    <item name="subscribe_item_text_color_normal" type="color">@color/default_text</item>
-    <color name="default_text">#ff454545</color>
+    <color name="base_color_orange">#FE6829</color>
+
+    <!-- 友盟自动更新配置 start -->
+    <color name="accent_1">#ff29549f</color>
+    <color name="actionbar_background_start">#3A5FCD</color>
+    <color name="actionbar_background_end">#27408B</color>
+    <!-- 友盟自动更新配置 end -->
+
 </resources>

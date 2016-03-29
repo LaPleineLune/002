@@ -63,7 +63,7 @@
         <LinearLayout
             android:layout_width="@dimen/dp0"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -89,13 +89,12 @@
 
         <Button
             android:id="@+id/request_code"
-            android:layout_width="@dimen/dp0"
-            android:layout_height="@dimen/dp28"
-            android:layout_weight="4"
-            android:background="@drawable/input_phone_number"
+            android:layout_width="@dimen/dp104"
+            android:layout_height="@dimen/dp30"
+            android:background="@color/light_gray"
             android:text="获取验证码"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp16" />
+            android:textColor="@color/carminum"
+            android:textSize="@dimen/sp14" />
     </LinearLayout>
 
     <View

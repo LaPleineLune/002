@@ -1,7 +1,6 @@
 package com.android.linglan.ui.homepage;
 
 import android.content.Intent;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,16 +8,25 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.android.linglan.base.AllSubjectBaseActivity;
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.http.Constants;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.ArticleDetails;
@@ -31,49 +39,54 @@ import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ShareUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;
-import com.android.linglan.http.Constants;
 import com.android.linglan.widget.UpdateDialog;
 import com.umeng.socialize.sso.UMSsoHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.net.URL;
+import java.util.regex.Pattern;
 
 /**
  * Created by LeeMy on 2016/1/13.
  * 文章详情页
  */
 public class ArticleDetailsActivity extends BaseActivity implements View.OnClickListener {
+    protected static final int REQUEST_FAILURE = 0;
     protected static final int FONTSIZECHANG = 1;
     protected static final int REQUEST_SUCCESS = 2;
-    protected static final int REQUEST_FAIL = 3;
-    protected static final int REQUEST_LIKE = 4;
-    protected static final int REQUEST_COLLECT = 5;
+    protected static final int REQUEST_LIKE = 3;
+    protected static final int REQUEST_COLLECT = 4;
 
     private Intent intent = null;
     //    private PopupWindowHelper popupWindowHelper;
     private PopupWindow popupWindow;
     private View popView;
-    private RelativeLayout rl_author;
+    private LinearLayout ll_no_network;
+    private RelativeLayout rl_author, rl_article_details;
     private SeekBar fontseek;
     private TextView textFont;
-    private int fontsize = 16; // 字体大小
+    private int fontsize = 18; // 字体大小
     private TextView article_title;
     private TextView article_author;
     private TextView article_publishtime;
     private TextView article_publisher;
     private TextView article_details_digest;
     private TextView article_details_content;
+    private WebView web_article_details_content;
+    private WebSettings webSettings;
     private TextView article_details_copyright;
     private TextView article_write_note;
     private TextView article_write_like;
     private TextView article_write_collect;
     private TextView article_write_share;
     private String articleId;
-    private String isLike = "1";
-    private String isCollect = "1";
+    private String photo;// 小图
+    private String isLike = "1";// 原：1
+    private String isCollect = "1";// 原：1
+    private String isShare = "1";// 原：1
+    private ArticleDetails articleDetails;
     private UpdateDialog exitLoginDialog;
 
     private Handler handler = new Handler() {
@@ -86,11 +99,10 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
                     article_details_content.setTextSize(fontsize);
                     break;
                 case REQUEST_SUCCESS:
-                    LogUtil.d("第二次" + data.toString());
+//                    LogUtil.d("第二次" + data.toString());
+                    rl_article_details.setVisibility(View.VISIBLE);
+                    ll_no_network.setVisibility(View.GONE);
                     setData(data);
-                    break;
-                case REQUEST_FAIL:
-
                     break;
                 case REQUEST_LIKE:
                     if (isLike.equals("0")) {
@@ -99,7 +111,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
                         likeTopDrawable.setBounds(0, 0, likeTopDrawable.getMinimumWidth(), likeTopDrawable.getMinimumHeight());
                         article_write_like.setCompoundDrawables(null, likeTopDrawable, null, null);
                         isLike = "1";
-                    } else {
+                    } else if (isLike.equals("1")) {
                         article_write_like.setTextColor(getResources().getColor(R.color.french_grey));
                         Drawable likeTopDrawable = getResources().getDrawable(R.drawable.article_write_like);
                         likeTopDrawable.setBounds(0, 0, likeTopDrawable.getMinimumWidth(), likeTopDrawable.getMinimumHeight());
@@ -114,7 +126,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
                         collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
                         article_write_collect.setCompoundDrawables(null, collectTopDrawable, null, null);
                         isCollect = "1";
-                    } else {
+                    } else if (isCollect.equals("1")) {
                         article_write_collect.setTextColor(getResources().getColor(R.color.french_grey));
                         Drawable collectTopDrawable = getResources().getDrawable(R.drawable.article_write_collect);
                         collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
@@ -122,23 +134,75 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
                         isCollect = "0";
                     }
                     break;
+                case REQUEST_FAILURE:
+                    rl_article_details.setVisibility(View.GONE);
+                    ll_no_network.setVisibility(View.VISIBLE);
+                    break;
             }
         }
     };
 
     private void setData(ArticleDetails.ArticleData data) {
         article_title.setText(data.title);
-        article_author.setText("作者：" + data.authornames);
+        if (!TextUtils.isEmpty(data.authornames)) {
+            article_author.setText("作者：" + data.authornames);
+        } else {
+            article_author.setVisibility(View.GONE);
+        }
 //        article_publishtime.setText(getDate(data.publishtime));
         article_publishtime.setText(data.publishtime);
-        article_publisher.setText(data.publishername);
+        if (!TextUtils.isEmpty(data.publishername)) {
+            article_publisher.setText(data.publishername);
+        } else {
+            article_publisher.setText("中医书友会");
+        }
         if (!data.digest.isEmpty()) {
             article_details_digest.setVisibility(View.VISIBLE);
             article_details_digest.setText(data.digest);
         }
-        Spanned content = Html.fromHtml(data.content);
+
+        Spanned content = Html.fromHtml(data.content, imgGetter, null);
+        article_details_content.setMovementMethod(ScrollingMovementMethod.getInstance());// 设置可滚动
+        article_details_content.setMovementMethod(LinkMovementMethod.getInstance());//设置超链接可以打开网页
         article_details_content.setText(content);
-        article_details_copyright.setText(Html.fromHtml(data.copyright));
+
+        web_article_details_content.loadDataWithBaseURL(null, data.content, "text/html", "UTF-8", null);
+
+        article_details_copyright.setText(Html.fromHtml(data.copyright, imgGetter, null));
+
+        // 设置分享的内容String articleORsubject, String id, String shareTitle, String imgUrl, String shareContent
+        ShareUtil.setShareContent(this, Constants.ARTICLE, articleId, data.title, photo, data.digest);
+    }
+
+    private Html.ImageGetter imgGetter = new Html.ImageGetter() {
+        public Drawable getDrawable(String source) {
+            LogUtil.i("RG", "source---?>>>" + source);
+            Drawable drawable = null;
+            URL url;
+            try {
+                url = new URL(source);
+                LogUtil.i("RG", "url---?>>>" + url);
+                drawable = Drawable.createFromStream(url.openStream(), ""); // 获取网路图片
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+                    drawable.getIntrinsicHeight());
+            LogUtil.i("RG", "url---?>>>" + url);
+            return drawable;
+        }
+    };
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        articleId = getIntent().getStringExtra("articleId");
+        photo = getIntent().getStringExtra("photo");
+        if (isShare.equals("1")) {
+            getDetailsArticle();
+        }
     }
 
     @Override
@@ -150,6 +214,8 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initView() {
+        ll_no_network = (LinearLayout) findViewById(R.id.ll_no_network);
+        rl_article_details = (RelativeLayout) findViewById(R.id.rl_article_details);
         rl_author = (RelativeLayout) findViewById(R.id.rl_author);
         article_title = (TextView) findViewById(R.id.article_title);
         article_author = (TextView) findViewById(R.id.article_author);
@@ -157,6 +223,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         article_publisher = (TextView) findViewById(R.id.article_publisher);
         article_details_digest = (TextView) findViewById(R.id.article_details_digest);
         article_details_content = (TextView) findViewById(R.id.article_details_content);
+        web_article_details_content = (WebView) findViewById(R.id.web_article_details_content);
         article_details_copyright = (TextView) findViewById(R.id.article_details_copyright);
         article_write_note = (TextView) findViewById(R.id.article_write_note);
         article_write_like = (TextView) findViewById(R.id.article_write_like);
@@ -170,17 +237,60 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     protected void initData() {
         setTitle("文章详情", "");
         intent = new Intent();
+
 //        right.setImageResource(R.drawable.font_size);
-        articleId = getIntent().getStringExtra("articleId");
-        fontsize = SharedPreferencesUtil.getInt(Constants.FONT_SIZE, 16);// 初始化文字大小
+//        articleId = getIntent().getStringExtra("articleId");
+//        getDetailsArticle();
+        webSettings = web_article_details_content.getSettings();
+
+//        setJavaScriptEnabled(true);  //支持js
+//        setPluginsEnabled(true);  //支持插件
+//        setUseWideViewPort(false);  //将图片调整到适合webview的大小
+//        setSupportZoom(true);  //支持缩放
+//        setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN); //支持内容重新布局
+//        supportMultipleWindows();  //多窗口
+//        setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //关闭webview中缓存
+//        setAllowFileAccess(true);  //设置可以访问文件
+//        setNeedInitialFocus(true); //当webview调用requestFocus时为webview设置节点
+//        webview webSettings.setBuiltInZoomControls(true); //设置支持缩放
+//        setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
+//        setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+//        setLoadsImagesAutomatically(true);  //支持自动加载图片
+
+        webSettings.setJavaScriptEnabled(true);// 支持js
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setDisplayZoomControls(false);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); //支持内容重新布局
+        webSettings.setUseWideViewPort(false);// 将图片调整到适合webview的大小
+        webSettings.setLoadsImagesAutomatically(true);// 支持自动加载图片
+        webSettings.setPluginState(WebSettings.PluginState.ON);//支持多媒体
+        web_article_details_content.requestFocusFromTouch();
+        String textSize = SharedPreferencesUtil.getString("webTextSize", "正常");// 初始化文字大小
+
+        if (textSize.equals("较小")) {
+            webSettings.setTextSize(WebSettings.TextSize.SMALLEST);
+        } else if (textSize.equals("小")) {
+            webSettings.setTextSize(WebSettings.TextSize.SMALLER);
+        } else if (textSize.equals("正常")) {
+            webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        } else if (textSize.equals("大")) {
+            webSettings.setTextSize(WebSettings.TextSize.LARGER);
+        } else if (textSize.equals("较大")) {
+            webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+        }
+
+
+        fontsize = SharedPreferencesUtil.getInt(Constants.FONT_SIZE, 18);// 初始化文字大小
         article_details_content.setTextSize(fontsize);
-        article_publisher.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
-        article_publisher.getPaint().setAntiAlias(true);//抗锯齿
+//        article_publisher.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+//        article_publisher.getPaint().setAntiAlias(true);//抗锯齿
+
 //        order.setVisibility(View.GONE);
 //        popupWindowHelper = new PopupWindowHelper(popView);
         popupWindow = new PopupWindow(this);
 
-        getDetailsArticle();
 
         //设置打印友盟log日志
         com.umeng.socialize.utils.Log.LOG = true;
@@ -188,8 +298,8 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         ShareUtil.mController.getConfig().closeToast();
         // 配置需要分享的相关平台
         ShareUtil.configPlatforms(ArticleDetailsActivity.this);
-        // 设置分享的内容
-        ShareUtil.setShareContent(this);
+//        // 设置分享的内容String articleORsubject, String id, String shareTitle, String imgUrl, String shareContent
+//        ShareUtil.setShareContent(this, Constants.ARTICLE, articleId, data.title, null, "");
     }
 
     @Override
@@ -201,11 +311,64 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         article_write_like.setOnClickListener(this);
         article_write_collect.setOnClickListener(this);
         article_write_share.setOnClickListener(this);
+
+        ll_no_network.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onResume();
+            }
+        });
+
+        web_article_details_content.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                ToastUtil.show("哈哈哈哈");
+                return false;
+            }
+        });
+
+        web_article_details_content.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                LogUtil.e("这是文章页的超链接=" + url);
+//                if (!Pattern.compile("^(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-Z0-9\\.&%\\$\\-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,4})(\\:[0-9]+)?(/[^/][a-zA-Z0-9\\.\\,\\?\\'\\\\/\\+&%\\$\\=~_\\-@]*)*$")
+                if (!Pattern.compile("^(http://|https://)?((?:[A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\\.)+([A-Za-z]+)[/\\?\\:]?.*$")
+                        .matcher(url).matches()) {// 此处需要判断URL 超链接是否正确，以及需要跳转到的页面
+                    // URL 不正确的情况下
+                    ToastUtil.show("地址错误");
+                } else {
+                    // URL 不正确的情况下
+                    intent.setClass(ArticleDetailsActivity.this, ArticleUrlDetailsActivity.class);
+                    intent.putExtra("url", url);
+                    startActivity(intent);
+                }
+
+//                return super.shouldOverrideUrlLoading(view, url);
+                return true;
+            }
+        });
+    }
+
+    /**
+     * WebView对于Back按键的响应是整个退出，如果希望一级一级退出，则需要监听Back按键
+     * 监听按键弹起的状态
+     * 返回值 true表示在此拦截，不再向下传递
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        LogUtil.d("onKeyUp keyCode: " + keyCode);
+        if (keyCode == KeyEvent.KEYCODE_BACK && web_article_details_content.canGoBack()) {
+            web_article_details_content.goBack();
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+
     }
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        isShare = "1";
         switch (v.getId()) {
             case R.id.right:
 //                ToastUtil.show("我是右边");
@@ -248,7 +411,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.rl_author:
             case R.id.article_publisher:
-                jumpActivity(ArticleDetailsActivity.this, AuthorDetailsActivity.class);
+//                jumpActivity(ArticleDetailsActivity.this, AuthorDetailsActivity.class);
                 break;
             case R.id.article_write_note:
                 intent.putExtra("note", "write");
@@ -273,6 +436,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.article_write_share:
 //                ToastUtil.show("这是分享");
+                isShare = "0";
                 ShareUtil.umengPlatforms(ArticleDetailsActivity.this);
                 break;
             default:
@@ -281,22 +445,14 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void showExitDialog() {
-        exitLoginDialog = new UpdateDialog(this, "确定登录后查看更多精彩内容吗", new View.OnClickListener() {
+        exitLoginDialog = new UpdateDialog(this, "登录后可体验更多功能", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SharedPreferencesUtil.removeValue("token");
-//                SharedPreferencesUtil.removeValue("phone");
-//                SharedPreferencesUtil.removeValue("username");
-//                logout(SHARE_MEDIA.SINA);
-//                logout(SHARE_MEDIA.QQ);
-//                logout(SHARE_MEDIA.WEIXIN);
-//                AuthenticationActivity.show(SettingActivity.this);
                 startActivity(new Intent(ArticleDetailsActivity.this, RegisterActivity.class));
                 exitLoginDialog.dismiss();
-//                finish();
             }
         });
-        exitLoginDialog.setTitle("登录后更精彩");
+        exitLoginDialog.setTitle("提示");
         exitLoginDialog.setCancelText("我先看看");
         exitLoginDialog.setEnterText("马上登录");
         exitLoginDialog.show();
@@ -322,17 +478,18 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         NetApi.getDetailsArticle(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
-                LogUtil.d("getDetailsArticle=" + result);
+                LogUtil.e("getDetailsArticle=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ArticleDetailsActivity.this)) {
                     return;
                 }
+                articleDetails = JsonUtil.json2Bean(result, ArticleDetails.class);
 
-                ArticleDetails articleDetails = JsonUtil.json2Bean(result, ArticleDetails.class);
                 isLike = articleDetails.favouriscancel;
                 handler.sendEmptyMessage(REQUEST_LIKE);
                 isCollect = articleDetails.collectiscancel;
                 handler.sendEmptyMessage(REQUEST_COLLECT);
+
 //                if (articleDetails.favouriscancel.equals("0")) {
 //                    handler.sendEmptyMessage(REQUEST_LIKE);
 //                }
@@ -352,7 +509,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onFailure(String message) {
                 LogUtil.e(message);
-                handler.sendEmptyMessage(REQUEST_FAIL);
+                handler.sendEmptyMessage(REQUEST_FAILURE);
             }
         }, articleId);
     }
@@ -366,7 +523,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
             public void onSuccess(String result) {
                 LogUtil.e("文章点赞" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ArticleDetailsActivity.this)) {
                     return;
                 }
 
@@ -402,7 +559,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
             public void onSuccess(String result) {
                 LogUtil.e("文章收藏" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ArticleDetailsActivity.this)) {
                     return;
                 }
 
@@ -430,5 +587,6 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         }, articleId, isCollect);
 
     }
+
 
 }

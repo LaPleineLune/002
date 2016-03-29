@@ -15,10 +15,10 @@
 
         <ImageView
             android:id="@+id/img_homepage_subject_logo"
-            android:layout_width="@dimen/dp74"
-            android:layout_height="@dimen/dp60"
+            android:layout_width="@dimen/dp84"
+            android:layout_height="@dimen/dp68"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/subject" />
+            android:src="@drawable/default_image" />
 
         <LinearLayout
             android:layout_width="@dimen/dp0"

@@ -39,4 +39,4 @@
             android:paddingRight="4dp"
             android:textSize="13sp" />
     </RelativeLayout>
-</LinearLayout><!-- From: file:/E:/git/LingLan/social_sdk_library_project/src/main/res/layout/umeng_socialize_at_item.xml --><!-- From: file:/E:/git/LingLan/social_sdk_library_project/build/intermediates/bundles/debug/res/layout/umeng_socialize_at_item.xml -->
+</LinearLayout><!-- From: file:/E:/AndroidStudioProjects/Linglan/LingLan/social_sdk_library_project/src/main/res/layout/umeng_socialize_at_item.xml --><!-- From: file:/E:/AndroidStudioProjects/Linglan/LingLan/social_sdk_library_project/build/intermediates/bundles/debug/res/layout/umeng_socialize_at_item.xml -->

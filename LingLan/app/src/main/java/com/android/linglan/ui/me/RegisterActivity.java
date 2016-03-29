@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,13 +16,18 @@ import com.android.linglan.broadcast.SMSBroadcastReceiver;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.RegisterBean;
+import com.android.linglan.ui.MainActivity;
 import com.android.linglan.ui.R;
+import com.android.linglan.utils.AESCryptUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.TelephonyUtil;
 import com.android.linglan.utils.ToastUtil;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Created by LeeMy on 2016/2/2 0002.
@@ -37,6 +43,7 @@ public class RegisterActivity extends BaseActivity {
     private SMSBroadcastReceiver mSMSBroadcastReceiver;
     private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
     public RegisterBean.RegisterData data;
+    private AESCryptUtil aesCryptUtil = new AESCryptUtil();
 
     @Override
     protected void setView() {
@@ -64,8 +71,9 @@ public class RegisterActivity extends BaseActivity {
     protected void setListener() {
         requestCode.setOnClickListener(this);
         submit.setOnClickListener(this);
-        registerDeal.setOnClickListener(this);
-
+        registerDeal.setOnClickListener(null);
+//        String str = aesCryptUtil.decrypt("hdpxUvAjTfNO7z7g6WU9EScmSJuDU4zUXeNeosW5whHvcgMVWOHfe79FV/2bQ8CG10gEX5JXc0CMbi1qxOAndnqF6E8EMZlPVHcILEkSJmE=");
+//        LogUtil.e("=======" + str);
     }
 
     @Override
@@ -90,6 +98,7 @@ public class RegisterActivity extends BaseActivity {
                     return;
                 }
                 checkCode(registerPhone, code, null, null);
+
 //                } else {
 //                    ToastUtil.show(PasserbyClient.NETWORK_ERROR_MESSAGE);
 //                }
@@ -98,7 +107,6 @@ public class RegisterActivity extends BaseActivity {
             case R.id.request_code:
                 registerPhone = inputPhonenumber.getText().toString().trim();
                 if (checkMobileLocally(registerPhone)) {
-//                    if (NetworkUtil.isNetworkConnected(getActivity())) {
                     getUserCode(registerPhone);
                     launchBroadcast();
                     return;
@@ -170,7 +178,7 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
                 LogUtil.e("登录请求成功" + result);
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,RegisterActivity.this)){
                     return;
                 }
                 if (!TextUtils.isEmpty(result)) {
@@ -178,11 +186,23 @@ public class RegisterActivity extends BaseActivity {
                     String code = register.code;
                     data = register.data;
                     if ("0".equals(code)) {
+                        SharedPreferencesUtil.saveString("token", data.token);
                         SharedPreferencesUtil.saveString("userid", data.userid);
                         SharedPreferencesUtil.saveString("phone", registerPhone);
                         SharedPreferencesUtil.saveString("username", data.username);
-                        SharedPreferencesUtil.saveString("token", data.token);
-                        ToastUtil.show("登录成功");
+
+                        SharedPreferencesUtil.saveString("face", data.face);// 头像
+                        SharedPreferencesUtil.saveString("alias", data.alias);// 用户昵称
+                        SharedPreferencesUtil.saveString("isfamilymember", data.isfamilymember);// 亲情会员
+
+//                        ToastUtil.show("登录成功");
+
+                        Intent intent = new Intent();
+                        intent.putExtra("face", data.face == null || TextUtils.isEmpty(data.face) ? "" : data.face);
+                        setResult(RESULT_OK, intent);
+
+//                        Intent intent2 = new Intent(RegisterActivity.this, MainActivity.class);
+//                        startActivity(intent2);
                         finish();
                     } else {
                         ToastUtil.show(register.msg);
@@ -224,9 +244,11 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
                 LogUtil.e("getUserCode=" + result);
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,RegisterActivity.this)){
                     return;
                 }
+                sendVerifyCodeCountDown.start();
+
 //                VerifyCode verifyCode = JsonUtil
 //                        .json2Bean(result, VerifyCode.class);
 //                if (!"1".equals(verifyCode.code)) {
@@ -244,39 +266,44 @@ public class RegisterActivity extends BaseActivity {
 
     private void startSendingVerifyCodeCD() {
         sendVerifyCodeCountDown.cancel();
-        sendVerifyCodeCountDown.start();
-        requestCode.setEnabled(false);
+//        sendVerifyCodeCountDown.start();
+        String requesContent = requestCode.getText().toString().trim();
+        if(requesContent.equals("获取验证码")){
+            requestCode.setEnabled(true);
+        }else {
+            requestCode.setEnabled(false);
+        }
     }
 
     private void resetCD() {
         sendVerifyCodeCountDown.cancel();
-        requestCode.setTextColor(0xfffe6829);
-        requestCode.setBackgroundResource(R.drawable.input_phone_number);
+        requestCode.setTextColor(getResources().getColor(R.color.carminum));
+//        requestCode.setBackgroundResource(R.drawable.input_phone_number);
         requestCode.setEnabled(true);
-        requestCode.setText("重新发送验证码");
+        requestCode.setText("重获验证码");
     }
 
     private void resetCDWrong() {
         sendVerifyCodeCountDown.cancel();
         requestCode.setEnabled(true);
-        requestCode.setText("免费获取验证码");
+        requestCode.setText("获取验证码");
     }
 
     private CountDownTimer sendVerifyCodeCountDown = new CountDownTimer(60000, 1000) {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            requestCode.setTextColor(Color.GRAY);
-            requestCode.setBackgroundResource(R.drawable.get_code_later);
-            requestCode.setText(((int) millisUntilFinished / 1000) + "秒后重新发送");
+            requestCode.setTextColor(getResources().getColor(R.color.french_grey));
+//            requestCode.setBackgroundResource(R.drawable.get_code_later);
+            requestCode.setText("重新发送(" + ((int) millisUntilFinished / 1000) + ")");
         }
 
         @Override
         public void onFinish() {
-            requestCode.setTextColor(0xfffe6829);
-            requestCode.setBackgroundResource(R.drawable.input_phone_number);
+            requestCode.setTextColor(getResources().getColor(R.color.carminum));
+//            requestCode.setBackgroundResource(R.drawable.input_phone_number);
             requestCode.setEnabled(true);
-            requestCode.setText("重新发送验证码");
+            requestCode.setText("重获验证码");
         }
     };
 
@@ -346,4 +373,5 @@ public class RegisterActivity extends BaseActivity {
             });
         }
     }
+
 }

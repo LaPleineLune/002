@@ -13,6 +13,8 @@ public class SubjectDetails {
     public class SubjectData {
         public String specialid;// 专题id
         public String contentid;// 专题内容id
+        public String logo;// logo（小图）
+        public String photo;// photo(详情)
         public String content_title;// 内容标题（图书为书名）
         public String contenttype;// 内容类型 0 文章 1 医案 2 图书 3视频
         public String author;// 作者名称

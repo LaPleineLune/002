@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.android.linglan.http.bean.RecommendSubjects;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.homepage.SubjectDetailsActivity;
-import com.android.linglan.utils.LogUtil;
+import com.android.linglan.utils.ImageUtil;
 
 import java.util.ArrayList;
 
@@ -48,9 +48,6 @@ public class RecycleHomeSubjectAdapter extends
 
     public void updateAdapter(ArrayList<RecommendSubjects.RecommendSubject> recommendSubject) {
         this.recommendSubject = recommendSubject;
-        for (RecommendSubjects.RecommendSubject rec : recommendSubject) {
-            LogUtil.e("是ni 是你还是你" + rec.toString());
-        }
         this.notifyDataSetChanged();
     }
 
@@ -80,9 +77,15 @@ public class RecycleHomeSubjectAdapter extends
 
         public void bindData(final RecommendSubjects.RecommendSubject subject) {
             this.subject = subject;
+            try {
+                ImageUtil.loadImageAsync(logo, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, subject.logo, null);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+//            ImageUtil.loadImageAsync(logo, subject.logo, R.drawable.default_image);
             title.setText(subject.specialname);// getItem(position).specialname
             description.setText(subject.content_title);
-            date.setText(subject.addtime);
+            date.setText(subject.updatetime);
 
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,6 +93,9 @@ public class RecycleHomeSubjectAdapter extends
                     intent = new Intent();
                     intent.setClass(context, SubjectDetailsActivity.class);
                     intent.putExtra("specialid", subject.specialid);
+                    intent.putExtra("specialname", subject.specialname);
+                    intent.putExtra("photo", subject.photo);
+                    intent.putExtra("logo", subject.logo);
                     intent.putExtra("description", subject.description);
                     context.startActivity(intent);
                 }

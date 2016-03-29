@@ -2,12 +2,14 @@ package com.android.linglan.utils;
 
 import android.util.Log;
 
+import com.android.linglan.http.Constants;
+
 /**
  * Created by LeeMy on 2016/1/6 0006.
  */
 public class LogUtil {
     /**控制log的打印*/
-    public static boolean isShow = true;
+    public static boolean isShow = Constants.isShow;
     /** 日志输出级别NONE */
     public static final int LEVEL_NONE = 0;
     /** 日志输出级别V */

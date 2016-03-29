@@ -1,18 +1,18 @@
 package com.android.linglan.ui.me;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.http.Constants;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
@@ -69,7 +69,15 @@ public class FeedbackActivity extends BaseActivity {
         Drawable collectTopDrawable = getResources().getDrawable(R.drawable.submit);
         collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
         right.setCompoundDrawables(collectTopDrawable, null, null, null);
-        initKeyboard();
+//        initKeyboard();
+
+//        /* 获取屏幕宽高 */
+//        if (Constants.isShow) {
+//            DisplayMetrics dm=new DisplayMetrics();
+//            getWindowManager().getDefaultDisplay().getMetrics(dm);
+//            ToastUtil.show(Integer.toString(dm.heightPixels) + ":" + Integer.toString(dm.widthPixels));
+//            System.out.println(Integer.toString(dm.heightPixels)+":"+Integer.toString(dm.widthPixels));
+//        }
     }
 
     private void initKeyboard() {
@@ -132,7 +140,7 @@ public class FeedbackActivity extends BaseActivity {
            @Override
            public void onSuccess(String result) {
 
-               if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+               if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,FeedbackActivity.this)){
                    return;
                }
 
@@ -140,6 +148,7 @@ public class FeedbackActivity extends BaseActivity {
                    JSONObject resultJson = new JSONObject(result);
                    String msg = resultJson.getString("msg");
                    ToastUtil.show("发送" + msg);
+                   finish();
                } catch (JSONException e) {
                    e.printStackTrace();
                }

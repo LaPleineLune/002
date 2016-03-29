@@ -7,6 +7,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.linglan.ui.R;
+import com.umeng.analytics.MobclickAgent;
+//import com.umeng.message.PushAgent;
 
 /**
  * Created by LeeMy on 2016/1/6 0006.
@@ -31,6 +33,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         initView();
         initData();
         setListener();
+
+//        PushAgent.getInstance(getActivity()).onAppStart();
     }
 //    public void setTitle(String titleStr, String rightStr){
 //        title.setText(titleStr);
@@ -52,13 +56,13 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
-//        MobclickAgent.onPageStart(tag);
+        MobclickAgent.onPageStart(tag);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        MobclickAgent.onPageEnd(tag);
+        MobclickAgent.onPageEnd(tag);
     }
 
 }

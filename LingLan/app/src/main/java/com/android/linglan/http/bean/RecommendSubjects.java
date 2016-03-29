@@ -13,8 +13,9 @@ public ArrayList<RecommendSubject> data;
         public String specialid;//专题ID
         public String specialname;//专题名称
         public String description;//描述
-        public String logo;
-        public String photo;
+        public String logo;// logo（小图）
+        public String photo;// photo(详情)
+        public String updatetime;//更新时间
         public String addtime;//创建时间
         public String orderid;//排序
         public String content_title;// 最新添加的文章标题

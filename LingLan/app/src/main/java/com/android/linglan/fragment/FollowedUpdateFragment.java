@@ -91,7 +91,7 @@ public class FollowedUpdateFragment extends BaseFragment {
             public void onSuccess(String result) {
                 LogUtil.e("getFollowedList=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,getActivity())){
                     return;
                 }
                 followedList = JsonUtil.json2Bean(result, FollowedListBean.class);

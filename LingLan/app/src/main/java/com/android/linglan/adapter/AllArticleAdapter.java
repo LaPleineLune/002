@@ -2,7 +2,9 @@ package com.android.linglan.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,12 +74,23 @@ public class AllArticleAdapter extends RecyclerView.Adapter{
 
         public void bindData(final AllArticleClassifyListBean.ArticleClassifyListBean articleClassifyList) {
             ll_item_article_title.setText(articleClassifyList.title);
-            ll_item_article_time.setText(articleClassifyList.authornames);
+            if (!TextUtils.isEmpty(articleClassifyList.authornames)) {
+                ll_item_article_time.setVisibility(View.VISIBLE);
+                Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
+                collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+                ll_item_article_time.setCompoundDrawables(collectTopDrawable, null, null, null);
+                ll_item_article_time.setCompoundDrawablePadding(12);
+                ll_item_article_time.setText(articleClassifyList.authornames);
+            } else {
+                ll_item_article_time.setVisibility(View.GONE);
+            }
+//            ll_item_article_time.setText(articleClassifyList.authornames);
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ArticleDetailsActivity.class);
                     intent.putExtra("articleId", articleClassifyList.articleid);
+                    intent.putExtra("photo", articleClassifyList.photo);
                     context.startActivity(intent);
                 }
             });

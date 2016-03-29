@@ -44,7 +44,9 @@
         android:id="@+id/rl_history_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp20"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
         android:visibility="gone">
 
         <TextView
@@ -52,14 +54,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="历史搜索"
-            android:textColor="#999999"
+            android:textColor="@color/carminum"
             android:textSize="@dimen/sp16" />
         <View
             android:id="@+id/view_div"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px1"
             android:layout_marginTop="@dimen/dp10"
-            android:layout_marginBottom="@dimen/dp10"
             android:layout_below="@+id/tv_history_search"
             android:background="#cccccc" />
 
@@ -71,13 +72,14 @@
 
         <TextView
             android:id="@+id/tv_delete_history_search"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rec_history_search"
-            android:layout_marginTop="@dimen/dp10"
-            android:layout_marginBottom="@dimen/dp10"
+            android:paddingTop="@dimen/dp10"
+            android:paddingBottom="@dimen/dp10"
             android:drawableLeft="@drawable/delete"
             android:drawablePadding="@dimen/dp4"
+            android:background="@drawable/bg_bottom_textview"
             android:text="清除历史搜索记录"
             android:textColor="#999999"
             android:textSize="@dimen/sp16" />

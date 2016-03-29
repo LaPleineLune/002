@@ -17,7 +17,8 @@ import com.android.linglan.utils.SharedPreferencesUtil;
  */
 public class SetFontSizeActivity extends BaseActivity {
     protected static final int FONTSIZECHANG = 1;
-    private int fontsize = 16; // 字体大小
+    private int fontsize = 18; // 字体大小
+    private int webTextSize = 4; // 字体大小
     private TextView tv_font_size_show;
     private SeekBar fontseek;
     private TextView textFont;
@@ -51,8 +52,20 @@ public class SetFontSizeActivity extends BaseActivity {
     @Override
     protected void initData() {
         setTitle("字体大小", "");
-        fontsize = SharedPreferencesUtil.getInt(Constants.FONT_SIZE, 16);// 初始化文字大小
+        fontsize = SharedPreferencesUtil.getInt(Constants.FONT_SIZE, 18);// 初始化文字大小
         tv_font_size_show.setTextSize(fontsize);
+        String textSize = SharedPreferencesUtil.getString("webTextSize", "正常");// 初始化文字大小
+        if (textSize.equals("较小")) {
+            webTextSize = 0;
+        } else if (textSize.equals("小")) {
+            webTextSize = 2;
+        } else if (textSize.equals("正常")) {
+            webTextSize = 3;
+        } else if (textSize.equals("大")) {
+            webTextSize = 4;
+        } else if (textSize.equals("较大")) {
+            webTextSize = 7;
+        }
 
         initSetFontSeek();
     }
@@ -63,15 +76,39 @@ public class SetFontSizeActivity extends BaseActivity {
     }
 
     private void initSetFontSeek() {
-        fontseek.setMax(20);
-        fontseek.setProgress(fontsize - 10);
+        fontseek.setMax(6);
+        fontseek.setProgress(webTextSize);
         fontseek.setSecondaryProgress(0);
-        textFont.setText(fontsize + "");
+        textFont.setText("正常");
         fontseek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                fontsize = progress + 10;
-                textFont.setText("" + fontsize);
+                switch (progress) {
+                    case 0:
+                    case 1:
+                        textFont.setText("较小");
+                        fontsize = 10;
+                        break;
+                    case 2:
+                        textFont.setText("小");
+                        fontsize = 14;
+                        break;
+                    case 3:
+                        textFont.setText("正常");
+                        fontsize = 18;
+                        break;
+                    case 4:
+                        textFont.setText("大");
+                        fontsize = 24;
+                        break;
+                    case 5:
+                    case 6:
+                        textFont.setText("较大");
+                        fontsize = 30;
+                        break;
+                }
+//                fontsize = progress + 10;
+//                textFont.setText("" + fontsize);
                 handler.sendEmptyMessage(FONTSIZECHANG);
             }
 
@@ -83,6 +120,7 @@ public class SetFontSizeActivity extends BaseActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 SharedPreferencesUtil.saveInt(Constants.FONT_SIZE, fontsize);
+                SharedPreferencesUtil.saveString("webTextSize", textFont.getText().toString());
             }
         });
     }

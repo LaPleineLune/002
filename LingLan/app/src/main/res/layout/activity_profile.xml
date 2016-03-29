@@ -79,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10" >
+                    android:layout_marginRight="@dimen/dp10">
 
                     <TextView
                         android:id="@+id/nickname_label"
@@ -87,7 +87,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/dp12"
                         android:text="@string/nickname"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/sp16" />
@@ -98,17 +97,15 @@
 
                     <TextView
                         android:id="@+id/nickname"
-                        android:layout_width="wrap_content"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/nickname_arrow_right"
-                        android:layout_toRightOf="@id/nickname_label"
                         android:gravity="right"
                         android:singleLine="true"
-                        android:text="未设置"
+                        android:text="设置未设置未设置未设置未设置未设置未设置未设置未设"
                         android:textColor="@color/text_title_color"
                         android:textSize="@dimen/sp16" />
-
                 </RelativeLayout>
 
                 <View
@@ -121,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10" >
+                    android:layout_marginRight="@dimen/dp10">
 
                     <TextView
                         android:id="@+id/name_label"
@@ -139,11 +136,10 @@
 
                     <TextView
                         android:id="@+id/name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/name_arrow_right"
-                        android:layout_toRightOf="@id/name_label"
                         android:gravity="right"
                         android:singleLine="true"
                         android:text="未设置"
@@ -162,9 +158,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10" >
+                    android:layout_marginRight="@dimen/dp10">
 
                     <TextView
+                        android:id="@+id/description_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -179,11 +176,13 @@
 
                     <TextView
                         android:id="@+id/description"
-                        android:layout_width="wrap_content"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/description_arrow_right"
-                        android:text=""
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="未设置"
                         android:textColor="@color/text_title_color"
                         android:textSize="@dimen/sp16" />
 
@@ -199,9 +198,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10" >
+                    android:layout_marginRight="@dimen/dp10">
 
                     <TextView
+                        android:id="@+id/belonging_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -216,10 +216,12 @@
 
                     <TextView
                         android:id="@+id/belonging"
-                        android:layout_width="wrap_content"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/belonging_arrow_right"
+                        android:gravity="right"
+                        android:singleLine="true"
                         android:text="未设置"
                         android:textColor="@color/text_title_color"
                         android:textSize="@dimen/sp16" />
@@ -236,7 +238,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10" >
+                    android:layout_marginRight="@dimen/dp10">
 
                     <TextView
                         android:id="@+id/company_label"
@@ -254,14 +256,15 @@
 
                     <TextView
                         android:id="@+id/company"
-                        android:layout_width="wrap_content"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/company_arrow_right"
+                        android:gravity="right"
+                        android:singleLine="true"
                         android:text="未设置"
                         android:textColor="@color/text_title_color"
-                        android:textSize="@dimen/sp16"
-                        android:visibility="gone" />
+                        android:textSize="@dimen/sp16" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -284,14 +287,14 @@
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/dp16"
                 android:paddingRight="@dimen/dp16"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/characteristics_item"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10" >
+                    android:layout_marginRight="@dimen/dp10">
 
                     <TextView
                         android:id="@+id/characteristics_label"
@@ -334,7 +337,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10" >
+                    android:layout_marginRight="@dimen/dp10">
 
                     <TextView
                         android:id="@+id/grade_label"
@@ -372,7 +375,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10" >
+                    android:layout_marginRight="@dimen/dp10">
 
                     <TextView
                         android:id="@+id/binding_label"

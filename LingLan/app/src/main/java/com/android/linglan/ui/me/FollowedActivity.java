@@ -6,9 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.linglan.base.BaseActivity;
-import com.android.linglan.fragment.CollectArticleFragment;
-import com.android.linglan.fragment.CollectSubjectFragment;
-import com.android.linglan.fragment.CollectTestFragment;
 import com.android.linglan.fragment.FollowedAuthorFragment;
 import com.android.linglan.fragment.FollowedTeamFragment;
 import com.android.linglan.fragment.FollowedUpdateFragment;
@@ -88,8 +85,7 @@ public class FollowedActivity extends BaseActivity implements View.OnClickListen
     /**
      * 将所有的Fragment都置为隐藏状态。
      *
-     * @param transaction
-     *            用于对Fragment执行操作的事务
+     * @param transaction 用于对Fragment执行操作的事务
      */
 
     private void hideFragments(FragmentTransaction transaction) {
@@ -113,7 +109,7 @@ public class FollowedActivity extends BaseActivity implements View.OnClickListen
                 followed_update.setTextColor(getResources().getColor(R.color.text_color_fragment_title));
                 if (followedUpdateFragment == null) {
                     followedUpdateFragment = new FollowedUpdateFragment();
-                    transaction.add(R.id.followed_content, followedUpdateFragment,"tag1");
+                    transaction.add(R.id.followed_content, followedUpdateFragment, "tag1");
                 } else {
                     transaction.show(followedUpdateFragment);
                 }
@@ -122,7 +118,7 @@ public class FollowedActivity extends BaseActivity implements View.OnClickListen
                 followed_author.setTextColor(getResources().getColor(R.color.text_color_fragment_title));
                 if (followedAuthorFragment == null) {
                     followedAuthorFragment = new FollowedAuthorFragment();
-                    transaction.add(R.id.followed_content, followedAuthorFragment,"tag2");
+                    transaction.add(R.id.followed_content, followedAuthorFragment, "tag2");
                 } else {
                     transaction.show(followedAuthorFragment);
                 }
@@ -131,7 +127,7 @@ public class FollowedActivity extends BaseActivity implements View.OnClickListen
                 followed_team.setTextColor(getResources().getColor(R.color.text_color_fragment_title));
                 if (followedTeamFragment == null) {
                     followedTeamFragment = new FollowedTeamFragment();
-                    transaction.add(R.id.followed_content, followedTeamFragment,"tag3");
+                    transaction.add(R.id.followed_content, followedTeamFragment, "tag3");
                 } else {
                     transaction.show(followedTeamFragment);
                 }

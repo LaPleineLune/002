@@ -2,7 +2,9 @@ package com.android.linglan.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.android.linglan.http.bean.AllArticleClassifyListBean;
 import com.android.linglan.http.bean.SearchArticleBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.homepage.ArticleDetailsActivity;
+import com.android.linglan.utils.ImageUtil;
 
 import java.util.ArrayList;
 
@@ -66,14 +69,27 @@ public class ArticleSearchMoreAdapter extends
             this.rootView = rootView;
             ll_item_article_title = (TextView)rootView.findViewById(R.id.ll_item_article_title);
             ll_item_article_addtime = (TextView)rootView.findViewById(R.id.ll_item_article_addtime);
+            iv_item_article_image = (ImageView) rootView.findViewById(R.id.iv_item_article_image);
 
         }
         public void bindData(final AllArticleClassifyListBean.ArticleClassifyListBean recommendArticle) {
             this.recommendArticle = recommendArticle;
             ll_item_article_title.setText(recommendArticle.title);
-            ll_item_article_addtime.setText(recommendArticle.publishtime);
+            if (!TextUtils.isEmpty(recommendArticle.authornames)) {
+                Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
+                collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+                ll_item_article_addtime.setCompoundDrawables(collectTopDrawable, null, null, null);
+                ll_item_article_addtime.setCompoundDrawablePadding(12);
+                ll_item_article_addtime.setText(recommendArticle.authornames);
+            }
             if(recommendArticle.photo != null && !recommendArticle.photo.equals("")){
-//                iv_item_article_image.setVisibility(View.GONE);
+                try {
+                    ImageUtil.loadImageAsync(iv_item_article_image, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, recommendArticle.photo, null);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            } else {
+                iv_item_article_image.setVisibility(View.GONE);
             }
 
             iv_item_article_image = (ImageView)rootView.findViewById(R.id.iv_item_article_image);
@@ -83,6 +99,7 @@ public class ArticleSearchMoreAdapter extends
                     Intent intent = new Intent(context,
                             ArticleDetailsActivity.class);
                     intent.putExtra("articleId", recommendArticle.articleid);
+                    intent.putExtra("photo", recommendArticle.photo);
                     context.startActivity(intent);
                 }
             });

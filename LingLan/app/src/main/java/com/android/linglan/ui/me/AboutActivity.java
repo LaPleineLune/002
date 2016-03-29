@@ -1,5 +1,7 @@
 package com.android.linglan.ui.me;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Message;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import org.json.JSONObject;
  */
 public class AboutActivity extends BaseActivity {
     private TextView tv_about;
+    private TextView version;
 
     private android.os.Handler handler = new android.os.Handler() {
         @Override
@@ -41,12 +44,18 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void initView() {
         tv_about = (TextView) findViewById(R.id.tv_about);
+        version = (TextView) findViewById(R.id.tv_version);
     }
 
     @Override
     protected void initData() {
         setTitle("关于我们", "");
-        getAbout();
+        try {
+            version.setText("V" + getVersionName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        getAbout();
     }
 
     @Override
@@ -59,7 +68,7 @@ public class AboutActivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,AboutActivity.this)){
                     return;
                 }
                 try {
@@ -84,5 +93,12 @@ public class AboutActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private String getVersionName() throws Exception {
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageManager packageManager = getPackageManager();
+        PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(), 0);
+        return packInfo.versionName;
     }
 }

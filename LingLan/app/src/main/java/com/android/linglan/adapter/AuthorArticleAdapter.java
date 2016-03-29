@@ -1,6 +1,8 @@
 package com.android.linglan.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.linglan.http.bean.SubjectDetails;
 import com.android.linglan.ui.R;
+import com.android.linglan.utils.ImageUtil;
 
 import java.util.ArrayList;
 
@@ -63,10 +66,20 @@ public class AuthorArticleAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        try {
+            ImageUtil.loadImageAsync(viewHolder.iv_item_article_image, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, getItem(position).photo, null);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 //        viewHolder.iv_item_article_image.setBackgroundResource(draw[position]);
         viewHolder. ll_item_article_title.setText(getItem(position).content_title);
         viewHolder.ll_item_article_time.setText(getItem(position).addtime);
-        if (!getItem(position).author.equals("")) {
+        if (!TextUtils.isEmpty(getItem(position).author)) {
+            Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
+            collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+            viewHolder.ll_item_article_name.setCompoundDrawables(collectTopDrawable, null, null, null);
+            viewHolder.ll_item_article_name.setCompoundDrawablePadding(12);
             viewHolder.ll_item_article_name.setText(getItem(position).author);
         } else {
             viewHolder.ll_item_article_name.setVisibility(View.GONE);

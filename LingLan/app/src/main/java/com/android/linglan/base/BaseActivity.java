@@ -2,6 +2,7 @@ package com.android.linglan.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.linglan.ui.R;
+import com.umeng.analytics.MobclickAgent;
+//import com.umeng.message.PushAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         title = (TextView) findViewById(R.id.title);
         right = (TextView) findViewById(R.id.right);
         back = (RelativeLayout) findViewById(R.id.back);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initView();
         initData();
         setListener();
@@ -40,6 +44,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             childlist = new ArrayList<BaseActivity>();
         }
         childlist.add(this);
+
+//        PushAgent.getInstance(this).onAppStart();
     }
 
     public void setTitle(String titleStr, String rightStr) {
@@ -74,8 +80,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     @Override
     public void onResume() {
         super.onResume();
-//        MobclickAgent.onPageStart(tag);
-//        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(tag);
+        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -87,8 +93,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     @Override
     public void onPause() {
         super.onPause();
-//        MobclickAgent.onPageStart(tag);
-//        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(tag);
+        MobclickAgent.onResume(this);
     }
 
     protected void backTo(Class<?> cls) {

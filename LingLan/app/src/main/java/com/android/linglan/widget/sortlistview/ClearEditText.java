@@ -5,6 +5,9 @@ import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -43,12 +46,24 @@ public class ClearEditText extends EditText implements View.OnFocusChangeListene
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
             mClearDrawable = getResources()
-                    .getDrawable(R.drawable.emotionstore_progresscancelbtn);
+                    .getDrawable(R.drawable.delete);
         }
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
+
         setClearIconVisible(false);
         setOnFocusChangeListener(this);
         addTextChangedListener(this);
+//        setLongClickable(false);
+//        setTextIsSelectable(false);
+//        setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+//            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+//                return false;
+//            }
+//            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) { return false; }
+//            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) { return false; }
+//            public void onDestroyActionMode(ActionMode actionMode) {}
+//        });
+
     }
 
 
@@ -65,10 +80,30 @@ public class ClearEditText extends EditText implements View.OnFocusChangeListene
                         - getPaddingRight() - mClearDrawable.getIntrinsicWidth())
                         && (event.getX() < ((getWidth() - getPaddingRight())));
                 if (touchable) {
+                    setClearIconVisible(false);
                     this.setText("");
                 }
             }
         }
+
+//        setLongClickable(false);
+//        setTextIsSelectable(false);
+//        setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+//            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+//                return false;
+//            }
+//
+//            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+//                return false;
+//            }
+//
+//            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+//                return false;
+//            }
+//
+//            public void onDestroyActionMode(ActionMode actionMode) {
+//            }
+//        });
 
         return super.onTouchEvent(event);
     }
@@ -82,6 +117,24 @@ public class ClearEditText extends EditText implements View.OnFocusChangeListene
             setClearIconVisible(getText().length() > 0);
         } else {
             setClearIconVisible(false);
+//            setLongClickable(false);
+//            setTextIsSelectable(false);
+//            setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+//                public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+//                    return false;
+//                }
+//
+//                public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+//                    return false;
+//                }
+//
+//                public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+//                    return false;
+//                }
+//
+//                public void onDestroyActionMode(ActionMode actionMode) {
+//                }
+//            });
         }
     }
 

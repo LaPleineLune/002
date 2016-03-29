@@ -26,7 +26,6 @@
                 android:id="@+id/ll_item_article_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp10"
                 android:ellipsize="end"
                 android:lineSpacingExtra="@dimen/dp2"
                 android:lineSpacingMultiplier="1.2"
@@ -35,16 +34,38 @@
                 android:textColor="@color/text_title_color"
                 android:text="中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的" />
 
-            <TextView
-                android:id="@+id/ll_item_article_time"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/article"
-                android:drawablePadding="@dimen/dp6"
-                android:lines="1"
-                android:textColor="@color/gray"
-                android:text="56分钟前"
-                android:textSize="@dimen/sp12"/>
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/dp10">
+                <TextView
+                    android:id="@+id/ll_item_article_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dp6"
+                    android:lines="1"
+                    android:textColor="@color/gray"
+                    android:text="56分钟前"
+                    android:textSize="@dimen/sp14"/>
+
+                <TextView
+                    android:id="@+id/tv_homepage_article_new"
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16"
+                    android:gravity="center_horizontal"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingTop="1dp"
+                    android:layout_marginLeft="@dimen/dp6"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="新"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp10"
+                    android:background="@drawable/frame_red_new"/>
+
+            </RelativeLayout>
         </LinearLayout>
 
         <!--<ImageView-->

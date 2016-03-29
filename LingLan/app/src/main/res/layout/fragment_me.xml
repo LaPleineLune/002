@@ -72,23 +72,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp0"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
                         android:text="瓦力"
                         android:textColor="@color/text_title_color"
                         android:textSize="@dimen/sp20" />
 
                     <LinearLayout
+                        android:id="@+id/ll_familymember"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp0"
                         android:layout_weight="1"
-                        android:layout_marginTop="@dimen/dp16"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/dp22"
+                            android:paddingTop="@dimen/dp16"
                             android:text="亲情会员"
                             android:textColor="@color/carminum"
                             android:textSize="@dimen/sp16" />
@@ -96,8 +100,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/dp16"
                             android:text="认证医生"
                             android:textColor="@color/carminum"
+                            android:visibility="gone"
                             android:textSize="@dimen/sp16" />
 
                     </LinearLayout>
@@ -428,14 +434,16 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px1"
-                    android:background="@color/gainsboro" />
+                    android:background="@color/gainsboro"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:id="@+id/share"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10">
+                    android:layout_marginRight="@dimen/dp10"
+                    android:visibility="gone" >
 
                     <TextView
                         android:id="@+id/share_label"

@@ -14,8 +14,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- <uses-permission android:name="android.permission.CALL_PHONE"/> -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
@@ -44,6 +46,115 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <!-- 推送配置开始 -->
+        <receiver
+            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
+            android:exported="false" >
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.SystemReceiver"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.MessageReceiver"
+            android:exported="false"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.ElectionReceiver"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
+                <category android:name="umeng" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.RegistrationReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.umeng.message.example.intent.action.COMMAND" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.umeng.message.UmengMessageBootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.umeng.message.UmengService"
+            android:label="PushService"
+            android:exported="true"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="com.umeng.message.example.intent.action.START" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.example.intent.action.COCKROACH" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.PING_V4" />
+                <category android:name="umeng" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.umeng.message.UmengIntentService"
+            android:process=":push" />
+
+        <service
+            android:name="com.umeng.message.UmengMessageIntentReceiverService"
+            android:process=":push"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="org.android.agoo.client.MessageReceiverService" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.android.agoo.client.ElectionReceiverService" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.umeng.messge.registercallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.unregistercallback.action"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.handler.action"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.autoupdate.handler.action"/>
+            </intent-filter>
+        </service>
+        <service android:name="com.umeng.message.UmengDownloadResourceService" />
+        <!-- 推送配置结束 -->
+
+        <!-- 友盟自动更新配置 start -->
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <!-- 友盟自动更新配置 end -->
+
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -55,12 +166,28 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="56af2c49e0f55a2863000a1c" />
+
+        <!--
+        UMENG_CHANNEL：用来标注应用推广渠道，不同渠道可以上传不同更新包，
+        您可以使用20位以内的英文和数字为渠道定名，替换value中的"Channel ID"。
+        如果不改动，将代表默认渠道。（特别提示：如果需要使用友盟自动更新多渠道更新，
+        必须先集成友盟统计SDK）
+        -->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Umeng" />
+            android:value="Umeng" >
+        </meta-data>
+        <!--<meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="BAIDU" />-->
+
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="y81gpp9lhmqob7yvw4coexr91esviwwu" >
+        </meta-data>
         <!-- 友盟 end -->
 
-        <activity android:name=".StartActivity" >
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -84,10 +211,15 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
+            android:name=".me.ClipPictureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
             android:name=".me.ChangeNameActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+
         <activity
             android:name=".me.FollowedActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
@@ -125,10 +257,6 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name=".me.AuthenticationActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
-        <activity
             android:name=".me.DescriptionActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
@@ -136,44 +264,36 @@
             android:name=".me.CityActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        <activity
-            android:name=".homepage.AllArticleActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
-        //文章分类排序页面
-        <activity
-            android:name=".homepage.AllArticleClassifyActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
 
-        <!-- 全部专题页 -->
-        <activity
-            android:name=".homepage.AllSubjectActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
-
-        <!-- 全部专题测试页 -->
-        <activity
-            android:name=".homepage.AllSubjectTestActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
-        </activity>
         <activity
             android:name=".homepage.ArticleDetailsActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        <activity android:name=".homepage.SubjectDetailsActivity" >
+        <activity
+            android:name=".homepage.ArticleUrlDetailsActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity android:name=".homepage.AuthorDetailsActivity" >
+        </activity>
+
+        <activity android:name=".homepage.SubjectDetailsActivity" >
         </activity>
 
         <receiver android:name="com.android.linglan.broadcast.SMSBroadcastReceiver" />
 
         <activity
             android:name=".homepage.SearchActivity"
-            android:label="@string/title_activity_search"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity android:name=".homepage.SearchMoreActivity" >
+        </activity>
+        <activity
+            android:name=".me.CountryActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".me.ProvinceActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
     </application>
 

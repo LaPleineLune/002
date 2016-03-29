@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp16"
+    android:paddingRight="@dimen/dp16">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp16">
+
+        <ImageView
+            android:id="@+id/img_item_article_delete"
+            android:layout_width="@dimen/dp18"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dp16"
+            android:src="@drawable/delete"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_item_article"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ll_item_article_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lineSpacingExtra="@dimen/dp2"
+                android:maxLines="2"
+                android:text="中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的"
+                android:textColor="@color/text_title_color" />
+
+            <TextView
+                android:id="@+id/ll_item_article_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="56分钟前"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/ll_item_article_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:lines="1"
+                android:text="作者" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_item_article_image"
+            android:layout_width="@dimen/dp84"
+            android:layout_height="@dimen/dp68"
+            android:src="@drawable/default_image" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginTop="@dimen/dp16"
+        android:background="#cccccc" />
+</LinearLayout>

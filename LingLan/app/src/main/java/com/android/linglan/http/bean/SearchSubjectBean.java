@@ -13,9 +13,12 @@ public class SearchSubjectBean {
     public static class SubjectClassifyListBean implements Serializable {
         public String specialid;// 分类ID（必须）
         public String specialname;// 分类名称（必须）
+        public String content_title;// 最新文章标题
         public String description;// 描述
-        public String photo;// 图片
+        public String logo;// logo（小图）
+        public String photo;// photo(详情)
         public String orderid;// 分类排序
+        public String updatetime;// 更新时间
         public String addtime;// 发布时间
 
         @Override

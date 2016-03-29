@@ -60,7 +60,7 @@ public class TermsOfServiceActivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,TermsOfServiceActivity.this)){
                     return;
                 }
                 try {

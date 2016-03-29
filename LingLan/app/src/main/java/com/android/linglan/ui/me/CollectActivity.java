@@ -9,12 +9,7 @@ import android.widget.TextView;
 import com.android.linglan.base.BaseActivity;
 import com.android.linglan.fragment.CollectArticleFragment;
 import com.android.linglan.fragment.CollectSubjectFragment;
-import com.android.linglan.fragment.CollectTestFragment;
-import com.android.linglan.http.NetApi;
-import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
-import com.android.linglan.utils.HttpCodeJugementUtil;
-import com.android.linglan.utils.LogUtil;
 
 /**
  * Created by LeeMy on 2016/1/7 0007.
@@ -28,7 +23,6 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
     private FragmentManager fragmentManager;
     private CollectArticleFragment collectArticleFragment;
     private CollectSubjectFragment collectSubjectFragment;
-    private CollectTestFragment collectTestFragment;
 
     @Override
     protected void setView() {
@@ -78,9 +72,6 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
         if (collectSubjectFragment != null) {
             transaction.hide(collectSubjectFragment);
         }
-        if (collectTestFragment != null) {
-            transaction.hide(collectTestFragment);
-        }
     }
 
     private void setTabSelection(int index) {
@@ -104,15 +95,6 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
                     transaction.add(R.id.collect_content, collectSubjectFragment,"tag2");
                 } else {
                     transaction.show(collectSubjectFragment);
-                }
-                break;
-            case 2:
-                collect_test.setTextColor(getResources().getColor(R.color.text_color_fragment_title));
-                if (collectTestFragment == null) {
-                    collectTestFragment = new CollectTestFragment();
-                    transaction.add(R.id.collect_content, collectTestFragment,"tag3");
-                } else {
-                    transaction.show(collectTestFragment);
                 }
                 break;
         }
@@ -173,42 +155,5 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
             default:
                 break;
         }
-    }
-    //取消专题收藏
-    private void getSubjectCancleCollect(String specialid){
-        NetApi.getSubjectCancleCollect(new PasserbyClient.HttpCallback() {
-            @Override
-            public void onSuccess(String result) {
-                LogUtil.e("result=" + result);
-
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(String message) {
-
-            }
-        }, specialid);
-    }
-
-    //取消文章收藏
-    private void getArticleCancleCollect(String articleid){
-        NetApi.getArticleCancleCollect(new PasserbyClient.HttpCallback() {
-            @Override
-            public void onSuccess(String result) {
-                LogUtil.e("result=" + result);
-
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(String message) {
-
-            }
-        }, articleid);
     }
 }

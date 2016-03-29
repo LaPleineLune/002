@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.android.linglan.constants.Constants;
+import com.android.linglan.http.Constants;
 import com.android.linglan.ui.R;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -41,11 +41,17 @@ public class ShareUtil {
     /**
      * 根据不同的平台设置不同的分享内容
      */
-    public static void setShareContent(Context context){
-        String shareTitle = "分享文章的标题";//分享文章的标题
-        String shareUrl = "http://zhongyishuyou.com";//分享文章的地址
-        String imgUrl = "null";//封面图片的url地址
-        String shareContent = "summary";//新闻摘要
+    public static void setShareContent(Context context, String articleORsubject, String id, String shareTitle, String imgUrl, String shareContent){// articleORsubject: 0 文章  4专题
+        String shareUrl = null;
+        if (Constants.ARTICLE.equals(articleORsubject)) {
+            shareUrl = Constants.SERVER + "/Api/Open/article?articleid=" + id;
+        } else if (Constants.SUBJECT.equals(articleORsubject)) {
+            shareUrl = Constants.SERVER + "/Api/Open/special?specialid=" + id;
+        }
+//        String shareTitle = "分享文章的标题";//分享文章的标题
+//        String shareUrl = "http://zhongyishuyou.com";//分享文章的地址
+//        String imgUrl = "null";//封面图片的url地址
+//        String shareContent = "summary";//新闻摘要
         UMImage shareImg;
         if (TextUtils.isEmpty(shareTitle)) {
 
@@ -59,7 +65,7 @@ public class ShareUtil {
         if(!TextUtils.isEmpty(imgUrl)){
             shareImg = new UMImage(context, imgUrl);
         }else{
-            shareImg = new UMImage(context, R.mipmap.ic_launcher);//默认的图片
+            shareImg = new UMImage(context, R.drawable.ic_launcher);//默认的图片
         }
         // 配置SSO设置免登陆
 //        mController.getConfig().setSsoHandler(new SinaSsoHandler());

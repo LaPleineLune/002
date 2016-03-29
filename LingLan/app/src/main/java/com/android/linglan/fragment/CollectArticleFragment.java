@@ -88,6 +88,7 @@ public class CollectArticleFragment extends BaseFragment implements View.OnClick
 //        ToastUtil.show(getActivity(), "点击第" + position + "个", 1);
         intent.setClass(getActivity(), ArticleDetailsActivity.class);
         intent.putExtra("articleId", articleClassifyList.get(position).articleid);
+        intent.putExtra("photo", articleClassifyList.get(position).photo);
         startActivity(intent);
     }
 
@@ -264,7 +265,7 @@ public class CollectArticleFragment extends BaseFragment implements View.OnClick
             public void onSuccess(String result) {
                 LogUtil.e("getCollectArticle" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,getActivity())){
                     return;
                 }
 

@@ -1,18 +1,19 @@
 package com.android.linglan.ui.homepage;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ScrollView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.linglan.adapter.AuthorArticleAdapter;
+import com.android.linglan.adapter.SubjectDetailsAdapter;
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.http.Constants;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.SubjectDetails;
@@ -25,8 +26,13 @@ import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ShareUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;
-import com.android.linglan.widget.ListViewForScrollView;
+import com.android.linglan.widget.SyLinearLayoutManager;
 import com.android.linglan.widget.UpdateDialog;
+import com.chanven.lib.cptr.PtrClassicFrameLayout;
+import com.chanven.lib.cptr.PtrDefaultHandler;
+import com.chanven.lib.cptr.PtrFrameLayout;
+import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
+import com.chanven.lib.cptr.recyclerview.RecyclerAdapterWithHF;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,29 +40,45 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class SubjectDetailsActivity extends BaseActivity implements View.OnClickListener {
-    protected static final int REQUEST_LIKE = 1;
-    protected static final int REQUEST_COLLECT = 2;
-    private ListViewForScrollView lv_subject_details;
-    private ScrollView scrollview_subject_details;
-    private TextView subject_description;
+    protected static final int REQUEST_FAILURE = 0;
+    protected static final int REQUEST_SUCCESS = 1;
+    protected static final int REQUEST_LIKE = 2;
+    protected static final int REQUEST_COLLECT = 3;
+    private String specialname = "";
+    private String logo;// 小图
+    private RecyclerView rec_subject_details;
+    private RelativeLayout rl_subject_details;
+    private LinearLayout ll_no_network;
     private TextView subject_details_note;
     private TextView subject_details_like;
     private TextView subject_details_collect;
     private TextView subject_details_share;
-    private AuthorArticleAdapter adapter;
     private Intent intent;
     private String specialid;
     private ArrayList<SubjectDetails.SubjectData> subjectData;
     private SubjectDetails subjectDetails;
-    private String isLike = "1";
-    private String isCollect = "1";
+    private String isLike = "1";// 原：1
+    private String isCollect = "1";// 原：1
     private UpdateDialog exitLoginDialog;
+    private SubjectDetailsAdapter subjectDetailsAdapter;
+    private PtrClassicFrameLayout recycler_view_subject_details;
+    private RecyclerAdapterWithHF mAdapter;
+    private int page;
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            ArrayList<SubjectDetails.SubjectData> subjectData = (ArrayList<SubjectDetails.SubjectData>) msg.getData().getSerializable("data");
             switch (msg.what) {
+                case REQUEST_SUCCESS:
+                    rl_subject_details.setVisibility(View.VISIBLE);
+                    ll_no_network.setVisibility(View.GONE);
+                    break;
+                case REQUEST_FAILURE:
+                    rl_subject_details.setVisibility(View.GONE);
+                    ll_no_network.setVisibility(View.VISIBLE);
+                    break;
                 case REQUEST_LIKE:
                     if (isLike.equals("0")) {
                         subject_details_like.setTextColor(getResources().getColor(R.color.gray_orange));
@@ -64,12 +86,14 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
                         likeTopDrawable.setBounds(0, 0, likeTopDrawable.getMinimumWidth(), likeTopDrawable.getMinimumHeight());
                         subject_details_like.setCompoundDrawables(null, likeTopDrawable, null, null);
                         isLike = "1";
-                    } else {
+                    } else if (isLike.equals("1")) {
                         subject_details_like.setTextColor(getResources().getColor(R.color.french_grey));
                         Drawable likeTopDrawable = getResources().getDrawable(R.drawable.article_write_like);
                         likeTopDrawable.setBounds(0, 0, likeTopDrawable.getMinimumWidth(), likeTopDrawable.getMinimumHeight());
                         subject_details_like.setCompoundDrawables(null, likeTopDrawable, null, null);
                         isLike = "0";
+//                    } else {
+//                        ToastUtil.show("没有数据，不支持点赞");
                     }
 
                     break;
@@ -80,17 +104,27 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
                         collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
                         subject_details_collect.setCompoundDrawables(null, collectTopDrawable, null, null);
                         isCollect = "1";
-                    } else {
+                    } else if (isCollect.equals("1")) {
                         subject_details_collect.setTextColor(getResources().getColor(R.color.french_grey));
                         Drawable collectTopDrawable = getResources().getDrawable(R.drawable.article_write_collect);
                         collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
                         subject_details_collect.setCompoundDrawables(null, collectTopDrawable, null, null);
                         isCollect = "0";
+//                    } else {
+//                        ToastUtil.show("没有数据，不支持收藏");
                     }
                     break;
             }
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        specialid = getIntent().getStringExtra("specialid");
+        LogUtil.d("specialid=" + specialid);
+        getDetailsSubject();
+    }
 
     @Override
     protected void setView() {
@@ -99,9 +133,10 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initView() {
-        lv_subject_details = (ListViewForScrollView) findViewById(R.id.lv_subject_details);
-        scrollview_subject_details = (ScrollView) findViewById(R.id.scrollview_subject_details);
-        subject_description = (TextView) findViewById(R.id.subject_description);
+        recycler_view_subject_details = (PtrClassicFrameLayout) findViewById(R.id.recycler_view_subject_details);
+        rec_subject_details = (RecyclerView) findViewById(R.id.rec_subject_details);
+        ll_no_network = (LinearLayout) findViewById(R.id.ll_no_network);
+        rl_subject_details = (RelativeLayout) findViewById(R.id.rl_subject_details);
         subject_details_note = (TextView) findViewById(R.id.subject_details_note);
         subject_details_like = (TextView) findViewById(R.id.subject_details_like);
         subject_details_collect = (TextView) findViewById(R.id.subject_details_collect);
@@ -111,15 +146,19 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initData() {
         setTitle("专题详情", "");
-        specialid = getIntent().getStringExtra("specialid");
-        subject_description.setText(getIntent().getStringExtra("description"));
-//        ToastUtil.show(specialid );
-        getDetailsSubject();
-        scrollview_subject_details.smoothScrollTo(0, 0);
-        lv_subject_details.setSelector(new ColorDrawable(Color.TRANSPARENT));// 设置item选中色
-        adapter = new AuthorArticleAdapter(SubjectDetailsActivity.this);
-        lv_subject_details.setAdapter(adapter);
         intent = new Intent();
+        specialname = getIntent().getStringExtra("specialname");
+        logo = getIntent().getStringExtra("logo");
+
+        rec_subject_details.setLayoutManager(new SyLinearLayoutManager(this));
+        rec_subject_details.setHasFixedSize(true);
+        String description = "";
+        if (!getIntent().getStringExtra("description").isEmpty()) {
+            description = getIntent().getStringExtra("description");
+        }
+        subjectDetailsAdapter = new SubjectDetailsAdapter(this, description, getIntent().getStringExtra("photo"));
+        mAdapter = new RecyclerAdapterWithHF(subjectDetailsAdapter);
+        rec_subject_details.setAdapter(mAdapter);
 
         //设置打印友盟log日志
         com.umeng.socialize.utils.Log.LOG = true;
@@ -127,8 +166,9 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
         ShareUtil.mController.getConfig().closeToast();
         // 配置需要分享的相关平台
         ShareUtil.configPlatforms(SubjectDetailsActivity.this);
-        // 设置分享的内容
-        ShareUtil.setShareContent(this);
+        // 设置分享的内容String articleORsubject, String id, String shareTitle, String imgUrl, String shareContent
+//        ShareUtil.setShareContent(this, Constants.SUBJECT, specialid, specialname, logo, getIntent().getStringExtra("description"));
+        ShareUtil.setShareContent(this, Constants.SUBJECT, getIntent().getStringExtra("specialid"), specialname, logo, getIntent().getStringExtra("description"));
     }
 
     @Override
@@ -137,13 +177,31 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
         subject_details_like.setOnClickListener(this);
         subject_details_collect.setOnClickListener(this);
         subject_details_share.setOnClickListener(this);
-        lv_subject_details.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ll_no_network.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                ToastUtil.show(getActivity(), "点击第" + position + "个", 1);
-                intent.putExtra("articleId", subjectData.get(position).contentid);
-                intent.setClass(SubjectDetailsActivity.this, ArticleDetailsActivity.class);
-                startActivity(intent);
+            public void onClick(View v) {
+                onResume();
+            }
+        });
+
+        //下拉刷新
+        recycler_view_subject_details.setPtrHandler(new PtrDefaultHandler() {
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+            page = 1;
+            getDetailsSubject();
+            }
+        });
+
+        //上拉刷新
+        recycler_view_subject_details.setOnLoadMoreListener(new OnLoadMoreListener() {
+
+            @Override
+            public void loadMore() {
+            page++;
+            getDetailsSubject();
+            recycler_view_subject_details.loadMoreComplete(true);
             }
         });
     }
@@ -159,18 +217,26 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.subject_details_like:
 //                ToastUtil.show("我是点赞");
-                if (SharedPreferencesUtil.getString("token", null) != null) {
-                    getDetailsSubjectLike();
+                if (!isLike.equals("")) {
+                    if (SharedPreferencesUtil.getString("token", null) != null) {
+                        getDetailsSubjectLike();
+                    } else {
+                        showExitDialog();
+                    }
                 } else {
-                    showExitDialog();
+                    ToastUtil.show("暂无数据，不支持点赞");
                 }
                 break;
             case R.id.subject_details_collect:
 //                ToastUtil.show("我是收藏");
-                if (SharedPreferencesUtil.getString("token", null) != null) {
-                    getDetailsSubjectCollect();
+                if (!isCollect.equals("")) {
+                    if (SharedPreferencesUtil.getString("token", null) != null) {
+                        getDetailsSubjectCollect();
+                    } else {
+                        showExitDialog();
+                    }
                 } else {
-                    showExitDialog();
+                    ToastUtil.show("暂无数据，不支持收藏");
                 }
                 break;
             case R.id.subject_details_share:
@@ -183,22 +249,14 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void showExitDialog() {
-        exitLoginDialog = new UpdateDialog(this, "确定登录后查看更多精彩内容吗", new View.OnClickListener() {
+        exitLoginDialog = new UpdateDialog(this, "登录后可体验更多功能", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SharedPreferencesUtil.removeValue("token");
-//                SharedPreferencesUtil.removeValue("phone");
-//                SharedPreferencesUtil.removeValue("username");
-//                logout(SHARE_MEDIA.SINA);
-//                logout(SHARE_MEDIA.QQ);
-//                logout(SHARE_MEDIA.WEIXIN);
-//                AuthenticationActivity.show(SettingActivity.this);
                 startActivity(new Intent(SubjectDetailsActivity.this, RegisterActivity.class));
                 exitLoginDialog.dismiss();
-//                finish();
             }
         });
-        exitLoginDialog.setTitle("登录后更精彩");
+        exitLoginDialog.setTitle("提示");
         exitLoginDialog.setCancelText("我先看看");
         exitLoginDialog.setEnterText("马上登录");
         exitLoginDialog.show();
@@ -212,35 +270,39 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(String result) {
                 LogUtil.e("getDetailsSubject=" + result);
-
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                recycler_view_subject_details.refreshComplete();
+                recycler_view_subject_details.setLoadMoreEnable(true);
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result, SubjectDetailsActivity.this)){
+                    isLike = "";
+                    isCollect = "";
+                    recycler_view_subject_details.loadMoreComplete(false);
                     return;
                 }
                 subjectDetails = JsonUtil.json2Bean(result, SubjectDetails.class);
-//                subjectData = new ArrayList<SubjectDetails.SubjectData>();
+
                 isLike = subjectDetails.favouriscancel;
                 handler.sendEmptyMessage(REQUEST_LIKE);
                 isCollect = subjectDetails.collectiscancel;
                 handler.sendEmptyMessage(REQUEST_COLLECT);
-//                if (subjectDetails.favouriscancel.equals("1")) {
-//                    handler.sendEmptyMessage(REQUEST_LIKE);
-//                }
-//                if (subjectDetails.collectiscancel.equals("1")) {
-//                    handler.sendEmptyMessage(REQUEST_COLLECT);
-//                }
 
                 subjectData = subjectDetails.data;
-                adapter.upDateAdapter(subjectData);
-                for (SubjectDetails.SubjectData data : subjectData) {
-                    LogUtil.e(data.toString());
-                }
-//                LogUtil.e("第一次" + subjectData.toString());
+
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", subjectData);
+                message.setData(bundle);// bundle传值，耗时，效率低
+                handler.sendMessage(message);// 发送message信息
+                message.what = REQUEST_SUCCESS;// 标志是哪个线程传数据
+
+                subjectDetailsAdapter.upDateAdapter(subjectData);
+
             }
 
             @Override
             public void onFailure(String message) {
 //                LogUtil.e(message);
-//                handler.sendEmptyMessage(REQUEST_FAIL);
+                recycler_view_subject_details.refreshComplete();
+                handler.sendEmptyMessage(REQUEST_FAILURE);
             }
         }, specialid);
     }
@@ -254,7 +316,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
             public void onSuccess(String result) {
                 LogUtil.e("专题点赞" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result, SubjectDetailsActivity.this)){
                     return;
                 }
 
@@ -290,7 +352,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
             public void onSuccess(String result) {
                 LogUtil.e("专题收藏" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result, SubjectDetailsActivity.this)){
                     return;
                 }
                 try {

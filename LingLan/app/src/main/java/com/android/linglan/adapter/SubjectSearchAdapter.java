@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.linglan.http.bean.AllSearchListBean;
 import com.android.linglan.http.bean.SearchSubjectBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.homepage.SubjectDetailsActivity;
+import com.android.linglan.utils.ImageUtil;
 
 import java.util.ArrayList;
 
@@ -47,10 +47,10 @@ public class SubjectSearchAdapter extends
     public int getItemCount() {
         if(RecommendSubjects == null){
             return 0;
-        }else if(RecommendSubjects.size() < 3){
+        }else if(RecommendSubjects.size() < 2){
             return RecommendSubjects.size();
         }else{
-            return 3;
+            return 1;
         }
 //        return RecommendSubjects.size();
     }
@@ -82,9 +82,14 @@ public class SubjectSearchAdapter extends
         public void bindData(final SearchSubjectBean.SubjectClassifyListBean recommendSubjects) {
 //            this.recommendSubjects = recommendSubjects;
 //            tv_subject_title.setText(recommendSubjects.specialname);
+            try {
+                ImageUtil.loadImageAsync(logo, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, recommendSubjects.logo, null);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             title.setText(recommendSubjects.specialname);
-            description.setText(recommendSubjects.description);
-            date.setText(recommendSubjects.addtime);
+            description.setText(recommendSubjects.content_title);
+            date.setText(recommendSubjects.updatetime);
 
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,6 +97,10 @@ public class SubjectSearchAdapter extends
                     Intent intent = new Intent(context,
                             SubjectDetailsActivity.class);
                     intent.putExtra("specialid", recommendSubjects.specialid);
+                    intent.putExtra("specialname", recommendSubjects.specialname);
+                    intent.putExtra("photo", recommendSubjects.photo);
+                    intent.putExtra("logo", recommendSubjects.logo);
+                    intent.putExtra("description", recommendSubjects.description);
                     context.startActivity(intent);
                 }
             });

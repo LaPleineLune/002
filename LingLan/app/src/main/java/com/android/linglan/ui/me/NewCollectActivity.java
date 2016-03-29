@@ -2,17 +2,14 @@ package com.android.linglan.ui.me;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.android.linglan.adapter.RecycleHomeRecommendAdapter;
 import com.android.linglan.base.BaseActivity;
-import com.android.linglan.fragment.CollectArticleFragment;
-import com.android.linglan.fragment.CollectSubjectFragment;
-import com.android.linglan.fragment.CollectTestFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.HomepageRecommendBean;
@@ -36,11 +33,42 @@ public class NewCollectActivity extends BaseActivity implements View.OnClickList
     private RecycleHomeRecommendAdapter adapter;
     private View rootView;
     private RecyclerView lv_homepage_recommend;
+    private LinearLayout ll_no_network;
     public ArrayList<HomepageRecommendBean.HomepageRecommendBeanData> data;
     private Intent intent;
     private int page;//页码
 
+    protected static final int REQUEST_FAILURE = 0;
+    protected static final int REQUEST_SUCCESS = 1;
+
     public boolean edit = false;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case REQUEST_FAILURE:
+                    //原页面GONE掉，提示网络不好的页面出现
+                    refresh_more_every.setVisibility(View.GONE);
+                    ll_no_network.setVisibility(View.VISIBLE);
+
+                    break;
+                case REQUEST_SUCCESS:
+                    //原页面GONE掉，提示网络不好的页面出现
+                    refresh_more_every.setVisibility(View.VISIBLE);
+                    ll_no_network.setVisibility(View.GONE);
+                    break;
+            }
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        page = 1;
+        getHomeRecommend(page);
+    }
 
     @Override
     protected void setView() {
@@ -49,7 +77,8 @@ public class NewCollectActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void initView() {
-        refresh_more_every = (CustomPullToRefreshRecyclerView)findViewById(R.id.refresh_more_every);
+        refresh_more_every = (CustomPullToRefreshRecyclerView) findViewById(R.id.refresh_more_every);
+        ll_no_network = (LinearLayout) findViewById(R.id.ll_no_network);
         RecycleCollection = refresh_more_every.getRefreshableView();
         RecycleCollection.setLayoutManager(new SyLinearLayoutManager(this));
         RecycleCollection.setHasFixedSize(true);
@@ -72,6 +101,12 @@ public class NewCollectActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void setListener() {
         right.setOnClickListener(this);
+        ll_no_network.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
+            }
+        });
         refresh_more_every.setRefreshCallback(new CustomPullToRefreshRecyclerView.RefreshCallback() {
             //上拉
             @Override
@@ -83,8 +118,10 @@ public class NewCollectActivity extends BaseActivity implements View.OnClickList
             //下拉
             @Override
             public void onPullUpToLoadMore() {
-                page++;
+//                page++;
+                page = 1;
                 getHomeRecommend(page);
+                ToastUtil.show("没有更多数据了");
             }
         });
 
@@ -100,7 +137,7 @@ public class NewCollectActivity extends BaseActivity implements View.OnClickList
                 refresh_more_every.onRefreshComplete();
                 LogUtil.d("getHomeRecommend=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, NewCollectActivity.this)) {
                     return;
                 }
 
@@ -117,15 +154,17 @@ public class NewCollectActivity extends BaseActivity implements View.OnClickList
                 }
 
                 if (data != null && data.size() != 0) {
-                    adapter.updateAdapter(data,edit);
+                    adapter.updateAdapter(data, edit);
                 } else {
                     refresh_more_every.setVisibility(View.GONE);
                 }
+                handler.sendEmptyMessage(REQUEST_SUCCESS);
             }
 
             @Override
             public void onFailure(String message) {
                 refresh_more_every.onRefreshComplete();
+                handler.sendEmptyMessage(REQUEST_FAILURE);
             }
         }, page + "");
     }
@@ -141,7 +180,7 @@ public class NewCollectActivity extends BaseActivity implements View.OnClickList
                     collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
                     right.setCompoundDrawables(collectTopDrawable, null, null, null);
                     edit = true;
-                    adapter.updateAdapter(data,edit);
+                    adapter.updateAdapter(data, edit);
 //                    if (collectArticleFragment != null) {
 //                        collectArticleFragment.mSetVisibility(true);
 //                    }
@@ -156,7 +195,7 @@ public class NewCollectActivity extends BaseActivity implements View.OnClickList
                     collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
                     right.setCompoundDrawables(collectTopDrawable, null, null, null);
                     edit = false;
-                    adapter.updateAdapter(data,edit);
+                    adapter.updateAdapter(data, edit);
 //                    if (collectArticleFragment != null) {
 //                        collectArticleFragment.mSetVisibility(false);
 //                    }

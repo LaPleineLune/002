@@ -2,8 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:layout_margin="@dimen/dp16" >
+    android:layout_marginLeft="@dimen/dp16"
+    android:layout_marginRight="@dimen/dp16"
+    android:layout_marginBottom="@dimen/dp2"
+    android:layout_marginTop="@dimen/dp2"
+    android:paddingBottom="@dimen/dp6"
+    android:paddingTop="@dimen/dp6"
+    android:gravity="center" >
 
     <ImageView
         android:padding="@dimen/dp4"
@@ -11,16 +16,17 @@
         android:layout_width="@dimen/dp22"
         android:layout_height="@dimen/dp22"
         android:src="@drawable/hot_search"
-        android:layout_marginRight="@dimen/dp6"
-        android:background="@drawable/dialog_login_edit_bg"/>
+        android:paddingLeft="10dp"
+        android:layout_marginRight="@dimen/dp2"
+        />
 
     <TextView
         android:id="@+id/tv_hot_search_context"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingRight="4dp"
         android:textColor="#666666"
-        android:text="Helloworld">
-
-    </TextView>
+        android:text="Helloworld"
+        />
 
 </LinearLayout>

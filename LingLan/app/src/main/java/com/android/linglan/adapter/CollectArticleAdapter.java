@@ -4,16 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.linglan.http.bean.AllArticleClassifyListBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.utils.TimeStampConversionUtil;
 import com.android.linglan.utils.ToastUtil;
-import com.android.linglan.widget.swipe.SwipeLayout;
 
 import java.util.ArrayList;
 
@@ -34,7 +31,7 @@ public class CollectArticleAdapter extends BaseAdapter {
     @Override
     public int getCount() {
 //        return this.draw!=null? this.draw.length: 0 ;
-        return this.articleClassifyList != null ? this.articleClassifyList.size() : 0 ;
+        return this.articleClassifyList != null ? this.articleClassifyList.size() : 0;
     }
 
     @Override
@@ -51,7 +48,7 @@ public class CollectArticleAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.item_collect_article, null);
             viewHolder = new ViewHolder();
             viewHolder.delete = (ImageView) convertView.findViewById(R.id.img_item_article_delete);
@@ -94,7 +91,7 @@ public class CollectArticleAdapter extends BaseAdapter {
 
     }
 
-    public void updateAdapter(boolean edit, ArrayList<AllArticleClassifyListBean.ArticleClassifyListBean> articleClassifyList){
+    public void updateAdapter(boolean edit, ArrayList<AllArticleClassifyListBean.ArticleClassifyListBean> articleClassifyList) {
         this.edit = edit;
         this.articleClassifyList = articleClassifyList;
         this.notifyDataSetChanged();

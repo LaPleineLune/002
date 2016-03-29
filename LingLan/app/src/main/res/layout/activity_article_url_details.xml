@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/page_head"
+        layout="@layout/page_head" />
+
+    <WebView
+        android:id="@+id/web_article_details_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/page_head">
+    </WebView>
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp10"-->
+        <!--android:layout_above="@id/bottom"-->
+        <!--android:background="@drawable/line_horizontal_gray" />-->
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/bottom"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp50"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="#ffffff">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/article_write_note"-->
+            <!--android:layout_width="@dimen/dp0"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:drawableTop="@drawable/article_write_note"-->
+            <!--android:background="@drawable/bg_bottom_textview"-->
+            <!--android:paddingTop="@dimen/dp6"-->
+            <!--android:gravity="center"-->
+            <!--android:text="写笔记"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:textColor="@color/french_grey"-->
+            <!--android:visibility="gone"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/article_write_like"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:drawableTop="@drawable/article_write_like"-->
+            <!--android:background="@drawable/bg_bottom_textview"-->
+            <!--android:paddingTop="@dimen/dp6"-->
+            <!--android:gravity="center"-->
+            <!--android:text="点赞"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:textColor="@color/french_grey"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/article_write_collect"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:drawableTop="@drawable/article_write_collect"-->
+            <!--android:background="@drawable/bg_bottom_textview"-->
+            <!--android:paddingTop="@dimen/dp6"-->
+            <!--android:gravity="center"-->
+            <!--android:text="收藏"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:textColor="@color/french_grey"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/article_write_share"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:drawableTop="@drawable/article_write_share"-->
+            <!--android:background="@drawable/bg_bottom_textview"-->
+            <!--android:paddingTop="@dimen/dp6"-->
+            <!--android:gravity="center"-->
+            <!--android:text="分享"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:textColor="@color/french_grey"/>-->
+    <!--</LinearLayout>-->
+</RelativeLayout>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="E:\AndroidStudioProjects\Linglan\LingLan\PushSDK\res"/><source path="E:\AndroidStudioProjects\Linglan\LingLan\PushSDK\build\generated\res\rs\debug"/><source path="E:\AndroidStudioProjects\Linglan\LingLan\PushSDK\build\generated\res\resValues\debug"/></dataSet><dataSet config="debug"><source path="E:\AndroidStudioProjects\Linglan\LingLan\PushSDK\build-types\debug\res"/></dataSet><mergedItems/></merger>

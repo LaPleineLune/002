@@ -4,24 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.android.linglan.fragment.HomeFragment;
+import com.android.linglan.base.BaseActivity;
 import com.android.linglan.fragment.HomePageFragment;
 import com.android.linglan.fragment.MeFragment;
 import com.android.linglan.fragment.TestTabFragmentDelegate;
 import com.android.linglan.http.bean.RecommendArticles;
 import com.android.linglan.http.bean.RecommendSubjects;
+import com.android.linglan.utils.AppUpdaterUtil;
 import com.android.linglan.utils.ToastUtil;
 import com.android.linglan.widget.TestFixedTabPageIndicator;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends BaseActivity {
 
     private List<TestTabFragmentDelegate> fragmentDelegates = new ArrayList<TestTabFragmentDelegate>();
     private boolean doubleBackToExitPressedOnce;
@@ -35,10 +36,35 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_activity_main);
+        setContentView(R.layout.activity_main);
+
+        UmengUpdateAgent.update(this);
+
+//        new AppUpdaterUtil().checkToUpdate(this);
+
         initFragments();
         ArticlesData = (ArrayList<RecommendArticles.RecommendArticle>) getIntent().getSerializableExtra("ArticlesData");
         SubjectsData = (ArrayList<RecommendSubjects.RecommendSubject>) getIntent().getSerializableExtra("SubjectsData");
+    }
+
+    @Override
+    protected void setView() {
+
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void setListener() {
+
     }
 
     public ArrayList<RecommendArticles.RecommendArticle> getArticlesData() {
@@ -52,12 +78,10 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initFragments() {
-//        TestTabFragmentDelegate fragmentDelegate =
-//                new TestTabFragmentDelegate(HomeFragment.class, null, R.drawable.bottom_home_icon, R.string.first_page);
         TestTabFragmentDelegate fragmentDelegate =
                 new TestTabFragmentDelegate(HomePageFragment.class, null, R.drawable.bottom_home_icon, R.string.first_page);
         fragmentDelegates.add(fragmentDelegate);
-        fragmentDelegate = new TestTabFragmentDelegate(MeFragment.class, null, R.drawable.bottom_me_icon ,R.string.mine);
+        fragmentDelegate = new TestTabFragmentDelegate(MeFragment.class, null, R.drawable.bottom_me_icon, R.string.mine);
         fragmentDelegates.add(fragmentDelegate);
 
         adapter = new MainTabAdapter(getSupportFragmentManager());

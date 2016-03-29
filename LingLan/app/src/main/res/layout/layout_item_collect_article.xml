@@ -43,5 +43,5 @@
         android:id="@+id/iv_item_article_image"
         android:layout_width="@dimen/dp112"
         android:layout_height="@dimen/dp56"
-        android:src="@drawable/subject" />
+        android:src="@drawable/default_image" />
 </LinearLayout>

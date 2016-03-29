@@ -4,15 +4,23 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,16 +29,20 @@ import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.ProfileBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.utils.ActionSheetUtil;
 import com.android.linglan.utils.CameraUtil;
+import com.android.linglan.utils.FaceFileUtil;
+import com.android.linglan.utils.FaceImageUtil;
+import com.android.linglan.utils.FaceUIUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.ImageUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.StorageManager;
 import com.android.linglan.utils.ToastUtil;
-import com.roc.actionsheet.ActionSheet;
-import com.soundcloud.android.crop.Crop;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -53,19 +65,21 @@ public class ProfileActivity extends BaseActivity {
     private static final int REQUEST_NAME = 6;
     private static final int REQUEST_ABOUT = 7;
     private static final int REQUEST_COMPANY = 8;
+    private static final int REQUEST_PICTURE = 9;
+    private static final int REQUEST_GALLERY = 10;
+    private static final int REQUEST_CLIP_PIC_RESULT = 11;
     public static final int AVATAR_WIDTH = 120;
     public static final int AVATAR_HEIGHT = 120;
 
     private static final String ROOT_DIR = "linglan";
     private String captureAvatarPath;
 
-
     private RelativeLayout nickname_item;
     private RelativeLayout name_item;
     private RelativeLayout description_item;
     private RelativeLayout company_item;
     private ImageView avatarView;
-    private TextView nickname;
+    private TextView nickname, description, company;
     private String alias = "";
     private TextView name;
     private String userName = "";
@@ -74,8 +88,17 @@ public class ProfileActivity extends BaseActivity {
     private String about = "";
     private String companyName = "";
     private Intent intent;
-//    public ArrayList<ProfileBean.ProfileData> data;
-    public ProfileBean.ProfileData data;
+    //    public ArrayList<ProfileBean.ProfileData> data;
+    public ProfileBean.ProfileData data = null;
+
+    private PopupWindow popupWindow;
+    private View popView;
+    private RelativeLayout rl_profile;
+    private Button bt_profile_picture;
+    private Button bt_profile_gallery;
+    private Button bt_profile_cancel;
+    private File mImageFile;
+    private String mClipImagePath;
 
     private Handler handler = new Handler() {
         @Override
@@ -94,49 +117,54 @@ public class ProfileActivity extends BaseActivity {
     };
 
     private void setData(ProfileBean.ProfileData data) {
-//        if (data.get(0).alias.trim().isEmpty()) {
-        if (data.alias.trim().isEmpty()) {
+        if (!TextUtils.isEmpty(data.face)) {// !data.face.trim().isEmpty() && !data.face.trim().equals("")
+            SharedPreferencesUtil.saveString("face", data.face);// 头像
+            ImageUtil.loadImageAsync(avatarView, data.face);
+        }
+
+        if (TextUtils.isEmpty(data.alias)) {// data.alias.trim().isEmpty()
+            SharedPreferencesUtil.removeValue("alias");// 用户昵称
             alias = getString(R.string.default_setting);
         } else {
+            SharedPreferencesUtil.saveString("alias", data.alias);// 用户昵称
             alias = data.alias;
         }
         nickname.setText(alias);
 
-//        if (data.get(0).name.trim().isEmpty()) {
-        if (data.name.trim().isEmpty()) {
+        if (TextUtils.isEmpty(data.name)) {// data.name.trim().isEmpty()
             userName = getString(R.string.default_setting);
         } else {
             userName = data.name;
         }
         name.setText(userName);
 
-//        if (data.get(0).city.trim().isEmpty()) {
-        if (data.city.trim().isEmpty()) {
+        if (TextUtils.isEmpty(data.city)) {// data.city.trim().isEmpty()
             cityName = getString(R.string.default_setting);
         } else {
             cityName = data.city;
         }
         belonging.setText(cityName);
 
-        if (data.about.trim().isEmpty()) {
+        if (TextUtils.isEmpty(data.about)) {// data.about.trim().isEmpty()
             about = getString(R.string.default_setting);
         } else {
             about = data.about;
         }
-//        belonging.setText(cityName);
+        description.setText(about);
 
-        if (data.company.trim().isEmpty()) {
+        if (TextUtils.isEmpty(data.company)) {// data.company.trim().isEmpty()
             companyName = getString(R.string.default_setting);
         } else {
             companyName = data.company;
         }
-//        belonging.setText(cityName);
+        company.setText(companyName);
 
     }
 
     @Override
     protected void setView() {
         setContentView(R.layout.activity_profile);
+        popView = LayoutInflater.from(this).inflate(R.layout.popupview_profile, null);
     }
 
     @Override
@@ -149,13 +177,20 @@ public class ProfileActivity extends BaseActivity {
         avatarView = (ImageView) findViewById(R.id.avatar);
         findViewById(R.id.belonging_item).setOnClickListener(this);
         nickname = (TextView) findViewById(R.id.nickname);
+        description = (TextView) findViewById(R.id.description);
+        company = (TextView) findViewById(R.id.company);
         name = (TextView) findViewById(R.id.name);
         belonging = (TextView) findViewById(R.id.belonging);
+        rl_profile = (RelativeLayout) popView.findViewById(R.id.rl_profile);
+        bt_profile_picture = (Button) popView.findViewById(R.id.bt_profile_picture);
+        bt_profile_gallery = (Button) popView.findViewById(R.id.bt_profile_gallery);
+        bt_profile_cancel = (Button) popView.findViewById(R.id.bt_profile_cancel);
     }
 
     @Override
     protected void initData() {
         setTitle("账户信息", "");
+        popupWindow = new PopupWindow(this);
         showArea();
         getUserInfo();
     }
@@ -166,6 +201,10 @@ public class ProfileActivity extends BaseActivity {
         nickname_item.setOnClickListener(this);
         name_item.setOnClickListener(this);
         company_item.setOnClickListener(this);
+        rl_profile.setOnClickListener(this);
+        bt_profile_picture.setOnClickListener(this);
+        bt_profile_gallery.setOnClickListener(this);
+        bt_profile_cancel.setOnClickListener(this);
 
     }
 
@@ -174,21 +213,31 @@ public class ProfileActivity extends BaseActivity {
         intent = new Intent();
         switch (v.getId()) {
             case R.id.avatar_editor:
-                ActionSheetUtil.show(this, new ActionSheet.MenuItemClickListener() {
-                    @Override
-                    public void onItemClick(int itemPosition) {
-                        switch (itemPosition) {
-                            case 0:
-                                dispatchTakePictureIntent();
-                                break;
-                            case 1:
-                                if (!Crop.pickImage(ProfileActivity.this)) {
-                                    ToastUtil.show("头像上传失败!");
-                                }
-                                break;
-                        }
-                    }
-                }, getString(R.string.take_picture), getString(R.string.pick_from_gallery));
+                popupWindow.setBackgroundDrawable(new BitmapDrawable());
+                popupWindow.setWidth(getWindowManager().getDefaultDisplay().getWidth());
+                popupWindow.setHeight(getWindowManager().getDefaultDisplay().getHeight());
+//                popupWindow.setAnimationStyle(R.style.AnimationPreview);
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setBackgroundDrawable(new BitmapDrawable());
+                popupWindow.setFocusable(true);// 响应回退按钮事件
+                popupWindow.setContentView(popView);
+
+                int[] location = new int[2];
+                v.getLocationOnScreen(location);
+                popupWindow.showAtLocation(v, Gravity.BOTTOM, location[0], location[1] - popupWindow.getHeight());
+
+                break;
+            case R.id.bt_profile_picture:// 拍照
+                popupWindow.dismiss();
+                takePhoto();
+                break;
+            case R.id.bt_profile_gallery:// 图库
+                popupWindow.dismiss();
+                openPhotoLib();
+                break;
+            case R.id.rl_profile:
+            case R.id.bt_profile_cancel:
+                popupWindow.dismiss();
                 break;
             case R.id.nickname_item:
                 intent.putExtra("nameFlag", "用户昵称");
@@ -203,17 +252,18 @@ public class ProfileActivity extends BaseActivity {
                 startActivityForResult(intent, REQUEST_NAME);
                 break;
             case R.id.description_item:
-                intent.putExtra("about", (data.about.equals("") ? "" : about));
+                intent.putExtra("about", description.getText().toString().equals("未设置") ? "" : description.getText().toString());
                 intent.setClass(ProfileActivity.this, DescriptionActivity.class);
                 startActivityForResult(intent, REQUEST_ABOUT);
                 break;
             case R.id.belonging_item:
-                intent.setClass(this, CityActivity.class);
+//                intent.setClass(this, CityActivity.class);
+                intent.setClass(this, CountryActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_AREA);
                 break;
             case R.id.company_item:
                 intent.putExtra("nameFlag", "工作单位");
-                intent.putExtra("name", (data.company.equals("") ? "" : companyName));
+                intent.putExtra("name", (company.getText().toString().equals("未设置") ? "" : company.getText().toString()));
                 intent.setClass(ProfileActivity.this, ChangeNameActivity.class);
                 startActivityForResult(intent, REQUEST_COMPANY);
                 break;
@@ -229,24 +279,24 @@ public class ProfileActivity extends BaseActivity {
 
             switch (requestCode) {
                 case REQUEST_NICK_NAME:
-                    alias =  (String) data.getSerializableExtra("nickname");
+                    alias = (String) data.getSerializableExtra("nickname");
                     showArea();
                     break;
                 case REQUEST_NAME:
-                    userName =  (String) data.getSerializableExtra("userName");
+                    userName = (String) data.getSerializableExtra("userName");
                     showArea();
                     break;
                 case REQUEST_ABOUT:
                     about = (String) data.getSerializableExtra("about");
-//                    showArea();
+                    showArea();
                     break;
                 case REQUEST_CODE_AREA:
-                    cityName =  (String) data.getSerializableExtra("cityName");
+                    cityName = (String) data.getSerializableExtra("cityName");
                     showArea();
                     break;
                 case REQUEST_COMPANY:
                     companyName = (String) data.getSerializableExtra("companyName");
-//                    showArea();
+                    showArea();
                     break;
                 case REQUEST_TAKE_PHOTO:
                     if (!TextUtils.isEmpty(captureAvatarPath)) {
@@ -269,11 +319,14 @@ public class ProfileActivity extends BaseActivity {
                         }
                     }
                     break;
-                case Crop.REQUEST_PICK:
-                    beginCrop(data.getData());
+                case REQUEST_PICTURE:// 拍照
+                    takePhotoResult();
                     break;
-                case Crop.REQUEST_CROP:
-                    handleCrop(resultCode, data);
+                case REQUEST_GALLERY:// 图库
+                    picLibResult(data);
+                    break;
+                case REQUEST_CLIP_PIC_RESULT:// 剪切
+                    clipPicResult(data);
                     break;
 
                 default:
@@ -283,6 +336,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void showArea() {
+
         if (alias.trim().isEmpty()) {
             alias = getString(R.string.default_setting);
         }
@@ -293,38 +347,103 @@ public class ProfileActivity extends BaseActivity {
         }
         name.setText(userName);
 
+        if (about.trim().isEmpty()) {
+            about = getString(R.string.default_setting);
+        }
+        description.setText(about);
+
         if (cityName.trim().isEmpty()) {
             cityName = getString(R.string.default_setting);
         }
         belonging.setText(cityName);
 
-//        if (companyName.trim().isEmpty()) {
-//            companyName = getString(R.string.default_setting);
-//        }
-//        belonging.setText(companyName);
+        if (companyName.trim().isEmpty()) {
+            companyName = getString(R.string.default_setting);
+        }
+        company.setText(companyName);
     }
 
-    private void beginCrop(Uri source) {
-        Uri outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
-        new Crop(source).output(outputUri).asSquare().start(this);
-    }
 
-    private void handleCrop(int resultCode, Intent result) {
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Crop.getOutput(result));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception exception) {
-            exception.printStackTrace();
+    private void takePhotoResult() {
+        //图片是否需要旋转
+        mImageFile = new File(Environment.getExternalStorageDirectory()
+                + "/head.jpg");
+
+        int degree = FaceImageUtil.getBitmapDegree(mImageFile.getAbsolutePath());
+        if (degree != 0) {
+            Bitmap bitmap = FaceImageUtil.getScaledBitmap(mImageFile.getAbsolutePath(), FaceUIUtil.getScreenWidth(), FaceUIUtil.getScreenHeight());
+            bitmap = FaceImageUtil.rotateBitmapByDegree(bitmap, degree);
+            try {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(mImageFile));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
-        if (bitmap != null) {
-            avatarView.setImageBitmap(bitmap);
-            uploadHeadImage(bitmap);
+        Intent intent = new Intent(this,
+                ClipPictureActivity.class);
+        intent.putExtra(ClipPictureActivity.TAG_URL, mImageFile.getAbsolutePath());
+        startActivityForResult(intent, REQUEST_CLIP_PIC_RESULT);
+    }
+
+    private void picLibResult(Intent data) {
+        Uri selectedImage = data.getData();
+        String picturePath;
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(selectedImage,
+                filePathColumn, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            picturePath = cursor.getString(columnIndex);
+            cursor.close();
         } else {
-            ToastUtil.show("头像上传失败!");
+            picturePath = selectedImage.toString();
         }
+        if (picturePath.startsWith("file://")) {
+            picturePath = picturePath.substring(7);
+        }
+        Intent intent = new Intent(this, ClipPictureActivity.class);
+        intent.putExtra(ClipPictureActivity.TAG_URL, picturePath);
+        startActivityForResult(intent, REQUEST_CLIP_PIC_RESULT);
+    }
+
+    private void clipPicResult(Intent data) {
+        if (data == null) {
+            return;
+        }
+        mClipImagePath = data.getStringExtra(ClipPictureActivity.TAG_CLIPED_URL);
+        if (mClipImagePath != null) {
+            Bitmap bitmap = BitmapFactory.decodeFile(mClipImagePath);
+            if (bitmap != null) {
+                avatarView.setImageBitmap(bitmap);
+                uploadHeadImage(bitmap);
+            } else {
+                ToastUtil.show("头像上传失败!");
+            }
+        }
+    }
+
+    private void takePhoto() {
+
+        if (!verifyPermission("android.permission.CAMERA")) {
+            ToastUtil.show("摄像头打开失败，请检查设备并开放权限");
+            return;
+        }
+
+        mImageFile = FaceFileUtil.getImageFile();
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
+                "head.jpg")));
+
+        startActivityForResult(intent, REQUEST_PICTURE);
+    }
+
+    private void openPhotoLib() {
+        Intent i = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, REQUEST_GALLERY);
     }
 
     private void uploadHeadImage(Bitmap avatarBitmap) {
@@ -347,17 +466,26 @@ public class ProfileActivity extends BaseActivity {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
         NetApi.getUserPhotoUpdate(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
                 LogUtil.e("getUserPhotoUpdate????????????result=" + result);
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ProfileActivity.this)) {
                     return;
                 }
 
+                try {
+                    JSONObject json = new JSONObject(result);
+                    JSONObject data = json.getJSONObject("data");
+                    String url = data.getString("url");
+                    SharedPreferencesUtil.saveString("face", url);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
 //                SharedPreferencesUtil.saveString("avatar",
-//                            avatar.headpath.W180);
+//                        avatar.headpath.W180);
 //                        LogUtil.e("getUserPhotoUpdate????????????result=" + result);
 //                Avatar avatar = JsonUtil.json2Bean(result, Avatar.class);
 //                if (avatar != null && "1".equals(avatar.code)) {
@@ -369,7 +497,8 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onFailure(String message) {
             }
-        }, croppedFile,"jpg");
+        }, croppedFile);
+
     }
 
     private void startPhotoZoom(Uri uri) {
@@ -394,28 +523,28 @@ public class ProfileActivity extends BaseActivity {
                 && PackageManager.PERMISSION_GRANTED == checkCallingOrSelfPermission(permission);
     }
 
-    private void dispatchTakePictureIntent() {
-        if (!verifyPermission("android.permission.CAMERA")) {
-            ToastUtil.show("摄像头打开失败，请检查设备并开放权限");
-            return;
-        }
-
-        Intent captureIntent = new Intent(
-                MediaStore.ACTION_IMAGE_CAPTURE);
-        File captureFile;
-        try {
-            captureFile = createImageFile();
-            captureIntent.putExtra(
-                    MediaStore.EXTRA_OUTPUT,
-                    Uri.fromFile(captureFile));
-            captureAvatarPath = captureFile
-                    .getPath();
-            startActivityForResult(captureIntent,
-                    REQUEST_TAKE_PHOTO);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void dispatchTakePictureIntent() {
+//        if (!verifyPermission("android.permission.CAMERA")) {
+//            ToastUtil.show("摄像头打开失败，请检查设备并开放权限");
+//            return;
+//        }
+//
+//        Intent captureIntent = new Intent(
+//                MediaStore.ACTION_IMAGE_CAPTURE);
+//        File captureFile;
+//        try {
+//            captureFile = createImageFile();
+//            captureIntent.putExtra(
+//                    MediaStore.EXTRA_OUTPUT,
+//                    Uri.fromFile(captureFile));
+//            captureAvatarPath = captureFile
+//                    .getPath();
+//            startActivityForResult(captureIntent,
+//                    REQUEST_TAKE_PHOTO);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -454,12 +583,14 @@ public class ProfileActivity extends BaseActivity {
             public void onSuccess(String result) {
                 LogUtil.e("getUserInfo=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ProfileActivity.this)) {
                     return;
                 }
                 ProfileBean profileBean = JsonUtil.json2Bean(result, ProfileBean.class);
 //                if (profileBean.code.equals("0")) {
-                    data = profileBean.data;
+                data = profileBean.data;
+                String face = profileBean.data.face;
+                LogUtil.e("face =====" + face);
                 Message message = new Message();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data", data);
@@ -477,30 +608,4 @@ public class ProfileActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 用户信息修改
-     * @param alias 用户昵称(post)
-     * @param name  真实姓名(post)
-     * @param about  个人简介(post)
-     * @param city   所在城市(post)
-     * @param company 所在单位(post)
-     * @param feature 个人特征
-     */
-    private void getUserInfoEdit(String alias, String name, String about, String city, String company, String feature){
-        NetApi.getUserInfoEdit(new PasserbyClient.HttpCallback() {
-            @Override
-            public void onSuccess(String result) {
-                LogUtil.e("result=" + result);
-
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(String message) {
-
-            }
-        },alias,name,about,city,company,feature);
-    }
 }

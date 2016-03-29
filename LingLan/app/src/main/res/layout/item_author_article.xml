@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/dp10"
-    android:paddingBottom="@dimen/dp10" >
+    android:paddingTop="@dimen/dp16"
+    android:paddingBottom="@dimen/dp16" >
 
     <ImageView
         android:id="@+id/img_item_article_delete"
@@ -30,6 +30,7 @@
             android:lineSpacingExtra="@dimen/dp2"
             android:maxLines="2"
             android:ellipsize="end"
+            android:textColor="@color/text_title_color"
             android:text="中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的" />
 
         <TextView
@@ -50,7 +51,7 @@
 
     <ImageView
         android:id="@+id/iv_item_article_image"
-        android:layout_width="@dimen/dp74"
-        android:layout_height="@dimen/dp74"
-        android:src="@drawable/subject" />
+        android:layout_width="@dimen/dp84"
+        android:layout_height="@dimen/dp68"
+        android:src="@drawable/default_image" />
 </LinearLayout>

@@ -96,9 +96,10 @@
             android:id="@+id/img_home_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/dp8"
+            android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:src="@drawable/search1" />
+            android:src="@drawable/search1"
+            android:background="@drawable/bg_bottom_search"/>
 
     </LinearLayout>
 
@@ -108,11 +109,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <!--<FrameLayout
-        android:id="@+id/collect_content"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp0"
-        android:layout_weight="1" >
-    </FrameLayout>-->
+    <include layout="@layout/layout_no_network"
+        android:visibility="gone"/>
 
 </LinearLayout>

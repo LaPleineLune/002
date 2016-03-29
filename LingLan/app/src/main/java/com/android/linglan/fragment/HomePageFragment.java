@@ -13,10 +13,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.linglan.LinglanApplication;
 import com.android.linglan.base.BaseFragment;
 import com.android.linglan.http.Constants;
+import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.homepage.SearchActivity;
+import com.android.linglan.utils.NetworkUtil;
+import com.android.linglan.utils.ToastUtil;
 
 import java.util.ArrayList;
 
@@ -91,14 +95,23 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 clearSelection();
                 switch (arg0) {
                     case 0:
+                        if (!NetworkUtil.isNetworkConnected(LinglanApplication.getsApplicationContext())) {
+                            ToastUtil.show(PasserbyClient.NETWORK_ERROR_MESSAGE);
+                        }
                         tv_home_recommend.setTextColor(getResources().getColor(R.color.carminum));
                         img_home_recommend.setBackgroundResource(R.color.carminum);
                         break;
                     case 1:
+                        if (!NetworkUtil.isNetworkConnected(LinglanApplication.getsApplicationContext())) {
+                            ToastUtil.show(PasserbyClient.NETWORK_ERROR_MESSAGE);
+                        }
                         tv_home_article.setTextColor(getResources().getColor(R.color.carminum));
                         img_home_article.setBackgroundResource(R.color.carminum);
                         break;
                     case 2:
+                        if (!NetworkUtil.isNetworkConnected(LinglanApplication.getsApplicationContext())) {
+                            ToastUtil.show(PasserbyClient.NETWORK_ERROR_MESSAGE);
+                        }
                         tv_home_subject.setTextColor(getResources().getColor(R.color.carminum));
                         img_home_subject.setBackgroundResource(R.color.carminum);
                         break;
@@ -124,12 +137,21 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         super.onClick(v);
         switch (v.getId()) {
             case R.id.rl_home_recommend:
+                if (!NetworkUtil.isNetworkConnected(LinglanApplication.getsApplicationContext())) {
+                    ToastUtil.show(PasserbyClient.NETWORK_ERROR_MESSAGE);
+                }
                 pager_home.setCurrentItem(0,false);
                 break;
             case R.id.rl_home_article:
+                if (!NetworkUtil.isNetworkConnected(LinglanApplication.getsApplicationContext())) {
+                    ToastUtil.show(PasserbyClient.NETWORK_ERROR_MESSAGE);
+                }
                 pager_home.setCurrentItem(1,false);
                 break;
             case R.id.rl_home_subject:
+                if (!NetworkUtil.isNetworkConnected(LinglanApplication.getsApplicationContext())) {
+                    ToastUtil.show(PasserbyClient.NETWORK_ERROR_MESSAGE);
+                }
                 pager_home.setCurrentItem(2,false);
                 break;
             case R.id.img_home_search:

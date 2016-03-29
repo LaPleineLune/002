@@ -114,7 +114,7 @@ public class NoteWritePreviewActivity extends BaseActivity implements View.OnCli
 
             @Override
             public void onSuccess(String result) {
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,NoteWritePreviewActivity.this)){
                     return;
                 }
             }

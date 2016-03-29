@@ -13,6 +13,7 @@ import android.view.View;
 import com.android.linglan.download.DownloadApp;
 import com.android.linglan.download.DownloadFileTask;
 import com.android.linglan.download.DownloadItem;
+import com.android.linglan.http.Constants;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.Body;
@@ -47,6 +48,8 @@ public class AppUpdaterUtil {
     private String enter;
     private boolean hasUpdate = false;
     private Activity mContext;
+    private Body.BodyData data;
+    private UpdateDialog exitLoginDialog;
 
     private boolean checkVersionAutomatically;
 
@@ -57,6 +60,7 @@ public class AppUpdaterUtil {
 
     private boolean shouldUpdate(int forceUpdate) {
         return forceUpdate == 1 || !checkVersionAutomatically || noCheckForOneDay();
+//        return forceUpdate == 0 || !checkVersionAutomatically || noCheckForOneDay();
     }
 
     private boolean noCheckForOneDay() {
@@ -70,7 +74,7 @@ public class AppUpdaterUtil {
         return (System.currentTimeMillis() - lastTimestamp) > ONE_DAY_TIME_MILLIS;
     }
 
-    public void getUpdate(Activity context) {
+    public void getUpdate(final Activity context) {
         mContext = context;
         try {
             version = getVersionName();
@@ -80,77 +84,18 @@ public class AppUpdaterUtil {
         NetApi.getCheckUpdate(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
-//                try {
-//                    JSONObject json = new JSONObject(result);
-//                    JSONObject data = json.optJSONObject("data");
-//                    String url = data.optString("dataurl");
-//                    String updatecon = data.optString("updatecon");
-//                    String ver = data.optString("ver");
-//                    String isforceupdate = data.optString("isforceupdate");
-//                    if (ver.equals(getVersionName())) {
-////						Log.i("Version", "版本号相同");// 原   2015.11.19  15:09:01
-//                        LogUtil.i("Version", "版本号相同");// 改   lee   2015.11.19  15:09:01
-//
-//                    } else {
-////						Log.i("Version", "版本号不相同 ");// 原   2015.11.19  15:09:01
-//                        LogUtil.i("Version", "版本号相同");// 改   lee   2015.11.19  15:09:01
-//                        DownloadApp app = new DownloadApp(mContext,
-//                                url, "yks" + ver + ".apk", "版本更新提示", updatecon, isforceupdate);
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                LogUtil.e("getCheckUpdate=" + result);
+
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,context)){
                     return;
                 }
 
                 Body bean = JsonUtil.json2Bean(result, Body.class);
-                if (bean.code.equals("0")) {
-                    if (bean.data.update.equals("no")) {
-                        if (checkVersionAutomatically) {
-                            return;
-                        }
+                data = bean.data;
 
-                        if (NetworkUtil.isNetworkConnected(mContext)) {
-                            hasUpdate = false;
-                            title = "暂无更新";
-                            description = "您使用的已经是最新版本";
-                            noUpdateDialog = new UpdateDialog(mContext, description, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    safeDismissingDialog(noUpdateDialog);
-                                }
-                            });
-                            noUpdateDialog.setEnterText("确定");
-                            safeShowingDialog(noUpdateDialog);
-                        }
-                    } else {
-                        hasUpdate = true;
-                        title = bean.title;
-                        versionName = bean.version;
-                        marketWhiteList = bean.marketWhiteList;
 
-                        if (!shouldUpdate(bean.forceUpdate)) {
-                            return;
-                        }
-                        SharedPreferencesUtil.saveString("last_check_update_timestamp",
-                                String.valueOf(System.currentTimeMillis()));
-
-                        StringBuilder contentBuilder = new StringBuilder();
-                        for (String content : bean.content) {
-                            contentBuilder.append(content).append("\n");
-                        }
-                        int length = contentBuilder.length();
-                        if (length > 0) {
-                            contentBuilder.setLength(length - 1);
-                        }
-
-                        description = contentBuilder.toString();
-                        downloadUrl = bean.url;
-                        showDialog(bean);
-                    }
-                } else { // else 后面的可去掉
+                if (data.isupdate == 0) {
                     if (checkVersionAutomatically) {
                         return;
                     }
@@ -167,6 +112,37 @@ public class AppUpdaterUtil {
                         });
                         noUpdateDialog.setEnterText("确定");
                         safeShowingDialog(noUpdateDialog);
+                    }
+                } else {
+//                    title = bean.title;
+                    title = "有新版本了！";
+                    versionName = data.number;
+
+                    if (!shouldUpdate(data.isupdate)) {
+                        return;
+                    }
+                    SharedPreferencesUtil.saveString("last_check_update_timestamp",
+                            String.valueOf(System.currentTimeMillis()));
+
+                    description = data.description;
+                    downloadUrl = Constants.URL_APP_DOWNLOAD;
+
+                    if (0 == data.isforce) {// 非强制更新
+                        hasUpdate = true;
+                        showDialog(bean);
+                    } else {// 强制更新
+
+                        exitLoginDialog = new UpdateDialog(mContext, description, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DownloadApp app = new DownloadApp(mContext, downloadUrl, "linglan" + versionName + ".apk", title, description, data.isforce+"");
+                                exitLoginDialog.dismiss();
+                            }
+                        });
+                        exitLoginDialog.setTitle(title);
+//                        exitLoginDialog.setCancelText("取消");
+                        exitLoginDialog.setEnterText("立即更新");
+                        exitLoginDialog.show();
                     }
                 }
             }
@@ -213,20 +189,21 @@ public class AppUpdaterUtil {
                         if (!hasUpdate) {
                             safeDismissingDialog(updateDialog);
                         } else {
-                            String str = "market://details?id=" + mContext.getPackageName();
-                            Intent intent = new Intent();
-                            intent.setAction("android.intent.action.VIEW");
-                            Uri content_url = Uri.parse(str);
-                            intent.setData(content_url);
-                            if(!generateCustomChooserIntent(intent, marketWhiteList)) {
-                                DownloadItem downloadItem = new DownloadItem();
-                                downloadItem.title = mContext.getString(R.string.app_name);
-                                downloadItem.downloadUrl = downloadUrl;
-                                downloadItem.versionName = versionName;
-//                                downloadItem.md5 = bean.mdv;
-                                new DownloadFileTask(downloadItem).execute();
-
-                            }
+//                            String str = "market://details?id=" + mContext.getPackageName();
+//                            Intent intent = new Intent();
+//                            intent.setAction("android.intent.action.VIEW");
+//                            Uri content_url = Uri.parse(str);
+//                            intent.setData(content_url);
+//                            if(!generateCustomChooserIntent(intent, marketWhiteList)) {
+//                                DownloadItem downloadItem = new DownloadItem();
+//                                downloadItem.title = mContext.getString(R.string.app_name);
+//                                downloadItem.downloadUrl = downloadUrl;
+//                                downloadItem.versionName = versionName;
+////                                downloadItem.md5 = bean.mdv;
+//                                new DownloadFileTask(downloadItem).execute();
+//
+//                            }
+                            DownloadApp app = new DownloadApp(mContext, downloadUrl, "linglan" + versionName + ".apk", title, description, "1");
                             safeDismissingDialog(updateDialog);
                         }
                     }

@@ -19,7 +19,7 @@
             android:gravity="center"
             android:text="最近更新"
             android:textSize="@dimen/sp14"
-            android:textColor="@color/orange"/>
+            android:textColor="@color/carminum"/>
 
         <View
             android:layout_width="@dimen/px1"

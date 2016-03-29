@@ -1,31 +1,23 @@
 package com.android.linglan.http.bean;
 
-import java.util.Arrays;
-
 public class Body {
-	public String code;
 	public BodyData data;
-	public String isExist = "";
-	public String message;
-	public String[] content;
-	public String title;
-	public String version;
-	public String url;
-  public int forceUpdate;
-  // MD5 verification
-  public String mdv;
-  public String[] marketWhiteList;
+//	public String isExist = "";
+//	public String message;
+//	public String[] content;
+//	public String title;
+//	public String version;
+//	public String url;
+//  public int forceUpdate;
+//  // MD5 verification
+//  public String mdv;
+//  public String[] marketWhiteList;
 
 	public class BodyData {
-		public String update;// yes/no有更新为yes 不更新为no
-	}
-
-	@Override
-	public String toString() {
-		return "Body [code=" + code + ", isExist=" + isExist + ", message="
-				+ message + ", content=" + Arrays.toString(content)
-				+ ", title=" + title + ", version=" + version + ", url=" + url
-				+ "]";
+		public String number;// 最新版本号
+		public int isupdate;// 是否有更新 1是 0否
+		public String description;// app描述
+		public int isforce;// 是否强制更新 1是 0否
 	}
 
 }

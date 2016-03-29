@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.linglan.http.NetApi;
+import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.homepage.SearchActivity;
+import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
+import com.android.linglan.utils.ToastUtil;
 import com.android.linglan.widget.SyLinearLayoutManager;
 import com.android.linglan.widget.flowlayout.TagAdapter;
 import com.android.linglan.widget.flowlayout.TagFlowLayout;
@@ -54,28 +57,13 @@ public class SearchAdapter extends RecyclerView.Adapter {
 
     //热门搜索
     private View createHotSearchView(ViewGroup parent) {
-        View view =
-                LayoutInflater.from(context).inflate(R.layout.item_hot_search, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_hot_search, parent, false);
         return view;
     }
 
     //历史搜索
     private View createHistorySearchView(ViewGroup parent) {
-        View view =
-                LayoutInflater.from(context).inflate(R.layout.item_history_search, parent, false);
-
-//        RecyclerView rec_history_search = (RecyclerView) view.findViewById(R.id.rec_history_search);
-//        rec_history_search.setLayoutManager(new SyLinearLayoutManager(context));
-//        rec_history_search.setHasFixedSize(true);
-//
-////        RelativeLayout.LayoutParams lp = (android.widget.RelativeLayout.LayoutParams) rec_history_search
-////                .getLayoutParams();
-////        int itemHeight = context.getResources().getDimensionPixelSize(R.dimen.dp40);
-////        lp.height = itemHeight * 35;//(36*3 +10)
-////        rec_history_search.setLayoutParams(lp);
-//
-//        historySearchAdapter = new NewHistorySearchAdapter(context,historysearch);
-//        rec_history_search.setAdapter(historySearchAdapter);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_history_search, parent, false);
         return view;
     }
 
@@ -154,6 +142,8 @@ public class SearchAdapter extends RecyclerView.Adapter {
                         public boolean onTagClick(View view, int position, com.android.linglan.widget.flowlayout.FlowLayout parent) {
 //                            Toast.makeText(context, hotsearch[position], Toast.LENGTH_SHORT).show();
                             context.getKey(hotsearch[position]);
+                            view.setBackgroundResource(R.drawable.bg_bottom_textview);
+
                             return true;
                         }
                     });
@@ -167,7 +157,28 @@ public class SearchAdapter extends RecyclerView.Adapter {
                     historySearchAdapter = new NewHistorySearchAdapter(context,historysearch);
                     rec_history_search.setAdapter(historySearchAdapter);
 
+                    rootView.findViewById(R.id.tv_delete_history_search).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            NetApi.clearHistory(new PasserbyClient.HttpCallback() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result,context)) {
+                                        return;
+                                    }
+                                    ll_no_history_search.setVisibility(View.VISIBLE);
+                                    rl_history_search.setVisibility(View.GONE);
+                                    ToastUtil.show("历史记录清除成功");
+                                }
 
+                                @Override
+                                public void onFailure(String message) {
+
+                                }
+                            });
+
+                        }
+                    });
 
                     if (SharedPreferencesUtil.getString("token", null) == null) {
                         ll_history_search.setVisibility(View.GONE);

@@ -7,4 +7,4 @@
     android:paddingLeft="8dp"
     android:text="header"
     android:id="@+id/header" />
-<!-- From: file:/E:/git/LingLan/social_sdk_library_project/src/main/res/layout/umeng_socialize_composer_header.xml --><!-- From: file:/E:/git/LingLan/social_sdk_library_project/build/intermediates/bundles/debug/res/layout/umeng_socialize_composer_header.xml -->
+<!-- From: file:/E:/AndroidStudioProjects/Linglan/LingLan/social_sdk_library_project/src/main/res/layout/umeng_socialize_composer_header.xml --><!-- From: file:/E:/AndroidStudioProjects/Linglan/LingLan/social_sdk_library_project/build/intermediates/bundles/debug/res/layout/umeng_socialize_composer_header.xml -->

@@ -45,7 +45,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        text_size.setText(SharedPreferencesUtil.getInt(Constants.FONT_SIZE, 16) + "号");
+        text_size.setText(SharedPreferencesUtil.getString("webTextSize", "正常"));
     }
 
     @Override
@@ -70,9 +70,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     protected void initData() {
         setTitle("设置", "");
 //        fontsize = SharedPreferencesUtil.getInt(Constants.FONT_SIZE, 16);
-        text_size.setText(SharedPreferencesUtil.getInt(Constants.FONT_SIZE, 16) + "号");// 初始化文字大小
+        String textSize = SharedPreferencesUtil.getString("webTextSize", "正常");// 初始化文字大小
+        text_size.setText(textSize);// 初始化文字大小
         try {
-            check_update.setText(getVersionName());// 初始化文字大小
+            check_update.setText(getVersionName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,12 +91,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         check_update_item.setOnClickListener(this);
         about_item.setOnClickListener(this);
         exit_btn.setOnClickListener(this);
-//        if (SharedPreferencesUtil.getString("token", null) != null) {
-//            exit_btn.setOnClickListener(this);
-//        } else {
-//            exit_btn.setBackgroundResource(R.color.gainsboro);
-//            exit_btn.setOnClickListener(null);
-//        }
     }
 
     @Override
@@ -147,17 +142,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         exitLoginDialog = new UpdateDialog(this, "确定退出当前账号吗", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SharedPreferencesUtil.removeValue("token");
-//                SharedPreferencesUtil.removeValue("phone");
-//                SharedPreferencesUtil.removeValue("username");
-//                logout(SHARE_MEDIA.SINA);
-//                logout(SHARE_MEDIA.QQ);
-//                logout(SHARE_MEDIA.WEIXIN);
-//                AuthenticationActivity.show(SettingActivity.this);
-                getUserExit();
-//                startActivity(new Intent(SettingActivity.this, RegisterActivity.class));
+
+               getUserExit();
                 exitLoginDialog.dismiss();
-//                finish();
             }
         });
         exitLoginDialog.setTitle("退出登录");
@@ -247,19 +234,21 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             public void onSuccess(String result) {
                 LogUtil.e("getUserExit=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,SettingActivity.this)){
                     return;
                 }
 
                 SharedPreferencesUtil.removeValue("token");
+                SharedPreferencesUtil.removeValue("face");// 头像
+
                 SharedPreferencesUtil.removeValue("phone");
                 SharedPreferencesUtil.removeValue("username");
-//                logout(SHARE_MEDIA.SINA);
-//                logout(SHARE_MEDIA.QQ);
-//                logout(SHARE_MEDIA.WEIXIN);
-//                AuthenticationActivity.show(SettingActivity.this);
-                startActivity(new Intent(SettingActivity.this, RegisterActivity.class));
-//                exitLoginDialog.dismiss();
+
+                SharedPreferencesUtil.removeValue("alias");// 用户昵称
+                SharedPreferencesUtil.removeValue("isfamilymember");// 亲情会员
+
+//                Intent intent = new Intent(SettingActivity.this, RegisterActivity.class);
+//                startActivity(intent);
                 finish();
             }
 

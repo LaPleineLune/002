@@ -18,7 +18,7 @@ public class ProfileBean implements Serializable {
         public String about;// 个人简介
         public String city;// 所在城市
         public String company;// 工作单位
-        public String feature;// 个人特长
+        public String feature;// 个人特征
 //       "绑定其他平台"
     }
 }

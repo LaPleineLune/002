@@ -3,10 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LingLan.iml" filepath="$PROJECT_DIR$/LingLan.iml" />
-      <module fileurl="file://$PROJECT_DIR$/action_sheet_library/action_sheet_library.iml" filepath="$PROJECT_DIR$/action_sheet_library/action_sheet_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PushSDK/PushSDK.iml" filepath="$PROJECT_DIR$/PushSDK/PushSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/crop_image_lib/crop_image_lib.iml" filepath="$PROJECT_DIR$/crop_image_lib/crop_image_lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/popuphelper/popuphelper.iml" filepath="$PROJECT_DIR$/popuphelper/popuphelper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cptr/cptr.iml" filepath="$PROJECT_DIR$/cptr/cptr.iml" />
       <module fileurl="file://$PROJECT_DIR$/pulltorefresh_library/pulltorefresh_library.iml" filepath="$PROJECT_DIR$/pulltorefresh_library/pulltorefresh_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/social_sdk_library_project/social_sdk_library_project.iml" filepath="$PROJECT_DIR$/social_sdk_library_project/social_sdk_library_project.iml" />
     </modules>

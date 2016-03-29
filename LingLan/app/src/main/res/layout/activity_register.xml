@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_password">
+    android:background="@color/white">
 
     <include layout="@layout/page_head" />
 
@@ -53,18 +53,19 @@
         android:paddingRight="@dimen/dp16"
         android:paddingTop="@dimen/dp10"
         android:paddingBottom="@dimen/dp10">
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@color/gray"-->
+            <!--android:text="登录即表示您同意"-->
+            <!--android:textSize="@dimen/sp12"/>-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/servce"
+            android:textSize="@dimen/sp16"
             android:textColor="@color/gray"
-            android:text="登录即表示您同意"
-            android:textSize="@dimen/sp12"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/carminum"
-            android:text="《服务条款》"
-            android:textSize="@dimen/sp12"/>
+            android:lineSpacingExtra="4dp"/>
     </LinearLayout>
 
 
@@ -121,7 +122,6 @@
                 android:layout_weight="1"
                 android:background="#00ffffff"
                 android:focusable="true"
-                android:src="@drawable/login_qq_icon"
                 android:visibility="gone"/>
 
             <ImageButton
@@ -140,7 +140,6 @@
                 android:layout_weight="1"
                 android:background="#00ffffff"
                 android:focusable="true"
-                android:src="@drawable/login_weibo_icon"
                 android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>

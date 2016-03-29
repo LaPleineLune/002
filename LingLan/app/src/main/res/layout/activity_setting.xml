@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/text_size_arrow_right"
-                        android:text="16"
+                        android:text="正常"
                         android:textColor="@color/french_grey"
                         android:textSize="@dimen/sp14" />
 

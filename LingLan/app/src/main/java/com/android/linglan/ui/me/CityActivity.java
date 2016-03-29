@@ -1,202 +1,247 @@
 package com.android.linglan.ui.me;
 
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.linglan.adapter.SortAdapter;
 import com.android.linglan.base.BaseActivity;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
-import com.android.linglan.http.bean.SortModel;
+import com.android.linglan.http.bean.CityModel;
+import com.android.linglan.http.bean.CountryModel;
+import com.android.linglan.http.bean.ProvinceModel;
 import com.android.linglan.ui.R;
-import com.android.linglan.utils.CharacterParser;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.LogUtil;
-import com.android.linglan.utils.PinyinComparator;
+import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;
-import com.android.linglan.widget.sortlistview.ClearEditText;
-import com.android.linglan.widget.sortlistview.SideBar;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by LeeMy on 2016/1/8 0008.
  * 城市列表
  */
-public class CityActivity extends BaseActivity {
-    private ListView sortListView;
-    private SideBar sideBar;
-    private TextView dialog;
-    private SortAdapter adapter;
-    private ClearEditText mClearEditText;
-    /**
-     * 汉字转换成拼音的类
-     */
-    private CharacterParser characterParser;
-    private List<SortModel> SourceDateList;
+public class CityActivity extends BaseActivity implements  AdapterView.OnItemClickListener{
+    private ListView lv_area;
 
-    /**
-     * 根据拼音来排列ListView里面的数据类
-     */
-    private PinyinComparator pinyinComparator;
+    private List<ProvinceModel> provinceList;
+    private CountryAdapter cAdapter;
+    private int cPosition;
+    private int pPosition;
+
+    private String country, province, city;
+
     @Override
     protected void setView() {
-        setContentView(R.layout.activity_city);
+        setContentView(R.layout.activity_area);
     }
 
     @Override
     protected void initView() {
-        sideBar = (SideBar) findViewById(R.id.sidrbar);
-        dialog = (TextView) findViewById(R.id.dialog);
-        sortListView = (ListView) findViewById(R.id.country_lvcountry);
-        mClearEditText = (ClearEditText) findViewById(R.id.filter_edit);
+        lv_area = (ListView) findViewById(R.id.lv_area);
     }
 
     @Override
     protected void initData() {
-        setTitle("所在城市", "");
-        getCity();
-        //实例化汉字转拼音类
-        characterParser = CharacterParser.getInstance();
-        pinyinComparator = new PinyinComparator();
-        sideBar.setTextView(dialog);
-        SourceDateList = filledData(getResources().getStringArray(R.array.date));
+        setTitle("所在地区", "");
+        cPosition = getIntent().getIntExtra("cPosition", -1);
+        pPosition = getIntent().getIntExtra("pPosition", -1);
+//        Drawable collectTopDrawable = getResources().getDrawable(R.drawable.save);
+//        collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+//        right.setCompoundDrawables(collectTopDrawable, null, null, null);
+        try {
+            parseAddress(getFromRaw());
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        if (pPosition >= 0 && cPosition >= 0) {
+            cAdapter = new CountryAdapter((provinceList.get(cPosition).getCity_list().get(pPosition).getCounty_list()));
+            lv_area.setAdapter(cAdapter);
+            country = provinceList.get(cPosition).getProvince();
+            province = (provinceList.get(cPosition).getCity_list().get(pPosition).getCity());
 
-        // 根据a-z进行排序源数据
-        Collections.sort(SourceDateList, pinyinComparator);
-        adapter = new SortAdapter(this, SourceDateList);
-        sortListView.setAdapter(adapter);
+        }
     }
 
     @Override
     protected void setListener() {
-        //设置右侧触摸监听
-        sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
-
-            @Override
-            public void onTouchingLetterChanged(String s) {
-                //该字母首次出现的位置
-                int position = adapter.getPositionForSection(s.charAt(0));
-                if (position != -1) {
-                    sortListView.setSelection(position);
-                }
-
-            }
-        });
-
-        sortListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                //这里要利用adapter.getItem(position)来获取当前position所对应的对象
-//                Intent intent = new Intent(CityActivity.this, ProfileActivity.class);
-                Intent intent = new Intent();
-                intent.putExtra("cityName", ((SortModel) adapter.getItem(position)).getName());
-                setResult(RESULT_OK, intent);
-                CityActivity.this.finish();
-//                ToastUtil.show(getApplication(), ((SortModel) adapter.getItem(position)).getName(), Toast.LENGTH_SHORT);
-            }
-        });
-
-        //根据输入框输入值的改变来过滤搜索
-        mClearEditText.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
-                filterData(s.toString());
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
+        lv_area.setOnItemClickListener(this);
     }
 
-    /**
-     * 为ListView填充数据
-     * @param date
-     * @return
-     */
-    private List<SortModel> filledData(String [] date){
-        List<SortModel> mSortList = new ArrayList<SortModel>();
+    private void parseAddress(String data) throws XmlPullParserException {
+        try {
+            ProvinceModel provinceModel = null;
+            CityModel cityModel = null;
+            CountryModel countyModel = null;
+            List<CityModel> cityList = null;
+            List<CountryModel> countyList = null;
 
-        for(int i=0; i<date.length; i++){
-            SortModel sortModel = new SortModel();
-            sortModel.setName(date[i]);
-            //汉字转换成拼音
-            String pinyin = characterParser.getSelling(date[i]);
-            String sortString = pinyin.substring(0, 1).toUpperCase();
-
-            // 正则表达式，判断首字母是否是英文字母
-            if(sortString.matches("[A-Z]")){
-                sortModel.setSortLetters(sortString.toUpperCase());
-            }else{
-                sortModel.setSortLetters("#");
-            }
-
-            mSortList.add(sortModel);
-        }
-        return mSortList;
-
-    }
-
-    /**
-     * 根据输入框中的值来过滤数据并更新ListView
-     * @param filterStr
-     */
-    private void filterData(String filterStr){
-        List<SortModel> filterDateList = new ArrayList<SortModel>();
-
-        if(TextUtils.isEmpty(filterStr)){
-            filterDateList = SourceDateList;
-        }else{
-            filterDateList.clear();
-            for(SortModel sortModel : SourceDateList){
-                String name = sortModel.getName();
-                if(name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())){
-                    filterDateList.add(sortModel);
+            InputStream xmlData = new ByteArrayInputStream(
+                    data.getBytes("UTF-8"));
+            XmlPullParserFactory factory = null;
+            factory = XmlPullParserFactory.newInstance();
+            XmlPullParser parser;
+            parser = factory.newPullParser();
+            parser.setInput(xmlData, "utf-8");
+            String province;
+            String city;
+            String county;
+            int type = parser.getEventType();
+            while (type != XmlPullParser.END_DOCUMENT) {
+                String typeName = parser.getName();
+                if (type == XmlPullParser.START_TAG) {
+                    if ("root".equals(typeName)) {
+                        provinceList = new ArrayList<ProvinceModel>();
+                    } else if ("province".equals(typeName)) {
+                        province = parser.getAttributeValue(0);// 获取标签里第一个属性,例如<city
+                        // name="北京市"
+                        // index="1">中的name属性
+                        provinceModel = new ProvinceModel();
+                        provinceModel.setProvince(province);
+                        cityList = new ArrayList<CityModel>();
+                    } else if ("city".equals(typeName)) {
+                        city = parser.getAttributeValue(0);
+                        cityModel = new CityModel();
+                        cityModel.setCity(city);
+                        countyList = new ArrayList<CountryModel>();
+                    } else if ("area".equals(typeName)) {
+                        county = parser.getAttributeValue(0);
+                        countyModel = new CountryModel();
+                        countyModel.setCounty(county);
+                    }
+                } else if (type == XmlPullParser.END_TAG) {
+                    if ("root".equals(typeName)) {
+                    } else if ("province".equals(typeName)) {
+                        provinceModel.setCity_list(cityList);
+                        provinceList.add(provinceModel);
+                    } else if ("city".equals(typeName)) {
+                        cityModel.setCounty_list(countyList);
+                        cityList.add(cityModel);
+                    } else if ("area".equals(typeName)) {
+                        countyList.add(countyModel);
+                    }
+                } else if (type == XmlPullParser.TEXT) {
+                    typeName = null;
                 }
+                type = parser.next();
             }
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        // 根据a-z进行排序
-        Collections.sort(filterDateList, pinyinComparator);
-        adapter.updateListView(filterDateList);
     }
 
-    //获取城市列表
-    private void getCity(){
-        NetApi.getCity(new PasserbyClient.HttpCallback() {
+    private String getFromRaw() {
+        InputStream open = getResources().openRawResource(R.raw.address);
+        InputStreamReader isr = new InputStreamReader(open);
+        BufferedReader br = new BufferedReader(isr);
+        StringBuffer sb = new StringBuffer();
+        String line = null;
+        try {
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            br.close();
+            isr.close();
+            open.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        ToastUtil.show("dianjile");
+        city = ((provinceList.get(cPosition).getCity_list().get(pPosition).getCounty_list()).get(position).getCounty());
+        updateArea();
+//        finish();
+    }
+
+    class CountryAdapter extends BaseAdapter {
+        public List<CountryModel> adapter_list;
+
+        public CountryAdapter(List<CountryModel> list) {
+            adapter_list = list;
+        }
+
+        @Override
+        public int getCount() {
+            return adapter_list.size();
+        }
+
+        @Override
+        public CountryModel getItem(int arg0) {
+            return adapter_list.get(arg0);
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View arg1, ViewGroup arg2) {
+            TextView tv = new TextView(CityActivity.this);
+            tv.setPadding(dpToPx(5), dpToPx(10), 0, dpToPx(10));
+            tv.setTextSize(18);
+            tv.setText(adapter_list.get(position).getCounty());
+            return tv;
+        }
+
+    }
+
+    private int dpToPx(float dipValue) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+    private void updateArea() {
+        NetApi.getUserInfoEdit(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
-                LogUtil.e("getCity=" + result);
-
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                LogUtil.e("getUserInfoEdit=" + result);
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result,CityActivity.this)) {
                     return;
                 }
+
+                SharedPreferencesUtil.saveString("country", country);
+                SharedPreferencesUtil.saveString("province", province);
+                SharedPreferencesUtil.saveString("city", city);
+
+                Intent intent = new Intent(CityActivity.this,ProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
 
             @Override
             public void onFailure(String message) {
 
             }
-        });
+        }, null, null, null, city, null, null);
+
+
     }
 }

@@ -79,12 +79,13 @@ public class DescriptionActivity extends BaseActivity {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = description_edt.getText().toString().trim();
-                if (!text.isEmpty()) {
-                    getUserInfoEdit(text);
-                } else {
-                    ToastUtil.show("请输入个人简介，一百字以内");
-                }
+                String text = description_edt.getText().toString();
+                getUserInfoEdit(text);
+//                if (!text.isEmpty()) {
+//                    getUserInfoEdit(text);
+//                } else {
+//                    ToastUtil.show("请输入个人简介，一百字以内");
+//                }
             }
         });
 
@@ -98,9 +99,9 @@ public class DescriptionActivity extends BaseActivity {
         NetApi.getUserInfoEdit(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
-                LogUtil.e("result=" + result);
+                LogUtil.e("getUserInfoEdit=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,DescriptionActivity.this)){
                     return;
                 }
                 ToastUtil.show("保存成功");

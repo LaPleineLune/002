@@ -1,26 +1,14 @@
 package com.android.linglan.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.linglan.http.NetApi;
-import com.android.linglan.http.PasserbyClient;
-import com.android.linglan.http.bean.HomepageRecommendBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.ArticleDetailsActivity;
 import com.android.linglan.ui.homepage.SearchActivity;
-import com.android.linglan.ui.homepage.SubjectDetailsActivity;
-import com.android.linglan.utils.LogUtil;
-import com.android.linglan.utils.ToastUtil;
-
-import java.util.ArrayList;
 
 /**
  * Created by wuiqngci on 2016/1/6 0006.
@@ -85,7 +73,8 @@ public class NewHistorySearchAdapter extends RecyclerView.Adapter{
                     context.getKey(key);
                 }
             });
-            }
+
+        }
 
         @Override
         public void onClick(View v) {

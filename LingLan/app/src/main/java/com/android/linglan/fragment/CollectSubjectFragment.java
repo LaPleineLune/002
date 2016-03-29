@@ -82,6 +82,10 @@ public class CollectSubjectFragment extends BaseFragment implements AdapterView.
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         intent.setClass(getActivity(), SubjectDetailsActivity.class);
         intent.putExtra("specialid", data.get(position).specialid);
+        intent.putExtra("specialname", data.get(position).specialname);
+        intent.putExtra("photo", data.get(position).photo);
+        intent.putExtra("logo", data.get(position).logo);
+        intent.putExtra("description", data.get(position).description);
         startActivity(intent);
 
     }
@@ -111,7 +115,7 @@ public class CollectSubjectFragment extends BaseFragment implements AdapterView.
             public void onSuccess(String result) {
                 LogUtil.e("getCollectSubject" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,getActivity())){
                     return;
                 }
                 if (!TextUtils.isEmpty(result)) {
@@ -126,6 +130,6 @@ public class CollectSubjectFragment extends BaseFragment implements AdapterView.
             public void onFailure(String message) {
 
             }
-        });
+        }, "1");
     }
 }

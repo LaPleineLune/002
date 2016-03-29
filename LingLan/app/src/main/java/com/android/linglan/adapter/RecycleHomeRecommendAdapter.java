@@ -2,7 +2,9 @@ package com.android.linglan.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.linglan.http.Constants;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
-import com.android.linglan.http.bean.AllArticleClassifyListBean;
 import com.android.linglan.http.bean.CommonProtocol;
 import com.android.linglan.http.bean.HomepageRecommendBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.homepage.ArticleDetailsActivity;
 import com.android.linglan.ui.homepage.SubjectDetailsActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.ImageUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
@@ -123,29 +126,55 @@ public class RecycleHomeRecommendAdapter extends
                 rootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (recommendArticle.type.equals("4")) {// 如果是专题
+                        if (recommendArticle.type.equals(Constants.SUBJECT)) {// 如果是专题
                             intent = new Intent(context, SubjectDetailsActivity.class);
                             intent.putExtra("specialid", recommendArticle.specialid);
+                            intent.putExtra("specialname", recommendArticle.specialname);
+                            intent.putExtra("logo", recommendArticle.logo);
+                            intent.putExtra("photo", recommendArticle.photo);
                             intent.putExtra("description", recommendArticle.description);
-                        } else if (recommendArticle.type.equals("0")) {// 如果是文章
+                        } else if (recommendArticle.type.equals(Constants.ARTICLE)) {// 如果是文章
                             intent = new Intent(context, ArticleDetailsActivity.class);
                             intent.putExtra("articleId", recommendArticle.articleid);
+                            intent.putExtra("photo", recommendArticle.photo);
                         }
                         context.startActivity(intent);
                     }
                 });
             }
-            if (recommendArticle.type.equals("4")) {
+            if (recommendArticle.type.equals("4")) {// 专题
+                try {
+                    ImageUtil.loadImageAsync(logo, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, recommendArticle.logo, null);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+//                ImageUtil.loadImageAsync(logo, recommendArticle.logo, R.drawable.default_image);
                 ll_homepage_subject.setVisibility(View.VISIBLE);
                 ll_homepage_article.setVisibility(View.GONE);
                 subject_title.setText(recommendArticle.specialname);
                 subject_description.setText(recommendArticle.content_title);
-                subject_date.setText(recommendArticle.addtime);
-            } else if (recommendArticle.type.equals("0")) {
+//                subject_date.setText(recommendArticle.updatetime);// 更新时间
+            } else if (recommendArticle.type.equals("0")) {// 文章
+                if (!TextUtils.isEmpty(recommendArticle.photo)) {
+                    try {
+                        ImageUtil.loadImageAsync(logo, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, recommendArticle.photo, null);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                } else {
+                    logo.setVisibility(View.GONE);
+                }
+//                ImageUtil.loadImageAsync(logo, recommendArticle.photo, R.drawable.default_image);
                 ll_homepage_subject.setVisibility(View.GONE);
                 ll_homepage_article.setVisibility(View.VISIBLE);
                 article_title.setText(recommendArticle.title);
-                article_date.setText(recommendArticle.author);
+                if (!TextUtils.isEmpty(recommendArticle.authornames)) {
+                    Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
+                    collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+                    article_date.setCompoundDrawables(collectTopDrawable, null, null, null);
+                    article_date.setCompoundDrawablePadding(12);
+                    article_date.setText(recommendArticle.authornames);
+                }
             }
 
 
@@ -162,13 +191,13 @@ public class RecycleHomeRecommendAdapter extends
             @Override
             public void onSuccess(String result) {
                 LogUtil.e("result=" + result);
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,context)){
                     return;
                 }
                 CommonProtocol data = JsonUtil.json2Bean(result, CommonProtocol.class);
                 homepageRecommend.remove(position);
                 notifyDataSetChanged();
-                ToastUtil.show("删除" + data.msg);
+                ToastUtil.show(data.msg);
             }
 
             @Override
@@ -185,11 +214,11 @@ public class RecycleHomeRecommendAdapter extends
             public void onSuccess(String result) {
                 LogUtil.e("result=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,context)){
                     return;
                 }
                 CommonProtocol data = JsonUtil.json2Bean(result, CommonProtocol.class);
-                ToastUtil.show("删除" + data.msg);
+                ToastUtil.show(data.msg);
                 homepageRecommend.remove(position);
                 notifyDataSetChanged();
 //                ToastUtil.show(result);

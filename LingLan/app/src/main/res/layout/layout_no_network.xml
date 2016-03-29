@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_no_network"
+    android:onClick="connectNet"
+    android:gravity="center">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wifi"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp16"
+        android:layout_marginTop="20dp"
+        android:text="网络不太好,轻触屏幕加载更多"/>
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_no_network"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:padding="6dp"-->
+        <!--android:background="@drawable/bg_bottom_no_network"-->
+        <!--android:text="点击加载"-->
+        <!--android:textColor="@color/carminum"-->
+        <!--android:visibility="gone"/>-->
+</LinearLayout>

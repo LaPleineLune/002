@@ -14,6 +14,7 @@ public class SearchArticleBean {
         public String articleid;// 文章ID
         public String title;// 文章标题
         public String photo;// 图片
+        public String authornames;// 作者名
         public String publishtime;// 文章发布时间
 //        public String catename;// 文章主分类
 //        public String sub_catenames;// 文章副分类

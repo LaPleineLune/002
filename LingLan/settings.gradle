@@ -1,2 +1,2 @@
-include ':app', ':action_sheet_library', ':crop_image_lib', ':pulltorefresh_library', ':popuphelper'
+include ':app', ':pulltorefresh_library', ':cptr', ':PushSDK'
 include ':social_sdk_library_project'

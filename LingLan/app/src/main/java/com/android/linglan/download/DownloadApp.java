@@ -34,7 +34,7 @@ public class DownloadApp {
     int downLoadFileSize;
 
     String downloadPath = Environment.getExternalStorageDirectory().getPath()
-            + "/yks/downloadapp";
+            + "/linglan/downloadapp";
     String apkName ;
     public static int  returnResturn = 0;
 

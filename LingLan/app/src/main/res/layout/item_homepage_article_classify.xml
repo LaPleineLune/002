@@ -3,19 +3,12 @@
     android:id="@+id/colorlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
-    <!--<ImageView
-        android:id="@+id/imageview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip"
-        android:layout_marginTop="5dip" />-->
     <TextView
         android:id="@+id/textview"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp44"
         android:gravity="center"
-        android:text="sssssss"
+        android:text=""
         android:textSize="@dimen/sp14"
         android:textColor="@color/text_title_color"/>
     <!--  android:background="@drawable/selector"  自定义listview 样式-->

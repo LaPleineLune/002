@@ -2,6 +2,7 @@ package com.android.linglan.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,35 +11,32 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.linglan.base.BaseFragment;
-import com.android.linglan.http.bean.RecommendArticles;
-import com.android.linglan.http.bean.RecommendSubjects;
-import com.android.linglan.ui.MainActivity;
-import com.android.linglan.ui.me.CollectActivity;
-import com.android.linglan.ui.me.FollowedActivity;
 import com.android.linglan.ui.me.NewCollectActivity;
-import com.android.linglan.ui.me.NoteActivity;
 import com.android.linglan.ui.me.ProfileActivity;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.me.RegisterActivity;
 import com.android.linglan.ui.me.SettingActivity;
 import com.android.linglan.ui.me.FeedbackActivity;
+import com.android.linglan.utils.ImageUtil;
 import com.android.linglan.utils.ShareUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
-import com.android.linglan.utils.ToastUtil;
-
-import java.util.ArrayList;
+import com.android.linglan.widget.imageview.RoundedImageView;
 
 /**
  * Created by LeeMy on 2016/1/6 0006.
  */
 public class MeFragment extends BaseFragment implements View.OnClickListener{
+    private static final int PROFILE_PANEL = 1;
+    private static final int PROFILE_PANEL_NOT_LOGIN = 2;
     private View rootView;
     private final static String POSTCARD = "postcard";
     private final static String ATTEND = "attend";
     private final static String DONATE = "donate";
     private final static String COUPON = "coupon";
 
+    private RoundedImageView avatar;// 是否是亲情会员
     private LinearLayout profile_panel,profile_panel_not_login;// 用户资料
+    private LinearLayout ll_familymember;// 是否是亲情会员
 //    private RelativeLayout my_followed;// 我的关注
     private RelativeLayout my_collect;// 我的收藏
 //    private RelativeLayout my_note;// 我的笔记
@@ -47,24 +45,35 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
     private RelativeLayout share;// 推荐给朋友
     private TextView phonenum;
 
-
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         String token = SharedPreferencesUtil.getString("token", null);
         if (token != null) {
             profile_panel.setVisibility(View.VISIBLE);
+
+            String url = SharedPreferencesUtil.getString("face", "");
+            ImageUtil.loadImageAsync(avatar, url, R.drawable.avatar_default);
+
+            String alias = SharedPreferencesUtil.getString("alias", null);
             String username =
-                    (SharedPreferencesUtil.getString("username", null) != null && !SharedPreferencesUtil.getString("username", null).equals("")) ? // username 的值为null 吗？
-                            SharedPreferencesUtil.getString("username", null) : // 不为空则为username 的值
+                    // SharedPreferencesUtil.getString("alias", null) != null && !SharedPreferencesUtil.getString("alias", null).equals(""))
+                    (!TextUtils.isEmpty(alias)) ? // username 的值为null 吗？
+                            (alias.length() >= 9 ? alias.substring(0, 8) + "..." : alias) : // 不为空则为username 的值
                             SharedPreferencesUtil.getString("phone", null);// 为空则为 phone 的值
             phonenum.setText(username);
+            if ("0".equals(SharedPreferencesUtil.getString("isfamilymember", "0"))) {
+                ll_familymember.setVisibility(View.GONE);
+            } else {
+                ll_familymember.setVisibility(View.VISIBLE);
+            }
             profile_panel_not_login.setVisibility(View.GONE);
         } else {
             profile_panel.setVisibility(View.GONE);
             profile_panel_not_login.setVisibility(View.VISIBLE);
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,9 +91,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     protected void initView() {
+        avatar = (RoundedImageView) rootView.findViewById(R.id.avatar);
         profile_panel = (LinearLayout) rootView.findViewById(R.id.profile_panel);
         phonenum = (TextView) rootView.findViewById(R.id.phonenum);
         profile_panel_not_login = (LinearLayout) rootView.findViewById(R.id.profile_panel_not_login);
+        ll_familymember = (LinearLayout) rootView.findViewById(R.id.ll_familymember);
 //        my_followed = (RelativeLayout) rootView.findViewById(R.id.my_followed);
         my_collect = (RelativeLayout) rootView.findViewById(R.id.my_collect);
 //        my_note = (RelativeLayout) rootView.findViewById(R.id.my_note);
@@ -92,7 +103,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
         settings = (RelativeLayout) rootView.findViewById(R.id.settings);
         share = (RelativeLayout) rootView.findViewById(R.id.share);
 
-//        avatar = (ImageView) rootView.findViewById(R.id.avatar);
 //        nickname = (TextView) rootView.findViewById(R.id.nickname);
 //        noSupportingPrompt = (TextView) rootView.findViewById(R.id.no_supporting_prompt);
 //        noCouponPrompt = (TextView) rootView.findViewById(R.id.no_coupon_prompt);
@@ -148,8 +158,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
         ShareUtil.mController.getConfig().closeToast();
         // 配置需要分享的相关平台
         ShareUtil.configPlatforms(getActivity());
-        // 设置分享的内容
-        ShareUtil.setShareContent(getActivity());
+//        // 设置分享的内容
+//        ShareUtil.setShareContent(getActivity());
     }
 
     @Override
@@ -169,10 +179,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.profile_panel:
                 startActivity(new Intent(getActivity(), ProfileActivity.class));
+//                startActivityForResult(new Intent(getActivity(), ProfileActivity.class), PROFILE_PANEL);
                 break;
             case R.id.profile_panel_not_login:
-//                AuthenticationActivity.show(getActivity());
                 startActivity(new Intent(getActivity(), RegisterActivity.class));
+//                startActivityForResult(new Intent(getActivity(), RegisterActivity.class), PROFILE_PANEL_NOT_LOGIN);
 //                finish();
                 break;
 //            case R.id.my_followed:

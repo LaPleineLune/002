@@ -1,0 +1,11 @@
+<resources>
+
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+			1776*1080 景楠姐
+    -->
+    <!--意见反馈页 activity_feedback.xml-->
+    <dimen name="dp200">160dp</dimen>
+
+</resources>

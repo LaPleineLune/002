@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_subject_details"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp125"
+        android:adjustViewBounds="true" />
+
+    <TextView
+        android:id="@+id/subject_description"
+        style="@style/project_detail_item_label_style"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp18"
+        android:lineSpacingMultiplier="1.2"
+        android:text="专题简介"
+        android:textColor="@color/french_grey"
+        android:textSize="@dimen/sp14" />
+
+    <TextView
+        android:id="@+id/subject_related_articles"
+        style="@style/project_detail_item_label_style"
+        android:layout_marginBottom="@dimen/dp6"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp18"
+        android:drawableLeft="@drawable/subject_related_articles"
+        android:text="相关文章"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/sp16" />
+
+    <View
+        android:id="@+id/view_subject_details"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/french_grey" />
+
+</LinearLayout>

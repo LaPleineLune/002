@@ -96,7 +96,7 @@ public class AuthorDetailsActivity extends BaseActivity implements View.OnClickL
             public void onSuccess(String result) {
                 LogUtil.e("getDetailsAuthor=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,AuthorDetailsActivity.this)){
                     return;
                 }
                 authorDetailsBean = JsonUtil.json2Bean(result, AuthorDetailsBean.class);
@@ -171,7 +171,7 @@ public class AuthorDetailsActivity extends BaseActivity implements View.OnClickL
         NetApi.addFollow(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,AuthorDetailsActivity.this)){
                     return;
                 }
             }
@@ -188,6 +188,8 @@ public class AuthorDetailsActivity extends BaseActivity implements View.OnClickL
 //        ToastUtil.show(getActivity(), "点击第" + position + "个", 1);
         if (position != 0) {
             intent.setClass(AuthorDetailsActivity.this, ArticleDetailsActivity.class);
+//            intent.putExtra("articleId", recommendArticle.articleid);
+//            intent.putExtra("photo", recommendArticle.photo);
             startActivity(intent);
         }
     }
@@ -352,7 +354,7 @@ public class AuthorDetailsActivity extends BaseActivity implements View.OnClickL
             public void onSuccess(String result) {
                 LogUtil.e("result=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,AuthorDetailsActivity.this)){
                     return;
                 }
             }

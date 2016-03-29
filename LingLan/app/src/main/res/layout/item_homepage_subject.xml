@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/dp12"
     android:paddingLeft="@dimen/dp16"
     android:paddingRight="@dimen/dp16"
     android:paddingTop="@dimen/dp12">
@@ -15,10 +14,10 @@
 
         <ImageView
             android:id="@+id/img_homepage_subject_logo"
-            android:layout_width="@dimen/dp74"
-            android:layout_height="@dimen/dp60"
+            android:layout_width="@dimen/dp84"
+            android:layout_height="@dimen/dp64"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/subject" />
+            android:src="@drawable/default_image" />
 
         <LinearLayout
             android:layout_width="@dimen/dp0"
@@ -51,15 +50,38 @@
                 android:textColor="@color/gray"
                 android:textSize="@dimen/sp14" />
 
-            <TextView
-                android:id="@+id/tv_homepage_subject_date"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp0"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="日期"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/sp12" />
+                android:layout_marginTop="@dimen/dp10">
+                <TextView
+                    android:id="@+id/tv_homepage_subject_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="日期"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/sp12" />
+
+                <TextView
+                    android:id="@+id/tv_homepage_subject_new"
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16"
+                    android:paddingTop="1dp"
+                    android:gravity="center_horizontal"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/dp6"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="新"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp10"
+                    android:background="@drawable/frame_red_new"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>

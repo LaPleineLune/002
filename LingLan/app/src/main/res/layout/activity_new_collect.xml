@@ -22,4 +22,7 @@
         app:ptr_animation_style_end="rotate"
         app:ptr_animation_style_start="flip" />
 
+    <include layout="@layout/layout_no_network"
+        android:visibility="gone"/>
+
 </LinearLayout>

@@ -17,7 +17,7 @@
         android:paddingBottom="@dimen/dp6"
         android:paddingTop="@dimen/dp6"
         android:singleLine="true"
-        android:textSize="@dimen/sp14"
+        android:textSize="@dimen/sp16"
         android:textColor="@color/text_title_color"
         android:background="@drawable/dialog_login_edit_bg" />
 

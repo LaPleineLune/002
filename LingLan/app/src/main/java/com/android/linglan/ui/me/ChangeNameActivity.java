@@ -11,6 +11,7 @@ import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.LogUtil;
+import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;
 
 /**
@@ -41,27 +42,9 @@ public class ChangeNameActivity extends BaseActivity {
         Drawable collectTopDrawable = getResources().getDrawable(R.drawable.save);
         collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
         right.setCompoundDrawables(collectTopDrawable, null, null, null);
-        if (name == null || name.equals("")) {
-//            if (changeNameTitle.equals("用户昵称")) {
-//                change_name.setHint("请输入用户昵称");
-//            } else if (changeNameTitle.equals("真实姓名")) {
-//                change_name.setHint("请输入真实姓名");
-//            } else if (changeNameTitle.equals("工作单位")) {
-//                change_name.setHint("请输入工作单位");
-//            }
-            change_name.setHint("请输入" + changeNameTitle);
-        } else {
-//            if (changeNameTitle.equals("用户昵称")) {
-//                change_name.setHint("请输入用户昵称");
-//            } else if (changeNameTitle.equals("真实姓名")) {
-//                change_name.setHint("请输入真实姓名");
-//            } else if (changeNameTitle.equals("工作单位")) {
-//                change_name.setHint("请输入工作单位");
-//            }
-            change_name.setHint("请输入" + changeNameTitle);
-            change_name.setText(name);
-            change_name.setSelection(name.length());
-        }
+        change_name.setHint("请输入" + changeNameTitle);
+        change_name.setText(name);
+        change_name.setSelection(name.length());
     }
 
     @Override
@@ -70,7 +53,7 @@ public class ChangeNameActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String text = change_name.getText().toString().trim();
-                if (!text.isEmpty()) {
+//                if (!text.isEmpty()) {
                     if (changeNameTitle.equals("用户昵称")) {
                         getUserInfoEdit(text, null, null);
                     } else if (changeNameTitle.equals("真实姓名")) {
@@ -78,10 +61,11 @@ public class ChangeNameActivity extends BaseActivity {
                     } else if (changeNameTitle.equals("工作单位")) {
                         getUserInfoEdit(null, null, text);
                     }
-                } else {
-                    ToastUtil.show("请输入" + changeNameTitle);
                 }
-            }
+//            else {
+//                    ToastUtil.show("请输入" + changeNameTitle);
+//                }
+//            }
         });
     }
 
@@ -96,7 +80,7 @@ public class ChangeNameActivity extends BaseActivity {
             public void onSuccess(String result) {
                 LogUtil.e("result=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,ChangeNameActivity.this)){
                     return;
                 }
 
@@ -104,6 +88,7 @@ public class ChangeNameActivity extends BaseActivity {
                 Intent intent = new Intent();
                 if (alias != null) {
                     intent.putExtra("nickname", alias);
+                    SharedPreferencesUtil.saveString("alias", alias);
                 } else if (name != null) {
                     intent.putExtra("userName", name);
                 } else if (company != null) {

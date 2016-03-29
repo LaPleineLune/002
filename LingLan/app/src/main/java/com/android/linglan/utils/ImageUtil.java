@@ -13,6 +13,13 @@ import com.squareup.picasso.RequestCreator;
  */
 public class ImageUtil {
 
+//  try {
+//                ImageUtil.loadImageAsync(控件对象,
+//                        R.dimen.dp84, R.dimen.dp68,
+//                        R.drawable.default_image（默认图）, url, null);
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
   public static void loadImageAsync(ImageView imageView, int targetWidthResId,
       int targetHeightResId, int placeholderResId, String url,
       Callback callback) {
@@ -40,6 +47,7 @@ public class ImageUtil {
     requestCreator.into(imageView, callback);
   }
 
+  // ImageUtil.loadImageAsync(控件对象, url);
   public static void loadImageAsync(ImageView imageView, String url) {
     loadImageAsync(imageView, url, null);
   }
@@ -48,6 +56,7 @@ public class ImageUtil {
     loadImageAsync(imageView, -1, -1, -1, url, callback);
   }
 
+  // ImageUtil.loadImageAsync(控件对象, url, R.drawable.default_image（默认图）);
   public static void loadImageAsync(ImageView imageView, String url, int placeholderResId) {
     loadImageAsync(imageView, -1, -1, placeholderResId, url, null);
   }

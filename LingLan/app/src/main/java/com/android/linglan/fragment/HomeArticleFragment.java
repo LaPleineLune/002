@@ -1,35 +1,38 @@
 package com.android.linglan.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.linglan.adapter.AllArticleAdapter;
 import com.android.linglan.adapter.HomepageArticleClassifyAdapter;
-import com.android.linglan.adapter.HomepageArticleListAdapter;
 import com.android.linglan.base.BaseFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.AllArticleClassifyBean;
 import com.android.linglan.http.bean.AllArticleClassifyListBean;
-import com.android.linglan.ui.MainActivity;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.AllArticleClassifyActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
 import com.android.linglan.widget.CustomPullToRefreshRecyclerView;
-import com.android.linglan.widget.HomepageListView;
 import com.android.linglan.widget.SyLinearLayoutManager;
+import com.chanven.lib.cptr.PtrClassicFrameLayout;
+import com.chanven.lib.cptr.PtrDefaultHandler;
+import com.chanven.lib.cptr.PtrFrameLayout;
+import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
+import com.chanven.lib.cptr.recyclerview.RecyclerAdapterWithHF;
 
 import java.util.ArrayList;
 
@@ -41,11 +44,15 @@ public class HomeArticleFragment extends BaseFragment {
     private View rootView;
     private ListView lv_article_classify;
     private TextView tv_classify_order;
+    private LinearLayout ll_all_article;
+    private LinearLayout ll_no_network;
     private HomepageArticleClassifyAdapter articleClassifyAdapter;
-    private CustomPullToRefreshRecyclerView article_refresh;
+    private PtrClassicFrameLayout recycler_view_home_recommend;
     private RecyclerView rec_all_article;
     private AllArticleAdapter allArticleAdapter;
+    private RecyclerAdapterWithHF mAdapter;
     private int page;
+    private int location;
     private String order;//排序方式('addtime按时间排序' ,'count_view按统计排序')
 
     private AllArticleClassifyBean AllArticleClassify;
@@ -53,15 +60,25 @@ public class HomeArticleFragment extends BaseFragment {
 
     private AllArticleClassifyListBean AllArticleClassifyList;
     private ArrayList<AllArticleClassifyListBean.ArticleClassifyListBean> ArticleClassifyList;
+    private int oldPosition = -1;
 
-    protected static final int REQUEST_SUCCESS = 0;
+//    protected static final int REQUEST_SUCCESS = 0;
+    protected static final int REQUEST_FAILURE = 0;
+    protected static final int REQUEST_SUCCESS = 1;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case REQUEST_SUCCESS:
-                   selectDefult();// 刚刚进来时的默认加载
+                   selectDefult();// 刚刚进来时的默认加载\
+                    ll_all_article.setVisibility(View.VISIBLE);
+                    ll_no_network.setVisibility(View.GONE);
+                    break;
+                case REQUEST_FAILURE:
+                    //原页面GONE掉，提示网络不好的页面出现
+                    ll_all_article.setVisibility(View.GONE);
+                    ll_no_network.setVisibility(View.VISIBLE);
                     break;
             }
         }
@@ -81,130 +98,134 @@ public class HomeArticleFragment extends BaseFragment {
         return rootView;
     }
 
+
     @Override
     protected void initView() {
+        ll_no_network = (LinearLayout) rootView.findViewById(R.id.ll_no_network);
+        ll_all_article = (LinearLayout) rootView.findViewById(R.id.ll_all_article);
         lv_article_classify = (ListView) rootView.findViewById(R.id.lv_article_classify);
-//        tv_classify_order = (TextView) rootView.findViewById(R.id.tv_classify_order);
+
+        recycler_view_home_recommend = (PtrClassicFrameLayout) rootView.findViewById(R.id. recycler_view_home_recommend);
+        rec_all_article = (RecyclerView) rootView.findViewById(R.id.rec_all_article);
+        rec_all_article.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rec_all_article .setHasFixedSize(true);
+        allArticleAdapter = new AllArticleAdapter(getActivity());
+        mAdapter = new RecyclerAdapterWithHF(allArticleAdapter);
+        rec_all_article.setAdapter(mAdapter);
+
+        articleClassifyAdapter = new HomepageArticleClassifyAdapter(getActivity());
+        lv_article_classify.setAdapter(articleClassifyAdapter);
+
     }
 
     @Override
     protected void initData() {
         getAllArticleClassify();
-        articleClassifyAdapter = new HomepageArticleClassifyAdapter(getActivity());
-        lv_article_classify.setAdapter(articleClassifyAdapter);
+    }
+
+    @Override
+    protected void setListener() {
+        //下拉刷新
+        recycler_view_home_recommend.setPtrHandler(new PtrDefaultHandler() {
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                page = 1;
+                if ((ArticleClassify == null || ArticleClassify.size() == 0)) {
+                    getAllArticleClassify();
+                }else{
+                    getAllArticleClassifyList(ArticleClassify.get(location).cateid, page, order);
+                }
+
+            }
+        });
+
+        //上拉刷新
+        recycler_view_home_recommend.setOnLoadMoreListener(new OnLoadMoreListener() {
+
+            @Override
+            public void loadMore() {
+                page++;
+                if ((ArticleClassify == null || ArticleClassify.size() == 0)) {
+                    getAllArticleClassify();
+                }else{
+                    getAllArticleClassifyList(ArticleClassify.get(location).cateid, page, order);
+                }
+                recycler_view_home_recommend.loadMoreComplete(true);
+            }
+        });
+
         lv_article_classify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
-                // TODO Auto-generated method stub
-                final int location = position;
-                articleClassifyAdapter.setSelectedPosition(position);
-                articleClassifyAdapter.notifyDataSetInvalidated();
-                getAllArticleClassifyList(ArticleClassify.get(location).cateid, page, order);
+                location = position;
+                page = 1;
+                if (oldPosition != position) {
+                    articleClassifyAdapter.setSelectedPosition(position);
+                    articleClassifyAdapter.notifyDataSetInvalidated();
 
-                allArticleAdapter = new AllArticleAdapter(getActivity());
-                rec_all_article.setAdapter(allArticleAdapter);
-                article_refresh.setRefreshCallback(new CustomPullToRefreshRecyclerView.RefreshCallback() {
-                    @Override
-                    public void onPullDownToRefresh() {
-                        page = 1;
-                        getAllArticleClassifyList(ArticleClassify.get(location).cateid, page, order);
-                    }
+                    getAllArticleClassifyList(ArticleClassify.get(location).cateid, page, order);
 
-                    @Override
-                    public void onPullUpToLoadMore() {
-                        page++;
-                        LogUtil.e("页面数：" + page);
-                        getAllArticleClassifyList(ArticleClassify.get(location).cateid, page, order);
-                    }
-                });
+                    oldPosition = position;
+                }
             }
         });
 
-    }
-
-    @Override
-    protected void setListener() {
-//        tv_classify_order.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ToastUtil.show("文章分类排序");
-////                Intent orderIntent = new Intent(getActivity(), AllArticleClassifyActivity.class);
-////                startActivity(orderIntent);
-//            }
-//        });
+        ll_no_network.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
+            }
+        });
     }
 
     private void selectDefult(){
-        final int location=0;
         articleClassifyAdapter.setSelectedPosition(0);
         articleClassifyAdapter.notifyDataSetInvalidated();
         order = "";
         page =1;
 
-        article_refresh =  (CustomPullToRefreshRecyclerView)rootView.findViewById(R.id. article_refresh);
-//		RecyclerView rec_all_article = (RecyclerView) rootView.findViewById(R.id.rec_all_article_page);
-        rec_all_article = article_refresh.getRefreshableView();
-        rec_all_article.setLayoutManager(new SyLinearLayoutManager(getActivity()));
-        rec_all_article .setHasFixedSize(true);
-
         getAllArticleClassifyList(ArticleClassify.get(location).cateid, page, order);
-
-        allArticleAdapter = new AllArticleAdapter(getActivity());
-        rec_all_article.setAdapter(allArticleAdapter);
-
-        article_refresh.setRefreshCallback(new CustomPullToRefreshRecyclerView.RefreshCallback() {
-            @Override
-            public void onPullDownToRefresh() {
-                page = 1;
-                getAllArticleClassifyList(ArticleClassify.get(location).cateid, page, order);
-            }
-
-            @Override
-            public void onPullUpToLoadMore() {
-                page++;
-                LogUtil.e("页面数：" + page);
-                getAllArticleClassifyList(ArticleClassify.get(location).cateid, page, order);
-            }
-        });
     }
 
     private void getAllArticleClassify() {
         NetApi.getAllArticleClassify(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                LogUtil.d(getActivity().getPackageName(), "getAllArticleClassify=" + result);
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,getActivity())){
                     return;
                 }
                 AllArticleClassify = JsonUtil.json2Bean(result, AllArticleClassifyBean.class);
                 ArticleClassify = AllArticleClassify.data;
-//                LogUtil.d("全部文章分类" + ArticleClassify.toString());
                 if (ArticleClassify != null && !ArticleClassify.equals("")) {
                     ArticleClassify.get(0).cateid = "";
                     articleClassifyAdapter.update(ArticleClassify);
                     handler.sendEmptyMessage(REQUEST_SUCCESS);
-                    for(AllArticleClassifyBean.ArticleClassifyBean article :  ArticleClassify) {
-                        LogUtil.e("全部文章分类" + article.toString());
-                    }
                 }
             }
 
             @Override
             public void onFailure(String message) {
+                handler.sendEmptyMessage(REQUEST_FAILURE);
             }
         });
     }
 
     //得到所有的文章分类
     private void getAllArticleClassifyList(String cateid, final int page,String order) {
-        LogUtil.e("全部文章分类列表id" + cateid);
         NetApi.getAllArticleClassifyList(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
-                article_refresh.onRefreshComplete();
+            LogUtil.d(getActivity().getPackageName(), "getAllArticleClassifyList=" + result);
 
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result)){
+                recycler_view_home_recommend.refreshComplete();
+                recycler_view_home_recommend.setLoadMoreEnable(true);
+
+                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,getActivity())){
+                    recycler_view_home_recommend.loadMoreComplete(false);
                     return;
                 }
 
@@ -219,7 +240,6 @@ public class HomeArticleFragment extends BaseFragment {
                     }
                 }
 //
-                LogUtil.d("全部文章分类列表" + ArticleClassifyList.toString());
                 if (ArticleClassifyList != null && !ArticleClassifyList.equals("")) {
                     allArticleAdapter.updateAdapter(ArticleClassifyList);
                 }
@@ -227,7 +247,8 @@ public class HomeArticleFragment extends BaseFragment {
 
             @Override
             public void onFailure(String message) {
-                article_refresh.onRefreshComplete();
+                recycler_view_home_recommend.refreshComplete();
+                handler.sendEmptyMessage(REQUEST_FAILURE);
             }
         }, cateid, page + "", order);
     }
