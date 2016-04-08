@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:gravity="center_vertical">
 
     <ImageView
@@ -11,19 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:src="@drawable/tab_me_icon_normal"/>
-
-    <!--<TextView-->
-        <!--android:id="@+id/message_indicator"-->
-        <!--android:layout_width="15dp"-->
-        <!--android:layout_height="15dp"-->
-        <!--android:layout_toRightOf="@id/tab_icon"-->
-        <!--android:layout_alignTop="@id/tab_icon"-->
-        <!--android:layout_marginLeft="-4dp"-->
-        <!--android:background="@drawable/icon_red_dot"-->
-        <!--android:gravity="center_horizontal"-->
-        <!--android:textColor="#FFFFFF"-->
-        <!--android:textSize="10dp"-->
-        <!--android:visibility="gone"/>-->
 
     <TextView
         android:id="@+id/tab_label"
@@ -35,5 +21,11 @@
         android:textSize="@dimen/sp12"
         android:text="消息"
         android:textColor="@drawable/main_tab_text_color"/>
+
+    <!--<ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp50"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/main_activity_divider" />-->
 
 </RelativeLayout>

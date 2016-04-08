@@ -7,27 +7,26 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
+import com.android.linglan.Service.MyPushIntentService;
 import com.android.linglan.base.BaseActivity;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
+import com.android.linglan.utils.DeviceUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
-//import com.umeng.message.IUmengRegisterCallback;
-//import com.umeng.message.PushAgent;
-//import com.umeng.message.UmengRegistrar;
+import com.umeng.common.message.UmengMessageDeviceConfig;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.MsgConstant;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.UUID;
 
 public class StartActivity extends BaseActivity {
@@ -35,6 +34,7 @@ public class StartActivity extends BaseActivity {
     private static String uuid = "";
     public String token;
     public String appkey;
+    String deviceId;
 
     protected static final int REQUEST_VISIT_TOKEN = 0;
     protected static final int REQUEST_SUCCESS = 1;
@@ -54,24 +54,55 @@ public class StartActivity extends BaseActivity {
         }
     };
 
+    private void initUMeng() {
+
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.enable();
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+
+                do {
+                    deviceId = UmengRegistrar.getRegistrationId(StartActivity.this);
+                    LogUtil.e("device_token哈哈哈哈哈?????" +deviceId );
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        // TODO 自动生成的 catch 块
+                        e.printStackTrace();
+                    }
+                } while (TextUtils.isEmpty(deviceId));
+            }
+        }, 1000);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         //友盟推送
-//        PushAgent mPushAgent = PushAgent.getInstance(this);
-//        mPushAgent.enable(new IUmengRegisterCallback() {
-//            @Override
-//            public void onRegistered(String registrationId) {
-//                //onRegistered方法的参数registrationId即是device_token
-////                Log.d("device_token", registrationId);
-//                LogUtil.e("device_token" + registrationId);
-//                LogUtil.e("device_token哈哈哈哈哈");
-//            }
-//        });
+//        initUMeng();
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.onAppStart();
 
-//        String device_token = UmengRegistrar.getRegistrationId(this);
-//        LogUtil.e("device_token哈哈哈哈哈?????" +device_token );
+//
+        mPushAgent.enable(new IUmengRegisterCallback() {
+            @Override
+            public void onRegistered(String registrationId) {
+                //onRegistered方法的参数registrationId即是device_token
+//                Log.d("device_token", registrationId);
+                LogUtil.e("device_token" + registrationId);//
+            }
+        });
+
+//        mPushAgent.enable();
+        mPushAgent.setPushCheck(false);
+        String device_token = UmengRegistrar.getRegistrationId(this);
+        LogUtil.e("device_token哈哈哈哈哈?????" +device_token );
+
+        mPushAgent.setPushIntentServiceClass(MyPushIntentService.class);
 
 //        if (SharedPreferencesUtil.getString("appkey", null) != null) {
 //            getAppKey();
@@ -118,6 +149,8 @@ public class StartActivity extends BaseActivity {
 //            }
 //        }, 3000);
     }
+
+
 
     @Override
     protected void setView() {
@@ -168,7 +201,7 @@ public class StartActivity extends BaseActivity {
             public void onFailure(String message) {
 
             }
-        }, getDeviceId(this));
+        }, DeviceUtil.getDeviceId(this));
     }
 
     /**
@@ -257,38 +290,5 @@ public class StartActivity extends BaseActivity {
         LogUtil.e("getUUID : " + uuid);
         return uuid;
     }
-
-
-//    private static String sID = null;
-//    private static final String INSTALLATION = "INSTALLATION";
-//
-//    public synchronized static String id(Context context) {
-//        if (sID == null) {
-//            File installation = new File(context.getFilesDir(), INSTALLATION);
-//            try {
-//                if (!installation.exists())
-//                    writeInstallationFile(installation);
-//                sID = readInstallationFile(installation);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//        return sID;
-//    }
-//
-//    private static String readInstallationFile(File installation) throws IOException {
-//        RandomAccessFile f = new RandomAccessFile(installation, "r");
-//        byte[] bytes = new byte[(int) f.length()];
-//        f.readFully(bytes);
-//        f.close();
-//        return new String(bytes);
-//    }
-//
-//    private static void writeInstallationFile(File installation) throws IOException {
-//        FileOutputStream out = new FileOutputStream(installation);
-//        String id = UUID.randomUUID().toString();
-//        out.write(id.getBytes());
-//        out.close();
-//    }
 
 }

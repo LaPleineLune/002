@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -59,6 +60,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
     private SubjectDetails subjectDetails;
     private String isLike = "1";// 原：1
     private String isCollect = "1";// 原：1
+    private String isShare = "1";// 原：1
     private UpdateDialog exitLoginDialog;
     private SubjectDetailsAdapter subjectDetailsAdapter;
     private PtrClassicFrameLayout recycler_view_subject_details;
@@ -121,9 +123,11 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        specialid = getIntent().getStringExtra("specialid");
-        LogUtil.d("specialid=" + specialid);
-        getDetailsSubject();
+//        specialid = getIntent().getStringExtra("specialid");
+//        LogUtil.d("specialid=" + specialid);
+//        if (isShare.equals("1")) {
+//            getDetailsSubject(page);
+//        }
     }
 
     @Override
@@ -147,10 +151,14 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
     protected void initData() {
         setTitle("专题详情", "");
         intent = new Intent();
+        specialid = getIntent().getStringExtra("specialid");
+        LogUtil.d("specialid=" + specialid);
         specialname = getIntent().getStringExtra("specialname");
         logo = getIntent().getStringExtra("logo");
+        page = 1;
+        getDetailsSubject(page);
 
-        rec_subject_details.setLayoutManager(new SyLinearLayoutManager(this));
+        rec_subject_details.setLayoutManager(new LinearLayoutManager(this));
         rec_subject_details.setHasFixedSize(true);
         String description = "";
         if (!getIntent().getStringExtra("description").isEmpty()) {
@@ -180,7 +188,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
         ll_no_network.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onResume();
+                initData();
             }
         });
 
@@ -190,7 +198,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
             page = 1;
-            getDetailsSubject();
+            getDetailsSubject(page);
             }
         });
 
@@ -200,7 +208,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void loadMore() {
             page++;
-            getDetailsSubject();
+            getDetailsSubject(page);
             recycler_view_subject_details.loadMoreComplete(true);
             }
         });
@@ -209,6 +217,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        isShare = "1";
         switch (v.getId()) {
             case R.id.subject_details_note:
                 intent.putExtra("note", "write");
@@ -241,6 +250,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.subject_details_share:
 //                ToastUtil.show("我是分享");
+                isShare = "0";
                 ShareUtil.umengPlatforms(SubjectDetailsActivity.this);
                 break;
             default:
@@ -265,7 +275,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
     /**
      * 获取专题详情
      */
-    private void getDetailsSubject() {
+    private void getDetailsSubject(final int page) {
         NetApi.getDetailsSubject(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
@@ -285,7 +295,11 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
                 isCollect = subjectDetails.collectiscancel;
                 handler.sendEmptyMessage(REQUEST_COLLECT);
 
-                subjectData = subjectDetails.data;
+                if (page == 1) {
+                    subjectData = subjectDetails.data;
+                } else {
+                    subjectData.addAll(subjectDetails.data);
+                }
 
                 Message message = new Message();
                 Bundle bundle = new Bundle();
@@ -304,7 +318,7 @@ public class SubjectDetailsActivity extends BaseActivity implements View.OnClick
                 recycler_view_subject_details.refreshComplete();
                 handler.sendEmptyMessage(REQUEST_FAILURE);
             }
-        }, specialid);
+        }, specialid,page + "");
     }
 
     /**

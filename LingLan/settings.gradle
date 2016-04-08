@@ -1,2 +1,2 @@
-include ':app', ':pulltorefresh_library', ':cptr', ':PushSDK'
+include ':app', ':pulltorefresh_library', ':PushSDK', ':cptr'
 include ':social_sdk_library_project'

@@ -19,6 +19,11 @@ public class Constants {
     public static String SECRET = "c!$X?Ss552:3`;w$-60^}h-,stz9Tu|zd+&:hIjyG#bFdxk(YN";
 
     /**
+     * 加密
+     */
+    public static String SEED_16_CHARACTER = "d.7r+[6D,4[]2cQ?|!>xE6d#{]3v%d{K@q#pVbU*Vm/SRDYsIl";
+
+    /**
      * App版本号
      */
     public static String VERSION = SharedPreferencesUtil.getString("version", "1.0.0");// 哪一版本返哪一个版本号
@@ -120,7 +125,7 @@ public class Constants {
     /**
      * 专题详情
      */
-    public static final String URL_DETAILS_SUBJECT = Constants.SERVER + "/Api/Special/specailcontent?appkey=%s&token=%s&specialid=%s";
+    public static final String URL_DETAILS_SUBJECT = Constants.SERVER + "/Api/Special/specailcontent?appkey=%s&token=%s&specialid=%s&page=%s";
 
     /**
      * 专题详情用户写（添加）笔记

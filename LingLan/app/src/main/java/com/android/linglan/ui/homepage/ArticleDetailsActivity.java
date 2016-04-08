@@ -3,6 +3,7 @@ package com.android.linglan.ui.homepage;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,6 +46,8 @@ import com.umeng.socialize.sso.UMSsoHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Pattern;
 
@@ -156,10 +159,10 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         } else {
             article_publisher.setText("中医书友会");
         }
-        if (!data.digest.isEmpty()) {
-            article_details_digest.setVisibility(View.VISIBLE);
-            article_details_digest.setText(data.digest);
-        }
+//        if (!data.digest.isEmpty()) {// 摘要
+//            article_details_digest.setVisibility(View.VISIBLE);
+//            article_details_digest.setText(data.digest);
+//        }
 
         Spanned content = Html.fromHtml(data.content, imgGetter, null);
         article_details_content.setMovementMethod(ScrollingMovementMethod.getInstance());// 设置可滚动
@@ -168,7 +171,7 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
 
         web_article_details_content.loadDataWithBaseURL(null, data.content, "text/html", "UTF-8", null);
 
-        article_details_copyright.setText(Html.fromHtml(data.copyright, imgGetter, null));
+//        article_details_copyright.setText(Html.fromHtml(data.copyright, imgGetter, null));// 版权声明
 
         // 设置分享的内容String articleORsubject, String id, String shareTitle, String imgUrl, String shareContent
         ShareUtil.setShareContent(this, Constants.ARTICLE, articleId, data.title, photo, data.digest);
@@ -256,9 +259,16 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
 //        setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
 //        setLoadWithOverviewMode(true); // 缩放至屏幕的大小
 //        setLoadsImagesAutomatically(true);  //支持自动加载图片
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);//排版适应屏幕
+
+
+
+//        webSettings.setPluginsEnabled(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setSupportMultipleWindows(true);// 新加
 
         webSettings.setJavaScriptEnabled(true);// 支持js
-        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setLoadWithOverviewMode(true);// setUseWideViewPort方法设置webview推荐使用的窗口。setLoadWithOverviewMode方法是设置webview加载的页面的模式。
         webSettings.setBuiltInZoomControls(true);
         webSettings.setSupportZoom(true);
         webSettings.setDisplayZoomControls(false);
@@ -267,6 +277,18 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
         webSettings.setLoadsImagesAutomatically(true);// 支持自动加载图片
         webSettings.setPluginState(WebSettings.PluginState.ON);//支持多媒体
         web_article_details_content.requestFocusFromTouch();
+
+        web_article_details_content.setWebChromeClient(new WebChromeClient() {
+
+            public void onProgressChanged(WebView view, int progress) {
+                // Activity和Webview根据加载程度决定进度条的进度大小
+                // 当加载到100%的时候 进度条自动消失
+                ArticleDetailsActivity.this.setProgress(progress * 100);
+
+            }
+
+        });
+
         String textSize = SharedPreferencesUtil.getString("webTextSize", "正常");// 初始化文字大小
 
         if (textSize.equals("较小")) {
@@ -319,13 +341,13 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
             }
         });
 
-        web_article_details_content.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                ToastUtil.show("哈哈哈哈");
-                return false;
-            }
-        });
+//        web_article_details_content.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                ToastUtil.show("哈哈哈哈");
+//                return false;
+//            }
+//        });
 
         web_article_details_content.setWebViewClient(new WebViewClient() {
             @Override
@@ -337,10 +359,27 @@ public class ArticleDetailsActivity extends BaseActivity implements View.OnClick
                     // URL 不正确的情况下
                     ToastUtil.show("地址错误");
                 } else {
-                    // URL 不正确的情况下
-                    intent.setClass(ArticleDetailsActivity.this, ArticleUrlDetailsActivity.class);
-                    intent.putExtra("url", url);
-                    startActivity(intent);
+                    // URL 正确的情况下
+                    String type = Uri.parse(url).getQueryParameter("type");
+//                    String type = "0";
+                    if (!TextUtils.isEmpty(type) && Constants.ARTICLE.equals(type)) {// 这是文章
+                        intent.setClass(ArticleDetailsActivity.this, ArticleDetailsActivity.class);
+                        intent.putExtra("articleId", Uri.parse(url).getQueryParameter("articleId"));
+//                        intent.putExtra("articleId", "1904");
+//                        intent.putExtra("photo", "http://img.zhongyishuyou.com/Public/data/article/logo/_2016030915444588699.jpg");
+                        startActivity(intent);
+                    } else if (!TextUtils.isEmpty(type) && Constants.SUBJECT.equals(type)) {// 这是专题
+                        intent.setClass(ArticleDetailsActivity.this, SubjectDetailsActivity.class);
+                        intent.putExtra("specialid", Uri.parse(url).getQueryParameter("specialid"));
+//                        intent.putExtra("specialid", "15");
+//                        intent.putExtra("photo", "http://img.zhongyishuyou.com/Public/data/special/logo/201603102330066.png");
+//                        intent.putExtra("logo", "http://img.zhongyishuyou.com/Public/data/special/logo/2016031022112547.png");
+//                        intent.putExtra("description", "赵绍琴（1918-2001年），北京市人，三代御医之后。赵氏幼承家学，后又拜师于太医院御医韩一斋、瞿文楼和北京四大名医之一汪逢春，尽得三家真传。1934年，悬壶北京。1956年，到北京中医学院任教，曾任北京中医学院温病教研室主任，中国中医药学会内科学会顾问。本专题内涉及赵老从理论到临床的学术成果。");
+                        startActivity(intent);
+                    }
+//                    intent.setClass(ArticleDetailsActivity.this, ArticleUrlDetailsActivity.class);
+//                    intent.putExtra("url", url);
+//                    startActivity(intent);
                 }
 
 //                return super.shouldOverrideUrlLoading(view, url);

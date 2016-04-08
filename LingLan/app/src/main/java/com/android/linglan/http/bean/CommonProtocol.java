@@ -1,7 +1,7 @@
 package com.android.linglan.http.bean;
 
 public class CommonProtocol {
-  public String code;
+  public int code;
   public String msg;
 
   @Override

@@ -18,7 +18,11 @@ import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengSnsUtil;
 import com.android.linglan.widget.UpdateDialog;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.listener.SocializeListeners;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -142,8 +146,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         exitLoginDialog = new UpdateDialog(this, "确定退出当前账号吗", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               getUserExit();
+                getUserExit();
                 exitLoginDialog.dismiss();
             }
         });
@@ -238,6 +241,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     return;
                 }
 
+                logout(SHARE_MEDIA.WEIXIN);
+
                 SharedPreferencesUtil.removeValue("token");
                 SharedPreferencesUtil.removeValue("face");// 头像
 
@@ -258,5 +263,20 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
             }
         });
+    }
+
+    public void logout(final SHARE_MEDIA platform) {
+        UmengSnsUtil.logout(SettingActivity.this, platform,
+            new SocializeListeners.SocializeClientListener() {
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onComplete(int i, SocializeEntity socializeEntity) {
+
+                }
+            });
     }
 }

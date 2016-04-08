@@ -4,6 +4,8 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
+    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "com.android.linglan.ui"
         minSdkVersion 15
@@ -46,13 +48,7 @@ dependencies {
     }
     compile project(':PushSDK')
     compile project(':cptr')
-    compile files('libs/umeng-update-v2.7.0.jar')
-    compile files('libs/okio-0.6.1.jar')
-}
-android {
-
-    useLibrary 'org.apache.http.legacy'
-
+    compile 'com.android.support:support-v4:23.1.1'
 }
 
 

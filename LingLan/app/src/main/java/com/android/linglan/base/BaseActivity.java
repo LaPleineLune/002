@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.android.linglan.ui.R;
 import com.umeng.analytics.MobclickAgent;
-//import com.umeng.message.PushAgent;
+import com.umeng.message.PushAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         }
         childlist.add(this);
 
-//        PushAgent.getInstance(this).onAppStart();
+        PushAgent.getInstance(this).onAppStart();
     }
 
     public void setTitle(String titleStr, String rightStr) {

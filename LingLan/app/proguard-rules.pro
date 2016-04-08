@@ -28,6 +28,40 @@
 #-dontobfuscate
 -printseeds
 
+#友盟 start
+-dontshrink
+-dontoptimize
+-dontwarn com.google.android.maps.**
+-dontwarn android.webkit.WebView
+-dontwarn com.umeng.**
+-dontwarn com.tencent.weibo.sdk.**
+-dontwarn com.facebook.**
+-keep enum com.facebook.**
+-keepattributes Exceptions,InnerClasses,Signature
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public interface com.facebook.**
+-keep public interface com.tencent.**
+-keep public interface com.umeng.socialize.**
+-keep public interface com.umeng.socialize.sensor.**
+-keep public interface com.umeng.scrshot.**
+-keep public class com.umeng.socialize.* {*;}
+-keep public class javax.**
+-keep public class android.webkit.**
+-keep class com.facebook.**
+-keep class com.umeng.scrshot.**
+-keep public class com.tencent.** {*;}
+-keep class com.umeng.socialize.sensor.**
+-keep class com.tencent.mm.sdk.modelmsg.WXMediaMessage {*;}
+-keep class com.tencent.mm.sdk.modelmsg.** implements com.tencent.mm.sdk.modelmsg.WXMediaMessage$IMediaObject {*;}
+-keep class im.yixin.sdk.api.YXMessage {*;}
+-keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
+-keep public class [your_pkg].R$*{
+    public static final int *;
+}
+#友盟 end
+
+
 -keepattributes *Annotation*
 -keepattributes InnerClasses
 -keepattributes Signature
@@ -72,8 +106,8 @@
 -keep public class com.loopj.android.http.** { *; }
 -keep public class com.loopj.android.http.TextHttpResponseHandler
 -keep public class com.loopj.android.http.AsyncHttpResponseHandler
--keep public class  com.android.linglan.http.** { *; }
--keep public class com.android.linglan.utils.** { *; }
+-keep public class  com.android.linglan.http.bean.** { *; }
+#-keep public class com.android.linglan.utils.** { *; }
 -dontwarn com.loopj.android.http.**
 -dontwarn com.loopj.android.http.TextHttpResponseHandler
 -dontwarn com.loopj.android.http.AsyncHttpResponseHandler
@@ -199,9 +233,79 @@
 -keep public class com.huijuan.passerby.R$*{
     public static final int *;
 }
+-dontwarn com.ut.mini.**
 
+-dontwarn okio.**
+
+-dontwarn com.xiaomi.**
+
+-dontwarn com.squareup.wire.**
+
+-dontwarn android.support.v4.**
+
+
+
+-keepattributes *Annotation*
+
+
+
+-keep class android.support.v4.** { *; }
+
+-keep interface android.support.v4.app.** { *; }
+
+
+
+-keep class okio.** {*;}
+
+-keep class com.squareup.wire.** {*;}
+
+
+
+-keep class com.umeng.message.protobuffer.* {
+
+         public <fields>;
+
+         public <methods>;
+
+}
+
+
+
+-keep class com.umeng.message.* {
+
+         public <fields>;
+
+         public <methods>;
+
+}
+
+
+
+
+-keep class org.android.agoo.impl.* {
+
+         public <fields>;
+
+         public <methods>;
+
+}
+
+
+
+
+-keep class org.android.agoo.service.* {*;}
+
+
+
+
+-keep class org.android.spdy.**{*;}
+
+
+
+
+-keep public class com.android.linglan.ui.R$*{
+
+    public static final int *;
+
+}
 -dontwarn com.squareup.okhttp.**
-
--keep class com.huijuan.passerby.http.bean.** { *; }
--keep class com.huijuan.passerby.webview.PasserByJsInterface { *;}
-

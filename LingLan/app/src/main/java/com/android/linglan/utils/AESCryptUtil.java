@@ -6,6 +6,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import android.util.Base64;
 
+import com.android.linglan.http.Constants;
+
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.spec.AlgorithmParameterSpec;
@@ -29,13 +31,13 @@ public class AESCryptUtil {
     public Cipher cipher;
     public SecretKeySpec key;
     private AlgorithmParameterSpec spec;
-    public static final String SEED_16_CHARACTER = "d.7r+[6D,4[]2cQ?|!>xE6d#{]3v%d{K@q#pVbU*Vm/SRDYsIl";
+//    public static final String SEED_16_CHARACTER = "d.7r+[6D,4[]2cQ?|!>xE6d#{]3v%d{K@q#pVbU*Vm/SRDYsIl";
 
     public AESCryptUtil() {//  throws Exception
         // hash password with SHA-256 and crop the output to 128-bit for key
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            digest.update(SEED_16_CHARACTER.getBytes("UTF-8"));
+            digest.update(Constants.SEED_16_CHARACTER.getBytes("UTF-8"));
             byte[] keyBytes = new byte[32];
             System.arraycopy(digest.digest(), 0, keyBytes, 0, keyBytes.length);
             cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");

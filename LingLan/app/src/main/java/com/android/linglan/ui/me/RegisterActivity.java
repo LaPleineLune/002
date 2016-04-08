@@ -3,12 +3,14 @@ package com.android.linglan.ui.me;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.linglan.base.BaseActivity;
@@ -22,12 +24,18 @@ import com.android.linglan.utils.AESCryptUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
+import com.android.linglan.utils.ProgressUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.TelephonyUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengSnsUtil;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.listener.SocializeListeners;
+import com.umeng.socialize.exception.SocializeException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 /**
  * Created by LeeMy on 2016/2/2 0002.
@@ -38,6 +46,7 @@ public class RegisterActivity extends BaseActivity {
     private EditText inputCode;
     private Button requestCode;
     private Button submit;
+    private ImageView weichat_login_icon;
     private LinearLayout registerDeal;
     private String registerPhone;
     private SMSBroadcastReceiver mSMSBroadcastReceiver;
@@ -57,6 +66,10 @@ public class RegisterActivity extends BaseActivity {
         inputCode = (EditText) findViewById(R.id.input_code);
         requestCode = (Button) findViewById(R.id.request_code);
         submit = (Button) findViewById(R.id.submit);
+//        weichat_login_icon = (ImageView) findViewById(R.id.weichat_login_icon);
+        View snsButton = findViewById(R.id.weichat_login_icon);
+        snsButton.setTag(SHARE_MEDIA.WEIXIN.ordinal());
+        snsButton.setOnClickListener(this);
         registerDeal = (LinearLayout) findViewById(R.id.register_deal);
 
     }
@@ -65,12 +78,14 @@ public class RegisterActivity extends BaseActivity {
     protected void initData() {
 //        setTitle("注册", "");
         setTitle("登录", "");
+        UmengSnsUtil.init(this);
     }
 
     @Override
     protected void setListener() {
         requestCode.setOnClickListener(this);
         submit.setOnClickListener(this);
+//        weichat_login_icon.setOnClickListener(this);
         registerDeal.setOnClickListener(null);
 //        String str = aesCryptUtil.decrypt("hdpxUvAjTfNO7z7g6WU9EScmSJuDU4zUXeNeosW5whHvcgMVWOHfe79FV/2bQ8CG10gEX5JXc0CMbi1qxOAndnqF6E8EMZlPVHcILEkSJmE=");
 //        LogUtil.e("=======" + str);
@@ -124,51 +139,52 @@ public class RegisterActivity extends BaseActivity {
             case R.id.register_deal:
                 startActivity(new Intent(RegisterActivity.this, TermsOfServiceActivity.class));
                 break;
-            case R.id.qq_login_icon:
-            case R.id.sina_login_icon:
+//            case R.id.qq_login_icon:
+//            case R.id.sina_login_icon:
             case R.id.weichat_login_icon:
-//                SHARE_MEDIA platform = SHARE_MEDIA.values()[(Integer) v.getTag()];
-//                SnsUtil.authorize(getActivity(), platform, new SocializeListeners.UMAuthListener() {
-//                    @Override
-//                    public void onError(SocializeException e, SHARE_MEDIA platform) {
-//                        ToastUtil.show("授权失败");
-//                    }
-//
-//                    @Override
-//                    public void onComplete(final Bundle value, final SHARE_MEDIA platform) {
-//                        if (value != null && !TextUtils.isEmpty(value.getString("uid"))) {
-//                            ProgressUtil.show(getActivity(), "登录验证中...");
-//                            ToastUtil.show("授权完成");
-//                            SnsUtil.getUserInfo(getActivity(), platform,
-//                                    new SocializeListeners.UMDataListener() {
-//                                        @Override
-//                                        public void onStart() {}
-//
-//                                        @Override
-//                                        public void onComplete(int status, final Map<String, Object> info) {
-//                                            if (status == 200 && info != null) {
+                SHARE_MEDIA platform = SHARE_MEDIA.values()[(Integer) v.getTag()];
+                UmengSnsUtil.authorize(this, platform, new SocializeListeners.UMAuthListener() {
+                    @Override
+                    public void onError(SocializeException e, SHARE_MEDIA platform) {
+                        ToastUtil.show("授权失败");
+                    }
+
+                    @Override
+                    public void onComplete(final Bundle value, final SHARE_MEDIA platform) {
+                        if (value != null && !TextUtils.isEmpty(value.getString("uid"))) {
+                            ProgressUtil.show(RegisterActivity.this, "登录验证中...");
+                            ToastUtil.show("授权完成");
+                            UmengSnsUtil.getUserInfo(RegisterActivity.this, platform,
+                                    new SocializeListeners.UMDataListener() {
+                                        @Override
+                                        public void onStart() {
+                                        }
+
+                                        @Override
+                                        public void onComplete(int status, final Map<String, Object> info) {
+                                            if (status == 200 && info != null) {
 //                                                NetApi.snsLogin(platform, value, info, loginCallback);
-//                                            } else {
-//                                                ProgressUtil.dismiss();
-//                                                ToastUtil.show("授权失败");
-//                                            }
-//                                        }
-//                                    });
-//                        } else {
-//                            ToastUtil.show("授权失败");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancel(SHARE_MEDIA platform) {
-//                        ToastUtil.show("授权取消");
-//                    }
-//
-//                    @Override
-//                    public void onStart(SHARE_MEDIA platform) {
-//                        // ToastUtil.show("授权开始");
-//                    }
-//                });
+                                            } else {
+                                                ProgressUtil.dismiss();
+                                                ToastUtil.show("授权失败");
+                                            }
+                                        }
+                                    });
+                        } else {
+                            ToastUtil.show("授权失败");
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA platform) {
+                        ToastUtil.show("授权取消");
+                    }
+
+                    @Override
+                    public void onStart(SHARE_MEDIA platform) {
+                        // ToastUtil.show("授权开始");
+                    }
+                });
                 break;
         }
     }

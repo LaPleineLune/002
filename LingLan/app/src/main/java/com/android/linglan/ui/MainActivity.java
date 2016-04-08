@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.fragment.HomePageFragment;
 import com.android.linglan.fragment.MeFragment;
 import com.android.linglan.fragment.TestTabFragmentDelegate;
@@ -17,7 +18,6 @@ import com.android.linglan.http.bean.RecommendSubjects;
 import com.android.linglan.utils.AppUpdaterUtil;
 import com.android.linglan.utils.ToastUtil;
 import com.android.linglan.widget.TestFixedTabPageIndicator;
-import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +37,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        UmengUpdateAgent.update(this);
-
-//        new AppUpdaterUtil().checkToUpdate(this);
-
+        new AppUpdaterUtil().checkToUpdate(this);
         initFragments();
         ArticlesData = (ArrayList<RecommendArticles.RecommendArticle>) getIntent().getSerializableExtra("ArticlesData");
         SubjectsData = (ArrayList<RecommendSubjects.RecommendSubject>) getIntent().getSerializableExtra("SubjectsData");
@@ -59,6 +55,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+//        SharedPreferencesUtil.saveString("appkey", "2b021b82e2974cfe39d3da53fca63d8e");
 
     }
 
@@ -81,6 +78,11 @@ public class MainActivity extends BaseActivity {
         TestTabFragmentDelegate fragmentDelegate =
                 new TestTabFragmentDelegate(HomePageFragment.class, null, R.drawable.bottom_home_icon, R.string.first_page);
         fragmentDelegates.add(fragmentDelegate);
+
+        fragmentDelegate =
+                new TestTabFragmentDelegate(ClinicalFragment.class, null, R.drawable.bottom_consilia_icon, R.string.clinical);
+        fragmentDelegates.add(fragmentDelegate);
+
         fragmentDelegate = new TestTabFragmentDelegate(MeFragment.class, null, R.drawable.bottom_me_icon, R.string.mine);
         fragmentDelegates.add(fragmentDelegate);
 

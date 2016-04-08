@@ -231,8 +231,8 @@ public class NetApi {
      * 专题详情
      * 192.168.1.117:8082/Api/Special/specailcontent?specialid=1
      * */
-    public static void getDetailsSubject( PasserbyClient.HttpCallback callback,String specialid) {
-        String url = String.format(Constants.URL_DETAILS_SUBJECT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(specialid));
+    public static void getDetailsSubject( PasserbyClient.HttpCallback callback,String specialid,String page) {
+        String url = String.format(Constants.URL_DETAILS_SUBJECT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(specialid), aesCryptUtil.encrypt(page));
         PasserbyClient.get(url, callback);
         LogUtil.e("url=" + url);
     }
@@ -505,13 +505,14 @@ public class NetApi {
         RequestParams params = new RequestParams();
         params.put("appkey", aesCryptUtil.encryptPost(getAppKey()));
         params.put("token", aesCryptUtil.encryptPost(getToken()));
-        params.put("alias", aesCryptUtil.encryptPost(alias));
-        params.put("name", aesCryptUtil.encryptPost(name));
-        params.put("about", aesCryptUtil.encryptPost(about));
-        params.put("city", aesCryptUtil.encryptPost(city));
-        params.put("company", aesCryptUtil.encryptPost(company));
-        params.put("feature", aesCryptUtil.encryptPost(feature));
-        PasserbyClient.post(Constants.URL_USER_INFO_EDIT + getToken(), params, callback);
+
+        if (alias != null) params.put("alias", aesCryptUtil.encryptPost(alias));
+        if (name != null) params.put("name", aesCryptUtil.encryptPost(name));
+        if (about != null) params.put("about", aesCryptUtil.encryptPost(about));
+        if (city != null) params.put("city", aesCryptUtil.encryptPost(city));
+        if (company != null) params.put("company", aesCryptUtil.encryptPost(company));
+        if (feature != null) params.put("feature", aesCryptUtil.encryptPost(feature));
+        PasserbyClient.post(Constants.URL_USER_INFO_EDIT, params, callback);
     }
 
     /**
@@ -520,7 +521,7 @@ public class NetApi {
      * @param avatar  排序修改后的分类  json类型的字符串
      */
     public static void getUserPhotoUpdate(PasserbyClient.HttpCallback callback,File avatar) {
-        String url = String.format(Constants.URL_USER_PHOTO_UPLOAD) + aesCryptUtil.encrypt(getToken());
+        String url = String.format(Constants.URL_USER_PHOTO_UPLOAD);
         RequestParams params = new RequestParams();
         params.put("appkey", aesCryptUtil.encryptPost(getAppKey()));
         params.put("token", aesCryptUtil.encryptPost(getToken()));

@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.android.linglan.ui.R;
 import com.umeng.analytics.MobclickAgent;
-//import com.umeng.message.PushAgent;
+import com.umeng.message.PushAgent;
 
 /**
  * Created by LeeMy on 2016/1/6 0006.
@@ -34,7 +34,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         initData();
         setListener();
 
-//        PushAgent.getInstance(getActivity()).onAppStart();
+        PushAgent.getInstance(getActivity()).onAppStart();
     }
 //    public void setTitle(String titleStr, String rightStr){
 //        title.setText(titleStr);

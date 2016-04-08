@@ -4,6 +4,7 @@
 
     <string name="mine">我的</string>
     <string name="first_page">首页</string>
+    <string name="clinical">临证</string>
     <string name="allarticle">文章</string>
     <string name="title_text">标题</string>
 
@@ -38,6 +39,8 @@
 无得参差。"</string>
 
     <string name="slogan">致力于中医成长</string>
+
+    <string name="register">《<u>服务条款</u>》</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -176,6 +179,7 @@
     <string name="agreed_as_register">注册即表示您同意《<u>服务条款</u>》</string>
     <string name="agreed_as_login">登录即表示您同意《服务条款》</string>
 
+
     <string name="in_pay">支付中...</string>
     <string name="pay">支付</string>
     <string name="default_setting">未设置</string>
@@ -278,33 +282,6 @@
     <string name="category_graduate">毕业生</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_area">AreaActivity</string>
-
-    <!-- 友盟自动更新配置 start -->
-    <string name="umeng_example_home_btn_analytics">统计分析</string>
-    <string name="umeng_example_home_btn_xp">应用联盟</string>
-    <string name="umeng_example_home_btn_ad">移动广告</string>
-    <string name="umeng_example_home_btn_tools">工具</string>
-    <string name="umeng_example_home_btn_fb">用户反馈</string>
-    <string name="umeng_example_home_btn_update">自动更新</string>
-    <string name="umeng_example_home_btn_plus">社交分享</string>
-    <string name="umeng_example_home_btn_xp_ufp">Umeng For Publisher</string>
-    <string name="umeng_example_xp_home_btn_container">嵌入容器</string>
-    <string name="umeng_example_xp_home_btn_banner">横幅</string>
-    <string name="umeng_example_xp_home_btn_banner_ufp">"横幅\n(UFP)"</string>
-    <string name="umeng_example_xp_home_btn_handler">小把手</string>
-    <string name="umeng_example_xp_home_btn_handler_ufp">"小把手\n(UFP)"</string>
-    <string name="umeng_example_xp_home_btn_tab">多页面</string>
-    <string name="umeng_example_xp_home_btn_custom">自定义样式</string>
-    <string name="umeng_example_xp_home_btn_wap">Web页</string>
-    <string name="umeng_example_xp_home_btn_wap_ufp">"Web页\n(UFP)"</string>
-    <string name="umeng_example_xp_home_btn_textlink">文字链</string>
-    <string name="umeng_example_xp_home_btn_container_header">轮播大图\n(UFP)</string>
-    <string name="umeng_example_xp_home_btn_push_header">推送弹窗\n(UFP)</string>
-    <string name="umeng_example_xp_home_handler_icons">图标列表\n(UFP)</string>
-    <string name="umeng_example_fb_home_btn_simple">简单反馈</string>
-    <string name="actionbar_activity_not_found">打开Activity失败</string>
-    <string name="umeng_example_home_hint_wait">敬请期待</string>
-    <!-- 友盟自动更新配置 end -->
 
 
 </resources>

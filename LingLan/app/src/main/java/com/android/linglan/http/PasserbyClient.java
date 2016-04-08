@@ -98,12 +98,11 @@ public class PasserbyClient {
 
         final String completeUrl = postCompleteUrl(url, appendDefaultParams);
         Log.d("Post request", "URL: " + completeUrl + " | with post data: " + params.toString());
-//    client.post(completeUrl, params, new TextHttpResponseHandler() {
         client.post(completeUrl, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString,
                                   Throwable throwable) {
-                Log.w("Post Request Failed: " + completeUrl, "Network error: " + responseString);
+                Log.e("Post Request Failed: " + completeUrl, "Network error: " + responseString);
                 ToastUtil.show(NETWORK_ERROR_MESSAGE);
                 try {
                     if (callback != null) {
@@ -120,7 +119,8 @@ public class PasserbyClient {
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.i(TAG, "Post Request Finished| " + completeUrl + " : " + responseString);
+                Log.e(TAG, "Post Request Finished| " + completeUrl + " : " + responseString);
+                Log.e(TAG, "Post Request Finished| " + completeUrl + " : " + aesCryptUtil.decrypt(responseString));
                 if (callback != null) {
 //                callback.onSuccess(responseString);
                     callback.onSuccess(aesCryptUtil.decrypt(responseString));

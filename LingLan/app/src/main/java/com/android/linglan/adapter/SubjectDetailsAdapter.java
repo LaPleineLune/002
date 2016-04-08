@@ -39,8 +39,6 @@ public class SubjectDetailsAdapter extends RecyclerView.Adapter {
     }
 
     public void upDateAdapter(ArrayList<SubjectDetails.SubjectData> subjectData) {
-//        this.hotsearch = hotsearch;
-//        this.historysearch = historysearch;
         this.subjectData = subjectData;
         notifyDataSetChanged();
     }
