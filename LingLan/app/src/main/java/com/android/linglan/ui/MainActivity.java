@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity {
 
     private void initFragments() {
         TestTabFragmentDelegate fragmentDelegate =
-                new TestTabFragmentDelegate(HomePageFragment.class, null, R.drawable.bottom_home_icon, R.string.first_page);
+                new TestTabFragmentDelegate(HomePageFragment.class, null, R.drawable.bottom_home_icon, R.string.study);
         fragmentDelegates.add(fragmentDelegate);
 
         fragmentDelegate =

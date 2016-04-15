@@ -1,17 +1,21 @@
 package com.android.linglan.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.linglan.adapter.clinical.ClinicalAdapter;
 import com.android.linglan.adapter.RecycleHomeSubjectAdapter;
@@ -19,7 +23,6 @@ import com.android.linglan.base.BaseFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.RecommendSubjects;
-import com.android.linglan.http.bean.SubjectDetails;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.clinical.ClinicalCreateActivity;
 import com.android.linglan.ui.clinical.ClinicalDetailsActivity;
@@ -43,11 +46,16 @@ import java.util.ArrayList;
 public class ClinicalFragment extends BaseFragment {
     protected static final int REQUEST_FAILURE = 0;
     protected static final int REQUEST_SUCCESS = 1;
+
+    private PopupWindow popupWindow;
+    private View popView;
+
     private Intent intent = null;
     private RelativeLayout rl_clinical;
     private LinearLayout ll_no_network;
     private Button bt_clinical_create;
     private Button bt_clinical_photograph;
+    private TextView tv_clinical_order;
     private PtrClassicFrameLayout recycler_view_clinical;
     private RecyclerView rec_clinical;
     private RecyclerAdapterWithHF mAdapter;
@@ -65,7 +73,6 @@ public class ClinicalFragment extends BaseFragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            ArrayList<SubjectDetails.SubjectData> subjectData = (ArrayList<SubjectDetails.SubjectData>) msg.getData().getSerializable("data");
             switch (msg.what) {
                 case REQUEST_SUCCESS:
                     rl_clinical.setVisibility(View.VISIBLE);
@@ -87,6 +94,9 @@ public class ClinicalFragment extends BaseFragment {
             rootView = inflater.inflate(R.layout.fragment_clinical, null);
         }
         ViewGroup parent = (ViewGroup) rootView.getParent();
+
+        popView = LayoutInflater.from(getActivity()).inflate(R.layout.popupview_clinical_order, null);
+
         if (parent != null) {
             parent.removeView(rootView);
         }
@@ -99,21 +109,24 @@ public class ClinicalFragment extends BaseFragment {
         ll_no_network = (LinearLayout) rootView.findViewById(R.id.ll_no_network);
         bt_clinical_create = (Button) rootView.findViewById(R.id.bt_clinical_create);
         bt_clinical_photograph = (Button) rootView.findViewById(R.id.bt_clinical_photograph);
+        tv_clinical_order = (TextView) rootView.findViewById(R.id.tv_clinical_order);
         recycler_view_clinical = (PtrClassicFrameLayout) rootView.findViewById(R.id.recycler_view_clinical);
         rec_clinical = (RecyclerView) rootView.findViewById(R.id.rec_clinical);
-        rootView.findViewById(R.id.go_clinical_details).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent.setClass(getActivity(), ClinicalDetailsActivity.class);
-                startActivity(intent);
 
-            }
-        });
+//        rootView.findViewById(R.id.go_clinical_details).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                intent.setClass(getActivity(), ClinicalDetailsActivity.class);
+//                startActivity(intent);
+//
+//            }
+//        });
     }
 
     @Override
     protected void initData() {
         intent = new Intent();
+        popupWindow = new PopupWindow(getActivity());
         rec_clinical.setLayoutManager(new LinearLayoutManager(getActivity()));
         rec_clinical.setHasFixedSize(true);
         page = 1;
@@ -130,6 +143,7 @@ public class ClinicalFragment extends BaseFragment {
     protected void setListener() {
         ll_no_network.setOnClickListener(this);
         bt_clinical_create.setOnClickListener(this);
+        tv_clinical_order.setOnClickListener(this);
         bt_clinical_photograph.setOnClickListener(this);
 
         //下拉刷新
@@ -169,10 +183,36 @@ public class ClinicalFragment extends BaseFragment {
                 intent.setClass(getActivity(), ClinicalPhotographActivity.class);
                 startActivity(intent);
                 break;
-//            case R.id.bt_clinical_create:
-//                break;
+            case R.id.tv_clinical_order:
+                showPopup(v);
+                ToastUtil.show("henghengehneg");
+                break;
         }
     }
+
+    private void showPopup(View v) {
+        int w = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0,
+                View.MeasureSpec.UNSPECIFIED);
+        popView.measure(w, h);
+
+        int height = popView.getMeasuredHeight();
+        int width = popView.getMeasuredWidth();
+            popupWindow = new PopupWindow(popView, width, (int)height);
+            popupWindow.setFocusable(true);
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setBackgroundDrawable(new BitmapDrawable());
+            int[] location = new int[2];
+            v.getLocationOnScreen(location);
+
+        int x = getResources().getDimensionPixelSize(R.dimen.dp14);
+        int y = getResources().getDimensionPixelSize(R.dimen.dp14);
+
+        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]-v.getWidth()+x, location[1] + v.getHeight()-y);
+
+    }
+
 
     private void getAllSubject(final int page, String addtime, String cateid) {
         NetApi.getAllSubject(new PasserbyClient.HttpCallback() {

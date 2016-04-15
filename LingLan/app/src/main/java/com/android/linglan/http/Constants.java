@@ -21,7 +21,8 @@ public class Constants {
     /**
      * 加密
      */
-    public static String SEED_16_CHARACTER = "d.7r+[6D,4[]2cQ?|!>xE6d#{]3v%d{K@q#pVbU*Vm/SRDYsIl";
+//    public static String SEED_16_CHARACTER = "p4ssw0rd";// 测试
+    public static String SEED_16_CHARACTER = "d.7r+[6D,4[]2cQ?|!>xE6d#{]3v%d{K@q#pVbU*Vm/SRDYsIl";// 正式
 
     /**
      * App版本号

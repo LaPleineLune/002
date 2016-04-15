@@ -8,13 +8,177 @@
         android:id="@+id/page_head"
         layout="@layout/page_head" />
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll_patient_details"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="患者信息"/>
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dp16"
+        android:orientation="vertical">
 
-    <include layout="@layout/layout_no_network"
-        android:visibility="gone"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dp12">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp16"
+                android:text="姓名"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/sp14" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请输入患者名字"
+                android:maxLength="7"
+                android:textColor="@color/text_title_color"
+                android:textColorHint="@color/gainsboro"
+                android:textSize="@dimen/sp16" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_marginTop="@dimen/dp16"
+            android:background="@color/gainsboro" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp16"
+                android:textSize="@dimen/sp14"
+                android:textColor="@color/gray"
+                android:text="性别"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/dp6"
+                    android:gravity="center"
+                    android:text="男"
+                    android:textSize="@dimen/sp16"
+                    android:textColor="@color/radiobutton_sex_text"
+                    android:button="@drawable/radiobutton_sex_bg"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp30"
+                    android:paddingLeft="@dimen/dp6"
+                    android:gravity="center"
+                    android:text="女"
+                    android:textSize="@dimen/sp16"
+                    android:textColor="@color/radiobutton_sex_text"
+                    android:button="@drawable/radiobutton_sex_bg"/>
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:background="@color/gainsboro" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp16"
+                android:textSize="@dimen/sp14"
+                android:textColor="@color/gray"
+                android:text="年龄"/>
+            <EditText
+                android:layout_width="@dimen/dp40"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3"
+                android:background="@null"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/text_title_color"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/text_title_color"
+                android:text="岁"/>
+            <!--android:textColor="@color/text_title_color"-->
+            <EditText
+                android:layout_width="@dimen/dp40"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="2"
+                android:background="@null"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/text_title_color"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/text_title_color"
+                android:text="月"/>
+            <!--android:textColor="@color/text_title_color"-->
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:background="@color/gainsboro" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp16"
+                android:textSize="@dimen/sp14"
+                android:textColor="@color/gray"
+                android:text="电话"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="11"
+                android:inputType="phone"
+                android:background="@null"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/text_title_color"
+                android:hint="请输入电话号码"
+                android:textColorHint="@color/gainsboro"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:background="@color/gainsboro" />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/layout_no_network"
+        android:visibility="gone" />
 
 </LinearLayout>

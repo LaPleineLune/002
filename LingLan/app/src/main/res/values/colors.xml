@@ -6,6 +6,7 @@
     <color name="right_bg_color">#dddddd</color>
     <color name="gray_orange">#c33c12</color>
     <color name="carminum">#a0141a</color>
+    <color name="blue">#48558f</color>
     <color name="french_grey">#999999</color>
     <color name="gray">#666666</color>
     <color name="light_gray">#F0F0F0</color>
@@ -32,4 +33,12 @@
     <color name="subscribe_tip_text">#ff2e2e2e</color>
     <color name="subscribe_seperate_line">#ffcdcdcd</color>
     <color name="base_color_orange">#FE6829</color>
+
+    <color name="main_menu_bg">#aa111213</color>
+    <color name="common_title_bg">#aa111213</color>
+    <color name="primary_title_text_color">#ff888888</color>
+    <color name="common_title_text">#ff565555</color>
+    <color name="common_text_yellow">#ffffe049</color>
+    <color name="album_item_bg">#fffcfcfd</color>
+    <color name="video_playter_bg">#333333</color>
 </resources>

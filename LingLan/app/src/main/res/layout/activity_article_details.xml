@@ -128,7 +128,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text=""
-                            android:textColor="#48558f"
+                            android:textColor="@color/blue"
                             android:textIsSelectable="true"
                             android:textSize="14sp" />
 

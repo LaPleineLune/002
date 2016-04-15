@@ -6,12 +6,6 @@
         <option name="GRADLE_PROJECT_PATH" value=":app" />
       </configuration>
     </facet>
-    <facet type="java-gradle" name="Java-Gradle">
-      <configuration>
-        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/build" />
-        <option name="BUILDABLE" value="false" />
-      </configuration>
-    </facet>
     <facet type="android" name="Android">
       <configuration>
         <option name="SELECTED_BUILD_VARIANT" value="debug" />
@@ -70,7 +64,22 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/rs" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
+<<<<<<< HEAD
+=======
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
+<<<<<<< HEAD
+=======
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/builds" />
+>>>>>>> b9eef39649ded9d585a6a364b0d1b167bce20346
+>>>>>>> fe61c1607243ec14051173cddeba42525ebf955f
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundles" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/coverage-instrumented-classes" />
@@ -89,7 +98,15 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/ndk" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
+<<<<<<< HEAD
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard" />
+=======
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard-rules" />
+<<<<<<< HEAD
+=======
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
+>>>>>>> b9eef39649ded9d585a6a364b0d1b167bce20346
+>>>>>>> fe61c1607243ec14051173cddeba42525ebf955f
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
@@ -98,6 +115,12 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
+    <orderEntry type="library" exported="" name="picasso-2.4.0" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.2.1" level="project" />
+    <orderEntry type="library" exported="" name="design-23.1.1" level="project" />
+=======
+>>>>>>> fe61c1607243ec14051173cddeba42525ebf955f
     <orderEntry type="library" exported="" name="recyclerview-v7-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="wire-runtime-1.7.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.1.1" level="project" />

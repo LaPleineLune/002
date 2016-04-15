@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="144dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/popupview_clinical_order">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dp16"
+    android:paddingBottom="@dimen/dp8"
+    android:textSize="@dimen/sp16"
+    android:textColor="@color/gray"
+    android:text="默认排序"/>
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:background="@drawable/clinical_div_line_hor"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp8"
+        android:paddingBottom="@dimen/dp8"
+        android:textSize="@dimen/sp16"
+        android:textColor="@color/gray"
+        android:text="首诊时间"/>
+    <View
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:background="@drawable/clinical_div_line_hor"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp8"
+        android:textSize="@dimen/sp16"
+        android:textColor="@drawable/clinical_order_tab_text_color"
+        android:text="患者姓名"/>
+</LinearLayout>

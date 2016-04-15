@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/page_head" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_prescribed"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="处方"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/carminum"/>
+
+        <View
+            android:layout_width="@dimen/px1"
+            android:layout_height="match_parent"
+            android:background="@drawable/line_vertical_gray" />
+
+        <TextView
+            android:id="@+id/tv_affected_part"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="患处"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/no_text_color_fragment_title"/>
+
+        <View
+            android:layout_width="@dimen/px1"
+            android:layout_height="match_parent"
+            android:background="@drawable/line_vertical_gray" />
+
+        <TextView
+            android:id="@+id/tv_tongue_picture"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="舌象"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/no_text_color_fragment_title"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/gainsboro" />
+
+    <!--<android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />-->
+
+    <FrameLayout
+        android:id="@+id/picture_contrast"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp0"
+        android:layout_weight="1" >
+    </FrameLayout>
+
+</LinearLayout>

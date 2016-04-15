@@ -209,6 +209,10 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
+            android:name=".clinical.ClinicalMouldActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
             android:name=".clinical.ClinicalCollatingActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
@@ -221,7 +225,15 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
+            android:name=".clinical.PictureContrastActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
             android:name=".clinical.CourseOfDiseaseActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".clinical.WeichatFlupActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
     </application>

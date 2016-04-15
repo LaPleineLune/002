@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -40,81 +41,137 @@
             android:textSize="@dimen/sp14" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_clinical_thoroughfare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_search"
-        android:orientation="horizontal">
+        android:layout_below="@+id/ll_search">
+
 
         <LinearLayout
             android:id="@+id/bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/dp10"
-            android:paddingBottom="@dimen/dp10"
+            android:layout_height="74dp"
+
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="@dimen/dp0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg_bottom_textview"
-                android:drawableTop="@drawable/article_write_note"
-                android:drawablePadding="@dimen/dp6"
-                android:gravity="center"
-                android:paddingTop="@dimen/dp6"
-                android:text="代整理病历"
-                android:textColor="@color/french_grey"
-                android:textSize="@dimen/sp12"/>
-
-            <TextView
+                android:id="@+id/tv_clinical_reference"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/bg_bottom_textview"
-                android:drawableTop="@drawable/article_write_like"
-                android:drawablePadding="@dimen/dp6"
-                android:gravity="center"
                 android:paddingTop="@dimen/dp6"
+                android:paddingBottom="@dimen/dp6"
+                android:background="@drawable/bg_bottom_textview"
+                android:drawableTop="@drawable/reference"
+                android:gravity="center"
                 android:text="临证参考"
-                android:textColor="@color/french_grey"
-                android:textSize="@dimen/sp12" />
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sp14" />
 
             <TextView
+                android:id="@+id/tv_weichat_flup"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/bg_bottom_textview"
-                android:drawableTop="@drawable/article_write_collect"
-                android:drawablePadding="@dimen/dp6"
-                android:gravity="center"
                 android:paddingTop="@dimen/dp6"
+                android:paddingBottom="@dimen/dp6"
+                android:background="@drawable/bg_bottom_textview"
+                android:drawableTop="@drawable/follow_up"
+                android:gravity="center"
                 android:text="微信随访"
-                android:textColor="@color/french_grey"
-                android:textSize="@dimen/sp12" />
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sp14" />
 
-            <TextView
-                android:id="@+id/article_write_share"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg_bottom_textview"
-                android:drawableTop="@drawable/article_write_share"
-                android:drawablePadding="@dimen/dp6"
-                android:gravity="center"
-                android:paddingTop="@dimen/dp6"
-                android:text="扩展"
-                android:textColor="@color/french_grey"
-                android:textSize="@dimen/sp12" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="74dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/clinical_div_line" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_centerInParent="true"
+        android:background="@color/gainsboro"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingTop="@dimen/dp10"
+        android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp16"
+        android:text="全部病历"
+        android:textColor="@color/carminum"
+        android:textSize="@dimen/sp16"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp20"
+            android:text="3个"
+            android:textColor="@color/carminum"
+            android:textSize="@dimen/sp16"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp16"
+            android:paddingLeft="@dimen/dp14"
+            android:src="@drawable/clinical_down_arrow"/>
 
     </LinearLayout>
 
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="1px"
+        android:layout_centerInParent="true"
+        android:background="@color/gainsboro"
+        />
+    <LinearLayout
+        android:id="@+id/ll_clinical_collating"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp16"
-        android:text="全部病历"/>
+        android:paddingRight="@dimen/dp16"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/dp0"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/no_name"
+            android:drawablePadding="@dimen/dp10"
+            android:text="未命名病历"
+            android:textColor="@color/text_title_color"
+            android:textSize="@dimen/sp18"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/dp12"
+            android:gravity="right"
+            android:src="@drawable/me_arrow_right"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_centerInParent="true"
+        android:background="@color/gainsboro"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16" />
+
 
 </LinearLayout>

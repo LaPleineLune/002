@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp16"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dp6"
+            android:drawableLeft="@drawable/patient_info"
+            android:textSize="@dimen/sp16"
+            android:textColor="@color/text_title_color"
+            android:text="患者信息"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_patient_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp12"
+            android:paddingBottom="@dimen/dp10">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp30"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/text_title_color"
+                android:text="姓名" />
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_name"
+                android:layout_marginRight="@dimen/dp30"
+                android:textSize="@dimen/sp14"
+                android:textColor="@color/gray"
+                android:text="性别"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/tv_sex"
+                android:textSize="@dimen/sp14"
+                android:textColor="@color/gray"
+                android:text="时间"/>
+            <ImageView
+                android:layout_width="@dimen/dp16"
+                android:layout_height="@dimen/dp16"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp28"
+                android:src="@drawable/me_arrow_right"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/gainsboro" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp16"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:drawablePadding="@dimen/dp6"
+        android:drawableLeft="@drawable/progress_note"
+        android:textSize="@dimen/sp16"
+        android:textColor="@color/text_title_color"
+        android:text="患者病程"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/gainsboro" />
+
+</LinearLayout>

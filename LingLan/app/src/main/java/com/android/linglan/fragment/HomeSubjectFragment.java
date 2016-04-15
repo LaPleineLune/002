@@ -246,44 +246,6 @@ public class HomeSubjectFragment extends BaseFragment implements View.OnClickLis
             }
         });
 
-//        refresh_more_every.setRefreshCallback(new CustomPullToRefreshRecyclerView.RefreshCallback() {
-//
-//            //上拉
-//            @Override
-//            public void onPullDownToRefresh() {
-//                bt_homepage_subject_type.setVisibility(View.VISIBLE);
-//
-//                if (subjectClassifyListBean == null || subjectClassifyListBean.size() == 0) {
-//                    getAllSubjectClassifyList();
-//                }
-//
-//                page = 1;
-//                if (SharedPreferencesUtil.getString("token", null) != null && 1 == location) {
-//                    getCollectSubject();
-//                } else {
-//                    getAllSubject(page, orderid, cateid);
-//                }
-//
-//            }
-//
-//            //下拉
-//            @Override
-//            public void onPullUpToLoadMore() {
-//                bt_homepage_subject_type.setVisibility(View.VISIBLE);
-//
-//                if (subjectClassifyListBean == null || subjectClassifyListBean.size() == 0) {
-//                    getAllSubjectClassifyList();
-//                }
-//
-//                page++;
-//
-//                if (SharedPreferencesUtil.getString("token", null) != null && 1 == location) {
-//                    getCollectSubject();
-//                } else {
-//                    getAllSubject(page, orderid, cateid);
-//                }
-//            }
-//        });
 
         ll_no_network.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,6 +14,7 @@ import com.android.linglan.Service.MyPushIntentService;
 import com.android.linglan.base.BaseActivity;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
+import com.android.linglan.utils.AESCryptUtil;
 import com.android.linglan.utils.DeviceUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.LogUtil;
@@ -82,6 +83,16 @@ public class StartActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+//        String encrypt = "";
+//        String decrypt = "";
+//        AESCryptUtil aesCryptUtil = new AESCryptUtil();
+//        encrypt = aesCryptUtil.encryptPost("top secret message");
+//        decrypt = aesCryptUtil.decrypt(encrypt);
+////		String decrypt = aesCryptUtil.decrypt("hdpxUvAjTfNO7z7g6WU9EcDzDWTK9GbBNL0Z0xd+XCTq+lXY+Hm6EyaIhUWQE0VXN0kRMuK3fJu3Zg2T+/ysa299kxdj3944a1BLWgT6P+Q=");
+//        System.out.println("测试加密打印值：" + encrypt + "测试解密打印值：" + decrypt);
+//        LogUtil.e("测试加密打印值：" + encrypt + "测试解密打印值：" + decrypt);
+
         //友盟推送
 //        initUMeng();
         PushAgent mPushAgent = PushAgent.getInstance(this);

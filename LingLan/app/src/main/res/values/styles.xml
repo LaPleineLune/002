@@ -169,7 +169,7 @@
         <item name="android:textSize">@dimen/sp12</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_gravity">bottom|center_horizontal</item>
-        <item name="android:background">@drawable/item_brown</item>
+        <item name="android:background">@drawable/backgroud_circle</item>
     </style>
 
     <style name="ProgressHUD" parent="@android:style/Theme.Dialog">
@@ -180,6 +180,25 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="CheckBoxStyle">
+        <item name="android:layout_width">28.0dip</item>
+        <item name="android:layout_height">28.0dip</item>
+        <item name="android:layout_marginRight">20.0dip</item>
+        <item name="android:button">@null</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="video_detail_player_bottom_btn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="video_detail_player">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 选中 -->
+    <item
+        android:state_checked="true"
+        android:state_enabled="true"
+        android:color="@color/text_title_color"/>
+
+    <!-- 没有选中 -->
+    <item android:color="@color/gainsboro"/>
+    <item
+        android:state_checked="false"
+        android:state_enabled="true"
+        android:color="@color/gainsboro"/>
+
+</selector>

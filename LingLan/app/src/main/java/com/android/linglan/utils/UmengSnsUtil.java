@@ -19,10 +19,9 @@ import java.util.List;
 /**
  * Created by changyizhang on 12/21/14.
  */
-public class
-        UmengSnsUtil {
+public class UmengSnsUtil {
 
-  private static boolean shareInit;
+//  private static boolean shareInit;
 //  private static String SINA_FOLLOW_UID = "5371124553";
 
   private static UMSocialService loginController = UMServiceFactory

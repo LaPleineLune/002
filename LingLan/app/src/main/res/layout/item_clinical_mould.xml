@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp16"
+    android:paddingRight="@dimen/dp16">
+
+    <!--<CheckBox
+        android:layout_width=""
+        android:layout_height="" />-->
+
+    <RelativeLayout
+        android:id="@+id/rl_clinical_mould"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp12"
+        android:paddingTop="@dimen/dp16">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/sp16"
+            android:text="@string/clinical_mould" />
+
+        <CheckBox
+            android:id="@+id/checkbox_clinical_mould"
+            android:layout_width="@dimen/dp16"
+            android:layout_height="@dimen/dp16"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/clinical_mould_bg"
+            android:button="@null" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginTop="@dimen/dp12"
+        android:background="@color/gainsboro" />
+</LinearLayout>

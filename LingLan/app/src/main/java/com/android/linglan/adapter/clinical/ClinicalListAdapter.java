@@ -24,7 +24,7 @@ public class ClinicalListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(
-                R.layout.item_clinical_details_list, parent, false);
+                R.layout.item_clinical_details, parent, false);
         return new ClinicalListViewHolder(view);
     }
 

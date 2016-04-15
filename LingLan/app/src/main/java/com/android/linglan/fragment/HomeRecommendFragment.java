@@ -35,6 +35,8 @@ import java.util.List;
  * 首页推荐
  */
 public class HomeRecommendFragment extends BaseFragment {
+    protected static final int REQUEST_FAILURE = 0;
+    protected static final int REQUEST_SUCCESS = 1;
     private View rootView;
     private PtrClassicFrameLayout recycler_view_home_recommend;
     private RecyclerAdapterWithHF mAdapter;
@@ -46,11 +48,8 @@ public class HomeRecommendFragment extends BaseFragment {
     private Intent intent;
     private int page;//页码
 //    private CustomPullToRefreshRecyclerView refresh_more_every;
-    protected static final int REQUEST_FAILURE = 0;
-    protected static final int REQUEST_SUCCESS = 1;
 
     private List<String> mData = new ArrayList<String>();
-
 
     private Handler handler = new Handler() {
         @Override
