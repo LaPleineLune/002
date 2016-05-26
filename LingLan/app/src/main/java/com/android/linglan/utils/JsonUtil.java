@@ -5,7 +5,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-
 public class JsonUtil {
 	public static <T> T json2Bean(String result, Class<T> clz) {
 		Gson gson = new Gson();

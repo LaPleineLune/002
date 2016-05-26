@@ -19,13 +19,21 @@ import com.android.linglan.ui.R;
 public class SideBar extends View {
     // 触摸事件
     private OnTouchingLetterChangedListener onTouchingLetterChangedListener;
-    // 26个字母
+    /**
+     * 26个字母+特殊的字符
+     */
     public static String[] b = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
             "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
             "W", "X", "Y", "Z", "#" };
+    private int letterSize = 20; // 字母的大小
+    private String letterDefaultColor = "#999999"; // 字母默认颜色
+    private String letterChooseColor = "#ffffff"; // 字母的大小
     private int choose = -1;// 选中
     private Paint paint = new Paint();
 
+    /**
+     * 选中字母时弹出的提示框，提示当前你选中的是哪个字母
+     */
     private TextView mTextDialog;
 
     public void setTextView(TextView mTextDialog) {
@@ -56,14 +64,13 @@ public class SideBar extends View {
         int singleHeight = height / b.length;// 获取每一个字母的高度
 
         for (int i = 0; i < b.length; i++) {
-            paint.setColor(Color.rgb(33, 65, 98));
-            // paint.setColor(Color.WHITE);
-            paint.setTypeface(Typeface.DEFAULT_BOLD);
+            paint.setColor(Color.parseColor(letterDefaultColor));
+            paint.setTypeface(Typeface.DEFAULT);
             paint.setAntiAlias(true);
-            paint.setTextSize(20);
-            // 选中的状态
+            paint.setTextSize(letterSize);
+            // 选中的状态字体颜色
             if (i == choose) {
-                paint.setColor(Color.parseColor("#3399ff"));
+                paint.setColor(Color.parseColor(letterChooseColor));
                 paint.setFakeBoldText(true);
             }
             // x坐标等于中间-字符串宽度的一半.
@@ -72,20 +79,19 @@ public class SideBar extends View {
             canvas.drawText(b[i], xPos, yPos, paint);
             paint.reset();// 重置画笔
         }
-
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         final int action = event.getAction();
-        final float y = event.getY();// 点击y坐标
+        final float event_y = event.getY();// 点击y坐标
         final int oldChoose = choose;
         final OnTouchingLetterChangedListener listener = onTouchingLetterChangedListener;
-        final int c = (int) (y / getHeight() * b.length);// 点击y坐标所占总高度的比例*b数组的长度就等于点击b中的个数.
+        final int c = (int) (event_y / getHeight() * b.length);// 点击y坐标所占总高度的比例*b数组的长度就等于点击b中的个数.
 
         switch (action) {
-            case MotionEvent.ACTION_UP:
-                setBackgroundDrawable(new ColorDrawable(0x00000000));
+            case MotionEvent.ACTION_UP:// 抬起
+                setBackgroundColor(Color.argb(0, 0, 0, 0));
                 choose = -1;//
                 invalidate();
                 if (mTextDialog != null) {
@@ -94,7 +100,8 @@ public class SideBar extends View {
                 break;
 
             default:
-                setBackgroundResource(R.drawable.sidebar_background);
+//                setBackgroundResource(R.drawable.sidebar_background);
+                setBackgroundColor(Color.argb(150, 0, 0, 0));
                 if (oldChoose != c) {
                     if (c >= 0 && c < b.length) {
                         if (listener != null) {
@@ -109,10 +116,19 @@ public class SideBar extends View {
                         invalidate();
                     }
                 }
-
                 break;
         }
         return true;
+    }
+
+    /**
+     * 供外部调用，需要在外部设置选中字母时弹出的提示框，传入的是一个TextView
+     *
+     * @param mTextDialog
+     *                外部定义好的提示框
+     */
+    public void setTextDialog(TextView mTextDialog) {
+        this.mTextDialog = mTextDialog;
     }
 
     /**

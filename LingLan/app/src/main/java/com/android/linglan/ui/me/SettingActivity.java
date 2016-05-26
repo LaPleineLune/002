@@ -122,6 +122,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 startActivity(new Intent(SettingActivity.this, SetFontSizeActivity.class));
                 break;
             case R.id.check_update_item:
+                SharedPreferencesUtil.saveBoolean("settingVersionNumber", true);
                 new AppUpdaterUtil().getUpdate(SettingActivity.this);
                 break;
             case R.id.about_item:

@@ -6,31 +6,34 @@ android {
 
     useLibrary 'org.apache.http.legacy'
 
-    defaultConfig {
-        applicationId "com.android.linglan.ui"
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0.0"
+    productFlavors {
     }
 
-    buildTypes {
-        release {
+    defaultConfig {
+        applicationId "com.android.linglan.ui"
+            minSdkVersion 15
+            targetSdkVersion 23
+            versionCode 20160513
+            versionName "1.1.0"
+        }
+
+        buildTypes {
+            release {
 //            minifyEnabled false
 //            signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            //开启代码混淆
-            minifyEnabled true
-            // 移除无用的resource文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+                minifyEnabled true
+                shrinkResources true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+            debug {
+                //开启代码混淆
+                minifyEnabled true
+                // 移除无用的resource文件
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.debug
+            }
         }
     }
-}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -49,7 +52,12 @@ dependencies {
     compile project(':PushSDK')
     compile project(':cptr')
     compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile project(':multi-image-selector')
+    allprojects {
+        repositories {
+            mavenCentral()
+        }
+    }
+    compile files('src/libs/cyberplayer-sdk.jar')
 }
-
-
-

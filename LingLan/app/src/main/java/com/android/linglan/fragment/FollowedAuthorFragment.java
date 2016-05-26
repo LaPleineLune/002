@@ -16,7 +16,7 @@ import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.FollowedListBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.AuthorDetailsActivity;
+import com.android.linglan.ui.study.AuthorDetailsActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
@@ -104,9 +104,6 @@ public class FollowedAuthorFragment extends BaseFragment {
                 followedListData = new ArrayList<FollowedListBean.FollowedListData>();
                 followedListData = followedList.data;
                 adapter.upDateAdapter(followedListData);
-//                for (SubjectDetails.SubjectData data : subjectData) {
-//                    LogUtil.e(data.toString());
-//                }
 
             }
 

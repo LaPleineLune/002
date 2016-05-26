@@ -2,11 +2,9 @@ package com.android.linglan.ui.me;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +16,6 @@ import com.android.linglan.broadcast.SMSBroadcastReceiver;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.RegisterBean;
-import com.android.linglan.ui.MainActivity;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.AESCryptUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
@@ -33,8 +30,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.listener.SocializeListeners;
 import com.umeng.socialize.exception.SocializeException;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Map;
 
 /**

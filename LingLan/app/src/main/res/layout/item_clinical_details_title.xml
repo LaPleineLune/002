@@ -6,14 +6,60 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp16"
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16"
         android:orientation="vertical">
-        <TextView
+
+        <LinearLayout
+            android:id="@+id/ll_classify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dp10"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_classify1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp10"
+                android:drawablePadding="@dimen/dp4"
+                android:drawableLeft="@drawable/tag"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
+                android:paddingBottom="@dimen/dp2"
+                android:paddingTop="@dimen/dp2"
+                android:background="@drawable/frame_original"
+                android:textSize="@dimen/sp14"
+                android:textColor="@color/carminum"
+                android:text="分类"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_classify2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp4"
+                android:drawableLeft="@drawable/tag"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
+                android:paddingBottom="@dimen/dp2"
+                android:paddingTop="@dimen/dp2"
+                android:background="@drawable/frame_original"
+                android:textSize="@dimen/sp14"
+                android:textColor="@color/carminum"
+                android:text="分类"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:drawablePadding="@dimen/dp6"
+            android:paddingTop="@dimen/dp4"
             android:drawableLeft="@drawable/patient_info"
             android:textSize="@dimen/sp16"
             android:textColor="@color/text_title_color"
@@ -31,8 +77,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dp30"
                 android:textSize="@dimen/sp16"
+                android:maxEms="6"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:textColor="@color/text_title_color"
-                android:text="姓名" />
+                android:text="" />
             <TextView
                 android:id="@+id/tv_sex"
                 android:layout_width="wrap_content"
@@ -41,14 +90,15 @@
                 android:layout_marginRight="@dimen/dp30"
                 android:textSize="@dimen/sp14"
                 android:textColor="@color/gray"
-                android:text="性别"/>
+                android:text=""/>
             <TextView
+                android:id="@+id/tv_age"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/tv_sex"
                 android:textSize="@dimen/sp14"
                 android:textColor="@color/gray"
-                android:text="时间"/>
+                android:text=""/>
             <ImageView
                 android:layout_width="@dimen/dp16"
                 android:layout_height="@dimen/dp16"

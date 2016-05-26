@@ -16,7 +16,7 @@
             android:gravity="center"
             android:layout_centerInParent="true"
             android:text="@string/clinical"
-            android:textColor="@color/carminum"
+            android:textColor="@color/black"
             android:textSize="@dimen/sp18" />
 
         <TextView
@@ -30,7 +30,8 @@
             android:textColor="@color/gray"
             android:paddingRight="@dimen/dp16"
             android:background="@drawable/bg_bottom_search"
-            android:textSize="@dimen/sp16" />
+            android:textSize="@dimen/sp16"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -92,7 +93,8 @@
                 android:drawableTop="@drawable/photo"
                 android:text="拍照"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp12" />
+                android:textSize="@dimen/sp12"
+                android:visibility="gone" />
         </LinearLayout>
 
     </RelativeLayout>

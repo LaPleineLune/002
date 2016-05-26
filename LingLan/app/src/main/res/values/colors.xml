@@ -6,16 +6,19 @@
     <color name="right_bg_color">#dddddd</color>
     <color name="gray_orange">#c33c12</color>
     <color name="carminum">#a0141a</color>
+    <color name="cattle">#e8e6da</color>
     <color name="blue">#48558f</color>
     <color name="french_grey">#999999</color>
     <color name="gray">#666666</color>
-    <color name="light_gray">#F0F0F0</color>
     <color name="text_title_color">#333333</color>
+    <color name="read_text_title_color">#999999</color>
+    <color name="light_gray">#F0F0F0</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#ff0000</color>
     <color name="whitesmoke">#f2f2f2</color>
     <color name="transparent_black">#22000000</color>
+    <color name="transparent">#b0000000</color>
 
     <color name="indicatorColor">#FF666666</color>
     <color name="start_page_theme_color3">#644956</color>

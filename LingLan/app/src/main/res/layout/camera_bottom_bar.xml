@@ -1,83 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="144dip"
+    android:layout_height="144dp"
     android:layout_alignParentBottom="true"
-    android:background="@color/white"
+    android:background="#99FFFFFF"
     android:baselineAligned="false"
     android:clickable="true"
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="5.0" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingTop="@dimen/dp10"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/member_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:paddingBottom="@dimen/dp2"
+            android:src="@drawable/point" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.android.linglan.widget.PickerView
+                android:id="@+id/pickerview_picture_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="@dimen/dp26"
-        android:orientation="horizontal" >
-        <TextView
-            android:id="@+id/tv_affected_part"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-            android:textSize="@dimen/sp14"
-        	android:text="患处"/>"
-        <TextView
-            android:id="@+id/tv_tongue_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp14"
-            android:layout_marginLeft="@dimen/dp30"
-            android:text="舌象"/>"
-        <TextView
-            android:id="@+id/tv_prescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp14"
-            android:layout_marginLeft="@dimen/dp30"
-            android:text="处方"/>"
-        <TextView
-            android:id="@+id/tv_other"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp14"
-            android:layout_marginLeft="@dimen/dp30"
-            android:text="其他"/>"
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="@dimen/dp100"
-        android:paddingBottom="@dimen/dp20"
+        android:paddingBottom="@dimen/dp10"
         android:orientation="horizontal" >
-
-        <!--<FrameLayout-->
-            <!--android:layout_width="0.0dip"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1.0"-->
-            <!--android:gravity="center" >-->
-
-           <!--<com.android.linglan.camerautils.FilterImageView-->
-                <!--android:id="@+id/btn_thumbnail"-->
-                <!--android:layout_width="@dimen/thumbnail_imageview_size"-->
-                <!--android:layout_height="@dimen/thumbnail_imageview_size"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:background="@drawable/thumbnail_bg"-->
-                <!--android:contentDescription="@string/app_name"-->
-                <!--android:padding="0.5dip"-->
-                <!--android:scaleType="centerCrop" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/videoicon"-->
-                <!--android:layout_width="25dip"-->
-                <!--android:layout_height="25dip"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:focusable="false"-->
-                <!--android:scaleType="fitXY"-->
-                <!--android:src="@drawable/btn_play_vedio" />-->
-        <!--</FrameLayout>-->
 
         <LinearLayout
+            android:id="@+id/ll_clinical_cancel"
             android:layout_width="0.0dip"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
@@ -103,14 +71,6 @@
             android:layout_weight="1.0"
             android:gravity="center" >
 
-            <!--<ImageButton-->
-                <!--android:id="@+id/btn_shutter_record"-->
-                <!--android:layout_width="@dimen/shutter_bottom_size"-->
-                <!--android:layout_height="@dimen/shutter_bottom_size"-->
-                <!--android:background="@drawable/btn_shutter_record"-->
-                <!--android:contentDescription="@string/app_name"-->
-                <!--android:scaleType="fitXY" />-->
-
             <ImageButton
                 android:id="@+id/btn_shutter_camera"
                 android:layout_width="@dimen/shutter_bottom_size"
@@ -120,18 +80,13 @@
                 android:scaleType="fitXY" />
         </RelativeLayout>
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="0.0dip"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1.0"-->
-            <!--android:gravity="center" >-->
-        <!--</RelativeLayout>-->
-
         <LinearLayout
+            android:id="@+id/ll_clinical_ok"
             android:layout_width="0.0dip"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
             android:gravity="center"
+            android:clickable="true"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="@dimen/dp14"
@@ -147,21 +102,6 @@
                 android:text="确定"/>
         </LinearLayout>
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="0.0dip"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1.0"-->
-            <!--android:gravity="center" >-->
-
-            <!--<ImageButton-->
-                <!--android:id="@+id/btn_switch_mode"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@drawable/ic_switcher_menu_indicator"-->
-                <!--android:contentDescription="@string/app_name"-->
-                <!--android:scaleType="center"-->
-                <!--android:src="@drawable/ic_switch_camera" />-->
-        <!--</RelativeLayout>-->
     </LinearLayout>
 
 </LinearLayout>

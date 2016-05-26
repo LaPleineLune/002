@@ -12,9 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.linglan.http.bean.AllArticleClassifyListBean;
-import com.android.linglan.http.bean.SearchArticleBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.ArticleDetailsActivity;
+import com.android.linglan.ui.study.ArticleDetailsActivity;
 import com.android.linglan.utils.ImageUtil;
 
 import java.util.ArrayList;

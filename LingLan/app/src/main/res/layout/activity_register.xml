@@ -4,7 +4,20 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <include layout="@layout/page_head" />
+    <include layout="@layout/page_head"
+        android:id="@+id/page_head"/>
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/page_head"
+        android:gravity="center"
+        android:textSize="@dimen/sp14"
+        android:textColor="@color/gray"
+        android:layout_marginTop="@dimen/dp30"
+        android:layout_marginBottom="@dimen/dp30"
+        android:text="无需注册，直接验证手机号登录"/>
 
     <!--<RelativeLayout
         android:layout_width="match_parent"
@@ -52,7 +65,8 @@
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16"
         android:paddingTop="@dimen/dp10"
-        android:paddingBottom="@dimen/dp10">
+        android:paddingBottom="@dimen/dp10"
+        android:visibility="gone">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,13 +83,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/third_fast_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_below="@+id/register_deal"
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16"
-        android:id="@+id/third_fast_login">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"

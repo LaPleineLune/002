@@ -14,14 +14,11 @@ import com.android.linglan.Service.MyPushIntentService;
 import com.android.linglan.base.BaseActivity;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
-import com.android.linglan.utils.AESCryptUtil;
 import com.android.linglan.utils.DeviceUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
-import com.umeng.common.message.UmengMessageDeviceConfig;
 import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
@@ -66,7 +63,7 @@ public class StartActivity extends BaseActivity {
 
                 do {
                     deviceId = UmengRegistrar.getRegistrationId(StartActivity.this);
-                    LogUtil.e("device_token哈哈哈哈哈?????" +deviceId );
+//                    LogUtil.e("device_token哈哈哈哈哈?????" +deviceId );
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -111,7 +108,7 @@ public class StartActivity extends BaseActivity {
 //        mPushAgent.enable();
         mPushAgent.setPushCheck(false);
         String device_token = UmengRegistrar.getRegistrationId(this);
-        LogUtil.e("device_token哈哈哈哈哈?????" +device_token );
+//        LogUtil.e("device_token哈哈哈哈哈?????" +device_token );
 
         mPushAgent.setPushIntentServiceClass(MyPushIntentService.class);
 
@@ -136,8 +133,18 @@ public class StartActivity extends BaseActivity {
             @Override
             public void run() {
                 if (SharedPreferencesUtil.getString("appkey", null) != null) {
-                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    if (!SharedPreferencesUtil.getBoolean("isGuideShowed", false)) {
+//                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                        Intent intent = new Intent(StartActivity.this, GuideImageIndicatorActivity.class);
+                        startActivity(intent);
+                    } else {
+//                        Intent intent = new Intent(StartActivity.this, GuideImageIndicatorActivity.class);
+                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+//                    Intenit intent = new Intent(StartActivity.this, MainActivity.class);
+//                    Intent intent = new Intent(StartActivity.this, GuideImageIndicatorActivity.class);
+//                    startActvity(intent);
                     finish();
                 } else {
                     getAppKey();
@@ -199,8 +206,15 @@ public class StartActivity extends BaseActivity {
                         JSONObject json = new JSONObject(result);
                         SharedPreferencesUtil.saveString("appkey", json.getJSONObject("data").getString("appkey"));
                         LogUtil.e("获取AppKey保存成功" + json.getJSONObject("data").getString("appkey"));
-                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        if (!SharedPreferencesUtil.getBoolean("isGuideShowed", false)) {
+//                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                            Intent intent = new Intent(StartActivity.this, GuideImageIndicatorActivity.class);
+                            startActivity(intent);
+                        } else {
+//                        Intent intent = new Intent(StartActivity.this, GuideImageIndicatorActivity.class);
+                            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
                         finish();
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -2,19 +2,108 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include
         android:id="@+id/page_head"
         layout="@layout/page_head" />
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="选择患者"/>
+        android:background="#fafafa"
+        android:orientation="horizontal">
 
-    <include layout="@layout/layout_no_network"
-        android:visibility="gone"/>
+        <com.android.linglan.widget.sortlistview.ClearEditText
+            android:id="@+id/filter_edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp30"
+            android:layout_marginBottom="@dimen/dp12"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@drawable/frame_french_grey"
+            android:drawableLeft="@drawable/search_bar_icon_normal"
+            android:drawablePadding="@dimen/dp6"
+            android:gravity="center_vertical"
+            android:hint="搜索患者"
+            android:paddingLeft="@dimen/dp10"
+            android:textColor="@color/french_grey"
+            android:textSize="@dimen/sp14" />
+
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_textview"
+            android:text="搜索"
+            android:textColor="@color/carminum"
+            android:textSize="@dimen/sp14"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_patient_select"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ListView
+            android:id="@+id/lv"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:divider="@null" />
+
+        <TextView
+            android:id="@+id/dialog"
+            android:layout_width="80.0dip"
+            android:layout_height="80.0dip"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_common_disabled"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="30.0dip"
+            android:visibility="invisible" />
+
+        <com.android.linglan.widget.sortlistview.SideBar
+            android:id="@+id/sidrbar"
+            android:layout_width="@dimen/dp16"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right|center" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_patient_select_no_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_patient_select_no_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:drawablePadding="@dimen/dp10"
+            android:drawableTop="@drawable/patient_select_no_content"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:text="@string/patient_select_no_content"
+            android:textColor="@color/french_grey"
+            android:textSize="@dimen/sp14" />
+    </LinearLayout>
+
+    <include
+        layout="@layout/layout_no_network"
+        android:visibility="gone" />
 
 </LinearLayout>

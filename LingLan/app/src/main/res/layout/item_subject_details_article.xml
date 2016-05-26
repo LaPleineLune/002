@@ -53,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp10"
                 android:lines="1"
+                android:textColor="@color/read_text_title_color"
                 android:text="作者" />
         </LinearLayout>
 

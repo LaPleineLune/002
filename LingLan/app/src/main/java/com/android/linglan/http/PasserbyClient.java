@@ -1,17 +1,15 @@
 package com.android.linglan.http;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.linglan.LinglanApplication;
 import com.android.linglan.utils.AESCryptUtil;
+import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.NetworkUtil;
 import com.android.linglan.utils.ToastUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-
-import java.net.URLEncoder;
 
 /**
  * Created by changyizhang on 12/10/14.
@@ -52,7 +50,7 @@ public class PasserbyClient {
                     @Override
                     public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString,
                                           Throwable throwable) {
-                        Log.w("Request Failed: " + url, "Network error: " + responseString);
+                        LogUtil.w("Request Failed: " + url, "Network error: " + responseString);
                         ToastUtil.show(NETWORK_ERROR_MESSAGE);
                         try {
                             if (callback != null) {
@@ -63,15 +61,15 @@ public class PasserbyClient {
                             }
                         } catch (Exception exception) {
                             exception.printStackTrace();
-                            Log.w(TAG, exception.toString());
+                            LogUtil.w(TAG, exception.toString());
                         }
                     }
 
                     @Override
                     public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                        Log.e(TAG, "Request Finished| " + url + " : " + responseString);
-                        Log.e(TAG,  responseString);
-                        Log.e(TAG,  aesCryptUtil.decrypt(responseString));
+                        LogUtil.e(TAG, "Request Finished| " + url + " : " + responseString);
+                        LogUtil.e(TAG,  responseString);
+                        LogUtil.e(TAG,  aesCryptUtil.decrypt(responseString));
 
                         if (callback != null) {
 //                        callback.onSuccess(responseString);
@@ -97,12 +95,12 @@ public class PasserbyClient {
         }
 
         final String completeUrl = postCompleteUrl(url, appendDefaultParams);
-        Log.d("Post request", "URL: " + completeUrl + " | with post data: " + params.toString());
+        LogUtil.d("Post request", "URL: " + completeUrl + " | with post data: " + params.toString());
         client.post(completeUrl, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, String responseString,
                                   Throwable throwable) {
-                Log.e("Post Request Failed: " + completeUrl, "Network error: " + responseString);
+                LogUtil.e("Post Request Failed: " + completeUrl, "Network error: " + responseString);
                 ToastUtil.show(NETWORK_ERROR_MESSAGE);
                 try {
                     if (callback != null) {
@@ -113,14 +111,14 @@ public class PasserbyClient {
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();
-                    Log.w(TAG, exception.toString());
+                    LogUtil.w(TAG, exception.toString());
                 }
             }
 
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, String responseString) {
-                Log.e(TAG, "Post Request Finished| " + completeUrl + " : " + responseString);
-                Log.e(TAG, "Post Request Finished| " + completeUrl + " : " + aesCryptUtil.decrypt(responseString));
+                LogUtil.e(TAG, "Post Request Finished| " + completeUrl + " : " + responseString);
+                LogUtil.e(TAG, "Post Request Finished| " + completeUrl + " : " + aesCryptUtil.decrypt(responseString));
                 if (callback != null) {
 //                callback.onSuccess(responseString);
                     callback.onSuccess(aesCryptUtil.decrypt(responseString));

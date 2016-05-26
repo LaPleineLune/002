@@ -19,7 +19,7 @@ import java.net.URLEncoder;
  * Created by changyizhang on 12/15/14.
  */
 public class NetApi {
-    private static AESCryptUtil aesCryptUtil = new AESCryptUtil();
+    public static AESCryptUtil aesCryptUtil = new AESCryptUtil();
     public static String getAppKey() {
         return SharedPreferencesUtil.getString("appkey", null);
     }
@@ -551,6 +551,405 @@ public class NetApi {
      */
     public static void getAppAgreement(PasserbyClient.HttpCallback callback) {
         String url = String.format(Constants.URL_APP_AGREEMENT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 新建病历
+     * @param callback
+     * @param patient   患者信息（json），例如：{"patientname":"","sex":"","ageyear":"",agemonth":"","phone":""}
+     * @param course    病程（json），例如：[{"feature":"病症","visittime":"就诊时间","mediaids":"多个图片以逗号隔开","pathography":{"模板ID(没有模板，默认ID为1)":"内容"，......}}]
+     */
+    public static void clinicalCreate(PasserbyClient.HttpCallback callback, String patient, String course) {
+        RequestParams params = new RequestParams();
+        params.put("appkey", aesCryptUtil.encryptPost(getAppKey()));
+        params.put("token", aesCryptUtil.encryptPost(getToken()));
+
+        params.put("patient", aesCryptUtil.encryptPost(patient));
+        params.put("course", aesCryptUtil.encryptPost(course));
+        PasserbyClient.post(Constants.URL_CLINICAL_CREATE, params, callback);
+    }
+
+    /**
+     * 上传病历多媒体（图片，音频，视频）
+     * @param callback
+     * @param media 多媒体（图片，音频，视频）流
+     * @param type  多媒体类型 0图片 1音频 2视频，不传默认为0图片
+     * @param categoryid    分类ID
+     */
+    public static void saveClinicalMultiMedia(PasserbyClient.HttpCallback callback, File media, String type, String categoryid) {
+        RequestParams params = new RequestParams();
+        params.put("appkey", aesCryptUtil.encryptPost(getAppKey()));
+        params.put("token", aesCryptUtil.encryptPost(getToken()));
+
+        try {
+            params.put("media", media, "image/x-png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        params.put("type", aesCryptUtil.encryptPost(type));
+        params.put("categoryid", aesCryptUtil.encryptPost(categoryid));
+        PasserbyClient.post(Constants.URL_SAVE_CLINICAL_MULTI_MEDIA, params, callback);
+    }
+
+    /**
+     * 修改病历多媒体分类（图片，音频，视频）
+     * @param callback
+     * @param categoryid    分类ID
+     * @param mediaid
+     */
+    public static void editClinicalMultiMedia(PasserbyClient.HttpCallback callback, String categoryid, String mediaid) {
+        String url = String.format(Constants.URL_EDIT_CLINICAL_MULTI_MEDIA, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(categoryid), aesCryptUtil.encrypt(mediaid));
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 删除病历多媒体（图片，音频，视频）
+     * @param callback
+     * @param mediaid
+     */
+    public static void deleteClinicalMultiMedia(PasserbyClient.HttpCallback callback, String mediaid) {
+        String url = String.format(Constants.URL_DELETE_CLINICAL_MULTI_MEDIA, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(mediaid));
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 最大上传图片数量（图片，音频，视频）
+     * @param callback
+     */
+    public static void getMaxPictureNumber(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_MAX_PICTURE_NUMBER, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
+        PasserbyClient.get(url, callback);
+    }
+    /**
+     * 图片对比
+     * @param callback
+     * @param category  分类（处方默认1、患处2、舌象3）
+     * @param illnesscaseid  病历ID
+     * @param page  分页，默认1
+     */
+    public static void getComparePicture(PasserbyClient.HttpCallback callback, String category, String illnesscaseid, String page) {
+        String url = String.format(Constants.URL_COMPARE_PICTURE, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(category), aesCryptUtil.encrypt(illnesscaseid), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 是否有未命名病历，以及未命名病历的个数
+     * @param callback
+     */
+    public static void getClinicalCollatingNum(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_CLINICAL_COLLATING_NUM, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 未命名病历列表
+     * @param callback
+     * @param sort  {firstvisittime:asc,patientname:desc}-------(asc升序 desc降序）（firstvisittime:首诊时间，patientname:患者姓名）
+     * @param page  分页，默认1
+     */
+    public static void getClinicalCollatingList(PasserbyClient.HttpCallback callback, String sort, String page) {
+        String url = String.format(Constants.URL_CLINICAL_COLLATING_LIST, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(sort), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 病历列表
+     * @param callback
+     * @param sort  {firstvisittime:asc,patientname:desc}-------(asc升序 desc降序）（firstvisittime:首诊时间，patientname:患者姓名）
+     * @param page  分页，默认1
+     * @param tag   标签
+     */
+    public static void getClinicalList(PasserbyClient.HttpCallback callback, String sort, String page, String tag,String patientname) {
+        String url = String.format(Constants.URL_CLINICAL_LIST, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(sort), aesCryptUtil.encrypt(page), aesCryptUtil.encrypt(tag), aesCryptUtil.encrypt(patientname));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 病历详情-->所贴的分类
+     * @param callback
+     * @param illnesscaseid 病历ID
+     */
+    public static void getClinicalDetailsCalssify(PasserbyClient.HttpCallback callback, String illnesscaseid) {
+        String url = String.format(Constants.URL_CLINICAL_DETAILS_CALSSIFY, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(illnesscaseid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 病历详情-->病人信息
+     * @param callback
+     * @param illnesscaseid 病历ID
+     */
+    public static void getPatientDetails(PasserbyClient.HttpCallback callback, String illnesscaseid) {
+        String url = String.format(Constants.URL_PATIENT_DETAILS, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(illnesscaseid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 病历详情-->病程列表
+     * @param callback
+     * @param illnesscaseid 病历ID
+     * @param sort  {visittime:asc}-------(asc升序 desc降序）（visittime:就诊时间）
+     * @param page  页码
+     */
+    public static void getClinicalDetailsList(PasserbyClient.HttpCallback callback, String illnesscaseid, String sort, String page) {
+        String url = String.format(Constants.URL_CLINICAL_DETAILS_LIST, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(illnesscaseid), aesCryptUtil.encrypt(sort), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+    public static void addClassify2ClinicalDetails(PasserbyClient.HttpCallback callback, String illnesscaseid, String tagid) {
+        String url = String.format(Constants.URL_ADD_CLINICAL_CLASSIFY, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(illnesscaseid), aesCryptUtil.encrypt(tagid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 编辑病人信息
+     * @param callback
+     * @param patientid 病人id
+     * @param patientname   病人名字
+     * @param sex   病人性别
+     * @param ageyear   病人岁数
+     * @param agemonth  病人出生个月
+     * @param phone 病人手机
+     */
+    public static void savePatientDetails (PasserbyClient.HttpCallback callback, String patientid, String patientname, String sex, String ageyear, String agemonth, String phone) {
+        RequestParams params = new RequestParams();
+        params.put("appkey", aesCryptUtil.encryptPost(getAppKey()));
+        params.put("token", aesCryptUtil.encryptPost(getToken()));
+        params.put("patientid", aesCryptUtil.encryptPost(patientid));
+        params.put("patientname", aesCryptUtil.encryptPost(patientname));
+        params.put("sex", aesCryptUtil.encryptPost(sex));
+        params.put("ageyear", aesCryptUtil.encryptPost(ageyear));
+        params.put("agemonth", aesCryptUtil.encryptPost(agemonth));
+        params.put("phone", aesCryptUtil.encryptPost(phone));
+        PasserbyClient.post(Constants.URL_PATIENT_DETAILS_EDIT, params, callback);
+    }
+
+    /**
+     * 编辑病程
+     * @param callback
+     * @param courseid 病程id
+     * @param course   病程内容
+     */
+    public static void saveDiseaseCourseInfo(PasserbyClient.HttpCallback callback, String courseid, String course) {
+        RequestParams params = new RequestParams();
+        params.put("appkey", aesCryptUtil.encryptPost(getAppKey()));
+        params.put("token", aesCryptUtil.encryptPost(getToken()));
+        params.put("courseid", aesCryptUtil.encryptPost(courseid));
+        params.put("course", aesCryptUtil.encryptPost(course));
+        PasserbyClient.post(Constants.URL_COURSE_DETAILS_EDIT, params, callback);
+    }
+
+    /**
+     * 添加病程
+     * @param callback
+     * @param illnesscaseid 病程id
+     * @param course   病程内容
+     */
+    public static void addDiseaseCourseInfo(PasserbyClient.HttpCallback callback, String illnesscaseid, String course) {
+        RequestParams params = new RequestParams();
+        params.put("appkey", aesCryptUtil.encryptPost(getAppKey()));
+        params.put("token", aesCryptUtil.encryptPost(getToken()));
+        params.put("illnesscaseid", aesCryptUtil.encryptPost(illnesscaseid));
+        params.put("course", aesCryptUtil.encryptPost(course));
+        PasserbyClient.post(Constants.URL_CLINICAL_COURSE_ADD, params, callback);
+    }
+
+    /**
+     * 删除病历
+     * @param callback
+     * @param illnesscaseid 病历ID
+     */
+    public static void clinicalDelete(PasserbyClient.HttpCallback callback, String illnesscaseid) {
+        String url = String.format(Constants.URL_CLINICAL_DELETE, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(illnesscaseid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 删除病程
+     * @param callback
+     * @param courseid  病程id
+     */
+    public static void clinicalCourseDelete(PasserbyClient.HttpCallback callback, String courseid) {
+        String url = String.format(Constants.URL_CLINICAL_COURSE_DELETE, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(courseid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+
+    /**
+     * 获取全部模板
+     * @param callback
+     */
+    public static void getClinicalAllMould(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_CLINICAL_ALL_MOULD, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 获取个人模板
+     * @param callback
+     */
+    public static void getClinicalPersonMould(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_CLINICAL_PERSON_MOULD, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 保存个人病历模板
+     * @param callback
+     * @param templet   {"templetname":"主诉,现病史,诊断"}
+     */
+    public static void saveClinicalMould(PasserbyClient.HttpCallback callback, String templet) {
+        String url = String.format(Constants.URL_SAVE_CLINICAL_MOULD, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(templet));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 获取分类
+     * @param callback
+     */
+    public static void getClinicalClassify(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_CLINICAL_CLASSIFY, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 获取分类下的病历
+     * @param callback
+     * @param classifyid 分类id（必须），以逗号相连接 eg：'1,2,3'
+     * @param page  分页
+     */
+    public static void getClassifyClinical(PasserbyClient.HttpCallback callback, String classifyid, String page) {
+        String url = String.format(Constants.URL_CLASSIFY_CLINICAL, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(classifyid), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 获取分类下的病例个数
+     * @param callback
+     * @param classifyid    tagid（必须）='1,2,3'
+     */
+    public static void getClassifyClinicalNum(PasserbyClient.HttpCallback callback, String classifyid) {
+        String url = String.format(Constants.URL_CLASSIFY_CLINICAL_NUM, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(classifyid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 新建分类
+     * @param callback
+     * @param tagname   分类名字，必须
+     */
+    public static void getClinicalCreateClassify(PasserbyClient.HttpCallback callback, String tagname) {
+        String url = String.format(Constants.URL_CLINICAL_CREATE_CLASSIFY, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(tagname));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 删除分类
+     * @param callback
+     * @param tagid 分类id
+     */
+    public static void getClinicalDeleteClassify(PasserbyClient.HttpCallback callback, String tagid) {
+        String url = String.format(Constants.URL_CLINICAL_DELETE_CLASSIFY, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(tagid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 编辑（改）分类
+     * @param callback
+     * @param tagid 分类id
+     * @param tagname   分类名称
+     */
+    public static void getClinicalEditClassify(PasserbyClient.HttpCallback callback, String tagid, String tagname) {
+        String url = String.format(Constants.URL_CLINICAL_EDIT_CLASSIFY, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(tagid), aesCryptUtil.encrypt(tagname));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 搜索
+     * @param callback
+     * @param key 分类id
+     * @param page   分类名称
+     */
+    public static void getClinicalIllnesscaseearch(PasserbyClient.HttpCallback callback, String key, String page) {
+        String url = String.format(Constants.URL_CLINICAL_ILLNESSCASE_SEARCH, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(key), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 临证参考
+     * @param callback
+     * @param page
+     */
+    public static void getClinicalReference(PasserbyClient.HttpCallback callback, String page) {
+        String url = String.format(Constants.URL_CLINICAL_REFERENCE, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 中医搜搜——关键字搜索
+     * @param callback
+     * @param key   搜索关键字
+     * @param page  页码
+     */
+    public static void getTCMSearchKey(PasserbyClient.HttpCallback callback, String key, String page) {
+        String url = String.format(Constants.URL_TCM_SEARCH_KEY, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(key), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 中医搜搜详情
+     * @param callback
+     * @param key   关键字（必须）
+     * @param page  上个页面的page
+     * @param itemid    条目ID(必须），说明：上一页面列表的ID
+     */
+    public static void getTCMSearchDetails(PasserbyClient.HttpCallback callback, String key, String page, String itemid) {
+        String url = String.format(Constants.URL_TCM_SEARCH_DETAILS, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(key), aesCryptUtil.encrypt(page), aesCryptUtil.encrypt(itemid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 未命名病例关联病人信息
+     * @param callback
+     * @param illnesscaseid  上个页面的page
+     * @param nonamecaseid    条目ID(必须），说明：上一页面列表的ID
+     */
+    public static void getRelatePatientInfo(PasserbyClient.HttpCallback callback, String illnesscaseid, String nonamecaseid) {
+        String url = String.format(Constants.URL_RELATE_PATIENT_INFO, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(illnesscaseid), aesCryptUtil.encrypt(nonamecaseid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 标记已经点选其他设备登录标志   针对code值为7的情况
+     * @param callback
+     */
+    public static void markotherlogin(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_MARKOTHER_LOGIN, aesCryptUtil.encrypt(getAppKey()));
         LogUtil.e("url=" + url);
         PasserbyClient.get(url, callback);
     }

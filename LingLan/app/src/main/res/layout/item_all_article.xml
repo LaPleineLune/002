@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ll_item_article_title"
+                android:id="@+id/tv_item_article_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -32,7 +32,7 @@
                 android:textSize="@dimen/sp16"
                 android:maxLines="2"
                 android:textColor="@color/text_title_color"
-                android:text="中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的中医是怎样练成的" />
+                android:text="" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -45,12 +45,12 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/dp6"
                     android:lines="1"
-                    android:textColor="@color/gray"
-                    android:text="56分钟前"
+                    android:textColor="@color/read_text_title_color"
+                    android:text=""
                     android:textSize="@dimen/sp14"/>
 
                 <TextView
-                    android:id="@+id/tv_homepage_article_new"
+                    android:id="@+id/tv_item_article_new"
                     android:layout_width="@dimen/dp16"
                     android:layout_height="@dimen/dp16"
                     android:gravity="center_horizontal"
@@ -63,7 +63,8 @@
                     android:text="新"
                     android:textColor="@color/red"
                     android:textSize="@dimen/sp10"
-                    android:background="@drawable/frame_red_new"/>
+                    android:background="@drawable/frame_red_new"
+                    android:visibility="gone"/>
 
             </RelativeLayout>
         </LinearLayout>

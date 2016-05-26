@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/page_head"
@@ -18,72 +18,84 @@
             android:id="@+id/ll_clinical_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp16"
+            android:layout_marginBottom="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp16"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl_patient_message"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp6"
                         android:drawableLeft="@drawable/patient_info"
-                        android:textSize="@dimen/sp16"
+                        android:drawablePadding="@dimen/dp6"
+                        android:text="患者信息"
                         android:textColor="@color/text_title_color"
-                        android:text="患者信息"/>
+                        android:textSize="@dimen/sp16" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/dp12"
+                        android:orientation="horizontal"
                         android:paddingBottom="@dimen/dp10"
-                        android:orientation="horizontal">
+                        android:paddingTop="@dimen/dp12">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/dp16"
-                            android:textSize="@dimen/sp14"
+                            android:text="姓名"
                             android:textColor="@color/gray"
-                            android:text="姓名" />
+                            android:textSize="@dimen/sp14" />
+
                         <EditText
+                            android:id="@+id/edt_patient_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:maxLength="7"
                             android:background="@null"
-                            android:textSize="@dimen/sp16"
-                            android:textColor="@color/text_title_color"
                             android:hint="请输入患者名字"
-                            android:textColorHint="@color/gainsboro"/>
+                            android:maxLength="10"
+                            android:textColor="@color/text_title_color"
+                            android:textColorHint="@color/gainsboro"
+                            android:textSize="@dimen/sp14" />
+
                         <TextView
                             android:id="@+id/tv_create_spread"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:paddingLeft="@dimen/dp50"
                             android:drawableRight="@drawable/spread"
-                            android:textSize="@dimen/sp14"
+                            android:paddingLeft="@dimen/dp50"
+                            android:text="详细"
                             android:textColor="@color/blue"
-                            android:text="详细"/>
+                            android:textSize="@dimen/sp14" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/bt_patient_select"
                     android:layout_width="@dimen/dp50"
                     android:layout_height="@dimen/dp50"
-                    android:gravity="center"
-                    android:background="@drawable/patient_relevance_bg"
-                    android:paddingTop="@dimen/dp6"
-                    android:paddingBottom="@dimen/dp6"
-                    android:drawableTop="@drawable/patient_relevance"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:background="@drawable/patient_relevance_bg"
+                    android:drawableTop="@drawable/patient_relevance"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp6"
+                    android:paddingTop="@dimen/dp6"
                     android:text="关联"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/sp12" />
+                    android:textSize="@dimen/sp12"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -91,45 +103,53 @@
                 android:id="@+id/ll_create_patient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp14"
+                android:layout_marginLeft="@dimen/dp16"
                 android:orientation="vertical"
+                android:paddingTop="@dimen/dp14"
                 android:visibility="gone">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/dp16"
-                        android:textSize="@dimen/sp14"
+                        android:text="性别"
                         android:textColor="@color/gray"
-                        android:text="性别"/>
+                        android:textSize="@dimen/sp14" />
 
                     <RadioGroup
+                        android:id="@+id/rdg_patient_sex"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:orientation="horizontal">
+
                         <RadioButton
+                            android:id="@+id/rdb_patient_boy"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:paddingLeft="@dimen/dp6"
+                            android:button="@drawable/radiobutton_sex_bg"
                             android:gravity="center"
+                            android:paddingLeft="@dimen/dp6"
                             android:text="男"
-                            android:textSize="@dimen/sp16"
                             android:textColor="@color/radiobutton_sex_text"
-                            android:button="@drawable/radiobutton_sex_bg"/>
+                            android:textSize="@dimen/sp16" />
+
                         <RadioButton
+                            android:id="@+id/rdb_patient_girl"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp30"
-                            android:paddingLeft="@dimen/dp6"
+                            android:button="@drawable/radiobutton_sex_bg"
                             android:gravity="center"
+                            android:paddingLeft="@dimen/dp6"
                             android:text="女"
-                            android:textSize="@dimen/sp16"
                             android:textColor="@color/radiobutton_sex_text"
-                            android:button="@drawable/radiobutton_sex_bg"/>
+                            android:textSize="@dimen/sp16" />
                     </RadioGroup>
 
                 </LinearLayout>
@@ -137,144 +157,167 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/dp24"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp24">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/dp16"
-                        android:textSize="@dimen/sp14"
+                        android:text="年龄"
                         android:textColor="@color/gray"
-                        android:text="年龄"/>
+                        android:textSize="@dimen/sp14" />
+
                     <EditText
+                        android:id="@+id/edt_patient_age"
                         android:layout_width="@dimen/dp40"
                         android:layout_height="wrap_content"
+                        android:background="@null"
                         android:gravity="center"
                         android:inputType="number"
                         android:maxLength="3"
-                        android:background="@null"
-                        android:textSize="@dimen/sp16"
-                        android:textColor="@color/text_title_color"/>
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp14" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp16"
+                        android:text="岁"
                         android:textColor="@color/gainsboro"
-                        android:text="岁"/>
+                        android:textSize="@dimen/sp16" />
                     <!--android:textColor="@color/text_title_color"-->
                     <EditText
+                        android:id="@+id/edt_patient_age_month"
                         android:layout_width="@dimen/dp40"
                         android:layout_height="wrap_content"
+                        android:background="@null"
                         android:gravity="center"
                         android:inputType="number"
                         android:maxLength="2"
-                        android:background="@null"
-                        android:textSize="@dimen/sp16"
-                        android:textColor="@color/text_title_color"/>
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp14" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp16"
+                        android:text="个月"
                         android:textColor="@color/gainsboro"
-                        android:text="月"/>
+                        android:textSize="@dimen/sp16" />
                     <!--android:textColor="@color/text_title_color"-->
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/dp24"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/dp10"
-                    android:orientation="horizontal">
+                    android:paddingTop="@dimen/dp24">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/dp16"
-                        android:textSize="@dimen/sp14"
+                        android:text="联系方式"
                         android:textColor="@color/gray"
-                        android:text="电话"/>
+                        android:textSize="@dimen/sp14" />
+
                     <EditText
+                        android:id="@+id/edt_patient_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLength="11"
-                        android:inputType="phone"
                         android:background="@null"
-                        android:textSize="@dimen/sp16"
+                        android:hint="请输入联系方式"
+                        android:inputType="phone"
+                        android:maxLength="20"
                         android:textColor="@color/text_title_color"
-                        android:hint="请输入电话号码"
-                        android:textColorHint="@color/gainsboro"/>
+                        android:textColorHint="@color/gainsboro"
+                        android:textSize="@dimen/sp14" />
+
                     <TextView
                         android:id="@+id/tv_create_retract"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/dp50"
                         android:drawableRight="@drawable/retract"
-                        android:textSize="@dimen/sp14"
+                        android:paddingLeft="@dimen/dp20"
+                        android:text="收起"
                         android:textColor="@color/blue"
-                        android:text="收起"/>
+                        android:textSize="@dimen/sp14" />
                 </LinearLayout>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
+                android:layout_marginLeft="@dimen/dp16"
                 android:background="@color/gainsboro" />
 
             <LinearLayout
+                android:id="@+id/ll_visit_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp16"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp12"
-                    android:drawablePadding="@dimen/dp6"
                     android:drawableLeft="@drawable/visit_time"
-                    android:textSize="@dimen/sp16"
+                    android:drawablePadding="@dimen/dp6"
+                    android:text="就诊时间"
                     android:textColor="@color/text_title_color"
-                    android:text="就诊时间"/>
+                    android:textSize="@dimen/sp16" />
+
                 <TextView
+                    android:id="@+id/tv_visit_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/sp16"
+                    android:text="2016-04-11"
                     android:textColor="@color/text_title_color"
-                    android:text="2016-04-11"/>
+                    android:textSize="@dimen/sp16" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
+                android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp10"
                 android:background="@color/gainsboro" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp16"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp12"
-                    android:drawablePadding="@dimen/dp6"
                     android:drawableLeft="@drawable/disease_generalization"
-                    android:textSize="@dimen/sp16"
+                    android:drawablePadding="@dimen/dp6"
+                    android:text="病证名称"
                     android:textColor="@color/text_title_color"
-                    android:text="病症概括"/>
+                    android:textSize="@dimen/sp16" />
+
                 <EditText
+                    android:id="@+id/edt_disease_generalization"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:textSize="@dimen/sp16"
+                    android:maxLength="20"
+                    android:hint="请输入病证名称"
                     android:textColor="@color/text_title_color"
-                    android:hint="请输入病症概括"
-                    android:textColorHint="@color/gainsboro"/>
+                    android:textColorHint="@color/gainsboro"
+                    android:textSize="@dimen/sp16" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
+                android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp10"
                 android:background="@color/gainsboro" />
 
@@ -283,73 +326,124 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp12"
-                    android:drawablePadding="@dimen/dp6"
-                    android:drawableLeft="@drawable/related_pictures"
-                    android:textSize="@dimen/sp16"
-                    android:textColor="@color/text_title_color"
-                    android:text="相关图片"/>
 
-                <!--此处应改为横向的ListView或者是GridView-->
-                <ImageView
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp12">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:drawableLeft="@drawable/related_pictures"
+                        android:drawablePadding="@dimen/dp6"
+                        android:text="相关图片"
+                        android:textColor="@color/text_title_color"
+                        android:textSize="@dimen/sp16" />
+
+                    <TextView
+                        android:id="@+id/tv_clinical_classify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:paddingRight="@dimen/dp12"
+                        android:text="[分类]"
+                        android:textColor="@color/blue"
+                        android:visibility="gone"
+                        android:textSize="@dimen/sp14" />
+
+                </RelativeLayout>
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/add_related_pictures"/>
+                    android:orientation="horizontal">
+                    <!--此处应改为横向的ListView或者是GridView-->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rec_create_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp76" />
+
+                    <ImageView
+                        android:id="@+id/img_related_pictures"
+                        android:layout_width="@dimen/dp76"
+                        android:layout_height="@dimen/dp76"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:src="@drawable/add_related_pictures"
+                        android:visibility="gone"/>
+                </LinearLayout>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
+                android:layout_marginLeft="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp10"
                 android:background="@color/gainsboro" />
 
             <LinearLayout
+                android:id="@+id/ll_clinical_mould"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
                 android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/dp16"
-                    android:paddingBottom="@dimen/dp12">
+                    android:paddingBottom="@dimen/dp12"
+                    android:paddingTop="@dimen/dp16">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp6"
                         android:drawableLeft="@drawable/pathography"
-                        android:textSize="@dimen/sp16"
+                        android:drawablePadding="@dimen/dp6"
+                        android:text="病情记录"
                         android:textColor="@color/text_title_color"
-                        android:text="病情记录"/>
+                        android:textSize="@dimen/sp16" />
+
                     <TextView
                         android:id="@+id/tv_clinical_mould"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingRight="@dimen/dp12"
                         android:layout_alignParentRight="true"
-                        android:textSize="@dimen/sp14"
+                        android:paddingRight="@dimen/dp12"
+                        android:text="[模板]"
                         android:textColor="@color/blue"
-                        android:text="[模板]"/>
+                        android:textSize="@dimen/sp14" />
+
                 </RelativeLayout>
 
 
                 <EditText
+                    android:id="@+id/edt_pathography"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:textSize="@dimen/sp16"
+                    android:hint="请输入病情记录"
                     android:textColor="@color/text_title_color"
-                    android:hint="请输入病症概括"
-                    android:textColorHint="@color/gainsboro"/>
+                    android:textColorHint="@color/gainsboro"
+                    android:textSize="@dimen/sp16" />
+
+                <LinearLayout
+                    android:id="@+id/ll_clinical_mould_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
-                android:layout_marginTop="@dimen/dp10"
                 android:layout_marginBottom="@dimen/dp50"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp10"
                 android:background="@color/gainsboro" />
 
         </LinearLayout>

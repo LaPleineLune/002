@@ -125,37 +125,47 @@ public class ProfileActivity extends BaseActivity {
         if (TextUtils.isEmpty(data.alias)) {// data.alias.trim().isEmpty()
             SharedPreferencesUtil.removeValue("alias");// 用户昵称
             alias = getString(R.string.default_setting);
+            nickname.setTextColor(getResources().getColor(R.color.french_grey));
         } else {
             SharedPreferencesUtil.saveString("alias", data.alias);// 用户昵称
             alias = data.alias;
+            nickname.setTextColor(getResources().getColor(R.color.gray));
         }
         nickname.setText(alias);
 
         if (TextUtils.isEmpty(data.name)) {// data.name.trim().isEmpty()
             userName = getString(R.string.default_setting);
+            name.setTextColor(getResources().getColor(R.color.french_grey));
         } else {
             userName = data.name;
+            name.setTextColor(getResources().getColor(R.color.gray));
         }
         name.setText(userName);
 
         if (TextUtils.isEmpty(data.city)) {// data.city.trim().isEmpty()
             cityName = getString(R.string.default_setting);
+            belonging.setTextColor(getResources().getColor(R.color.french_grey));
         } else {
             cityName = data.city;
+            belonging.setTextColor(getResources().getColor(R.color.gray));
         }
         belonging.setText(cityName);
 
         if (TextUtils.isEmpty(data.about)) {// data.about.trim().isEmpty()
             about = getString(R.string.default_setting);
+            description.setTextColor(getResources().getColor(R.color.french_grey));
         } else {
             about = data.about;
+            description.setTextColor(getResources().getColor(R.color.gray));
         }
         description.setText(about);
 
         if (TextUtils.isEmpty(data.company)) {// data.company.trim().isEmpty()
             companyName = getString(R.string.default_setting);
+            company.setTextColor(getResources().getColor(R.color.french_grey));
         } else {
             companyName = data.company;
+            company.setTextColor(getResources().getColor(R.color.gray));
         }
         company.setText(companyName);
 
@@ -189,7 +199,7 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        setTitle("账户信息", "");
+        setTitle("个人中心", "");
         popupWindow = new PopupWindow(this);
         showArea();
         getUserInfo();
@@ -337,28 +347,43 @@ public class ProfileActivity extends BaseActivity {
 
     private void showArea() {
 
-        if (alias.trim().isEmpty()) {
+        if (alias.trim().isEmpty() || alias.equals("未设置")) {
             alias = getString(R.string.default_setting);
+            nickname.setTextColor(getResources().getColor(R.color.french_grey));
+        } else {
+            nickname.setTextColor(getResources().getColor(R.color.gray));
         }
         nickname.setText(alias);
 
-        if (userName.trim().isEmpty()) {
+        if (userName.trim().isEmpty() || userName.equals("未设置")) {
             userName = getString(R.string.default_setting);
+            name.setTextColor(getResources().getColor(R.color.french_grey));
+        } else {
+            name.setTextColor(getResources().getColor(R.color.gray));
         }
         name.setText(userName);
 
-        if (about.trim().isEmpty()) {
+        if (about.trim().isEmpty() || about.equals("未设置")) {
             about = getString(R.string.default_setting);
+            description.setTextColor(getResources().getColor(R.color.french_grey));
+        } else {
+            description.setTextColor(getResources().getColor(R.color.gray));
         }
         description.setText(about);
 
-        if (cityName.trim().isEmpty()) {
+        if (cityName.trim().isEmpty() || cityName.equals("未设置")) {
             cityName = getString(R.string.default_setting);
+            belonging.setTextColor(getResources().getColor(R.color.french_grey));
+        } else {
+            belonging.setTextColor(getResources().getColor(R.color.gray));
         }
         belonging.setText(cityName);
 
-        if (companyName.trim().isEmpty()) {
+        if (companyName.trim().isEmpty() || companyName.equals("未设置")) {
             companyName = getString(R.string.default_setting);
+            company.setTextColor(getResources().getColor(R.color.french_grey));
+        } else {
+            company.setTextColor(getResources().getColor(R.color.gray));
         }
         company.setText(companyName);
     }
@@ -368,6 +393,7 @@ public class ProfileActivity extends BaseActivity {
         //图片是否需要旋转
         mImageFile = new File(Environment.getExternalStorageDirectory()
                 + "/head.jpg");
+
 
         int degree = FaceImageUtil.getBitmapDegree(mImageFile.getAbsolutePath());
         if (degree != 0) {

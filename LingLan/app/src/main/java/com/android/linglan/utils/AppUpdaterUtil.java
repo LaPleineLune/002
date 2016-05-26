@@ -128,8 +128,13 @@ public class AppUpdaterUtil {
                     downloadUrl = Constants.URL_APP_DOWNLOAD;
 
                     if (0 == data.isforce) {// 非强制更新
-                        hasUpdate = true;
-                        showDialog(bean);
+                        if (!versionName.equals(SharedPreferencesUtil.getString("versionNumber", "1.0.0"))) {
+                            hasUpdate = true;
+                            showDialog(bean);
+                        } else if (SharedPreferencesUtil.getBoolean("settingVersionNumber", false)) {
+                            hasUpdate = true;
+                            showDialog(bean);
+                        }
                     } else {// 强制更新
 
                         exitLoginDialog = new UpdateDialog(mContext, description, new View.OnClickListener() {
@@ -181,6 +186,8 @@ public class AppUpdaterUtil {
     // 弹出对话框
     private void showDialog(final Body bean) {
 //    private void showDialog() {
+        SharedPreferencesUtil.saveString("versionNumber", bean.data.number);
+        SharedPreferencesUtil.saveBoolean("settingVersionNumber", false);
         int backVisible = hasUpdate ? View.VISIBLE : View.GONE;
         updateDialog = new UpdateDialog(mContext, title, description, backVisible,
                 new View.OnClickListener() {

@@ -60,6 +60,8 @@
     public static final int *;
 }
 #友盟 end
+#-keep class com.android.linglan.ui.wxapi.WXEntryActivity;
+#-keep class com.tencent.mm.coolassist.debugprovider;
 
 
 -keepattributes *Annotation*
@@ -233,6 +235,9 @@
 -keep public class com.huijuan.passerby.R$*{
     public static final int *;
 }
+
+#-keep class com.zfdang.multiple_images_selector.**
+
 -dontwarn com.ut.mini.**
 
 -dontwarn okio.**
@@ -259,17 +264,11 @@
 
 -keep class com.squareup.wire.** {*;}
 
-
-
 -keep class com.umeng.message.protobuffer.* {
-
          public <fields>;
 
          public <methods>;
-
 }
-
-
 
 -keep class com.umeng.message.* {
 
@@ -279,33 +278,18 @@
 
 }
 
-
-
-
 -keep class org.android.agoo.impl.* {
 
          public <fields>;
 
          public <methods>;
-
 }
-
-
-
 
 -keep class org.android.agoo.service.* {*;}
 
-
-
-
 -keep class org.android.spdy.**{*;}
 
-
-
-
 -keep public class com.android.linglan.ui.R$*{
-
     public static final int *;
-
 }
 -dontwarn com.squareup.okhttp.**

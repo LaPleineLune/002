@@ -1,11 +1,11 @@
 [
     {
-        "merged": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\umeng_socialize_titile_bar_comment.xml",
-        "source": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\bundles\\debug\\res\\layout\\umeng_socialize_titile_bar_comment.xml"
-    },
-    {
         "merged": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\umeng_socialize_comment_detail.xml",
         "source": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\bundles\\debug\\res\\layout\\umeng_socialize_comment_detail.xml"
+    },
+    {
+        "merged": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\umeng_socialize_titile_bar_comment.xml",
+        "source": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\bundles\\debug\\res\\layout\\umeng_socialize_titile_bar_comment.xml"
     },
     {
         "merged": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\umeng_socialize_oauth_dialog.xml",

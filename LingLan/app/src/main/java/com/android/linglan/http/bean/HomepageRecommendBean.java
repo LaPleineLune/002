@@ -12,6 +12,7 @@ public class HomepageRecommendBean implements Serializable {
         public String type;// 0文章   4专题
         public String logo;// logo（专题）
         public String photo;// photo(文章)(专题大图)
+        public String isnew;// 是否是今日更新
 
         public String articleid;// 文章ID（必须）
         public String title;// 文章标题（必须）
@@ -30,4 +31,5 @@ public class HomepageRecommendBean implements Serializable {
         public String content_title;// 最新添加的文章标题
 
     }
+
 }

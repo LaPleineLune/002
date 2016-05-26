@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <!--圆角-->
-    <corners android:radius="@dimen/dp6" />
+    <corners android:radius="45dip" />
 
     <!--填充色-->
     <solid android:color="#ffffff" />
@@ -10,5 +10,5 @@
     <!--描边框的宽以及颜色-->
     <stroke
         android:width="@dimen/px1"
-        android:color="#c33c12" />
+        android:color="@color/carminum" />
 </shape>

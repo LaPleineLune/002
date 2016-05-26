@@ -107,6 +107,8 @@ public class CameraView extends SurfaceView implements CameraOperation {
                 Log.e(TAG, e.getMessage());
             }
             mCamera.startPreview();
+
+
         }
 
         @Override
@@ -452,53 +454,58 @@ public class CameraView extends SurfaceView implements CameraOperation {
      * 设置照相机参数
      */
     private void setCameraParameters() {
-        Camera.Parameters parameters = mCamera.getParameters();
-
-        List<Size> sizes =parameters.getSupportedPreviewSizes();
-        Size cameraSize = sizes.get(0);
-        Size optimalSize = getOptimalPreviewSize(sizes,cameraSize.width ,cameraSize.height);
-
-        parameters.setPreviewSize(optimalSize.width, optimalSize.height);
-        parameters.setPictureSize(optimalSize.width, optimalSize.height);
-
 //        Camera.Parameters parameters = mCamera.getParameters();
-//        // 选择合适的预览尺寸
-//        List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
 //
+//        List<Size> sizes =parameters.getSupportedPreviewSizes();
+//        Size cameraSize = sizes.get(0);
+//        Size optimalSize = getOptimalPreviewSize(sizes,cameraSize.width ,cameraSize.height);
 //
-//        if (sizeList.size() > 0) {
-//            Size cameraSize = sizeList.get(0);
-//            //预览图片大小
-//            parameters.setPreviewSize(cameraSize.width, cameraSize.height);
-//        }
-//
-//        //设置生成的图片大小
-//        sizeList = parameters.getSupportedPictureSizes();
-//        if (sizeList.size() > 0) {
-//            Size cameraSize = sizeList.get(0);
-//            for (Size size : sizeList) {
-//                //小于100W像素
-//                if (size.width * size.height < 100 * 10000) {
-//                    cameraSize = size;
-//                    break;
-//                }
-//            }
-//            parameters.setPictureSize(cameraSize.width, cameraSize.height);
-//        }
+//        parameters.setPreviewSize(optimalSize.width, optimalSize.height);
+//        parameters.setPictureSize(optimalSize.width, optimalSize.height);
+
+        Camera.Parameters parameters = mCamera.getParameters();
+        // 选择合适的预览尺寸
+        List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
+
+
+        if (sizeList.size() > 0) {
+            Size cameraSize = sizeList.get(0);
+            //预览图片大小
+            parameters.setPreviewSize(cameraSize.width, cameraSize.height);
+        }
+
+        //设置生成的图片大小
+        sizeList = parameters.getSupportedPictureSizes();
+        if (sizeList.size() > 0) {
+            Size cameraSize = sizeList.get(0);
+            for (Size size : sizeList) {
+                //小于100W像素
+                if (size.width * size.height < 100 * 10000) {
+                    cameraSize = size;
+                    break;
+                }
+            }
+            parameters.setPictureSize(cameraSize.width, cameraSize.height);
+        }
 //        //设置图片格式
-        parameters.setPictureFormat(ImageFormat.JPEG);
-        parameters.setJpegQuality(100);
-        parameters.setJpegThumbnailQuality(100);
-        //自动聚焦模式
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        mCamera.setParameters(parameters);
-        //设置闪光灯模式。此处主要是用于在相机摧毁后又重建，保持之前的状态
-        setFlashMode(mFlashMode);
-        //设置缩放级别
-        setZoom(mZoom);
-        //开启屏幕朝向监听
-        startOrientationChangeListener();
-    }
+    parameters.setPictureFormat(ImageFormat.JPEG);
+    parameters.setJpegQuality(100);
+    parameters.setJpegThumbnailQuality(100);
+    //自动聚焦模式
+    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+
+    mCamera.setParameters(parameters);
+
+    //设置闪光灯模式。此处主要是用于在相机摧毁后又重建，保持之前的状态
+    setFlashMode(mFlashMode);
+    //设置缩放级别
+    setZoom(mZoom);
+    //开启屏幕朝向监听
+    startOrientationChangeListener();
+
+
+
+}
 
     private Size getOptimalPreviewSize(List<Size> sizes, int w, int h) {
         final double ASPECT_TOLERANCE = 0.05;

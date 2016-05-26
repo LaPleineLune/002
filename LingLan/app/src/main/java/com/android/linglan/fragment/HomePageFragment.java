@@ -18,7 +18,7 @@ import com.android.linglan.base.BaseFragment;
 import com.android.linglan.http.Constants;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.SearchActivity;
+import com.android.linglan.ui.study.SearchActivity;
 import com.android.linglan.utils.NetworkUtil;
 import com.android.linglan.utils.ToastUtil;
 

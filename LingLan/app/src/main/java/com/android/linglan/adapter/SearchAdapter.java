@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.SearchActivity;
+import com.android.linglan.ui.study.SearchActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;

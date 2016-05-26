@@ -22,6 +22,7 @@ public class ShareUtil {
 
     // 友盟分享平台的Controller,负责管理整个SDK的配置、操作等处理
     public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+    private static AESCryptUtil aesCryptUtil = new AESCryptUtil();
 
     /**
      * 以下为umeng分享
@@ -44,9 +45,9 @@ public class ShareUtil {
     public static void setShareContent(Context context, String articleORsubject, String id, String shareTitle, String imgUrl, String shareContent){// articleORsubject: 0 文章  4专题
         String shareUrl = null;
         if (Constants.ARTICLE.equals(articleORsubject)) {
-            shareUrl = Constants.SERVER + "/Api/Open/article?articleid=" + id;
+            shareUrl = Constants.SERVER + "/Api/Open/article?articleid=" + aesCryptUtil.encrypt(id);
         } else if (Constants.SUBJECT.equals(articleORsubject)) {
-            shareUrl = Constants.SERVER + "/Api/Open/special?specialid=" + id;
+            shareUrl = Constants.SERVER + "/Api/Open/special?specialid=" + aesCryptUtil.encrypt(id);
         }
 //        String shareTitle = "分享文章的标题";//分享文章的标题
 //        String shareUrl = "http://zhongyishuyou.com";//分享文章的地址

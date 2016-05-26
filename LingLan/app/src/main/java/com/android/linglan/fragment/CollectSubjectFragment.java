@@ -18,7 +18,7 @@ import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.AllSubjectClassifyListBean;
 import com.android.linglan.http.bean.RecommendSubjects;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.SubjectDetailsActivity;
+import com.android.linglan.ui.study.SubjectDetailsActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;

@@ -18,7 +18,7 @@ import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.AllArticleClassifyListBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.ArticleDetailsActivity;
+import com.android.linglan.ui.study.ArticleDetailsActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;

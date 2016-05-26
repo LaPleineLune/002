@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 
 import com.android.linglan.ui.R;
+import com.android.linglan.utils.ImageUtil;
+import com.android.linglan.utils.LogUtil;
 
 import java.util.List;
 
@@ -113,6 +115,9 @@ public class AlbumViewPager extends ViewPager implements MatrixImageView.OnMovin
 
         public ViewPagerAdapter(List<String> paths) {
             this.paths = paths;
+            for(String path : paths){
+                LogUtil.e("pathpathpathpathpath" + path);
+            }
         }
 
         @Override
@@ -133,37 +138,37 @@ public class AlbumViewPager extends ViewPager implements MatrixImageView.OnMovin
             String path = paths.get(position);
             //final ProgressBar spinner = (ProgressBar) imageLayout.findViewById(R.id.loading);
 
-            ImageButton videoIcon = (ImageButton) imageLayout.findViewById(R.id.videoicon);
-            if (path.contains("video")) {
-                videoIcon.setVisibility(View.VISIBLE);
-            } else {
-                videoIcon.setVisibility(View.GONE);
-            }
-            videoIcon.setOnClickListener(playVideoListener);
-            videoIcon.setTag(path);
+//            if (path.contains("video")) {
+//                videoIcon.setVisibility(View.VISIBLE);
+//            } else {
+//                videoIcon.setVisibility(View.GONE);
+//            }
+//            videoIcon.setOnClickListener(playVideoListener);
+//            videoIcon.setTag(path);
             imageLayout.setTag(path);
-            mImageLoader.loadImage(path, imageView, mOptions);
+//            mImageLoader.loadImage(path, imageView, mOptions);
+            ImageUtil.loadImageAsync(imageView, path);
             return imageLayout;
         }
 
-        OnClickListener playVideoListener = new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-
-                String path = v.getTag().toString();
-                path = path.replace(getContext().getResources().getString(R.string.Thumbnail),
-                        getContext().getResources().getString(R.string.Video));
-                path = path.replace(".jpg", ".3gp");
-                if (onPlayVideoListener != null)
-                    onPlayVideoListener.onPlay(path);
-                else {
-                    Toast.makeText(getContext(), "onPlayVideoListener", Toast.LENGTH_SHORT).show();
-//					throw new RuntimeException("onPlayVideoListener is null");
-                }
-            }
-        };
+//        OnClickListener playVideoListener = new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//
+//                String path = v.getTag().toString();
+//                path = path.replace(getContext().getResources().getString(R.string.Thumbnail),
+//                        getContext().getResources().getString(R.string.Video));
+//                path = path.replace(".jpg", ".3gp");
+//                if (onPlayVideoListener != null)
+//                    onPlayVideoListener.onPlay(path);
+//                else {
+//                    Toast.makeText(getContext(), "onPlayVideoListener", Toast.LENGTH_SHORT).show();
+////					throw new RuntimeException("onPlayVideoListener is null");
+//                }
+//            }
+//        };
 
         @Override
         public int getItemPosition(Object object) {

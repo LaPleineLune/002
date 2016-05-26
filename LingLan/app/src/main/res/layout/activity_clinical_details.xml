@@ -36,24 +36,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="bottom|end"
-            android:paddingRight="@dimen/dp20"
-            android:paddingBottom="@dimen/dp20"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom|center_horizontal"
+            android:paddingBottom="@dimen/dp30"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/bt_course_of_disease"
-                android:layout_width="@dimen/dp50"
-                android:layout_height="@dimen/dp50"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
                 android:gravity="center"
                 android:background="@drawable/backgroud_circle"
                 android:paddingTop="@dimen/dp6"
                 android:paddingBottom="@dimen/dp6"
-                android:drawableTop="@drawable/new_construction"
-                android:text="病程"
+                android:text="@string/clinical_add"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp12" />
+                android:textSize="@dimen/sp14"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/bt_weichat_flup"
@@ -67,7 +66,8 @@
                 android:drawableTop="@drawable/weichat_flup"
                 android:text="随访"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp12" />
+                android:textSize="@dimen/sp12"
+                android:visibility="gone"/>
         </LinearLayout>
 
     </RelativeLayout>

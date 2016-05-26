@@ -16,6 +16,7 @@
 
         <TextView
             style="@style/title_text_style"
+            android:textColor="@color/black"
             android:text="@string/mine" />
 
     </RelativeLayout>

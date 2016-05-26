@@ -3,6 +3,7 @@ package com.android.linglan.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -92,6 +93,7 @@ public class UpdateDialog extends Dialog {
             enterButton.setText(enterText);
         setNegativeVisible(negativeVisible);
         contentView.setText(content);
+//        contentView.setText(Html.fromHtml(content, null, null));
         enterButton.setOnClickListener(onClickListener);
         negativeButton.setOnClickListener(new View.OnClickListener() {
             @Override

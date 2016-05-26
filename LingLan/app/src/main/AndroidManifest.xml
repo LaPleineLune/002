@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.linglan.ui" >
+    package="com.android.linglan.ui">
 
     <permission
         android:name="com.huijuan.passerby.permission.JPUSH_MESSAGE"
@@ -22,6 +22,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
+    <!-- 开启闪光灯权限 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!--<uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />-->
     <!-- < UMeng  > -->
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -30,11 +33,13 @@
     <!-- < JPush  > -->
     <uses-permission android:name="com.huijuan.passerby.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <permission
         android:name="com.android.linglan.ui.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signatureOrSystem" />
@@ -48,8 +53,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <service android:name="com.android.linglan.Service.NotificationService" />
         <service
             android:name="com.android.linglan.Service.MyPushIntentService"
@@ -66,11 +72,11 @@
         <!-- 友盟 start -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="56af2c49e0f55a2863000a1c" />
+            android:value="5730756667e58eeaee0003c9" />
 
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="3969437fa0643a904e6ea2831de4148e" >
+            android:value="a36d6cbcf424400979da50cf6bce8b19">
         </meta-data>
 
         <meta-data
@@ -85,157 +91,274 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".GuideImageIndicatorActivity">
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:launchMode="singleTask" >
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".me.RegisterActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.TermsOfServiceActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.ProfileActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.ClipPictureActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.ChangeNameActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
 
         <activity
             android:name=".me.FollowedActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.CollectActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.NewCollectActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.NoteActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.NoteWritePreviewActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.FeedbackActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.SettingActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.SetFontSizeActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.AboutActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.DescriptionActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.CityActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.CountryActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".me.ProvinceActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
 
 
+        <activity android:name=".study.ArticleActivity">
+        </activity>
         <activity
-            android:name=".homepage.ArticleDetailsActivity"
+            android:name=".study.ArticleDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
-            android:name=".homepage.ArticleUrlDetailsActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:name=".study.ArticleUrlDetailsActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
-        <activity android:name=".homepage.AuthorDetailsActivity" >
+        <activity android:name=".study.AuthorDetailsActivity">
         </activity>
-
-        <activity android:name=".homepage.SubjectDetailsActivity" >
+        <activity android:name=".study.SubjectActivity">
+        </activity>
+        <activity android:name=".study.SubjectDetailsActivity">
         </activity>
 
         <receiver android:name="com.android.linglan.broadcast.SMSBroadcastReceiver" />
 
         <activity
-            android:name=".homepage.SearchActivity"
+            android:name=".study.SearchActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
-        <activity android:name=".homepage.SearchMoreActivity" >
+        <activity android:name=".study.SearchMoreActivity">
+        </activity>
+        <activity android:name=".study.StudyMoreActivity">
         </activity>
 
+
+        <activity
+            android:name=".clinical.ClinicalClassifyActivity"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth">
+        </activity>
+        <activity
+            android:name=".clinical.ClinicalManageClassifyActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+        </activity>
+        <activity
+            android:name=".clinical.ClinicalChangeClassifyActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
 
         <activity
             android:name=".clinical.ClinicalReferenceActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
+            android:name=".clinical.ClinicalReferenceInstructionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/myTransparent">
+        </activity>
+
+        <activity
             android:name=".clinical.PatientDetailsActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".clinical.PatientSelectActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".clinical.ClinicalCreateActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
         </activity>
         <activity
             android:name=".clinical.ClinicalMouldActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.EditClinicalMouldActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".clinical.ClinicalCollatingActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".clinical.ClinicalPhotographActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".clinical.ClinicalDetailsActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+        <activity
+            android:name=".clinical.ClinicalCollatingDetailsActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
             android:name=".clinical.PictureContrastActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <activity
+            android:name=".clinical.ClinicalAddClassifyActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+        <activity
+            android:name=".clinical.ClinicalBigPictureActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.ClinicalClassifyPictureActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.ClinicalSearchActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
             android:name=".clinical.CourseOfDiseaseActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".clinical.WeichatFlupActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
+        <activity
+            android:name=".clinical.TCMSearchActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+        <activity
+            android:name=".clinical.TCMSearchRequestResultActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.webviewTCMSearchRequestResultActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.TCMSearchDetailsActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.webViewTCMSearchDetailsActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.ClinicalPictureClassifyActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.EditClinicalPictureClassifyActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.ViewPhotoActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".clinical.MultiImageSelectorActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".fm.RadioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fm.RadioPlayActivity"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>

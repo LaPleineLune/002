@@ -3,6 +3,7 @@ package com.android.linglan.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,10 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.linglan.http.bean.SubjectDetails;
+import com.android.linglan.http.bean.SubjectDetailsBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.ArticleDetailsActivity;
+import com.android.linglan.ui.study.ArticleDetailsActivity;
 import com.android.linglan.utils.ImageUtil;
+import com.android.linglan.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 
@@ -23,9 +25,9 @@ import java.util.ArrayList;
  */
 public class SubjectDetailsListAdapter extends RecyclerView.Adapter {
     private Activity context;
-    private ArrayList<SubjectDetails.SubjectData> subjectData;
+    private ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData;
 
-    public SubjectDetailsListAdapter(Activity context, ArrayList<SubjectDetails.SubjectData> subjectData) {
+    public SubjectDetailsListAdapter(Activity context, ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData) {
         this.context = context;
         this.subjectData = subjectData;
     }
@@ -52,7 +54,7 @@ public class SubjectDetailsListAdapter extends RecyclerView.Adapter {
         return position;
     }
 
-    public void updateAdapter(ArrayList<SubjectDetails.SubjectData> subjectData){
+    public void updateAdapter(ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData){
         this.subjectData = subjectData;
         this.notifyDataSetChanged();
     }
@@ -91,6 +93,13 @@ public class SubjectDetailsListAdapter extends RecyclerView.Adapter {
             }
 //        viewHolder.iv_item_article_image.setBackgroundResource(draw[position]);
             ll_item_article_title.setText(subjectData.get(position).content_title);
+            String oldArticleid = SharedPreferencesUtil.getString("articleid" + subjectData.get(position).contentid, null);
+            if (oldArticleid != null && oldArticleid.equals(subjectData.get(position).contentid)) {
+                ll_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.read_text_title_color));
+            } else {
+                ll_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.text_title_color));
+            }
+
             ll_item_article_time.setText(subjectData.get(position).addtime);
             if (!TextUtils.isEmpty(subjectData.get(position).author)) {
                 Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
@@ -104,6 +113,8 @@ public class SubjectDetailsListAdapter extends RecyclerView.Adapter {
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    SharedPreferencesUtil.saveString("articleid" + subjectData.get(position).contentid, subjectData.get(position).contentid);
+                    ll_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.read_text_title_color));
                     Intent intent = new Intent();
                     intent.putExtra("articleId", subjectData.get(position).contentid);
                     intent.putExtra("photo", subjectData.get(position).photo);

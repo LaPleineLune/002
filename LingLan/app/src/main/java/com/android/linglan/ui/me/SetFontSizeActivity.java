@@ -57,14 +57,19 @@ public class SetFontSizeActivity extends BaseActivity {
         String textSize = SharedPreferencesUtil.getString("webTextSize", "正常");// 初始化文字大小
         if (textSize.equals("较小")) {
             webTextSize = 0;
+            textFont.setText("较小");
         } else if (textSize.equals("小")) {
             webTextSize = 2;
+            textFont.setText("小");
         } else if (textSize.equals("正常")) {
             webTextSize = 3;
+            textFont.setText("正常");
         } else if (textSize.equals("大")) {
             webTextSize = 4;
+            textFont.setText("大");
         } else if (textSize.equals("较大")) {
             webTextSize = 7;
+            textFont.setText("较大");
         }
 
         initSetFontSeek();
@@ -79,7 +84,7 @@ public class SetFontSizeActivity extends BaseActivity {
         fontseek.setMax(6);
         fontseek.setProgress(webTextSize);
         fontseek.setSecondaryProgress(0);
-        textFont.setText("正常");
+//        textFont.setText("正常");
         fontseek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

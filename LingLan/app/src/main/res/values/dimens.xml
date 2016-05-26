@@ -62,6 +62,7 @@
     <dimen name="dp125">125dp</dimen>
     <dimen name="dp130">130dp</dimen>
     <dimen name="dp136">136dp</dimen>
+    <dimen name="dp160">160dp</dimen>
     <dimen name="dp180">180dp</dimen>
     <dimen name="dp200">200dp</dimen>
     <dimen name="dp288">288dp</dimen>

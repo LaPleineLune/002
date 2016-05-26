@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.linglan.http.bean.SubjectDetails;
+import com.android.linglan.http.bean.SubjectDetailsBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.ImageUtil;
 
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class AuthorArticleAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-    private ArrayList<SubjectDetails.SubjectData> subjectData;
+    private ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData;
 
     public AuthorArticleAdapter(Context context) {
         this.context = context;
@@ -35,7 +35,7 @@ public class AuthorArticleAdapter extends BaseAdapter {
     }
 
     @Override
-    public SubjectDetails.SubjectData getItem(int position) {
+    public SubjectDetailsBean.SubjectData.SubjectList getItem(int position) {
         return subjectData.get(position);
     }
 
@@ -44,7 +44,7 @@ public class AuthorArticleAdapter extends BaseAdapter {
         return position;
     }
 
-    public void upDateAdapter(ArrayList<SubjectDetails.SubjectData> subjectData){
+    public void upDateAdapter(ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData){
         this.subjectData = subjectData;
         notifyDataSetChanged();
     }

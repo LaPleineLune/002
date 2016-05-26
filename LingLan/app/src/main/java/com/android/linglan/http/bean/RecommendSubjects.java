@@ -19,6 +19,7 @@ public ArrayList<RecommendSubject> data;
         public String addtime;//创建时间
         public String orderid;//排序
         public String content_title;// 最新添加的文章标题
+        public String isnew;// 是否是今日更新
 
         @Override
         public String toString() {

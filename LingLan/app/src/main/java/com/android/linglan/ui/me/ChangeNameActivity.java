@@ -2,6 +2,7 @@ package com.android.linglan.ui.me;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 
@@ -43,8 +44,24 @@ public class ChangeNameActivity extends BaseActivity {
         collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
         right.setCompoundDrawables(collectTopDrawable, null, null, null);
         change_name.setHint("请输入" + changeNameTitle);
-        change_name.setText(name);
-        change_name.setSelection(name.length());
+
+        if (changeNameTitle.equals("工作单位")) {
+            change_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+            change_name.setText(name);
+            if (name.length() <= 20) {
+                change_name.setSelection(name.length());
+            } else {
+                change_name.setSelection(20);
+            }
+        } else {
+            change_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+            change_name.setText(name);
+            if (name.length() <= 10) {
+                change_name.setSelection(name.length());
+            } else {
+                change_name.setSelection(10);
+            }
+        }
     }
 
     @Override

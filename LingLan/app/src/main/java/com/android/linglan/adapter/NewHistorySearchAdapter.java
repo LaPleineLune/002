@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.SearchActivity;
+import com.android.linglan.ui.study.SearchActivity;
 
 /**
  * Created by wuiqngci on 2016/1/6 0006.

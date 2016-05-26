@@ -1,25 +1,38 @@
 package com.android.linglan.ui.clinical;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
+import com.android.linglan.adapter.clinical.PhotoAdapter;
 import com.android.linglan.camerautils.CameraContainer;
 import com.android.linglan.camerautils.CameraView;
 import com.android.linglan.camerautils.FileOperateUtil;
-import com.android.linglan.camerautils.FilterImageView;
+import com.android.linglan.http.NetApi;
+import com.android.linglan.http.PasserbyClient;
+import com.android.linglan.http.bean.UpdataPhotoBeen;
 import com.android.linglan.ui.R;
+import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.JsonUtil;
+import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.widget.PickerView;
 
 import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,95 +43,104 @@ import java.util.List;
  */
 public class ClinicalPhotographActivity extends Activity implements View.OnClickListener, CameraContainer.TakePictureListener {
     public final static String TAG = "CameraAty";
-    private boolean mIsRecordMode = false;
     private String mSaveRoot;
     private CameraContainer mContainer;
-    private FilterImageView mThumbView;
     private ImageButton mCameraShutterButton;
-    private ImageButton mRecordShutterButton;
     private ImageView mFlashView;
     private ImageButton mSwitchModeButton;
     private ImageView mSwitchCameraView;
-    private ImageView mSettingView;
-    private ImageView mVideoIconView;
     private View mHeaderBar;
-    private TextView tv_prescription,tv_tongue_picture,tv_affected_part,tv_other;
-    private boolean isRecording = false;
+    private LinearLayout ll_clinical_ok,ll_clinical_cancel;
+
+
+    private RecyclerView rec_image;
+    private PhotoAdapter photoAdapter;
+    private ArrayList<Bitmap> photoes;
+    private String text = "处方";
+
+    private File media;
+    private String type;
+    private String categoryid;
+
+    private UpdataPhotoBeen updataPhotoBeen;
+    private List<UpdataPhotoBeen> updataPhotoBeens;
+    private List<File> files;
+    private int photoCount;
+
+    private PickerView pickerview_picture_tag;
+    protected static final int REQUEST_FAILURE = 0;
+    protected static final int REQUEST_SUCCESS = 1;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case REQUEST_SUCCESS:
+                    Intent intent = new Intent();
+                    intent.setClass(ClinicalPhotographActivity.this, ClinicalCreateActivity.class);
+                    intent.putExtra("updataPhotoBeens", (Serializable) updataPhotoBeens);
+                    startActivity(intent);
+                    finish();
+                    break;
+                case REQUEST_FAILURE:
+                    //原页面GONE掉，提示网络不好的页面出现
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.camera);
 
         mHeaderBar = findViewById(R.id.camera_header_bar);
         mContainer = (CameraContainer) findViewById(R.id.container);
-//        mThumbView = (FilterImageView) findViewById(R.id.btn_thumbnail);
-//        mVideoIconView = (ImageView) findViewById(R.id.videoicon);
+        ll_clinical_ok = (LinearLayout) findViewById(R.id.ll_clinical_ok);
+        ll_clinical_cancel = (LinearLayout) findViewById(R.id.ll_clinical_cancel);
         mCameraShutterButton = (ImageButton) findViewById(R.id.btn_shutter_camera);
-//        mRecordShutterButton = (ImageButton) findViewById(R.id.btn_shutter_record);
         mSwitchCameraView = (ImageView) findViewById(R.id.btn_switch_camera);
         mFlashView = (ImageView) findViewById(R.id.btn_flash_mode);
-//        mSwitchModeButton = (ImageButton) findViewById(R.id.btn_switch_mode);
-//        mSettingView = (ImageView) findViewById(R.id.btn_other_setting);
-        tv_prescription = (TextView) findViewById(R.id.tv_prescription);
-        tv_tongue_picture = (TextView) findViewById(R.id.tv_tongue_picture);
-        tv_affected_part = (TextView) findViewById(R.id.tv_affected_part);
-        tv_other = (TextView) findViewById(R.id.tv_other);
+        pickerview_picture_tag = (PickerView) findViewById(R.id.pickerview_picture_tag);
 
+        rec_image = (RecyclerView) findViewById(R.id.rec_image);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rec_image.setLayoutManager(linearLayoutManager);
+        photoAdapter = new PhotoAdapter(this);
+        rec_image.setAdapter(photoAdapter);
+        photoes = new ArrayList<Bitmap>();
+        List<String> data = new ArrayList<String>();
+        updataPhotoBeens = new ArrayList<UpdataPhotoBeen>();
+        type = 0 + "";
+        categoryid = 0 + "";
+        photoCount = 0;
 
-//        mThumbView.setOnClickListener(this);
+        data.add("其他");
+        data.add("舌象");
+        data.add("处方");
+        data.add("患处");
+        pickerview_picture_tag.setData(data);
+        pickerview_picture_tag.setOnSelectListener(new PickerView.onSelectListener() {
+
+            @Override
+            public void onSelect(String text) {
+                ClinicalPhotographActivity.this.text = text;
+            }
+        });
+
+        ll_clinical_ok.setOnClickListener(this);
+        ll_clinical_cancel.setOnClickListener(this);
         mCameraShutterButton.setOnClickListener(this);
-//        mRecordShutterButton.setOnClickListener(this);
         mFlashView.setOnClickListener(this);
-//        mSwitchModeButton.setOnClickListener(this);
         mSwitchCameraView.setOnClickListener(this);
-//        mSettingView.setOnClickListener(this);
-
-        tv_prescription.setOnClickListener(this);
-        tv_tongue_picture.setOnClickListener(this);
-        tv_affected_part.setOnClickListener(this);
-        tv_other.setOnClickListener(this);
 
         mSaveRoot = "test";
         mContainer.setRootPath(mSaveRoot);
-//        initThumbnail();
-
-        tv_prescription.setTextColor(this.getResources().getColor(R.color.blue));
-
-//        tv_prescription.setTextSize(this.getResources().getDimension(R.dimen.sp18));
-        tv_prescription.setTextSize(18);
-
-        Drawable rightDrawable = getResources().getDrawable(R.drawable.point);
-        rightDrawable.setBounds(0, 0, rightDrawable.getMinimumWidth(), rightDrawable.getMinimumHeight());
-        tv_prescription.setCompoundDrawables(null, rightDrawable, null, null);
-
-    }
-
-
-    /**
-     * 加载缩略图
-     */
-    private void initThumbnail() {
-        String thumbFolder = FileOperateUtil.getFolderPath(this, FileOperateUtil.TYPE_THUMBNAIL, mSaveRoot);
-        List<File> files = FileOperateUtil.listFiles(thumbFolder, ".jpg");
-        if (files != null && files.size() > 0) {
-            Bitmap thumbBitmap = BitmapFactory.decodeFile(files.get(0).getAbsolutePath());
-            if (thumbBitmap != null) {
-//                mThumbView.setImageBitmap(thumbBitmap);
-                //视频缩略图显示播放图案
-                if (files.get(0).getAbsolutePath().contains("video")) {
-                    mVideoIconView.setVisibility(View.VISIBLE);
-                } else {
-                    mVideoIconView.setVisibility(View.GONE);
-                }
-            }
-        } else {
-//            mThumbView.setImageBitmap(null);
-            mVideoIconView.setVisibility(View.VISIBLE);
-        }
 
     }
 
@@ -127,12 +149,30 @@ public class ClinicalPhotographActivity extends Activity implements View.OnClick
         // TODO Auto-generated method stub
         switch (view.getId()) {
             case R.id.btn_shutter_camera:
-                mCameraShutterButton.setClickable(false);
-                mContainer.takePicture(this);
+                if(photoCount < 5){
+                    mCameraShutterButton.setClickable(false);
+                    mContainer.takePicture(this);
+                }else{
+                    ToastUtil.show("一次只能拍5张照片");
+                }
+
                 break;
-//            case R.id.btn_thumbnail:
-////                startActivity(new Intent(this, AlbumAty.class));
-//                break;
+            case R.id.ll_clinical_ok:
+                String thumbFolder = FileOperateUtil.getFolderPath(this, FileOperateUtil.TYPE_IMAGE, mSaveRoot);
+                files = FileOperateUtil.listFiles(thumbFolder, ".jpg");
+                if (files == null || files.size() == 0) {
+                    ToastUtil.show("没有照片");
+                } else {
+                    for (File media : files) {
+                        saveClinicalMultiMedia(media, type, categoryid);
+                    }
+                }
+
+
+                break;
+            case R.id.ll_clinical_cancel:
+              finish();
+                break;
             case R.id.btn_flash_mode:
                 if (mContainer.getFlashMode() == CameraView.FlashMode.ON) {
                     mContainer.setFlashMode(CameraView.FlashMode.OFF);
@@ -148,36 +188,6 @@ public class ClinicalPhotographActivity extends Activity implements View.OnClick
                     mFlashView.setImageResource(R.drawable.btn_flash_on);
                 }
                 break;
-//            case R.id.btn_switch_mode:
-//                if (mIsRecordMode) {
-//                    mSwitchModeButton.setImageResource(R.drawable.ic_switch_camera);
-//                    mCameraShutterButton.setVisibility(View.VISIBLE);
-//                    mRecordShutterButton.setVisibility(View.GONE);
-//                    //拍照模式下显示顶部菜单
-//                    mHeaderBar.setVisibility(View.VISIBLE);
-//                    mIsRecordMode = false;
-//                    mContainer.switchMode(0);
-//                    stopRecord();
-//                } else {
-//                    mSwitchModeButton.setImageResource(R.drawable.ic_switch_video);
-//                    mCameraShutterButton.setVisibility(View.GONE);
-//                    mRecordShutterButton.setVisibility(View.VISIBLE);
-//                    //录像模式下隐藏顶部菜单
-//                    mHeaderBar.setVisibility(View.GONE);
-//                    mIsRecordMode = true;
-//                    mContainer.switchMode(5);
-//                }
-//                break;
-//            case R.id.btn_shutter_record:
-//                if (!isRecording) {
-//                    isRecording = mContainer.startRecord();
-//                    if (isRecording) {
-//                        mRecordShutterButton.setBackgroundResource(R.drawable.btn_shutter_recording);
-//                    }
-//                } else {
-//                    stopRecord();
-//                }
-//                break;
             case R.id.btn_switch_camera:
                 mContainer.switchCamera();
                 break;
@@ -190,12 +200,6 @@ public class ClinicalPhotographActivity extends Activity implements View.OnClick
     }
 
 
-    private void stopRecord() {
-        mContainer.stopRecord(this);
-        isRecording = false;
-//        mRecordShutterButton.setBackgroundResource(R.drawable.btn_shutter_record);
-    }
-
     @Override
     public void onTakePictureEnd(Bitmap thumBitmap) {
         mCameraShutterButton.setClickable(true);
@@ -206,13 +210,42 @@ public class ClinicalPhotographActivity extends Activity implements View.OnClick
         if (bm != null) {
             //生成缩略图
             Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bm, 213, 213);
-//            mThumbView.setImageBitmap(thumbnail);
-//            if (isVideo)
-//                mVideoIconView.setVisibility(View.VISIBLE);
-//            else {
-//                mVideoIconView.setVisibility(View.GONE);
-//            }
+            photoes.add(thumbnail);
+            photoAdapter.updateAdapter(photoes, text);
+            photoCount ++;
         }
+    }
+
+    public void saveClinicalMultiMedia(File media, String type, String categoryid) {
+        NetApi.saveClinicalMultiMedia(new PasserbyClient.HttpCallback() {
+            @Override
+            public void onSuccess(String result) {
+//                LogUtil.e(result);
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ClinicalPhotographActivity.this)) {
+                    return;
+                }
+                updataPhotoBeen = JsonUtil.json2Bean(result, UpdataPhotoBeen.class);
+//                LogUtil.e(updataPhotoBeen.data.toString());
+                updataPhotoBeens.add(updataPhotoBeen);
+                if (files.size() == updataPhotoBeens.size()) {
+                    handler.sendEmptyMessage(REQUEST_SUCCESS);
+                    String thumbFolder = FileOperateUtil.getFolderPath(ClinicalPhotographActivity.this, FileOperateUtil.TYPE_THUMBNAIL, mSaveRoot);
+                    List<File> smallfiles = FileOperateUtil.listFiles(thumbFolder, ".jpg");
+                    for (File file : smallfiles) {
+                        FileOperateUtil.deleteThumbFile(file.getAbsolutePath(), ClinicalPhotographActivity.this);
+                    }
+                    for (File file : files) {
+                        FileOperateUtil.deleteThumbFile(file.getAbsolutePath(), ClinicalPhotographActivity.this);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        }, media, type, categoryid);
     }
 
     @Override

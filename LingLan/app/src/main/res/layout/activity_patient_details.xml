@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <include
         android:id="@+id/page_head"
@@ -16,7 +17,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="@dimen/dp12">
@@ -30,14 +31,16 @@
                 android:textSize="@dimen/sp14" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:id="@+id/edt_patient_name"
+                android:layout_width="@dimen/dp0"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@null"
                 android:hint="请输入患者名字"
-                android:maxLength="7"
+                android:maxLength="10"
                 android:textColor="@color/text_title_color"
                 android:textColorHint="@color/gainsboro"
-                android:textSize="@dimen/sp16" />
+                android:textSize="@dimen/sp14" />
         </LinearLayout>
 
         <View
@@ -61,11 +64,13 @@
                 android:text="性别"/>
 
             <RadioGroup
+                android:id="@+id/rdg_patient_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
                 <RadioButton
+                    android:id="@+id/rdb_patient_boy"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/dp6"
@@ -75,6 +80,7 @@
                     android:textColor="@color/radiobutton_sex_text"
                     android:button="@drawable/radiobutton_sex_bg"/>
                 <RadioButton
+                    android:id="@+id/rdb_patient_girl"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp30"
@@ -107,13 +113,14 @@
                 android:textColor="@color/gray"
                 android:text="年龄"/>
             <EditText
+                android:id="@+id/edt_patient_age"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="3"
                 android:background="@null"
-                android:textSize="@dimen/sp16"
+                android:textSize="@dimen/sp14"
                 android:textColor="@color/text_title_color"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -123,20 +130,21 @@
                 android:text="岁"/>
             <!--android:textColor="@color/text_title_color"-->
             <EditText
+                android:id="@+id/edt_patient_age_month"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:inputType="number"
                 android:maxLength="2"
                 android:background="@null"
-                android:textSize="@dimen/sp16"
+                android:textSize="@dimen/sp14"
                 android:textColor="@color/text_title_color"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp16"
                 android:textColor="@color/text_title_color"
-                android:text="月"/>
+                android:text="个月"/>
             <!--android:textColor="@color/text_title_color"-->
         </LinearLayout>
 
@@ -146,7 +154,7 @@
             android:background="@color/gainsboro" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
@@ -157,16 +165,18 @@
                 android:layout_marginRight="@dimen/dp16"
                 android:textSize="@dimen/sp14"
                 android:textColor="@color/gray"
-                android:text="电话"/>
+                android:text="联系方式"/>
             <EditText
-                android:layout_width="wrap_content"
+                android:id="@+id/edt_patient_phone"
+                android:layout_width="@dimen/dp0"
                 android:layout_height="wrap_content"
-                android:maxLength="11"
+                android:layout_weight="1"
+                android:maxLength="20"
                 android:inputType="phone"
                 android:background="@null"
-                android:textSize="@dimen/sp16"
+                android:textSize="@dimen/sp14"
                 android:textColor="@color/text_title_color"
-                android:hint="请输入电话号码"
+                android:hint="请输入联系方式"
                 android:textColorHint="@color/gainsboro"/>
         </LinearLayout>
 

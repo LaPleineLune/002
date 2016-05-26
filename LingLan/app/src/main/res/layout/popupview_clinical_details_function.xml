@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="120dp"
-    android:layout_height="270dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/popupview_clinical_details_function">
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp16"
@@ -19,12 +19,12 @@
     <View
         android:layout_width="110dp"
         android:layout_height="@dimen/px1"
-        android:background="@drawable/clinical_div_line_hor"/>
+        android:background="@drawable/clinical_div_line_hor" />-->
     <TextView
         android:id="@+id/tv_picture_contrast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp8"
+        android:paddingTop="@dimen/dp16"
         android:paddingBottom="@dimen/dp8"
         android:textSize="@dimen/sp16"
         android:textColor="@color/gray"
@@ -34,18 +34,19 @@
         android:layout_height="@dimen/px1"
         android:background="@drawable/clinical_div_line_hor"/>
     <TextView
+        android:id="@+id/tv_add_classify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dp8"
         android:paddingBottom="@dimen/dp8"
         android:textSize="@dimen/sp16"
         android:textColor="@color/gray"
-        android:text="添加标签"/>
+        android:text="病历分类"/>
     <View
         android:layout_width="110dp"
         android:layout_height="@dimen/px1"
         android:background="@drawable/clinical_div_line_hor"/>
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dp8"
@@ -56,24 +57,26 @@
     <View
         android:layout_width="110dp"
         android:layout_height="@dimen/px1"
-        android:background="@drawable/clinical_div_line_hor"/>
+        android:background="@drawable/clinical_div_line_hor"/>-->
     <TextView
+        android:id="@+id/tv_clinical_sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dp8"
         android:paddingBottom="@dimen/dp8"
         android:textSize="@dimen/sp16"
         android:textColor="@color/gray"
-        android:text="时间排序"/>
+        android:text="病程排序"/>
     <View
         android:layout_width="110dp"
         android:layout_height="@dimen/px1"
         android:background="@drawable/clinical_div_line_hor"/>
     <TextView
+        android:id="@+id/tv_clinical_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dp8"
-        android:paddingBottom="@dimen/dp16"
+        android:paddingBottom="@dimen/dp4"
         android:textSize="@dimen/sp16"
         android:textColor="@color/gray"
         android:text="删除病历"/>

@@ -2,33 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <include
         android:id="@+id/page_head"
         layout="@layout/page_head" />
 
-    <com.chanven.lib.cptr.PtrClassicFrameLayout
-        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/recycler_view_home_recommend"
+    <LinearLayout
+        android:id="@+id/ll_clinical_reference"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f0f0f0"
-        cube_ptr:ptr_duration_to_close="200"
-        cube_ptr:ptr_duration_to_close_header="700"
-        cube_ptr:ptr_keep_header_when_refresh="true"
-        cube_ptr:ptr_pull_to_fresh="false"
-        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
-        cube_ptr:ptr_resistance="1.8" >
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/lv_homepage_recommend"
+        <LinearLayout
+            android:id="@+id/ll_clinical_reference_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white"/>
-    </com.chanven.lib.cptr.PtrClassicFrameLayout>
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <include layout="@layout/layout_no_network"
-        android:visibility="gone"/>
+            <com.chanven.lib.cptr.PtrClassicFrameLayout
+                xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/recycler_view_home_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f0f0f0"
+                cube_ptr:ptr_duration_to_close="200"
+                cube_ptr:ptr_duration_to_close_header="700"
+                cube_ptr:ptr_keep_header_when_refresh="true"
+                cube_ptr:ptr_pull_to_fresh="false"
+                cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+                cube_ptr:ptr_resistance="1.8">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lv_homepage_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+            </com.chanven.lib.cptr.PtrClassicFrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_clinical_classify_no_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dp10"
+            android:drawableTop="@drawable/clinical_reference_no_content"
+            android:lineSpacingMultiplier="1.2"
+            android:padding="@dimen/dp28"
+            android:text="@string/clinical_reference_no_content"
+            android:textColor="@color/french_grey"
+            android:textSize="@dimen/sp14"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <include
+        layout="@layout/layout_no_network"
+        android:visibility="gone" />
 
 </LinearLayout>

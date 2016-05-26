@@ -5,8 +5,7 @@
     android:orientation="vertical"
     android:layout_marginLeft="@dimen/dp16"
     android:layout_marginRight="@dimen/dp16"
-    android:paddingTop="@dimen/dp12"
-    >
+    android:paddingTop="@dimen/dp12" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,7 +51,7 @@
                 android:paddingTop="@dimen/dp10"
                 android:singleLine="true"
                 android:text="最新文章的标题"
-                android:textColor="@color/gray"
+                android:textColor="@color/read_text_title_color"
                 android:textSize="@dimen/sp14" />
 
             <RelativeLayout
@@ -105,7 +104,8 @@
                     android:text="新"
                     android:textColor="@color/red"
                     android:textSize="@dimen/sp10"
-                    android:background="@drawable/frame_red_new"/>
+                    android:background="@drawable/frame_red_new"
+                    android:visibility="gone"/>
 
             </RelativeLayout>
 
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/gray"
+                    android:textColor="@color/read_text_title_color"
                     android:textSize="@dimen/sp14" />
 
                 <TextView
@@ -157,11 +157,10 @@
                     android:text="新"
                     android:textColor="@color/red"
                     android:textSize="@dimen/sp10"
-                    android:background="@drawable/frame_red_new"/>
+                    android:background="@drawable/frame_red_new"
+                    android:visibility="gone"/>
 
             </RelativeLayout>
-
-
 
         </LinearLayout>
 

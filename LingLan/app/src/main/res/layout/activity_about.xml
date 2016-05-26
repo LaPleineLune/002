@@ -38,7 +38,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="亲情会员内测版"
             android:textColor="@color/text_title_color"
             android:textSize="@dimen/sp14"/>
     </LinearLayout>

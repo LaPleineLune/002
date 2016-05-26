@@ -12,9 +12,9 @@ import com.android.linglan.base.BaseActivity;
 import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.fragment.HomePageFragment;
 import com.android.linglan.fragment.MeFragment;
+import com.android.linglan.fragment.StudyFragment;
+import com.android.linglan.fragment.TestStudyFragment;
 import com.android.linglan.fragment.TestTabFragmentDelegate;
-import com.android.linglan.http.bean.RecommendArticles;
-import com.android.linglan.http.bean.RecommendSubjects;
 import com.android.linglan.utils.AppUpdaterUtil;
 import com.android.linglan.utils.ToastUtil;
 import com.android.linglan.widget.TestFixedTabPageIndicator;
@@ -30,17 +30,30 @@ public class MainActivity extends BaseActivity {
     private ViewPager pager;
     private FragmentPagerAdapter adapter;
 
-    public ArrayList<RecommendArticles.RecommendArticle> ArticlesData;
-    public ArrayList<RecommendSubjects.RecommendSubject> SubjectsData;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        indicator = new TestFixedTabPageIndicator(this);
         new AppUpdaterUtil().checkToUpdate(this);
         initFragments();
-        ArticlesData = (ArrayList<RecommendArticles.RecommendArticle>) getIntent().getSerializableExtra("ArticlesData");
-        SubjectsData = (ArrayList<RecommendSubjects.RecommendSubject>) getIntent().getSerializableExtra("SubjectsData");
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+//        Intent intent = getIntent();
+//        int index = intent.getIntExtra("index", 0);
+//        if (index < fragmentDelegates.size()) {
+//            pager.setCurrentItem(index);
+//        }
+
+        String clinicalDetails = getIntent().getStringExtra("clinicalDetails");
+        if(clinicalDetails != null && clinicalDetails.equals("clinicalDetails")){
+            pager.setCurrentItem(1);
+        }
     }
 
     @Override
@@ -64,19 +77,10 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    public ArrayList<RecommendArticles.RecommendArticle> getArticlesData() {
-        return ArticlesData;
-
-    }
-
-    public ArrayList<RecommendSubjects.RecommendSubject> getSubjectsData() {
-        return SubjectsData;
-
-    }
-
     private void initFragments() {
         TestTabFragmentDelegate fragmentDelegate =
-                new TestTabFragmentDelegate(HomePageFragment.class, null, R.drawable.bottom_home_icon, R.string.study);
+                new TestTabFragmentDelegate(StudyFragment.class, null, R.drawable.bottom_home_icon, R.string.study);
+//                new TestTabFragmentDelegate(HomePageFragment.class, null, R.drawable.bottom_home_icon, R.string.study);
         fragmentDelegates.add(fragmentDelegate);
 
         fragmentDelegate =
@@ -92,6 +96,8 @@ public class MainActivity extends BaseActivity {
         pager.setOffscreenPageLimit(2);
         indicator = (TestFixedTabPageIndicator) findViewById(R.id.main_tab);
         indicator.setViewPager(pager);
+        redirectTo();
+        indicator.getMainContext(this);
     }
 
     class MainTabAdapter extends FragmentPagerAdapter
@@ -150,9 +156,9 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        redirectTo();
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        redirectTo();
+//    }
 }

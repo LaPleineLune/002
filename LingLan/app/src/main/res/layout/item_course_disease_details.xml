@@ -29,12 +29,13 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp16"
-                android:paddingBottom="@dimen/dp10">
+                android:layout_height="wrap_content" >
                 <TextView
+                    android:id="@+id/tv_visit_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp16"
+                    android:paddingBottom="@dimen/dp10"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:drawableLeft="@drawable/course_disease_time"
@@ -46,6 +47,8 @@
                     android:id="@+id/tv_course_disease_compile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp16"
+                    android:paddingBottom="@dimen/dp10"
                     android:layout_alignParentRight="true"
                     android:drawableRight="@drawable/course_disease_compile"
                     android:text="编辑"
@@ -61,150 +64,36 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.4"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp16"
-                    android:text="病症：" />
+                    android:text="病证：" />
                 <TextView
+                    android:id="@+id/tv_feature"
                     android:layout_width="@dimen/dp0"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:lineSpacingMultiplier="1.4"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp16"
-                    android:text="我是病症，很长很长很长很长很长很长很长很长很长很长很长很长的病症" />
+                    android:text="" />
             </LinearLayout>
-
-
 
             <!--此处可换为横向的listView-->
-            <ImageView
+            <!--<ImageView
                 android:layout_width="@dimen/dp76"
                 android:layout_height="@dimen/dp76"
-                android:src="@drawable/default_image"/>
+                android:src="@drawable/default_image"/>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp10"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dp10"
-                    android:lineSpacingMultiplier="1.4"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/sp16"
-                    android:text="病症,很长很长很长很长很长很长很长很长很长很长很长很长的病症" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dp10"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/dp10"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/blue"
-                        android:textSize="@dimen/sp16"
-                        android:text="[主述]" />
-                    <TextView
-                        android:layout_width="@dimen/dp0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/text_title_color"
-                        android:textSize="@dimen/sp16"
-                        android:text="我是主述，很长很长很长很长很长很长很长很长很长很长很长很长的主述" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dp10"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/dp10"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/blue"
-                        android:textSize="@dimen/sp16"
-                        android:text="[现病史]" />
-                    <TextView
-                        android:layout_width="@dimen/dp0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/text_title_color"
-                        android:textSize="@dimen/sp16"
-                        android:text="我是现病史，很长很长很长很长很长很长很长很长很长很长很长很长的现病史" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dp10"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/dp10"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/blue"
-                        android:textSize="@dimen/sp16"
-                        android:text="[诊断]" />
-                    <TextView
-                        android:layout_width="@dimen/dp0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/text_title_color"
-                        android:textSize="@dimen/sp16"
-                        android:text="我是诊断，很长很长很长很长很长很长很长很长很长很长很长很长的诊断" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dp10"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/dp10"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/blue"
-                        android:textSize="@dimen/sp16"
-                        android:text="[辩证]" />
-                    <TextView
-                        android:layout_width="@dimen/dp0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/text_title_color"
-                        android:textSize="@dimen/sp16"
-                        android:text="我是辩证，很长很长很长很长很长很长很长很长很长很长很长很长的辩证" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/dp10"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/blue"
-                        android:textSize="@dimen/sp16"
-                        android:text="[处方]" />
-                    <TextView
-                        android:layout_width="@dimen/dp0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:lineSpacingMultiplier="1.4"
-                        android:textColor="@color/text_title_color"
-                        android:textSize="@dimen/sp16"
-                        android:text="我是处方，很长很长很长很长很长很长很长很长很长很长很长很长的处方" />
-                </LinearLayout>
-            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rec_img"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp76" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rec_mould"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </LinearLayout>

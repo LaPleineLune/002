@@ -1,19 +1,23 @@
 package com.android.linglan.ui.clinical;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.linglan.adapter.RecycleHomeRecommendAdapter;
+import com.android.linglan.adapter.RecycleStudyAdapter;
 import com.android.linglan.base.BaseActivity;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.HomepageRecommendBean;
 import com.android.linglan.ui.R;
+import com.android.linglan.ui.study.SearchActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
@@ -34,10 +38,15 @@ import java.util.List;
 public class ClinicalReferenceActivity extends BaseActivity {
     protected static final int REQUEST_FAILURE = 0;
     protected static final int REQUEST_SUCCESS = 1;
+    protected static final int REQUEST_SUCCESS_NO_CONTENT = 2;
+    protected static final int REQUEST_SUCCESS_CONTENT = 3;
     private PtrClassicFrameLayout recycler_view_home_recommend;
     private RecyclerAdapterWithHF mAdapter;
     private RecyclerView lv_homepage_recommend;
+    private LinearLayout ll_clinical_reference;
+    private LinearLayout ll_clinical_reference_list;
     private LinearLayout ll_no_network;
+    private TextView tv_clinical_classify_no_content;
     //    private RecyclerAdapter adapter;
     private RecycleHomeRecommendAdapter adapter;
     public ArrayList<HomepageRecommendBean.HomepageRecommendBeanData> data;
@@ -54,14 +63,25 @@ public class ClinicalReferenceActivity extends BaseActivity {
             switch (msg.what) {
                 case REQUEST_FAILURE:
                     //原页面GONE掉，提示网络不好的页面出现
-                    recycler_view_home_recommend.setVisibility(View.GONE);
+//                    recycler_view_home_recommend.setVisibility(View.GONE);
+                    ll_clinical_reference.setVisibility(View.GONE);
                     ll_no_network.setVisibility(View.VISIBLE);
-
                     break;
                 case REQUEST_SUCCESS:
                     //原页面GONE掉，提示网络不好的页面出现
-                    recycler_view_home_recommend.setVisibility(View.VISIBLE);
+//                    recycler_view_home_recommend.setVisibility(View.VISIBLE);
+                    ll_clinical_reference.setVisibility(View.VISIBLE);
                     ll_no_network.setVisibility(View.GONE);
+                    break;
+                case REQUEST_SUCCESS_CONTENT:
+                    tv_clinical_classify_no_content.setVisibility(View.GONE);
+//                    recycler_view_home_recommend.setVisibility(View.VISIBLE);
+                    ll_clinical_reference_list.setVisibility(View.VISIBLE);
+                    break;
+                case REQUEST_SUCCESS_NO_CONTENT:
+                    tv_clinical_classify_no_content.setVisibility(View.VISIBLE);
+//                    recycler_view_home_recommend .setVisibility(View.GONE);
+                    ll_clinical_reference_list .setVisibility(View.GONE);
                     break;
             }
         }
@@ -75,16 +95,29 @@ public class ClinicalReferenceActivity extends BaseActivity {
     protected void initView() {
         lv_homepage_recommend = (RecyclerView) findViewById(R.id.lv_homepage_recommend);
         recycler_view_home_recommend = (PtrClassicFrameLayout) findViewById(R.id.recycler_view_home_recommend);
+        ll_clinical_reference = (LinearLayout) findViewById(R.id.ll_clinical_reference);
+        ll_clinical_reference_list = (LinearLayout) findViewById(R.id.ll_clinical_reference_list);
         ll_no_network = (LinearLayout) findViewById(R.id.ll_no_network);
+        tv_clinical_classify_no_content = (TextView) findViewById(R.id.tv_clinical_classify_no_content);
     }
 
     @Override
     protected void initData() {
         setTitle("临证参考", "");
+
+        Drawable collectTopDrawable1 = getResources().getDrawable(R.drawable.instruction);
+        collectTopDrawable1.setBounds(0, 0, collectTopDrawable1.getMinimumWidth(), collectTopDrawable1.getMinimumHeight());
+        title.setCompoundDrawablePadding(6);
+        title.setCompoundDrawables(null, null, collectTopDrawable1, null);
+
+        Drawable collectTopDrawable = getResources().getDrawable(R.drawable.search1);
+        collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+        right.setCompoundDrawables(collectTopDrawable, null, null, null);
+
         intent = new Intent();
         page = 1;
 
-        getHomeRecommend(page);
+        getClinicalReference(page);
         adapter = new RecycleHomeRecommendAdapter(this);
         mAdapter = new RecyclerAdapterWithHF(adapter);
         lv_homepage_recommend.setLayoutManager(new LinearLayoutManager(this));
@@ -100,7 +133,7 @@ public class ClinicalReferenceActivity extends BaseActivity {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 page = 1;
-                getHomeRecommend(page);
+                getClinicalReference(page);
 
             }
         });
@@ -111,7 +144,7 @@ public class ClinicalReferenceActivity extends BaseActivity {
             @Override
             public void loadMore() {
                 page++;
-                getHomeRecommend(page);
+                getClinicalReference(page);
                 recycler_view_home_recommend.loadMoreComplete(true);
             }
         });
@@ -123,23 +156,45 @@ public class ClinicalReferenceActivity extends BaseActivity {
                 initData();
             }
         });
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.setClass(ClinicalReferenceActivity.this, SearchActivity.class);
+                intent.putExtra("clinicalReference", "clinicalReference");
+                startActivity(intent);
+            }
+        });
+
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(ClinicalReferenceActivity.this, ClinicalReferenceInstructionActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
-     * 获取首页推荐
+     * 获取临证参考
      */
-    private void getHomeRecommend(final int page) {
-        NetApi.getHomeRecommend(new PasserbyClient.HttpCallback() {
+    private void getClinicalReference(final int page) {
+        NetApi.getClinicalReference(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
                 recycler_view_home_recommend.refreshComplete();
                 recycler_view_home_recommend.setLoadMoreEnable(true);
-                LogUtil.e("getHomeRecommend=" + result);
+                LogUtil.e("getClinicalReference=" + result);
 
                 if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ClinicalReferenceActivity.this)){
                     recycler_view_home_recommend.loadMoreComplete(false);
+                    if (HttpCodeJugementUtil.code == 1) {
+                        handler.sendEmptyMessage(REQUEST_SUCCESS_NO_CONTENT);
+                    }
                     return;
                 }
+
+                handler.sendEmptyMessage(REQUEST_SUCCESS_CONTENT);
+                handler.sendEmptyMessage(REQUEST_SUCCESS);
 
                 HomepageRecommendBean homepageRecommendBean = JsonUtil.json2Bean(result, HomepageRecommendBean.class);
 
@@ -160,7 +215,7 @@ public class ClinicalReferenceActivity extends BaseActivity {
 //                    refresh_more_every.setVisibility(View.GONE);
                 }
 
-                handler.sendEmptyMessage(REQUEST_SUCCESS);
+//                handler.sendEmptyMessage(REQUEST_SUCCESS);
             }
 
             @Override

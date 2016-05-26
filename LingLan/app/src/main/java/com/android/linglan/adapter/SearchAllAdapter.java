@@ -1,6 +1,5 @@
 package com.android.linglan.adapter;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import com.android.linglan.http.bean.SearchArticleBean;
 import com.android.linglan.http.bean.SearchSubjectBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.SearchMoreActivity;
+import com.android.linglan.ui.study.SearchMoreActivity;
 import com.android.linglan.widget.SyLinearLayoutManager;
 
 import java.util.ArrayList;

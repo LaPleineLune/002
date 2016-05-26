@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.android.linglan.adapter.RecycleHomeRecommendAdapter;
+import com.android.linglan.adapter.RecycleStudyAdapter;
 import com.android.linglan.base.BaseFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;

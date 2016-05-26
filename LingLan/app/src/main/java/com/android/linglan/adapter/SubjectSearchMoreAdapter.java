@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.android.linglan.http.bean.RecommendSubjects;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.SubjectDetailsActivity;
+import com.android.linglan.ui.study.SubjectDetailsActivity;
 import com.android.linglan.utils.ImageUtil;
 
 import java.util.ArrayList;

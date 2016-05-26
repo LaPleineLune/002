@@ -1,23 +1,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants"
-    android:orientation="vertical" >
+    android:descendantFocusability="blocksDescendants">
 
     <!-- 显示预览图形 -->
-
-    <com.android.linglan.camerautils.CameraContainer
-        android:id="@+id/container"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.android.linglan.camerautils.CameraContainer
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rec_image"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp76"
+                android:layout_marginBottom="@dimen/dp16"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/camera_bottom_bar"
+            layout="@layout/camera_bottom_bar" />
+    </LinearLayout>
 
     <include
-        android:id="@+id/camera_bottom_bar"
-         layout="@layout/camera_bottom_bar" />
-
-    <include
-            android:id="@+id/camera_header_bar"
-         layout="@layout/camera_header_bar" />
+        android:id="@+id/camera_header_bar"
+        layout="@layout/camera_header_bar" />
 
 </RelativeLayout>

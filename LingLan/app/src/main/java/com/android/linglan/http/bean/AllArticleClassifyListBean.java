@@ -17,6 +17,7 @@ public class AllArticleClassifyListBean implements Serializable {
         public String catename;// 文章主分类
         public String sub_catenames;// 文章副分类
         public String authornames;//作者
+        public String isnew;// 是否是今日更新
 
         @Override
         public String toString() {

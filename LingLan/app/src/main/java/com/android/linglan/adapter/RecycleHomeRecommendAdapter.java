@@ -18,8 +18,10 @@ import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.CommonProtocol;
 import com.android.linglan.http.bean.HomepageRecommendBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.ArticleDetailsActivity;
-import com.android.linglan.ui.homepage.SubjectDetailsActivity;
+import com.android.linglan.ui.study.ArticleActivity;
+import com.android.linglan.ui.study.ArticleDetailsActivity;
+import com.android.linglan.ui.study.SubjectActivity;
+import com.android.linglan.ui.study.SubjectDetailsActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.ImageUtil;
 import com.android.linglan.utils.JsonUtil;
@@ -41,6 +43,13 @@ public class RecycleHomeRecommendAdapter extends
     public RecycleHomeRecommendAdapter(Context context) {
         this.context = context;
     }
+
+    public RecycleHomeRecommendAdapter(Context context,ArrayList<HomepageRecommendBean.HomepageRecommendBeanData> homepageRecommend,boolean edit) {
+        this.context = context;
+        this.homepageRecommend = homepageRecommend;
+        this.edit = edit;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(
@@ -73,12 +82,14 @@ public class RecycleHomeRecommendAdapter extends
         private LinearLayout ll_homepage_article;
         private TextView article_title;
         private TextView article_date;
+        private TextView article_new;
 
         private LinearLayout ll_homepage_subject;
         private TextView subject_title;
         private TextView subject_description;
         private TextView subject_flag;
         private TextView subject_date;
+        private TextView subject_new;
         private ImageView img_item_article_delete;
         private HomepageRecommendBean.HomepageRecommendBeanData recommendArticle;
 
@@ -94,12 +105,14 @@ public class RecycleHomeRecommendAdapter extends
             ll_homepage_article = (LinearLayout) rootView.findViewById(R.id.ll_homepage_article);
             article_title = (TextView) rootView.findViewById(R.id.tv_homepage_article_title);
             article_date = (TextView) rootView.findViewById(R.id.tv_homepage_article_date);
+            article_new = (TextView) rootView.findViewById(R.id.tv_homepage_article_new);
 
             ll_homepage_subject = (LinearLayout) rootView.findViewById(R.id.ll_homepage_subject);
             subject_title = (TextView) rootView.findViewById(R.id.tv_homepage_subject_title);
             subject_description = (TextView) rootView.findViewById(R.id.tv_homepage_subject_description);
             subject_flag = (TextView) rootView.findViewById(R.id.tv_homepage_subject_flag);
             subject_date = (TextView) rootView.findViewById(R.id.tv_homepage_subject_date);
+            subject_new = (TextView) rootView.findViewById(R.id.tv_homepage_subject_new);
 
             img_item_article_delete = (ImageView) rootView.findViewById(R.id.img_item_article_delete);
 
@@ -153,21 +166,31 @@ public class RecycleHomeRecommendAdapter extends
                 ll_homepage_article.setVisibility(View.GONE);
                 subject_title.setText(recommendArticle.specialname);
                 subject_description.setText(recommendArticle.content_title);
+                if (recommendArticle.isnew != null && recommendArticle.isnew.equals("1")) {
+                    subject_new.setVisibility(View.VISIBLE);
+                } else {
+                    subject_new.setVisibility(View.GONE);
+                }
 //                subject_date.setText(recommendArticle.updatetime);// 更新时间
             } else if (recommendArticle.type.equals("0")) {// 文章
-                if (!TextUtils.isEmpty(recommendArticle.photo)) {
+//                if (!TextUtils.isEmpty(recommendArticle.photo)) {
                     try {
                         ImageUtil.loadImageAsync(logo, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, recommendArticle.photo, null);
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
-                } else {
-                    logo.setVisibility(View.GONE);
-                }
+//                } else {
+//                    logo.setVisibility(View.GONE);
+//                }
 //                ImageUtil.loadImageAsync(logo, recommendArticle.photo, R.drawable.default_image);
                 ll_homepage_subject.setVisibility(View.GONE);
                 ll_homepage_article.setVisibility(View.VISIBLE);
                 article_title.setText(recommendArticle.title);
+                if (recommendArticle.isnew != null && recommendArticle.isnew.equals("1")) {
+                    article_new.setVisibility(View.VISIBLE);
+                } else {
+                    article_new.setVisibility(View.GONE);
+                }
                 if (!TextUtils.isEmpty(recommendArticle.authornames)) {
                     Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
                     collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());

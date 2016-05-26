@@ -6,18 +6,17 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Handler;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.android.linglan.ui.R;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
+
+import org.xutils.x;
 
 /**
  * Created by LeeMy on 2016/1/6 0006.
@@ -30,7 +29,10 @@ public class LinglanApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        x.Ext.init(this);
+//        x.Ext.setDebug(BuildConfig.DEBUG);
         Log.d("passerby-application", "Application created...");
+//        Fresco.initialize(getApplicationContext());
         sApplicationContext = getApplicationContext();
 //        String version = null;
         try {
@@ -44,7 +46,7 @@ public class LinglanApplication extends Application {
         mPushAgent = PushAgent.getInstance(this);
         mPushAgent.setDebugMode(true);
 
-        UmengMessageHandler messageHandler = new UmengMessageHandler(){
+        UmengMessageHandler messageHandler = new UmengMessageHandler() {
             /**
              * 参考集成文档的1.6.3
              * http://dev.umeng.com/push/android/integration#1_6_3
@@ -58,7 +60,7 @@ public class LinglanApplication extends Application {
                         // TODO Auto-generated method stub
                         // 对自定义消息的处理方式，点击或者忽略
                         boolean isClickOrDismissed = true;
-                        if(isClickOrDismissed) {
+                        if (isClickOrDismissed) {
                             //自定义消息的点击统计
                             UTrack.getInstance(getApplicationContext()).trackMsgClick(msg);
                         } else {

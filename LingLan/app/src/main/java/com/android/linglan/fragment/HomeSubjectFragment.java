@@ -103,6 +103,10 @@ public class HomeSubjectFragment extends BaseFragment implements View.OnClickLis
     public void onStart() {
         super.onStart();
         bt_homepage_subject_type.setVisibility(View.VISIBLE);
+        page = 1;
+        if (SharedPreferencesUtil.getString("token", null) != null && 1 == location && colectionData != null && colectionData.size() > 0) {
+            getCollectSubject(page);
+        }
     }
 
     @Override
@@ -397,8 +401,11 @@ public class HomeSubjectFragment extends BaseFragment implements View.OnClickLis
                 LogUtil.d(getActivity().getPackageName(), "getCollectSubject=" + result);
 
                 if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result,getActivity())) {
-
                     recycler_view_home_recommend.loadMoreComplete(false);
+                    if (HttpCodeJugementUtil.code == 1 && page == 1) {
+                        ToastUtil.show("没有收藏的专题");
+                        adapter.updateAdapter(null);
+                    }
                     return;
                 }
 

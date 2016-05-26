@@ -12,7 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.linglan.http.bean.SubjectDetails;
+import com.android.linglan.http.bean.SubjectDetailsBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.ImageUtil;
 import com.android.linglan.widget.SyLinearLayoutManager;
@@ -30,7 +30,7 @@ public class SubjectDetailsAdapter extends RecyclerView.Adapter {
     private SubjectDetailsListAdapter subjectDetailsListAdapter;
     private String description;
     private String photo;
-    private ArrayList<SubjectDetails.SubjectData> subjectData;
+    private ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData;
 
     public SubjectDetailsAdapter(Activity context, String description, String photo) {
         this.description = description;
@@ -38,7 +38,7 @@ public class SubjectDetailsAdapter extends RecyclerView.Adapter {
         this.context = context;
     }
 
-    public void upDateAdapter(ArrayList<SubjectDetails.SubjectData> subjectData) {
+    public void upDateAdapter(ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData) {
         this.subjectData = subjectData;
         notifyDataSetChanged();
     }

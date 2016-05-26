@@ -14,6 +14,7 @@ public class AllSubjectClassifyListBean implements Serializable {
         public String catename;// 分类名称（必须）
         public String orderid;// 分类排序
         public String addtime;// 发布时间
+        public String isnew;// 是否是今日更新
 
         public SubjectClassifyListBean(String cateid, String catename, String orderid, String addtime) {
             this.cateid = cateid;

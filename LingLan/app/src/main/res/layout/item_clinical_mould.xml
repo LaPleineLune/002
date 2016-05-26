@@ -20,6 +20,7 @@
         android:paddingTop="@dimen/dp16">
 
         <TextView
+            android:id="@+id/tv_mould_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/blue"
@@ -32,6 +33,7 @@
             android:layout_height="@dimen/dp16"
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true"
+            android:clickable="false"
             android:background="@drawable/clinical_mould_bg"
             android:button="@null" />
 

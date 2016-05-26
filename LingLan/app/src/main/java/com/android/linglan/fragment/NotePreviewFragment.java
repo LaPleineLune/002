@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.android.linglan.base.BaseFragment;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.homepage.ArticleDetailsActivity;
 
 /**
  * Created by LeeMy on 2016/1/16 0016.

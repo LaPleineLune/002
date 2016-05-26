@@ -103,7 +103,7 @@
                         android:layout_toLeftOf="@id/nickname_arrow_right"
                         android:gravity="right"
                         android:singleLine="true"
-                        android:text="设置未设置未设置未设置未设置未设置未设置未设置未设"
+                        android:text="未设置"
                         android:textColor="@color/text_title_color"
                         android:textSize="@dimen/sp16" />
                 </RelativeLayout>

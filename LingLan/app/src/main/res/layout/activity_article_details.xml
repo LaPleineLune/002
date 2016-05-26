@@ -166,7 +166,6 @@
                         android:layout_height="wrap_content"
                         android:hardwareAccelerated="true"
                         android:scrollbars="none">
-
                     </WebView>
                     <!--android:layerType="software" //该属性使webview背景色透明
                         android:hardwareAccelerated="true" //该属性使webview支持flash 播放-->

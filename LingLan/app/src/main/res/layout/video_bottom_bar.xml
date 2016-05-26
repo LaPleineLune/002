@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.linj.video.view.VideoPlayerView
+    <com.android.linglan.camerautils.VideoPlayerView
         android:id="@+id/videoPlayerView"
         android:layout_width="match_parent"
         android:layout_height="0dip"

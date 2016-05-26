@@ -9,7 +9,11 @@ import com.android.linglan.base.BaseActivity;
 import com.android.linglan.fragment.PictureContrastAffectedPartFragment;
 import com.android.linglan.fragment.PictureContrastPrescribedFragment;
 import com.android.linglan.fragment.PictureContrastTonguePictureFragment;
+import com.android.linglan.http.NetApi;
+import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
+import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.LogUtil;
 
 /**
  * Created by LeeMy on 2016/4/14 0014.
@@ -24,6 +28,9 @@ public class PictureContrastActivity extends BaseActivity {
     private PictureContrastPrescribedFragment prescribedFragment;
     private PictureContrastAffectedPartFragment affectedPartFragment;
     private PictureContrastTonguePictureFragment tonguePictureFragment;
+
+//    private String category = "1"; //分类（处方默认1、患处2、舌象3）
+//    private String illnesscaseid = "";//病历
     @Override
     protected void setView() {
         setContentView(R.layout.activity_picture_contrast);
@@ -39,9 +46,12 @@ public class PictureContrastActivity extends BaseActivity {
     @Override
     protected void initData() {
         setTitle("图片对比", "");
+//        illnesscaseid = getIntent().getStringExtra("illnesscaseid");
         fragmentManager = getSupportFragmentManager();
         // 第一次启动时选中第0个tab
         setTabSelection(0);
+//        category = "1";
+//        getComparePicture(category, illnesscaseid);
 
     }
 
@@ -58,12 +68,18 @@ public class PictureContrastActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.tv_prescribed:
                 setTabSelection(0);
+//                category = "1";
+//                getComparePicture(category, illnesscaseid);
                 break;
             case R.id.tv_affected_part:
                 setTabSelection(1);
+//                category = "2";
+//                getComparePicture(category, illnesscaseid);
                 break;
             case R.id.tv_tongue_picture:
                 setTabSelection(2);
+//                category = "3";
+//                getComparePicture(category, illnesscaseid);
                 break;
             default:
                 break;
@@ -134,4 +150,5 @@ public class PictureContrastActivity extends BaseActivity {
         }
         transaction.commit();
     }
+
 }

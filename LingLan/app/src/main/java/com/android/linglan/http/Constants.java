@@ -21,18 +21,18 @@ public class Constants {
     /**
      * 加密
      */
-//    public static String SEED_16_CHARACTER = "p4ssw0rd";// 测试
     public static String SEED_16_CHARACTER = "d.7r+[6D,4[]2cQ?|!>xE6d#{]3v%d{K@q#pVbU*Vm/SRDYsIl";// 正式
 
     /**
      * App版本号
      */
-    public static String VERSION = SharedPreferencesUtil.getString("version", "1.0.0");// 哪一版本返哪一个版本号
+    public static String VERSION = SharedPreferencesUtil.getString("version", "1.1.0");// 哪一版本返哪一个版本号
 
     //    public static final String WEICHAT_APP_ID = "wx4087d127be50227f"; // 微信(测试)
 //    public static final String WEICHAT_APP_KEY = "bdeb22c7c0fe763808ccd468fb72a84a"; // 微信（测试）
     public static final String WEICHAT_APP_ID = "wxa5932d4ba421bd4c"; // 微信（正式）
-    public static final String WEICHAT_APP_KEY = "388390da3f578df26b5274c0cde36954"; // 微信（正式）
+//    public static final String WEICHAT_APP_KEY = "388390da3f578df26b5274c0cde36954"; // 微信（正式）
+    public static final String WEICHAT_APP_KEY = "0620bdd874be1a4dcc54d0c6cf60c7cf"; // 微信（正式）
 
     public static final String FONT_SIZE = "fontsize"; // 字体大小
     public static final int HOME = 0;// 首页的搜索
@@ -43,8 +43,8 @@ public class Constants {
 
     //    public static final String SERVER = "http://192.168.1.117:8082";//测试服务亲
 //    public static final String SERVER = "http://101.200.122.79";// 外网测试服务器
-//    public static final String SERVER = "http://101.200.122.79:8081";// 外网测试服务器
-    public static final String SERVER = "http://syh.zhongyishuyou.com";// 外网测试服务器
+    public static final String SERVER = "http://testsyh.zhongyishuyou.com";// 外网测试服务器
+//    public static final String SERVER = "http://syh.zhongyishuyou.com";// 新正式服务器
 //    public static final String SERVER = "http://app.zhongyishuyou.com";// 正式服务器
 
     /**
@@ -277,4 +277,168 @@ public class Constants {
      * 地区列表
      */
     public static final String URL_AREA = Constants.SERVER + "/Api/Sys/area?token=";
+
+    /**
+     * 新建病历
+     */
+    public static final String URL_CLINICAL_CREATE = Constants.SERVER + "/Api/Illnesscase/addcase";
+
+    /**
+     * 上传病历多媒体（图片，音频，视频）
+     */
+    public static final String URL_SAVE_CLINICAL_MULTI_MEDIA = Constants.SERVER + "/Api/Illnesscase/uploadmedia";
+
+    /**
+     * 修改病历多媒体分类（图片，音频，视频）
+     */
+    public static final String URL_EDIT_CLINICAL_MULTI_MEDIA = Constants.SERVER + "/Api/Illnesscase/editmediacategory?appkey=%s&token=%s&categoryid=%s&mediaid=%s";
+
+    /**
+     * 删除病历多媒体（图片，音频，视频）
+     */
+    public static final String URL_DELETE_CLINICAL_MULTI_MEDIA = Constants.SERVER + "/Api/Illnesscase/delmedia?appkey=%s&token=%s&mediaid=%s";
+
+    /**
+     * 上传图片数量
+     */
+    public static final String URL_MAX_PICTURE_NUMBER = Constants.SERVER + "/Api/Illnesscase/maxmpicnum?appkey=%s&token=%s";
+    /**
+     * 图片对比
+     */
+    public static final String URL_COMPARE_PICTURE = Constants.SERVER + "/Api/Illnesscase/comparepicture?appkey=%s&token=%s&category=%s&illnesscaseid=%s&page=%s";
+
+    /**
+     * 是否有未命名病历
+     */
+    public static final String URL_CLINICAL_COLLATING_NUM = Constants.SERVER + "/Api/Illnesscase/unnamedcasecount?appkey=%s&token=%s";
+
+    /**
+     * 未命名病历列表
+     */
+    public static final String URL_CLINICAL_COLLATING_LIST = Constants.SERVER + "/Api/Illnesscase/unnamedcaselist?appkey=%s&token=%s&sort=%s&page=%s";
+
+    /**
+     * 病历列表
+     */
+    public static final String URL_CLINICAL_LIST = Constants.SERVER + "/Api/Illnesscase/caselist?appkey=%s&token=%s&sort=%s&page=%s&tag=%s&patientname=%s";
+
+    /**
+     * 病历详情-->所贴的分类
+     */
+    public static final String URL_CLINICAL_DETAILS_CALSSIFY = Constants.SERVER + "/Api/Illnesscase/gettaglistbycaseid?appkey=%s&token=%s&illnesscaseid=%s";
+
+    /**
+     * 病历详情-->病人信息
+     */
+    public static final String URL_PATIENT_DETAILS = Constants.SERVER + "/Api/Illnesscase/patientinfo?appkey=%s&token=%s&illnesscaseid=%s";
+
+    /**
+     *  病历详情-->病程列表
+     */
+    public static final String URL_CLINICAL_DETAILS_LIST = Constants.SERVER + "/Api/Illnesscase/courselist?appkey=%s&token=%s&illnesscaseid=%s&sort=%s&page=%s";
+
+    /**
+     * 为病历添加分类
+     */
+    public static final String URL_ADD_CLINICAL_CLASSIFY = Constants.SERVER + "/Api/Illnesscase/addcasetotag?appkey=%s&token=%s&illnesscaseid=%s&tagid=%s";
+
+    /**
+     * 编辑病人信息
+     */
+    public static final String URL_PATIENT_DETAILS_EDIT = Constants.SERVER + "/Api/Illnesscase/editpatientinfo";
+
+    /**
+     * 编辑病程
+     */
+    public static final String URL_COURSE_DETAILS_EDIT = Constants.SERVER + "/Api/Illnesscase/editillnesscourse";
+
+    /**
+     * 添加病程
+     */
+    public static final String URL_CLINICAL_COURSE_ADD = Constants.SERVER + "/Api/Illnesscase/addcourse";
+
+    /**
+     * 删除病历
+     */
+    public static final String URL_CLINICAL_DELETE = Constants.SERVER + "/Api/Illnesscase/delcase?appkey=%s&token=%s&illnesscaseid=%s";
+
+    /**
+     * 删除病程
+     */
+    public static final String URL_CLINICAL_COURSE_DELETE = Constants.SERVER + "/Api/Illnesscase/delcourse?appkey=%s&token=%s&courseid=%s";
+
+    /**
+     * 获取所有模板
+     */
+    public static final String URL_CLINICAL_ALL_MOULD = Constants.SERVER + "/Api/Illnesscase/getalltemplet?appkey=%s&token=%s";
+    /**
+     * 获取个人模板
+     */
+    public static final String URL_CLINICAL_PERSON_MOULD = Constants.SERVER + "/Api/Illnesscase/gettemplet?appkey=%s&token=%s";
+
+    /**
+     * 保存病历模板
+     */
+    public static final String URL_SAVE_CLINICAL_MOULD = Constants.SERVER + "/Api/Illnesscase/addtemplet?appkey=%s&token=%s&templet=%s";
+
+    /**
+     * 获取分类
+     */
+    public static final String URL_CLINICAL_CLASSIFY = Constants.SERVER + "/Api/Illnesscase/gettaglist?appkey=%s&token=%s";
+
+    /**
+     * 获取分类下的病历
+     */
+    public static final String URL_CLASSIFY_CLINICAL = Constants.SERVER + "/Api/Illnesscase/gettagcaselist?appkey=%s&token=%s&tagid=%s&page=%s";
+
+    /**
+     * 获取分类下的病例个数
+     */
+    public static final String URL_CLASSIFY_CLINICAL_NUM = Constants.SERVER + "/Api/Illnesscase/gettagcasenum?appkey=%s&token=%s&tagid=%s";
+
+    /**
+     * 新建分类
+     */
+    public static final String URL_CLINICAL_CREATE_CLASSIFY = Constants.SERVER + "/Api/Illnesscase/addtag?appkey=%s&token=%s&tagname=%s";
+
+    /**
+     * 删除分类
+     */
+    public static final String URL_CLINICAL_DELETE_CLASSIFY = Constants.SERVER + "/Api/Illnesscase/deltag?appkey=%s&token=%s&tagid=%s";
+
+    /**
+     * 编辑（改）分类
+     */
+    public static final String URL_CLINICAL_EDIT_CLASSIFY = Constants.SERVER + "/Api/Illnesscase/edittag?appkey=%s&token=%s&tagid=%s&tagname=%s";
+
+    /**
+     * 搜索病历
+     */
+    public static final String URL_CLINICAL_ILLNESSCASE_SEARCH = Constants.SERVER + "/Api/Illnesscase/searchkey?appkey=%s&token=%s&key=%s&page=%s";
+
+    /**
+     * 临证参考
+     */
+    public static final String URL_CLINICAL_REFERENCE = Constants.SERVER + "/Api/Illnesscase/clinicalreference?appkey=%s&token=%s&page=%s";
+
+    /**
+     * 中医搜搜——关键字搜索
+     */
+    public static final String URL_TCM_SEARCH_KEY = Constants.SERVER + "/Api/Sousou/searchkey?appkey=%s&token=%s&key=%s&page=%s";
+
+    /**
+     * 中医搜搜——详情
+     */
+    public static final String URL_TCM_SEARCH_DETAILS = Constants.SERVER + "/Api/Sousou/searchinfo?appkey=%s&token=%s&key=%s&page=%s&itemid=%s";
+
+    /**
+     * 未命名病例关联病人信息
+     */
+    public static final String URL_RELATE_PATIENT_INFO = Constants.SERVER + "/Api/Illnesscase/relatepatientinfo?appkey=%s&token=%s&illnesscaseid=%s&nonamecaseid=%s";
+
+    /**
+     * 标记已经点选其他设备登录标志
+     */
+    public static final String URL_MARKOTHER_LOGIN = Constants.SERVER + "/Api/User/markotherlogin?appkey=%s";
+
 }

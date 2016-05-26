@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class FollowedAllAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-//    private ArrayList<SubjectDetails.SubjectData> subjectData;
     private ArrayList<FollowedListBean.FollowedListData> followedListData;
 
     public FollowedAllAdapter(Context context) {
@@ -28,8 +27,8 @@ public class FollowedAllAdapter extends BaseAdapter {
         layoutInflater = LayoutInflater.from(context);
     }
 
-//    public void upDateAdapter(ArrayList<SubjectDetails.SubjectData> subjectData){
-//        this.subjectData = subjectData;
+//    public void upDateAdapter(ArrayList<FollowedListBean.FollowedListData> followedListData){
+//        this.followedListData = followedListData;
 //        notifyDataSetChanged();
 //    }
 
