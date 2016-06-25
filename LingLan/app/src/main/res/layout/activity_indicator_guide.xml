@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.android.linglan.widget.ImageIndicatorView
+        android:id="@+id/guide_indicate_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp36"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp76"
+        android:background="@drawable/frame_blue_guide"
+        android:textSize="@dimen/sp16"
+        android:textColor="@color/blue"
+        android:text="立即使用" />
+
+</RelativeLayout>

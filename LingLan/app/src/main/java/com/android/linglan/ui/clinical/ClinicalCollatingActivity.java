@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.android.linglan.adapter.clinical.ClinicalCollatingAdapter;
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.ClinicalCollatingBean;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 public class ClinicalCollatingActivity extends BaseActivity {
     protected static final int REQUEST_FAILURE = 0;
     protected static final int REQUEST_SUCCESS = 1;
+    public static int ISREFRESHDATA = 0;
     private LinearLayout ll_clinical_collating;
     private LinearLayout ll_no_network;
     private PtrClassicFrameLayout recycler_view_clinical_collating;
@@ -47,6 +49,8 @@ public class ClinicalCollatingActivity extends BaseActivity {
     private Intent intent = null;
     private int page;//页码
     private String collatingNum = "0";// 未命名个数
+    private int firstpageClinicalCollatingListSize;
+    public static int position;
 
     private Handler handler = new Handler() {
         @Override
@@ -68,8 +72,33 @@ public class ClinicalCollatingActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-        page = 1;
-        getClinicalCollatingList(page);
+
+        //编辑或者新建了病历，刷新页面
+        if (ISREFRESHDATA == 1) {
+            page = 1;
+            ISREFRESHDATA = 0;
+            getClinicalCollatingList(page);
+        } else if (ISREFRESHDATA == 2) {
+            //删除了病历或者病程，刷新数据，在当前位置不动
+            ISREFRESHDATA = 0;
+            int count = clinicalCollatingList.size();
+            LogUtil.e("病历总数量 count = " + count);
+            LogUtil.e("第一页的数量 firstpageClinicalCollatingListSize = " + firstpageClinicalCollatingListSize);
+            LogUtil.e("删除的页码 position = " + position);
+            if (position == 1) {
+                clinicalCollatingList.clear();
+            } else {
+                if (count != 0) {
+                    for (int i = count - 1; i > firstpageClinicalCollatingListSize - 1 + (position - 2) * 10; i--) {
+                        clinicalCollatingList.remove(i);
+                        LogUtil.e("remove掉的那些item i = " + i);
+                    }
+                }
+            }
+
+            getClinicalCollatingList(position);
+        }
+//        getClinicalCollatingList(page);
         getClinicalCollatingNum();
     }
 
@@ -140,7 +169,7 @@ public class ClinicalCollatingActivity extends BaseActivity {
                 LogUtil.e("getClinicalCollatingList=" + result);
                 recycler_view_clinical_collating.refreshComplete();
                 recycler_view_clinical_collating.setLoadMoreEnable(true);
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ClinicalCollatingActivity.this)){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ClinicalCollatingActivity.this)) {
                     recycler_view_clinical_collating.loadMoreComplete(false);
                     return;
                 }
@@ -148,6 +177,7 @@ public class ClinicalCollatingActivity extends BaseActivity {
                 clinicalCollatingData = clinicalCollatingBean.data;
                 if (page == 1) {
                     clinicalCollatingList = clinicalCollatingBean.data.list;
+                    firstpageClinicalCollatingListSize = clinicalCollatingBean.data.list.size();
                 } else {
                     clinicalCollatingList.addAll(clinicalCollatingBean.data.list);
                 }
@@ -181,6 +211,7 @@ public class ClinicalCollatingActivity extends BaseActivity {
                     if (!collatingNum.equals("0")) {
                         setTitle("未命名病历(" + collatingNum + ")", "");
                     } else {
+                        ClinicalFragment.ISREFRESHDATA = 1;
                         finish();
                     }
                     LogUtil.e("未命名病历的个数=" + collatingNum);

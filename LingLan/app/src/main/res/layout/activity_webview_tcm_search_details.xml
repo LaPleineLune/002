@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/page_head"
+        layout="@layout/page_head" />
+
+    <WebView
+        android:id="@+id/web_search_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hardwareAccelerated="true"
+        android:scrollbars="none">
+    </WebView>
+
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scrollbars="none">-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/ll_tcm_search_details"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:padding="@dimen/dp16">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_tcm_search_title"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textIsSelectable="true"-->
+                <!--android:paddingTop="@dimen/dp4"-->
+                <!--android:paddingBottom="@dimen/dp10"-->
+                <!--android:textSize="@dimen/sp20"-->
+                <!--android:textColor="@color/blue"-->
+                <!--android:text="" />-->
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/px1"-->
+                <!--android:background="@color/gainsboro" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_tcm_search_position"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textIsSelectable="true"-->
+                <!--android:textSize="@dimen/sp12"-->
+                <!--android:textColor="@color/gainsboro"-->
+                <!--android:paddingTop="@dimen/dp16"-->
+                <!--android:text=""-->
+                <!--android:visibility="gone"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_tcm_search_content"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textIsSelectable="true"-->
+                <!--android:lineSpacingMultiplier="1.5"-->
+                <!--android:paddingTop="@dimen/dp20"-->
+                <!--android:textColor="@color/text_title_color"-->
+                <!--android:textSize="@dimen/sp16"-->
+                <!--android:text="" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_tcm_search_source"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textIsSelectable="true"-->
+                <!--android:lineSpacingMultiplier="1.3"-->
+                <!--android:textSize="@dimen/sp12"-->
+                <!--android:textColor="@color/french_grey"-->
+                <!--android:text="" />-->
+        <!--</LinearLayout>-->
+
+    <!--</ScrollView>-->
+
+    <include layout="@layout/layout_no_network"
+        android:visibility="gone"/>
+
+</LinearLayout>

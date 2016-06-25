@@ -19,17 +19,5 @@ public class AllArticleClassifyListBean implements Serializable {
         public String authornames;//作者
         public String isnew;// 是否是今日更新
 
-        @Override
-        public String toString() {
-            return "ArticleClassifyListBean{" +
-                    "articleid='" + articleid + '\'' +
-                    ", title='" + title + '\'' +
-                    ", photo='" + photo + '\'' +
-                    ", publishtime='" + publishtime + '\'' +
-                    ", catename='" + catename + '\'' +
-                    ", catename='" + sub_catenames + '\'' +
-                    ", authornames='" + authornames + '\'' +
-                    '}';
-        }
     }
 }

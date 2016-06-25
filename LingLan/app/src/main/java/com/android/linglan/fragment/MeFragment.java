@@ -14,13 +14,16 @@ import com.android.linglan.base.BaseFragment;
 import com.android.linglan.ui.me.NewCollectActivity;
 import com.android.linglan.ui.me.ProfileActivity;
 import com.android.linglan.ui.R;
+import com.android.linglan.ui.me.RadioDownloadActivity;
 import com.android.linglan.ui.me.RegisterActivity;
 import com.android.linglan.ui.me.SettingActivity;
 import com.android.linglan.ui.me.FeedbackActivity;
 import com.android.linglan.utils.ImageUtil;
 import com.android.linglan.utils.ShareUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.android.linglan.widget.imageview.RoundedImageView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by LeeMy on 2016/1/6 0006.
@@ -39,6 +42,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
     private LinearLayout ll_familymember;// 是否是亲情会员
 //    private RelativeLayout my_followed;// 我的关注
     private RelativeLayout my_collect;// 我的收藏
+    private RelativeLayout my_radio_download;// 我的下载
 //    private RelativeLayout my_note;// 我的笔记
     private RelativeLayout feedback;// 意见反馈
     private RelativeLayout settings;// 设置
@@ -46,8 +50,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
     private TextView phonenum;
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+//    public void onStart() {
+//        super.onStart();
         String token = SharedPreferencesUtil.getString("token", null);
         if (token != null) {
             profile_panel.setVisibility(View.VISIBLE);
@@ -74,6 +80,40 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
         }
     }
 
+    /** 此方法意思为fragment是否可见 ,可见时候加载数据 */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (isVisibleToUser) {
+            //fragment可见时加载数据
+            String token = SharedPreferencesUtil.getString("token", null);
+            if (token != null) {
+                profile_panel.setVisibility(View.VISIBLE);
+
+                String url = SharedPreferencesUtil.getString("face", "");
+                ImageUtil.loadImageAsync(avatar, url, R.drawable.avatar_default);
+
+                String alias = SharedPreferencesUtil.getString("alias", null);
+                String username =
+                        // SharedPreferencesUtil.getString("alias", null) != null && !SharedPreferencesUtil.getString("alias", null).equals(""))
+                        (!TextUtils.isEmpty(alias)) ? // username 的值为null 吗？
+                                (alias.length() >= 9 ? alias.substring(0, 8) + "..." : alias) : // 不为空则为username 的值
+                                SharedPreferencesUtil.getString("phone", null);// 为空则为 phone 的值
+                phonenum.setText(username);
+                if ("0".equals(SharedPreferencesUtil.getString("isfamilymember", "0"))) {
+                    ll_familymember.setVisibility(View.GONE);
+                } else {
+                    ll_familymember.setVisibility(View.VISIBLE);
+                }
+                profile_panel_not_login.setVisibility(View.GONE);
+            } else {
+                profile_panel.setVisibility(View.GONE);
+                profile_panel_not_login.setVisibility(View.VISIBLE);
+            }
+        }else{
+            //fragment不可见时不执行操作
+        }
+        super.setUserVisibleHint(isVisibleToUser);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,47 +138,15 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
         ll_familymember = (LinearLayout) rootView.findViewById(R.id.ll_familymember);
 //        my_followed = (RelativeLayout) rootView.findViewById(R.id.my_followed);
         my_collect = (RelativeLayout) rootView.findViewById(R.id.my_collect);
+        my_radio_download = (RelativeLayout) rootView.findViewById(R.id.my_radio_download);
 //        my_note = (RelativeLayout) rootView.findViewById(R.id.my_note);
         feedback = (RelativeLayout) rootView.findViewById(R.id.feedback);
         settings = (RelativeLayout) rootView.findViewById(R.id.settings);
         share = (RelativeLayout) rootView.findViewById(R.id.share);
-
-//        nickname = (TextView) rootView.findViewById(R.id.nickname);
-//        noSupportingPrompt = (TextView) rootView.findViewById(R.id.no_supporting_prompt);
-//        noCouponPrompt = (TextView) rootView.findViewById(R.id.no_coupon_prompt);
-//        myFollowedCount = (TextView) rootView.findViewById(R.id.followed_count);
-//        mySupportedCount = (TextView) rootView.findViewById(R.id.support_count);
-//        myCouponsCount = (TextView) rootView.findViewById(R.id.coupon_count);
-//        myAlbumCount = (TextView) rootView.findViewById(R.id.album_count);
-//        supportPics = rootView.findViewById(R.id.supported_pics);
-//        couponPics = rootView.findViewById(R.id.coupon_pics);
-//
-//        supportPic1 = (ImageView) rootView.findViewById(R.id.support_pic1);
-//        supportPic2 = (ImageView) rootView.findViewById(R.id.support_pic2);
-//        couponPic1 = (ImageView) rootView.findViewById(R.id.coupon_pic1);
-//        couponPic2 = (ImageView) rootView.findViewById(R.id.coupon_pic2);
-//
-//        followIndicator = rootView.findViewById(R.id.followed_indicator);
-//        supportIndicator = rootView.findViewById(R.id.support_indicator);
-//        couponIndicator = rootView.findViewById(R.id.coupon_indicator);
-//        albumIndicator = rootView.findViewById(R.id.album_indicator);
-//
-//
-//        rootView.findViewById(R.id.my_supporting).setOnClickListener(this);
-//        rootView.findViewById(R.id.my_coupon).setOnClickListener(this);
-//        rootView.findViewById(R.id.my_album).setOnClickListener(this);
-//
-//
-//
-//        rootView.findViewById(R.id.test).setVisibility(View.GONE);
-//        rootView.findViewById(R.id.test).setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
-//        setTitle("我的", "");
-//        String userid = SharedPreferencesUtil.getString("userid", null);
-//        if (userid != null && !userid.equals("")) {
         String token = SharedPreferencesUtil.getString("token", null);
         if (token != null) {
             profile_panel.setVisibility(View.VISIBLE);
@@ -168,6 +176,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
         profile_panel.setOnClickListener(this);
 //        my_followed.setOnClickListener(this);
         my_collect.setOnClickListener(this);
+        my_radio_download.setOnClickListener(this);
 //        my_note.setOnClickListener(this);
         feedback.setOnClickListener(this);
         settings.setOnClickListener(this);
@@ -178,6 +187,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.profile_panel:
+                MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.MyHome);
                 startActivity(new Intent(getActivity(), ProfileActivity.class));
 //                startActivityForResult(new Intent(getActivity(), ProfileActivity.class), PROFILE_PANEL);
                 break;
@@ -192,10 +202,16 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
 //                getActivity().startActivity(new Intent(getActivity(), FollowedActivity.class));
 //                break;
             case R.id.my_collect:
-//                deleteMessage(DONATE);
-                // supportIndicator.setVisibility(View.GONE);
+                MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.MyClickCollect);
                 if (SharedPreferencesUtil.getString("token", null) != null) {
                     startActivity(new Intent(getActivity(), NewCollectActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), RegisterActivity.class));
+                }
+                break;
+            case R.id.my_radio_download:
+                if (SharedPreferencesUtil.getString("token", null) != null) {
+                    startActivity(new Intent(getActivity(), RadioDownloadActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), RegisterActivity.class));
                 }
@@ -206,14 +222,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
 //                startActivity(new Intent(getActivity(), NoteActivity.class));
 //                break;
             case R.id.feedback:
-//                deleteMessage(POSTCARD);
-                // albumIndicator.setVisibility(View.GONE);
-//                Intent intent = new Intent();
+                MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.MyOpinion);
                 startActivity(new Intent(getActivity(), FeedbackActivity.class));
-//                intent.putExtra("title", getString(R.string.album));
-//                startActivity(intent);
                 break;
             case R.id.settings:
+                MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.MySet);
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.share:

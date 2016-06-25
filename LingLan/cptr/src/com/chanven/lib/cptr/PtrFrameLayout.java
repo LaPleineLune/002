@@ -1110,6 +1110,13 @@ public class PtrFrameLayout extends ViewGroup {
         }
     }
 
+    /**
+     * 加载第一页的没有更多数据的情况
+     */
+    public void loadPage1MoreComplete() {
+        mLoadMoreView.showPage1Nomore();
+    }
+
     public boolean isLoading() {
         return isLoading;
     }

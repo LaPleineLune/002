@@ -193,7 +193,8 @@
                                 android:paddingRight="@dimen/dp12"
                                 android:text="[模板]"
                                 android:textColor="@color/blue"
-                                android:textSize="@dimen/sp14" />
+                                android:textSize="@dimen/sp14"
+                                android:visibility="gone"/>
                         </RelativeLayout>
 
                         <android.support.v7.widget.RecyclerView

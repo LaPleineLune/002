@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:paddingRight="@dimen/dp16"
     android:paddingLeft="@dimen/dp16"
-    android:paddingTop="@dimen/dp16">
+    android:paddingTop="@dimen/dp10">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,8 @@
             android:layout_width="@dimen/dp84"
             android:layout_height="@dimen/dp68"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/default_image" />
+            android:src="@drawable/default_image"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="@dimen/dp0"
@@ -59,6 +60,7 @@
                 android:gravity="center_vertical"
                 android:text="日期"
                 android:textColor="@color/gray"
+                android:visibility="gone"
                 android:textSize="@dimen/sp12" />
 
         </LinearLayout>

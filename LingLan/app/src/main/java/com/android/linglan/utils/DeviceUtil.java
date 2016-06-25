@@ -25,6 +25,7 @@ public class DeviceUtil {
     private static String uuid = "";
 
     public static  void getAppKey(final Context context) {
+        String mode = android.os.Build.MODEL + ",API:" + android.os.Build.VERSION.SDK + ",RELEASE:" + android.os.Build.VERSION.RELEASE;
         NetApi.getAppKey(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
@@ -40,6 +41,7 @@ public class DeviceUtil {
                         JSONObject json = new JSONObject(result);
                         SharedPreferencesUtil.saveString("appkey", json.getJSONObject("data").getString("appkey"));
                         LogUtil.e("获取AppKey保存成功" + json.getJSONObject("data").getString("appkey"));
+                        LogUtil.e("设备型号：" + android.os.Build.MODEL + "\n设备API:" + android.os.Build.VERSION.SDK_INT + "\n设备RELEASE:" + android.os.Build.VERSION.RELEASE);
 //                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
 //                        startActivity(intent);
 //                        finish();
@@ -53,7 +55,7 @@ public class DeviceUtil {
             public void onFailure(String message) {
 
             }
-        }, getDeviceId(context));
+        }, getDeviceId(context), mode);
     }
 
     /**

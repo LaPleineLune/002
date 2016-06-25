@@ -78,8 +78,9 @@ containing a value of this type.
         public static int ptr_rotate_arrow=0x7f020000;
     }
     public static final class id {
-        public static int loadmore_default_footer_progressbar=0x7f050005;
-        public static int loadmore_default_footer_tv=0x7f050006;
+        public static int loadmore_default_footer_ll=0x7f050005;
+        public static int loadmore_default_footer_progressbar=0x7f050006;
+        public static int loadmore_default_footer_tv=0x7f050007;
         public static int ptr_classic_header_rotate_view=0x7f050003;
         public static int ptr_classic_header_rotate_view_header_last_update=0x7f050002;
         public static int ptr_classic_header_rotate_view_header_text=0x7f050000;

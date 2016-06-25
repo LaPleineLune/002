@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -17,6 +18,7 @@
             android:text="热门搜索"
             android:textColor="@color/carminum"
             android:textSize="@dimen/sp16" />
+        
 
         <com.android.linglan.widget.flowlayout.TagFlowLayout
             android:id="@+id/id_flowlayout"
@@ -24,4 +26,86 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_hot_search"/>
     </RelativeLayout>
+    
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/dp20"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginRight="@dimen/sp16"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:visibility="gone">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_hot_search_context1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingRight="@dimen/dp6"-->
+            <!--android:paddingLeft="@dimen/dp6"-->
+            <!--android:paddingTop="@dimen/dp4"-->
+            <!--android:paddingBottom="@dimen/dp4"-->
+            <!--android:textColor="#666666"-->
+            <!--android:background="@drawable/frame_grey_hot_search"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:text="中医大师"-->
+            <!--/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_hot_search_context2"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingRight="6dp"-->
+            <!--android:paddingLeft="@dimen/dp6"-->
+            <!--android:paddingTop="@dimen/dp4"-->
+            <!--android:paddingBottom="@dimen/dp4"-->
+            <!--android:textColor="#666666"-->
+            <!--android:background="@drawable/frame_grey_hot_search"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:text="中医大师"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/tv_hot_search_context3"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingRight="6dp"-->
+            <!--android:paddingLeft="@dimen/dp6"-->
+            <!--android:paddingTop="@dimen/dp4"-->
+            <!--android:paddingBottom="@dimen/dp4"-->
+            <!--android:textColor="#666666"-->
+            <!--android:background="@drawable/frame_grey_hot_search"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:text="中医大师"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/tv_hot_search_context4"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingRight="6dp"-->
+            <!--android:paddingLeft="@dimen/dp6"-->
+            <!--android:paddingTop="@dimen/dp4"-->
+            <!--android:paddingBottom="@dimen/dp4"-->
+            <!--android:textColor="#666666"-->
+            <!--android:background="@drawable/frame_grey_hot_search"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:text="中医大师"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/tv_hot_search_context5"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingRight="6dp"-->
+            <!--android:paddingLeft="@dimen/dp6"-->
+            <!--android:paddingTop="@dimen/dp4"-->
+            <!--android:paddingBottom="@dimen/dp4"-->
+            <!--android:textColor="#666666"-->
+            <!--android:background="@drawable/frame_grey_hot_search"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:text="中医大师"-->
+            <!--/>-->
+    <!--</LinearLayout>-->
 </LinearLayout>

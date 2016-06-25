@@ -64,7 +64,6 @@ public class CollectActivity extends BaseActivity implements View.OnClickListene
      * @param transaction
      *            用于对Fragment执行操作的事务
      */
-
     private void hideFragments(FragmentTransaction transaction) {
         if (collectArticleFragment != null) {
             transaction.hide(collectArticleFragment);

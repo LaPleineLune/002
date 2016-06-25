@@ -14,7 +14,10 @@ import com.android.linglan.http.bean.RecommendSubjects;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.study.SubjectDetailsActivity;
 import com.android.linglan.utils.ImageUtil;
+import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -107,6 +110,7 @@ public class RecycleHomeSubjectAdapter extends
                 public void onClick(View v) {
                     SharedPreferencesUtil.saveString("specialid" + subject.specialid, subject.specialid);
                     title.setTextColor(ContextCompat.getColor(context, R.color.read_text_title_color));
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.StudySubjectContent);
                     intent = new Intent();
                     intent.setClass(context, SubjectDetailsActivity.class);
                     intent.putExtra("specialid", subject.specialid);
@@ -114,6 +118,9 @@ public class RecycleHomeSubjectAdapter extends
                     intent.putExtra("photo", subject.photo);
                     intent.putExtra("logo", subject.logo);
                     intent.putExtra("description", subject.description);
+                    intent.putExtra("page", subject.page);
+                    intent.putExtra("HomeSubjectFragment", "HomeSubjectFragment");
+                    intent.putExtra("subjectActivity", "subjectActivity");
                     context.startActivity(intent);
                 }
             });

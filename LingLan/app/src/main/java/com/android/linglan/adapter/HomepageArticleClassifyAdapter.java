@@ -2,6 +2,7 @@ package com.android.linglan.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,14 +69,16 @@ public class HomepageArticleClassifyAdapter extends BaseAdapter {
 //            holder.textView.setTextColor(Color.BLUE);
 //            holder.layout.setBackgroundColor(Color.WHITE);
             holder.layout.setBackgroundResource(R.color.white);
+            holder.textView.setTextColor(ContextCompat.getColorStateList(context, R.color.carminum));
         } else {
             holder.textView.setTextColor(Color.WHITE);
             holder.layout.setBackgroundColor(Color.TRANSPARENT);
+            holder.textView.setTextColor(Color.BLACK);
         }
 
 
         holder.textView.setText(getItem(position).catename);
-        holder.textView.setTextColor(Color.BLACK);
+//        holder.textView.setTextColor(Color.BLACK);
 //        holder.imageView.setBackgroundResource(images[position]);
 
         return convertView;

@@ -12,11 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.linglan.http.Constants;
 import com.android.linglan.http.bean.SubjectDetailsBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.study.ArticleDetailsActivity;
 import com.android.linglan.utils.ImageUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -25,9 +28,9 @@ import java.util.ArrayList;
  */
 public class SubjectDetailsListAdapter extends RecyclerView.Adapter {
     private Activity context;
-    private ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData;
+    private ArrayList<SubjectDetailsBean.SubjectList> subjectData;
 
-    public SubjectDetailsListAdapter(Activity context, ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData) {
+    public SubjectDetailsListAdapter(Activity context, ArrayList<SubjectDetailsBean.SubjectList> subjectData) {
         this.context = context;
         this.subjectData = subjectData;
     }
@@ -54,7 +57,7 @@ public class SubjectDetailsListAdapter extends RecyclerView.Adapter {
         return position;
     }
 
-    public void updateAdapter(ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData){
+    public void updateAdapter(ArrayList<SubjectDetailsBean.SubjectList> subjectData){
         this.subjectData = subjectData;
         this.notifyDataSetChanged();
     }
@@ -85,41 +88,44 @@ public class SubjectDetailsListAdapter extends RecyclerView.Adapter {
 
         }
         public void bindData(final int position) {
-//            tv_item_history_search.setText(key);
-            try {
-                ImageUtil.loadImageAsync(iv_item_article_image, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, subjectData.get(position).photo, null);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-//        viewHolder.iv_item_article_image.setBackgroundResource(draw[position]);
-            ll_item_article_title.setText(subjectData.get(position).content_title);
-            String oldArticleid = SharedPreferencesUtil.getString("articleid" + subjectData.get(position).contentid, null);
-            if (oldArticleid != null && oldArticleid.equals(subjectData.get(position).contentid)) {
-                ll_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.read_text_title_color));
-            } else {
-                ll_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.text_title_color));
-            }
+                try {
+                    ImageUtil.loadImageAsync(iv_item_article_image, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, subjectData.get(position).photo, null);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                ll_item_article_title.setText(subjectData.get(position).title);
+                String oldArticleid = SharedPreferencesUtil.getString("articleid" + subjectData.get(position).articleid, null);
+                if (oldArticleid != null && oldArticleid.equals(subjectData.get(position).articleid)) {
+                    ll_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.read_text_title_color));
+                } else {
+                    ll_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.text_title_color));
+                }
 
-            ll_item_article_time.setText(subjectData.get(position).addtime);
-            if (!TextUtils.isEmpty(subjectData.get(position).author)) {
-                Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
-                collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
-                ll_item_article_name.setCompoundDrawables(collectTopDrawable, null, null, null);
-                ll_item_article_name.setCompoundDrawablePadding(12);
-                ll_item_article_name.setText(subjectData.get(position).author);
-            } else {
-                ll_item_article_name.setVisibility(View.GONE);
-            }
+                ll_item_article_time.setText(subjectData.get(position).publishtime);
+                if (!TextUtils.isEmpty(subjectData.get(position).authornames)) {
+                    Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
+                    collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+                    ll_item_article_name.setCompoundDrawables(collectTopDrawable, null, null, null);
+                    ll_item_article_name.setCompoundDrawablePadding(12);
+                    ll_item_article_name.setText(subjectData.get(position).authornames);
+                } else {
+                    ll_item_article_name.setVisibility(View.GONE);
+                }
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SharedPreferencesUtil.saveString("articleid" + subjectData.get(position).contentid, subjectData.get(position).contentid);
-                    ll_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.read_text_title_color));
-                    Intent intent = new Intent();
-                    intent.putExtra("articleId", subjectData.get(position).contentid);
-                    intent.putExtra("photo", subjectData.get(position).photo);
-                    intent.setClass(context, ArticleDetailsActivity.class);
-                    context.startActivity(intent);
+                        MobclickAgent.onEvent(context, UmengBuriedPointUtil.StudyClickCharacter);
+                        SharedPreferencesUtil.saveString("articleid" + subjectData.get(position).articleid, subjectData.get(position).articleid);
+                        ll_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.read_text_title_color));
+                        Intent intent = new Intent();
+                        String subjectActivity = context.getIntent().getStringExtra("subjectActivity");
+                        if (subjectActivity != null && subjectActivity.equals("subjectActivity")) {
+                            intent.putExtra("subjectActivity", "subjectActivity");
+                        }
+                        intent.putExtra("articleId", subjectData.get(position).articleid);
+                        intent.putExtra("photo", subjectData.get(position).photo);
+                        intent.setClass(context, ArticleDetailsActivity.class);
+                        context.startActivity(intent);
                 }
             });
 

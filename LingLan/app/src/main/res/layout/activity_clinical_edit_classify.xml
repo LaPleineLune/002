@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <include
+        android:id="@+id/page_head"
+        layout="@layout/page_head" />
+
+    <EditText
+        android:id="@+id/edt_change_classify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/page_head"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:maxLength="6"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingBottom="@dimen/dp6"
+        android:paddingTop="@dimen/dp6"
+        android:singleLine="true"
+        android:hint="请输入分类名称"
+        android:textColorHint="@color/gainsboro"
+        android:textSize="@dimen/sp16"
+        android:textColor="@color/text_title_color"
+        android:background="@drawable/dialog_login_edit_bg" />
+
+    <!--android:maxLength="6"-->
+    <Button
+        android:id="@+id/bt_delete_classify"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginBottom="@dimen/dp16"
+        android:background="@color/whitesmoke"
+        android:text="删除分类"
+        android:textColor="@color/french_grey"
+        android:textSize="@dimen/sp16" />
+
+</RelativeLayout>

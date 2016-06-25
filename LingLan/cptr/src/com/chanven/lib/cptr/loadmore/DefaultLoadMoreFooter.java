@@ -17,6 +17,7 @@ package com.chanven.lib.cptr.loadmore;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ public class DefaultLoadMoreFooter implements ILoadViewMoreFactory {
 
     private class LoadMoreHelper implements ILoadMoreView {
 
+        protected LinearLayout footerLl;
         protected TextView footerTv;
         protected ProgressBar footerBar;
 
@@ -42,6 +44,7 @@ public class DefaultLoadMoreFooter implements ILoadViewMoreFactory {
         @Override
         public void init(FootViewAdder footViewHolder, OnClickListener onClickRefreshListener) {
             View view = footViewHolder.addFootView(R.layout.loadmore_default_footer);
+            footerLl = (LinearLayout) view.findViewById(R.id.loadmore_default_footer_ll);
             footerTv = (TextView) view.findViewById(R.id.loadmore_default_footer_tv);
             footerBar = (ProgressBar) view.findViewById(R.id.loadmore_default_footer_progressbar);
             this.onClickRefreshListener = onClickRefreshListener;
@@ -51,6 +54,8 @@ public class DefaultLoadMoreFooter implements ILoadViewMoreFactory {
         @Override
         public void showNormal() {
             footerTv.setText("点击加载更多");
+            footerLl.setVisibility(View.VISIBLE);
+            footerTv.setVisibility(View.VISIBLE);
             footerBar.setVisibility(View.GONE);
             footerTv.setOnClickListener(onClickRefreshListener);
         }
@@ -58,6 +63,8 @@ public class DefaultLoadMoreFooter implements ILoadViewMoreFactory {
         @Override
         public void showLoading() {
             footerTv.setText("正在加载中...");
+            footerLl.setVisibility(View.VISIBLE);
+            footerTv.setVisibility(View.VISIBLE);
             footerBar.setVisibility(View.VISIBLE);
             footerTv.setOnClickListener(null);
         }
@@ -65,13 +72,26 @@ public class DefaultLoadMoreFooter implements ILoadViewMoreFactory {
         @Override
         public void showFail(Exception exception) {
             footerTv.setText("加载失败，点击重新");
+            footerLl.setVisibility(View.VISIBLE);
+            footerTv.setVisibility(View.VISIBLE);
             footerBar.setVisibility(View.GONE);
             footerTv.setOnClickListener(onClickRefreshListener);
         }
 
         @Override
+        public void showPage1Nomore() {
+            footerTv.setText("已经加载完毕");
+            footerLl.setVisibility(View.GONE);
+            footerTv.setVisibility(View.GONE);
+            footerBar.setVisibility(View.GONE);
+            footerTv.setOnClickListener(null);
+        }
+
+        @Override
         public void showNomore() {
             footerTv.setText("已经加载完毕");
+            footerLl.setVisibility(View.VISIBLE);
+            footerTv.setVisibility(View.VISIBLE);
             footerBar.setVisibility(View.GONE);
             footerTv.setOnClickListener(null);
         }

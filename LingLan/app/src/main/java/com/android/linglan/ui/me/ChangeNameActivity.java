@@ -1,9 +1,11 @@
 package com.android.linglan.ui.me;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.text.InputFilter;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.android.linglan.base.BaseActivity;
@@ -11,6 +13,7 @@ import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.KeyBoardUtils;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;
@@ -32,7 +35,18 @@ public class ChangeNameActivity extends BaseActivity {
     @Override
     protected void initView() {
         change_name = (EditText) findViewById(R.id.change_name);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        KeyBoardUtils.openKeybord(change_name, this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        KeyBoardUtils.closeKeybord(change_name, this);
     }
 
     @Override
@@ -44,6 +58,7 @@ public class ChangeNameActivity extends BaseActivity {
         collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
         right.setCompoundDrawables(collectTopDrawable, null, null, null);
         change_name.setHint("请输入" + changeNameTitle);
+//        change_name.requestFocus();
 
         if (changeNameTitle.equals("工作单位")) {
             change_name.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});

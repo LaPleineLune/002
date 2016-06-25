@@ -4,14 +4,6 @@
         "source": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\cptr\\res\\layout\\cube_ptr_classic_default_header.xml"
     },
     {
-        "merged": "E:\\github\\LingLan\\cptr\\build\\intermediates\\res\\merged\\release\\layout\\cube_ptr_classic_default_header.xml",
-        "source": "E:\\github\\LingLan\\cptr\\res\\layout\\cube_ptr_classic_default_header.xml"
-    },
-    {
-        "merged": "E:\\github\\LingLan\\cptr\\build\\intermediates\\res\\merged\\release\\layout\\loadmore_default_footer.xml",
-        "source": "E:\\github\\LingLan\\cptr\\res\\layout\\loadmore_default_footer.xml"
-    },
-    {
         "merged": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\cptr\\build\\intermediates\\res\\merged\\release\\layout\\loadmore_default_footer.xml",
         "source": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\cptr\\res\\layout\\loadmore_default_footer.xml"
     }

@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/slogan"
-            android:textColor="#48558f"
+            android:textColor="@color/blue"
             android:textSize="@dimen/sp18"/>
 
         <TextView

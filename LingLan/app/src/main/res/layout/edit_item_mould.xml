@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_item_clinical_mould"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp10"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_clinical_mould"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/dp10"
+            android:lineSpacingMultiplier="1.4"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/sp16"
+            android:text="@string/clinical_mould" />
+        <EditText
+            android:id="@+id/tv_clinical_mould_content"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="@dimen/dp60"
+            android:layout_weight="1"
+            android:lineSpacingMultiplier="1.4"
+            android:textColor="@color/text_title_color"
+            android:textSize="@dimen/sp16"
+            android:background="@null"
+            android:text="我是主述，很长很长很长很长很长很长很长很长很长很长很长很长的主述" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -23,10 +23,12 @@ import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.android.linglan.widget.swipemenu.SwipeMenu;
 import com.android.linglan.widget.swipemenu.SwipeMenuCreator;
 import com.android.linglan.widget.swipemenu.SwipeMenuItem;
 import com.android.linglan.widget.swipemenu.SwipeMenuListView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -86,6 +88,7 @@ public class CollectArticleFragment extends BaseFragment implements View.OnClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //        ToastUtil.show(getActivity(), "点击第" + position + "个", 1);
+        MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.StudyClickCharacter);
         intent.setClass(getActivity(), ArticleDetailsActivity.class);
         intent.putExtra("articleId", articleClassifyList.get(position).articleid);
         intent.putExtra("photo", articleClassifyList.get(position).photo);

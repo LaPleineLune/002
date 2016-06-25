@@ -10,6 +10,6 @@
         android:gravity="center"
         android:text=""
         android:textSize="@dimen/sp14"
-        android:textColor="@color/text_title_color"/>
+        android:textColor="@color/carminum"/>
     <!--  android:background="@drawable/selector"  自定义listview 样式-->
 </LinearLayout>

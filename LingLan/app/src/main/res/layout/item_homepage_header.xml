@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:id="@+id/tv_study_subject"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_textview"
+            android:drawableTop="@drawable/study_subject"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp6"
+            android:paddingTop="@dimen/dp6"
+            android:text="专题"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/sp14" />
+        <View
+            android:layout_width="@dimen/px1"
+            android:layout_height="74dp"
+            android:background="@drawable/clinical_div_line" />
+
+        <TextView
+            android:id="@+id/tv_study_fm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_textview"
+            android:drawableTop="@drawable/study_fm"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp6"
+            android:paddingTop="@dimen/dp6"
+            android:text="电台"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/sp14"/>
+        <View
+            android:layout_width="@dimen/px1"
+            android:layout_height="74dp"
+            android:background="@drawable/clinical_div_line" />
+
+        <TextView
+            android:id="@+id/tv_study_article"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_textview"
+            android:drawableTop="@drawable/study_article"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp6"
+            android:paddingTop="@dimen/dp6"
+            android:text="文章"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/sp14" />
+
+
+        <View
+            android:layout_width="@dimen/px1"
+            android:layout_height="74dp"
+            android:background="@drawable/clinical_div_line" />
+
+        <TextView
+            android:id="@+id/tv_study_more"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_textview"
+            android:drawableTop="@drawable/study_more"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp6"
+            android:paddingTop="@dimen/dp6"
+            android:text="更多"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/sp14"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/gainsboro" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp24"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_bottom_textview"
+        android:drawableLeft="@drawable/study_hot_recommend"
+        android:drawablePadding="@dimen/dp10"
+        android:text="热点推荐"
+        android:layout_marginLeft="@dimen/dp16"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/sp12" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="#cccccc" />
+
+</LinearLayout>

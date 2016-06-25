@@ -16,6 +16,8 @@ import com.android.linglan.http.bean.AllArticleClassifyListBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.study.ArticleDetailsActivity;
 import com.android.linglan.utils.SharedPreferencesUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -87,7 +89,7 @@ public class AllArticleAdapter extends RecyclerView.Adapter{
             } else {
                 tv_item_article_new.setVisibility(View.GONE);
             }
-            if (!TextUtils.isEmpty(articleClassifyList.authornames)) {
+            if (articleClassifyList.authornames != null && !articleClassifyList.authornames.equals("")) {
                 ll_item_article_time.setVisibility(View.VISIBLE);
                 Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
                 collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
@@ -101,6 +103,7 @@ public class AllArticleAdapter extends RecyclerView.Adapter{
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.StudyClickCharacter);
                     SharedPreferencesUtil.saveString("articleid" + articleClassifyList.articleid, articleClassifyList.articleid);
                     tv_item_article_title.setTextColor(ContextCompat.getColor(context, R.color.read_text_title_color));
                     Intent intent = new Intent(context, ArticleDetailsActivity.class);

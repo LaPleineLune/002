@@ -52,10 +52,10 @@
             android:drawableTop="@drawable/clinical_reference_no_content"
             android:lineSpacingMultiplier="1.2"
             android:padding="@dimen/dp28"
-            android:text="@string/clinical_reference_no_content"
             android:textColor="@color/french_grey"
             android:textSize="@dimen/sp14"
             android:visibility="gone" />
+            <!--android:text="@string/clinical_reference_no_content"-->
     </LinearLayout>
 
 

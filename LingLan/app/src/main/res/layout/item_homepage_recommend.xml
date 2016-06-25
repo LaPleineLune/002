@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginLeft="@dimen/dp16"
     android:layout_marginRight="@dimen/dp16"
-    android:paddingTop="@dimen/dp12" >
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp12">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,8 +26,8 @@
             android:layout_width="@dimen/dp0"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:gravity="center_vertical"
+            android:orientation="vertical"
             android:visibility="gone">
 
             <TextView
@@ -58,25 +58,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp0"
                 android:layout_weight="1">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <ImageView
                         android:id="@+id/tv_homepage_subject_flag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dp30"
+                        android:layout_height="@dimen/dp14"
                         android:layout_gravity="center"
-                        android:background="@drawable/frame_red"
+                        android:layout_marginBottom="@dimen/dp2"
+                        android:layout_marginTop="@dimen/dp2"
                         android:gravity="center"
-                        android:paddingBottom="@dimen/dp2"
-                        android:paddingLeft="@dimen/dp6"
-                        android:paddingRight="@dimen/dp6"
-                        android:paddingTop="@dimen/dp2"
-                        android:text="专题"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/sp10" />
+                        android:src="@drawable/homepage_subject" />
 
                     <TextView
                         android:id="@+id/tv_homepage_subject_date"
@@ -94,18 +90,18 @@
                     android:id="@+id/tv_homepage_subject_new"
                     android:layout_width="@dimen/dp16"
                     android:layout_height="@dimen/dp16"
-                    android:gravity="center_horizontal"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
                     android:layout_centerHorizontal="true"
-                    android:paddingTop="1dp"
                     android:layout_marginLeft="@dimen/dp6"
                     android:layout_marginRight="@dimen/dp10"
-                    android:text="新"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/sp10"
                     android:background="@drawable/frame_red_new"
-                    android:visibility="gone"/>
+                    android:gravity="center_horizontal"
+                    android:paddingTop="1dp"
+                    android:text="新"
+                    android:textColor="@color/carminum"
+                    android:textSize="@dimen/sp10"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -123,9 +119,9 @@
                 android:id="@+id/tv_homepage_article_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
                 android:ellipsize="end"
                 android:lineSpacingMultiplier="1.2"
+                android:maxLines="2"
                 android:text=""
                 android:textColor="@color/text_title_color"
                 android:textSize="@dimen/sp16" />
@@ -133,8 +129,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/dp10">
+                android:layout_marginTop="@dimen/dp10"
+                android:gravity="center_vertical">
+
                 <TextView
                     android:id="@+id/tv_homepage_article_date"
                     android:layout_width="match_parent"
@@ -147,34 +144,71 @@
                     android:id="@+id/tv_homepage_article_new"
                     android:layout_width="@dimen/dp16"
                     android:layout_height="@dimen/dp16"
-                    android:gravity="center_horizontal"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
                     android:layout_centerHorizontal="true"
-                    android:paddingTop="1dp"
                     android:layout_marginLeft="@dimen/dp6"
                     android:layout_marginRight="@dimen/dp10"
+                    android:background="@drawable/frame_red_new"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="1dp"
                     android:text="新"
                     android:textColor="@color/red"
                     android:textSize="@dimen/sp10"
-                    android:background="@drawable/frame_red_new"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_homepage_logo"
+        <RelativeLayout
             android:layout_width="@dimen/dp84"
             android:layout_height="@dimen/dp68"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp12"
-            android:src="@drawable/default_image" />
+           >
+
+            <ImageView
+                android:id="@+id/img_homepage_logo"
+                android:layout_width="@dimen/dp84"
+                android:layout_height="@dimen/dp68"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/default_image" />
+
+            <ImageView
+                android:id="@+id/img_homepage_play_logo"
+                android:layout_width="@dimen/dp34"
+                android:layout_height="@dimen/dp34"
+                android:layout_centerInParent="true"
+                android:src="@drawable/homepage_icon" />
+
+        </RelativeLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/px1"
         android:layout_marginTop="@dimen/dp10"
         android:background="#cccccc" />
+
+    <LinearLayout
+        android:id="@+id/ll_no_collect_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="150dp"
+        android:paddingTop="184dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp62"
+            android:layout_height="@dimen/dp50"
+            android:src="@drawable/no_collect_subject" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp10"
+            android:text="暂无数据" />
+
+    </LinearLayout>
 </LinearLayout>

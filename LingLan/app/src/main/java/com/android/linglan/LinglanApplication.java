@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
+import com.android.linglan.utils.ToastUtil;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
@@ -39,6 +40,7 @@ public class LinglanApplication extends Application {
             String version = getVersionName();
             SharedPreferencesUtil.saveString("version", version);
             LogUtil.e("版本号：" + version);
+            LogUtil.e("设备型号：" + android.os.Build.MODEL + "\n设备API:" + android.os.Build.VERSION.SDK_INT + "\n设备RELEASE:" + android.os.Build.VERSION.RELEASE);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,7 +69,7 @@ public class LinglanApplication extends Application {
                             //自定义消息的忽略统计
                             UTrack.getInstance(getApplicationContext()).trackMsgDismissed(msg);
                         }
-                        Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
+                        ToastUtil.show(context, msg.custom, Toast.LENGTH_LONG);
                     }
                 });
             }

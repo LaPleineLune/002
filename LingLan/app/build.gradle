@@ -6,39 +6,176 @@ android {
 
     useLibrary 'org.apache.http.legacy'
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+
+//    task nativeLibsToJar(type: Zip, description: "create a jar archive of the native libs") {
+//        destinationDir file("$projectDir/libs")
+//        baseName "Native_Libs2"
+//        extension "jar"
+//        from fileTree(dir: "libs", include: "**/*.so")
+//        into "lib"
+//    }
+//
+//    tasks.withType(JavaCompile) {
+//        compileTask -> compileTask.dependsOn(nativeLibsToJar)
+//    }
+
     productFlavors {
     }
 
     defaultConfig {
         applicationId "com.android.linglan.ui"
-            minSdkVersion 15
-            targetSdkVersion 23
-            versionCode 20160513
-            versionName "1.1.0"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 20160602
+        versionName "1.2.0"
+    }
+
+    dexOptions { jumboMode = true }
+
+    signingConfigs {
+        // 在Terminal中敲下 gradle assembleRelease就可以一次性生成所有的渠道包了
+        // 下一版快速打包测试链接：http://blog.isming.me/2015/03/18/android-build-speed-up/
+        debug {
+            // No debug config
         }
 
-        buildTypes {
-            release {
-//            minifyEnabled false
-//            signingConfig signingConfigs.release
-                minifyEnabled true
-                shrinkResources true
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            }
-            debug {
-                //开启代码混淆
-                minifyEnabled true
-                // 移除无用的resource文件
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-                signingConfig signingConfigs.debug
-            }
+        release {
+            storeFile file("E:/AndroidStudioProjects/linglanshuyuan.jks")
+            storePassword "159357"
+            keyAlias "zhongyishuyouhui"
+            keyPassword "159357"
         }
     }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+//            signingConfig signingConfigs.release
+//            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为linglan_v1.0_2015-01-15_wandoujia.apk
+                        def fileName = "linglan_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+        debug {
+            //开启代码混淆
+            minifyEnabled false
+            // 移除无用的resource文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    productFlavors {
+        standard {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "standard"]
+        }
+        linglan {// 灵兰
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "linglan"]
+        }
+        tencent {// 腾讯应用宝
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "tencent"]
+        }
+        baidu {// 百度、91、安卓市场
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+        }
+        _360 {// 360应用
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_360"]
+        }
+        wandoujia {// 豌豆荚
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+        xiaomi {// 小米
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+        meizu {// 魅族
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "meizu"]
+        }
+        oppo {// OPPO手机商店
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "oppo"]
+        }
+        lenovo {// 联想乐商店
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "lenovo"]
+        }
+        huawei {// 华为
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
+        }
+        anzhi {// 安智
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "anzhi"]
+        }
+        appchina {// 应用汇
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "appchina"]
+        }
+        mumayi {// 木蚂蚁
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "mumayi"]
+        }
+        taobao {// 淘宝、UC、PP助手
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "taobao"]
+        }
+        gfan {// 机锋
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "gfan"]
+        }
+        jinli {// 金立手机
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "jinli"]
+        }
+        wo {// 联通
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wo"]
+        }
+        _10086 {// 移动
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_10086"]
+        }
+        _189 {// 电信
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_189"]
+        }
+        liqu {// 历趣世界
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "liqu"]
+        }
+        _163 {// 网易
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_163"]
+        }
+        ztems {// 中兴
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ztems"]
+        }
+        zmapp {// 掌盟互娱
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "zmapp"]
+        }
+        smartisan {// 锤子
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "smartisan"]
+        }
+        samsung {// 三星
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "samsung"]
+        }
+        letv {// 乐视
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "letv"]
+        }
+        cool {// 酷派
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "cool"]
+        }
+//        qq {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "qq"]
+//        }
+    }
+
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile project(':pulltorefresh_library')
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.loopj.android:android-async-http:1.4.5'
@@ -59,5 +196,7 @@ dependencies {
             mavenCentral()
         }
     }
-    compile files('src/libs/cyberplayer-sdk.jar')
+    compile files('src/main/jniLibs/cyberplayer-sdk.jar')
+    compile 'com.android.support:support-annotations:23.0.0-alpha2'
+    compile files('src/main/jniLibs/cyberplayer-hlsdownload.jar')
 }

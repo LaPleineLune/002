@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/page_head"
+        layout="@layout/page_head" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dp40">
+
+        <ImageView
+            android:id="@+id/img_tcm_search_text"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp34"
+            android:layout_marginTop="@dimen/dp40"
+            android:gravity="center"
+            android:src="@drawable/tcm_search_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp36"
+            android:layout_below="@id/img_tcm_search_text"
+            android:layout_marginTop="@dimen/dp20"
+            android:background="@drawable/tcm_search_edit_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edt_tcm_search"
+                android:layout_width="@dimen/dp0"
+                android:layout_height="@dimen/dp40"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入搜索关键词"
+                android:paddingLeft="@dimen/dp10"
+                android:textColor="@color/text_title_color"
+                android:textColorHint="@color/gainsboro"
+                android:textSize="@dimen/sp18" />
+
+            <TextView
+                android:id="@+id/tv_tcm_search"
+                android:layout_width="@dimen/dp36"
+                android:layout_height="@dimen/dp36"
+                android:background="@drawable/tcm_search_bt"
+                android:text="" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_tcm_instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="@color/french_grey8"
+            android:textSize="@dimen/sp12" />
+            <!--android:text="@string/tcm_disclaimer"-->
+
+    </RelativeLayout>
+
+</LinearLayout>

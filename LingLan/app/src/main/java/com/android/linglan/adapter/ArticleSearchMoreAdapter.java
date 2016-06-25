@@ -15,6 +15,8 @@ import com.android.linglan.http.bean.AllArticleClassifyListBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.study.ArticleDetailsActivity;
 import com.android.linglan.utils.ImageUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -74,12 +76,15 @@ public class ArticleSearchMoreAdapter extends
         public void bindData(final AllArticleClassifyListBean.ArticleClassifyListBean recommendArticle) {
             this.recommendArticle = recommendArticle;
             ll_item_article_title.setText(recommendArticle.title);
-            if (!TextUtils.isEmpty(recommendArticle.authornames)) {
+            if (recommendArticle.authornames != null && !recommendArticle.authornames.equals("")) {
+                ll_item_article_addtime.setVisibility(View.VISIBLE);
                 Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
                 collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
                 ll_item_article_addtime.setCompoundDrawables(collectTopDrawable, null, null, null);
                 ll_item_article_addtime.setCompoundDrawablePadding(12);
                 ll_item_article_addtime.setText(recommendArticle.authornames);
+            } else {
+                ll_item_article_addtime.setVisibility(View.GONE);
             }
             if(recommendArticle.photo != null && !recommendArticle.photo.equals("")){
                 try {
@@ -95,8 +100,8 @@ public class ArticleSearchMoreAdapter extends
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,
-                            ArticleDetailsActivity.class);
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.StudyClickCharacter);
+                    Intent intent = new Intent(context, ArticleDetailsActivity.class);
                     intent.putExtra("articleId", recommendArticle.articleid);
                     intent.putExtra("photo", recommendArticle.photo);
                     context.startActivity(intent);

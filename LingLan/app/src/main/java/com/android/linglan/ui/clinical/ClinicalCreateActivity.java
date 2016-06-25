@@ -23,6 +23,7 @@ import com.android.linglan.base.BaseActivity;
 import com.android.linglan.camerautils.DisplayImageOptions;
 import com.android.linglan.camerautils.ImageLoader;
 import com.android.linglan.camerautils.RoundedBitmapDisplayer;
+import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.http.GsonTools;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
@@ -36,9 +37,11 @@ import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.TimeStampConversionUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.android.linglan.widget.AlertDialoginter;
 import com.android.linglan.widget.AlertDialogs;
 import com.android.linglan.widget.SyLinearLayoutManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -133,7 +136,8 @@ public class ClinicalCreateActivity extends BaseActivity implements AlertDialogi
                             clinical_mould.addView(title);
                             clinical_mould.addView(content);
                             title.setText("[" + clinicalMouldData.templetname + "] :");
-                            title.setTextColor(Color.parseColor("#48558f"));
+//                            title.setTextColor(Color.parseColor("#48558f"));
+                            title.setTextColor(content.getResources().getColor(R.color.blue));
 
                             title.setTextSize(16);
                             content.setTextSize(16);
@@ -289,6 +293,7 @@ public class ClinicalCreateActivity extends BaseActivity implements AlertDialogi
         super.onClick(v);
         switch (v.getId()) {
             case R.id.right:
+                MobclickAgent.onEvent(this, UmengBuriedPointUtil.ClinicalNewMedicalHistorySave);
                 String patientAgeMonth = edt_patient_age_month.getText().toString().trim();
                 if (!isEmptyContent()) {
                     ToastUtil.show("请填写病历内容");
@@ -531,6 +536,7 @@ public class ClinicalCreateActivity extends BaseActivity implements AlertDialogi
                     return;
                 }
                 ToastUtil.show("已保存");
+                ClinicalFragment.ISREFRESHDATA = 1;
                 if (clinicalMouldBean != null && clinicalMouldBean.data != null && clinicalMouldBean.data.size() != 0) {
                     for (int i = 0; i < clinicalMouldBean.data.size(); i++) {
                         SharedPreferencesUtil.saveString(clinicalMouldBean.data.get(i).templetname, null);

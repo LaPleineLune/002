@@ -42,8 +42,8 @@ public class NetApi {
      * @param callback
      * @param mac   物理地址ID
      */
-    public static void getAppKey(PasserbyClient.HttpCallback callback, String mac) {
-        String url = String.format(Constants.URL_APP_KEY, aesCryptUtil.encrypt(Constants.SECRET), aesCryptUtil.encrypt("android"), aesCryptUtil.encrypt(Constants.VERSION), aesCryptUtil.encrypt(mac));
+    public static void getAppKey(PasserbyClient.HttpCallback callback, String mac, String mode) {
+        String url = String.format(Constants.URL_APP_KEY, aesCryptUtil.encrypt(Constants.SECRET), aesCryptUtil.encrypt("android"), aesCryptUtil.encrypt(Constants.VERSION), aesCryptUtil.encrypt(mac), aesCryptUtil.encrypt(mode));
         LogUtil.e("url=" + url);
         PasserbyClient.get(url, callback);
     }
@@ -228,16 +228,36 @@ public class NetApi {
     }
 
     /**
-     * 专题详情
+     * 专题详情文章列表
      * 192.168.1.117:8082/Api/Special/specailcontent?specialid=1
      * */
-    public static void getDetailsSubject( PasserbyClient.HttpCallback callback,String specialid,String page) {
-        String url = String.format(Constants.URL_DETAILS_SUBJECT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(specialid), aesCryptUtil.encrypt(page));
+    public static void getDetailsSubjectArticle( PasserbyClient.HttpCallback callback,String specialid,String page) {
+        String url = String.format(Constants.URL_DETAILS_SUBJECT_ARTICLE, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(specialid), aesCryptUtil.encrypt(page));
         PasserbyClient.get(url, callback);
         LogUtil.e("url=" + url);
     }
 
-    /* 未接 */
+    /**
+     * 专题详情音频列表
+     * 192.168.1.117:8082/Api/Special/specailcontent?specialid=1
+     * */
+    public static void getDetailsFmArticle( PasserbyClient.HttpCallback callback,String specialid,String page) {
+        String url = String.format(Constants.URL_DETAILS_FM_ARTICLE, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(specialid), aesCryptUtil.encrypt(page));
+        PasserbyClient.get(url, callback);
+        LogUtil.e("url=" + url);
+    }
+
+    /**
+     * 专题详情
+     * 192.168.1.117:8082/Api/Special/specailcontent?specialid=1
+     * */
+    public static void getDetailsSubject( PasserbyClient.HttpCallback callback,String specialid) {
+        String url = String.format(Constants.URL_DETAILS_SUBJECT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(specialid));
+        PasserbyClient.get(url, callback);
+        LogUtil.e("url=" + url);
+    }
+
+
     /**
      * 专题详情用户写（添加）笔记
      * @param callback
@@ -395,6 +415,18 @@ public class NetApi {
     }
 
     /**
+     * 关键字搜索全局新接口（统计）
+     * @param callback
+     * @param key 关键字
+     * @param sourcepage  0文章 4专题 5电台 -1首页
+     */
+    public static void getNewSearchAll(PasserbyClient.HttpCallback callback,String key,String page,String sourcepage) {
+        String url = String.format(Constants.URL_SEARCH_NEW_ALL, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(key), aesCryptUtil.encrypt(page), aesCryptUtil.encrypt(sourcepage));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
      * 清除全局历史搜索
      * @param callback
      */
@@ -405,11 +437,21 @@ public class NetApi {
     }
 
     /**
-     * 获取专题热门搜索/历史搜索（统计）
+     * 获取专题热门搜索
      * @param callback
      */
-    public static void getSubjectHistoryHotSearchKey(PasserbyClient.HttpCallback callback) {
-        String url = String.format(Constants.URL_SUBJECT_STATISTIC, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
+    public static void getSubjectHotSearchKey(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_SUBJECT_HOT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 获取音频热门搜索
+     * @param callback
+     */
+    public static void getFmHotSearchKey(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_FM_HOT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
         LogUtil.e("url=" + url);
         PasserbyClient.get(url, callback);
     }
@@ -426,12 +468,22 @@ public class NetApi {
     }
 
     /**
-     * 未调试
-     * 获取文章热门搜索/历史搜索（统计）
+     * 关键字搜索音频
+     * @param callback
+     * @param key 关键字
+     */
+    public static void getSearchFm(PasserbyClient.HttpCallback callback,String key,String page) {
+        String url = String.format(Constants.URL_SEARCH_FM, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(key), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 获取文章热门搜索
      * @param callback
      */
-    public static void getArticleHistoryHotSearchKey(PasserbyClient.HttpCallback callback) {
-        String url = String.format(Constants.URL_ARTICLE_STATISTIC, aesCryptUtil.encrypt(getToken()));
+    public static void getArticleHotSearchKey(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_ARTICLE_HOT, aesCryptUtil.encrypt(getAppKey()),aesCryptUtil.encrypt(getToken()));
         LogUtil.e("url=" + url);
         PasserbyClient.get(url, callback);
     }
@@ -950,6 +1002,113 @@ public class NetApi {
      */
     public static void markotherlogin(PasserbyClient.HttpCallback callback) {
         String url = String.format(Constants.URL_MARKOTHER_LOGIN, aesCryptUtil.encrypt(getAppKey()));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 从后台获取app的相关提示
+     * @param callback
+     * @param type  什么类型的提示文字，
+     *              study_more学习模块更多提示（html格式），
+     *              cr_info 临症参考说明（普通文本），
+     *              cr_none 临症参考无内容说明，
+     *              sousou_info 中医搜搜功能说明
+     */
+    public static void getPrompt(PasserbyClient.HttpCallback callback, String type) {
+        String url = String.format(Constants.URL_PROMPT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(type));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 全部音频分类列表
+     * @param callback
+     */
+    public static void getRadioClassify(PasserbyClient.HttpCallback callback) {
+        String url = String.format(Constants.URL_RADIO_CLASSIFY, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 音频分类对应的列表
+     * @param callback
+     * @param cateid    音频分类id
+     * @param page  分页
+     */
+    public static void getRadioList(PasserbyClient.HttpCallback callback, String cateid, String page) {
+        String url = String.format(Constants.URL_RADIO_LIST, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(cateid), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 专辑详情(头部)
+     * @param callback
+     * @param albumid   专辑ID
+     */
+    public static void getRadioSpecialInfo(PasserbyClient.HttpCallback callback, String albumid) {
+        String url = String.format(Constants.URL_RADIO_SPECIAL_INFO, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(albumid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 专辑详情（列表）
+     * @param callback
+     * @param albumid   专辑ID
+     * @param page  分页
+     */
+    public static void getRadioSpecialList(PasserbyClient.HttpCallback callback, String albumid, String page) {
+        String url = String.format(Constants.URL_RADIO_SPECIAL_LIST, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(albumid), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 专辑收藏
+     * @param callback
+     * @param albumid   专辑ID
+     * @param iscancel  是否取消收藏，0为收藏，1为取消
+     */
+    public static void getRadioSpecialCollect(PasserbyClient.HttpCallback callback, String albumid, String iscancel) {
+        String url = String.format(Constants.URL_RADIO_SPECIAL_COLLECT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(albumid), aesCryptUtil.encrypt(iscancel));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 音频播放详情(头部)
+     * @param callback
+     * @param audioid   音频ID
+     */
+    public static void getRadioPlayInfo(PasserbyClient.HttpCallback callback, String audioid) {
+        String url = String.format(Constants.URL_RADIO_PLAY_INFO, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(audioid));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 音频播放详情（列表）
+     * @param callback
+     * @param audioid   音频ID
+     * @param page  分页
+     */
+    public static void getRadioPlayList(PasserbyClient.HttpCallback callback, String audioid, String page) {
+        String url = String.format(Constants.URL_RADIO_PLAY_LIST, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(audioid), aesCryptUtil.encrypt(page));
+        LogUtil.e("url=" + url);
+        PasserbyClient.get(url, callback);
+    }
+
+    /**
+     * 音频收藏
+     * @param callback
+     * @param audioid   音频ID
+     * @param iscancel  是否取消收藏，0为收藏，1为取消
+     */
+    public static void getRadioPlayCollect(PasserbyClient.HttpCallback callback, String audioid, String iscancel) {
+        String url = String.format(Constants.URL_RADIO_PLAY_COLLECT, aesCryptUtil.encrypt(getAppKey()), aesCryptUtil.encrypt(getToken()), aesCryptUtil.encrypt(audioid), aesCryptUtil.encrypt(iscancel));
         LogUtil.e("url=" + url);
         PasserbyClient.get(url, callback);
     }

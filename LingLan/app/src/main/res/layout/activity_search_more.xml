@@ -4,11 +4,77 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/page_head"
-        android:id="@+id/title_bar" />
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/page_head" />
 
-    <com.chanven.lib.cptr.PtrClassicFrameLayout
-        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:background="#fafafa"
+        android:orientation="horizontal">
+
+        <com.android.linglan.widget.sortlistview.ClearEditText
+            android:id="@+id/filter_edit"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp14"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_weight="4"
+            android:background="@drawable/search_wire_frame"
+            android:drawableLeft="@drawable/search_bar_icon_normal"
+            android:drawablePadding="@dimen/dp4"
+            android:hint="搜索文章"
+            android:singleLine="true"
+            android:textSize="@dimen/sp14" />
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_textview"
+            android:text="搜索"
+            android:textColor="@color/carminum"
+            android:textSize="@dimen/sp14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_hot_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/dp26"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_hot_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp20"
+            android:textColor="@color/text_title_color"
+            android:paddingBottom="@dimen/dp16"
+            android:text="热搜文章" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rec_hot_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
+    </LinearLayout>
+
+    <com.chanven.lib.cptr.PtrClassicFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/recycler_view_home_recommend"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,16 +84,17 @@
         cube_ptr:ptr_keep_header_when_refresh="true"
         cube_ptr:ptr_pull_to_fresh="false"
         cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
-        cube_ptr:ptr_resistance="1.8" >
+        cube_ptr:ptr_resistance="1.8">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rec_more_every"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white"/>
+            android:background="@android:color/white" />
     </com.chanven.lib.cptr.PtrClassicFrameLayout>
 
-    <include layout="@layout/layout_no_network"
-        android:visibility="gone"/>
+    <include
+        layout="@layout/layout_no_network"
+        android:visibility="gone" />
 
 </LinearLayout>

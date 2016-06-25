@@ -1,6 +1,7 @@
 package com.android.linglan.fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -25,13 +26,14 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.android.linglan.adapter.clinical.ClinicalListAdapter;
 import com.android.linglan.base.BaseFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.ClinicalClassifyBean;
-import com.android.linglan.http.bean.UpdataPhotoBeen;
 import com.android.linglan.http.bean.ClinicalCollatingBean;
+import com.android.linglan.http.bean.UpdataPhotoBeen;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.clinical.ClinicalClassifyPictureActivity;
 import com.android.linglan.ui.clinical.ClinicalCollatingActivity;
@@ -50,9 +52,12 @@ import com.android.linglan.utils.FaceImageUtil;
 import com.android.linglan.utils.FaceUIUtil;
 import com.android.linglan.utils.GuideViewUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.ImageUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
+import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.android.linglan.widget.SyLinearLayoutManager;
 import com.android.linglan.widget.flowlayout.FlowLayout;
 import com.android.linglan.widget.flowlayout.TagAdapter;
@@ -62,6 +67,7 @@ import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.chanven.lib.cptr.recyclerview.RecyclerAdapterWithHF;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +89,9 @@ public class ClinicalFragment extends BaseFragment {
     protected static final int REQUEST_SUCCESS_CLASSIFY = 3;
     private static final int REQUEST_PICTURE = 9;
     private static final int REQUEST_CLIP_PIC_RESULT = 11;
+    public static int ISREFRESHDATA = 0;
+    public static int ISLOGIN = 0;
+    public static int position;
     public static int MaxPictureNumber;
 
     public String collatingNum = "0";
@@ -111,6 +120,7 @@ public class ClinicalFragment extends BaseFragment {
     private ClinicalCollatingBean clinicalCollatingBean;
     private ClinicalCollatingBean.ClinicalCollatingData clinicalCollatingData;
     private ArrayList<ClinicalCollatingBean.ClinicalCollatingData.ClinicalCollatingList> clinicalCollatingList;
+    private int firstpageClinicalCollatingListSize;
     private int page = 1;//页码
     private String orderid;//排序 传参数 addtime按时间排序, count_view按统计排序，""为全部
     private String cateid;//分类 传参数分类id(subjectClassifyListBeans.cateid)，传""则返回全部
@@ -119,12 +129,12 @@ public class ClinicalFragment extends BaseFragment {
     private String categoryid;
     private UpdataPhotoBeen updataPhotoBeen;
     private List<UpdataPhotoBeen> updataPhotoBeens;
-    private boolean isAllClassify = true;
+    public static boolean isAllClassify = true;
     private String classifyIdStr = "";
     private String oldClassifyIdStr = "";
     private String allcasecon = "0";
-    private String classifyNameAll = "全部";
-    private String classifyNameNew = "全部";
+    private String classifyNameAll = "全部病历";
+    private String classifyNameNew = "全部病历";
 
     private Handler handler = new Handler() {
         @Override
@@ -153,16 +163,66 @@ public class ClinicalFragment extends BaseFragment {
     };
 
     @Override
-    public void onStart() {
-        super.onStart();
-        page = 1;
-        if (isAllClassify) {
-            getClinicalList(page);
-        } else {
-            getClassifyClinical(classifyIdStr, page);
+    public void onResume() {
+        super.onResume();
+        if (recycler_view_clinical == null) {
+            recycler_view_clinical = (PtrClassicFrameLayout) rootView.findViewById(R.id.recycler_view_clinical);
         }
-        collatingNum = "0";
-        getClinicalCollatingNum();
+
+        //编辑或者新建了病历，刷新页面
+        if (ISREFRESHDATA == 1 && ISLOGIN == 0) {
+            recycler_view_clinical.refreshComplete();
+            recycler_view_clinical.setLoadMoreEnable(true);
+            recycler_view_clinical.loadMoreComplete(true);
+            page = 1;
+            ISREFRESHDATA = 0;
+
+            if(!SharedPreferencesUtil.getString("token","").equals("")){
+                if (isAllClassify) {
+                    getClinicalList(page);
+                } else {
+                    getClassifyClinical(classifyIdStr, page);
+                }
+            }else{
+                getClinicalList(1);
+                isAllClassify = true;
+            }
+
+            getClinicalCollatingNum();
+        } else if (ISREFRESHDATA == 2) {
+            //删除了病历或者病程，刷新数据，在当前位置不动
+            ISREFRESHDATA = 0;
+            int count = clinicalCollatingList.size();
+//            LogUtil.e("病历总数量 count = " + count );
+//            LogUtil.e("第一页的数量 firstpageClinicalCollatingListSize = " + firstpageClinicalCollatingListSize );
+//            LogUtil.e("删除的页码 position = " + position );
+            if (position == 1) {
+                clinicalCollatingList.clear();
+            } else {
+                if (count != 0) {
+                    for (int i = count - 1; i > firstpageClinicalCollatingListSize - 1 + (position - 2) * 10; i--) {
+                        clinicalCollatingList.remove(i);
+//                        LogUtil.e("remove掉的那些item i = " + i);
+                    }
+                }
+            }
+
+            if (isAllClassify) {
+                getClinicalList(position);
+            } else {
+                getClassifyClinical(classifyIdStr, position);
+            }
+
+            collatingNum = "0";
+            getClinicalCollatingNum();
+        }else if (ISLOGIN == 1) {
+            //登录页面过来后刷新全部病例的第一页
+            ISLOGIN = 0;
+            getClinicalList(1);
+            isAllClassify = true;
+            collatingNum = "0";
+            getClinicalCollatingNum();
+        }
     }
 
     @Override
@@ -180,15 +240,9 @@ public class ClinicalFragment extends BaseFragment {
             parent.removeView(rootView);
         }
 
-
         return rootView;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        mGuideViewUtil=new GuideViewUtil(getActivity(), R.drawable.xinshou1);
-    }
 
     @Override
     protected void initView() {
@@ -239,6 +293,10 @@ public class ClinicalFragment extends BaseFragment {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.ClinicalHomepageManualRefresh);
+                recycler_view_clinical.refreshComplete();
+                recycler_view_clinical.setLoadMoreEnable(true);
+                recycler_view_clinical.loadMoreComplete(true);
                 page = 1;
                 if (isAllClassify) {
                     getClinicalList(page);
@@ -254,6 +312,7 @@ public class ClinicalFragment extends BaseFragment {
 
             @Override
             public void loadMore() {
+                MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.ClinicalHomepageManualRefresh);
                 page++;
                 if (isAllClassify) {
                     getClinicalList(page);
@@ -274,6 +333,7 @@ public class ClinicalFragment extends BaseFragment {
                 initData();
                 break;
             case R.id.bt_clinical_create:
+                MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.ClinicalNewMedicalHistory);
                 if (NetApi.getToken() != null) {
                     intent.setClass(getActivity(), ClinicalCreateActivity.class);
                     startActivity(intent);
@@ -283,20 +343,11 @@ public class ClinicalFragment extends BaseFragment {
                 }
                 break;
             case R.id.bt_clinical_photograph:
-
                 intent.setClass(getActivity(), ClinicalPhotographActivity.class);
                 startActivity(intent);
-
-//                Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent, 1);
-//                takePhoto();
-
-
                 break;
             case R.id.tv_clinical_order:
                 showPopup(v);
-                ToastUtil.show("henghengehneg");
                 break;
         }
     }
@@ -359,45 +410,6 @@ public class ClinicalFragment extends BaseFragment {
         startActivityForResult(intent, REQUEST_CLIP_PIC_RESULT);
     }
 
-
-    private static String getExternalContentDirectory(String storageDirectory) {
-        if (!TextUtils.isEmpty(storageDirectory)) {
-            // make the absolute path (lowercase the enum value)
-            String content = storageDirectory + "/" + ROOT_DIR + "/";
-
-            File contentFile = new File(content);
-            if (!contentFile.exists()) {
-                if (!contentFile.mkdirs()) {
-                    return null;
-                }
-            }
-            return content;
-        } else {
-            return null;
-        }
-    }
-
-    public void saveClinicalMultiMedia(File media, String type, String categoryid) {
-        NetApi.saveClinicalMultiMedia(new PasserbyClient.HttpCallback() {
-            @Override
-            public void onSuccess(String result) {
-//                LogUtil.e(result);
-                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, getActivity())) {
-                    return;
-                }
-                updataPhotoBeen = JsonUtil.json2Bean(result, UpdataPhotoBeen.class);
-                updataPhotoBeens.add(updataPhotoBeen);
-                handler.sendEmptyMessage(REQUEST_SUCCESS);
-            }
-
-            @Override
-            public void onFailure(String message) {
-
-            }
-        }, media, type, categoryid);
-    }
-
-
     private void showPopup(View v) {
         int w = View.MeasureSpec.makeMeasureSpec(0,
                 View.MeasureSpec.UNSPECIFIED);
@@ -425,12 +437,13 @@ public class ClinicalFragment extends BaseFragment {
         NetApi.getClinicalList(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
-                LogUtil.e("getClinicalList=" + result);
+                LogUtil.e("page = " + page + "   getClinicalList=" + result);
                 recycler_view_clinical.refreshComplete();
                 recycler_view_clinical.setLoadMoreEnable(true);
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result, getActivity())){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, getActivity())) {
                     recycler_view_clinical.loadMoreComplete(false);
                     if (HttpCodeJugementUtil.code == 1 && page == 1) {
+                        recycler_view_clinical.loadPage1MoreComplete();
                         clinicalAdapter.upDateAdapterTitle(classifyNameAll);
                         if (page == 1) {
                             clinicalAdapter.upDateAdapter(null, null);
@@ -439,14 +452,30 @@ public class ClinicalFragment extends BaseFragment {
                     return;
                 }
 
-                classifyNameAll = "全部";
+                classifyNameAll = "全部病历";
                 clinicalAdapter.upDateAdapterTitle(classifyNameAll);
 
                 clinicalCollatingBean = JsonUtil.json2Bean(result, ClinicalCollatingBean.class);
 
+                if (clinicalCollatingBean.data.list == null || (clinicalCollatingBean.data.list).size() == 0) {
+                    if (page != 1) {
+                        recycler_view_clinical.loadMoreComplete(false);
+                    }
+                }
+
+//                if(clinicalCollatingBean.data.list == null || clinicalCollatingBean.data.list.size() == 0){
+//                    recycler_view_clinical.loadMoreComplete(false);
+//                }
+
                 clinicalCollatingData = clinicalCollatingBean.data;
                 if (page == 1) {
                     clinicalCollatingList = clinicalCollatingBean.data.list;
+                    firstpageClinicalCollatingListSize = clinicalCollatingBean.data.list.size();
+                    if (firstpageClinicalCollatingListSize <= 9) {
+                        recycler_view_clinical.loadPage1MoreComplete();
+                    } else {
+                        recycler_view_clinical.loadMoreComplete(true);
+                    }
                 } else {
                     clinicalCollatingList.addAll(clinicalCollatingBean.data.list);
                 }
@@ -467,7 +496,7 @@ public class ClinicalFragment extends BaseFragment {
                 recycler_view_clinical.refreshComplete();
                 handler.sendEmptyMessage(REQUEST_FAILURE);
             }
-        }, null, page + "", null,null);
+        }, null, page + "", null, null);
     }
 
     private void getClassifyClinical(String classifyid, final int page) {
@@ -477,7 +506,7 @@ public class ClinicalFragment extends BaseFragment {
                 LogUtil.e("getClassifyClinical=" + result);
                 recycler_view_clinical.refreshComplete();
                 recycler_view_clinical.setLoadMoreEnable(true);
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result, getActivity())){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, getActivity())) {
                     recycler_view_clinical.loadMoreComplete(false);
                     if (HttpCodeJugementUtil.code == 1) {
                         classifyIdStr = oldClassifyIdStr;
@@ -487,9 +516,28 @@ public class ClinicalFragment extends BaseFragment {
                 }
                 classifyNameAll = classifyNameNew;
                 clinicalCollatingBean = JsonUtil.json2Bean(result, ClinicalCollatingBean.class);
+
+//                if (clinicalCollatingBean.data.list == null || (clinicalCollatingBean.data.list).size() == 0 || clinicalCollatingBean.data.list.size() <= 9) {
+//                    if (page == 1) {
+//                        recycler_view_clinical.loadPage1MoreComplete();
+//                    } else {
+//                        recycler_view_clinical.loadMoreComplete(false);
+//                    }
+//                }
+
+                if(clinicalCollatingBean.data.list == null || clinicalCollatingBean.data.list.size() == 0){
+                    recycler_view_clinical.loadMoreComplete(false);
+                }
+
                 clinicalCollatingData = clinicalCollatingBean.data;
                 if (page == 1) {
                     clinicalCollatingList = clinicalCollatingBean.data.list;
+                    firstpageClinicalCollatingListSize = clinicalCollatingBean.data.list.size();
+                    if (firstpageClinicalCollatingListSize <= 9) {
+                        recycler_view_clinical.loadPage1MoreComplete();
+                    } else {
+                        recycler_view_clinical.loadMoreComplete(false);
+                    }
                 } else {
                     clinicalCollatingList.addAll(clinicalCollatingBean.data.list);
                 }
@@ -500,7 +548,6 @@ public class ClinicalFragment extends BaseFragment {
                     clinicalAdapter.upDateAdapter(clinicalCollatingData, null);
                 }
                 handler.sendEmptyMessage(REQUEST_SUCCESS);
-
             }
 
             @Override
@@ -565,7 +612,7 @@ public class ClinicalFragment extends BaseFragment {
         private ArrayList<ClinicalCollatingBean.ClinicalCollatingData.ClinicalCollatingList> clinicalCollatingList;
         private List<ClinicalClassifyBean.ClinicalClassifyData> clinicalClassifyData;
         private String collatingNum = "0";
-        private String classifyName = "全部";
+        private String classifyName = "全部病历";
 
         private PopupWindow popupWindow;
         private View popView;
@@ -583,7 +630,8 @@ public class ClinicalFragment extends BaseFragment {
             this.classifyName = classifyName;
             notifyDataSetChanged();
         }
-        public void upDateAdapter(ClinicalCollatingBean.ClinicalCollatingData clinicalCollatingData,ArrayList<ClinicalCollatingBean.ClinicalCollatingData.ClinicalCollatingList> clinicalCollatingList) {
+
+        public void upDateAdapter(ClinicalCollatingBean.ClinicalCollatingData clinicalCollatingData, ArrayList<ClinicalCollatingBean.ClinicalCollatingData.ClinicalCollatingList> clinicalCollatingList) {
             this.clinicalCollatingData = clinicalCollatingData;
             this.clinicalCollatingList = clinicalCollatingList;
             notifyDataSetChanged();
@@ -665,7 +713,7 @@ public class ClinicalFragment extends BaseFragment {
             private TextView tv_classify1;
             private TextView tv_classify2;
             private TextView tv_all_classify;
-//            private TagFlowLayout flowlayout_classify;
+            //            private TagFlowLayout flowlayout_classify;
 //            private TextView tv_clinical_classify_no_content;
             private TextView tv;
             private TextView tv_manage_classify;
@@ -719,7 +767,11 @@ public class ClinicalFragment extends BaseFragment {
                 intent = new Intent();
                 switch (index) {
                     case VIEW_CLINICAL_TITLE:
-                        tv_clinical_classify_type.setText(classifyName);
+                        if(clinicalCollatingData != null && clinicalCollatingData.tagnames != null && !clinicalCollatingData.tagnames.equals("")){
+                            tv_clinical_classify_type.setText(clinicalCollatingData.tagnames);
+                        }else{
+                            tv_clinical_classify_type.setText(classifyName);
+                        }
                         btn_search.setOnClickListener(this);
                         tv_clinical_reference.setOnClickListener(this);
                         tv_weichat_flup.setOnClickListener(this);
@@ -746,7 +798,7 @@ public class ClinicalFragment extends BaseFragment {
                         tv_classify2.setOnClickListener(this);
                         tv_manage_classify.setOnClickListener(this);
 
-                        tv_all_classify.setText("全部  " + allcasecon);
+                        tv_all_classify.setText("全部病历  " + allcasecon);
                         tv_all_classify.setOnClickListener(this);
 
                         filter_edit.setOnClickListener(this);
@@ -828,22 +880,23 @@ public class ClinicalFragment extends BaseFragment {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.ll_search:
-                        Intent intent1 = new Intent(context,ClinicalSearchActivity.class);
+                        Intent intent1 = new Intent(context, ClinicalSearchActivity.class);
                         context.startActivity(intent1);
                         break;
                     case R.id.btn_search:
 //                    ToastUtil.show("我是搜索");
                         String key = filter_edit.getText().toString().trim();
-                        if(key != null && key.length() != 0){
-                            Intent intent = new Intent(context,ClinicalSearchActivity.class);
-                            intent.putExtra("key",key);
+                        if (key != null && key.length() != 0) {
+                            Intent intent = new Intent(context, ClinicalSearchActivity.class);
+                            intent.putExtra("key", key);
                             context.startActivity(intent);
-                        }else{
+                        } else {
                             ToastUtil.show("请输入搜索内容");
                         }
 
                         break;
                     case R.id.tv_clinical_reference:
+                        MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.ClinicalSelectReference);
                         intent.setClass(context, ClinicalReferenceActivity.class);
                         context.startActivity(intent);
                         break;
@@ -852,6 +905,7 @@ public class ClinicalFragment extends BaseFragment {
                         context.startActivity(intent);
                         break;
                     case R.id.tv_tcm_search:
+                        MobclickAgent.onEvent(context, UmengBuriedPointUtil.ClinicalSelectSoso);
                         intent.setClass(context, TCMSearchActivity.class);
                         context.startActivity(intent);
                         break;
@@ -861,8 +915,6 @@ public class ClinicalFragment extends BaseFragment {
                         context.startActivity(intent);
                         break;
                     case R.id.ll_clinical_classify:
-//                    intent.setClass(context, ClinicalClassifyActivity.class);
-//                    context.startActivity(intent);
                         if (NetApi.getToken() != null) {
                             ll_clinical_classify.setFocusable(false);
                             ll_clinical_classify.setClickable(false);
@@ -879,6 +931,7 @@ public class ClinicalFragment extends BaseFragment {
                         }
                         break;
                     case R.id.tv_manage_classify:
+                        MobclickAgent.onEvent(context, UmengBuriedPointUtil.ClinicalClassEdit);
                         intent.setClass(context, ClinicalManageClassifyActivity.class);
                         context.startActivity(intent);
                         popupWindow.dismiss();
@@ -919,6 +972,7 @@ public class ClinicalFragment extends BaseFragment {
                         }
                         break;
                     case R.id.tv_classify_ok:
+                        MobclickAgent.onEvent(context, UmengBuriedPointUtil.ClinicalClassCheck);
                         if (classifyNum.equals("0")) {
                             ToastUtil.show("选择的分类没有病历，请重新选择");
                         } else {
@@ -948,8 +1002,8 @@ public class ClinicalFragment extends BaseFragment {
                         popupWindow.dismiss();
                         ll_clinical_classify.setFocusable(true);
                         ll_clinical_classify.setClickable(true);
-                        tv_clinical_classify_type.setText("全部");
-                        classifyNameAll = "全部";
+//                        tv_clinical_classify_type.setText("全部病历");
+                        classifyNameAll = "全部病历";
                         getAllClassify();
                         break;
                     case R.id.filter_edit:
@@ -978,7 +1032,7 @@ public class ClinicalFragment extends BaseFragment {
 
                 int height = popView.getMeasuredHeight();
                 int width = popView.getMeasuredWidth();
-                popupWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT,true);
+                popupWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
 
 //            popupWindow = new PopupWindow(popView, width, (int) height);
                 popupWindow.setFocusable(true);
@@ -1006,6 +1060,7 @@ public class ClinicalFragment extends BaseFragment {
 
             final LayoutInflater mInflater = LayoutInflater.from(context);
             final List<ClinicalClassifyBean.ClinicalClassifyData> data = new ArrayList<ClinicalClassifyBean.ClinicalClassifyData>();
+
             private void getClinicalClassify() {
                 NetApi.getClinicalClassify(new PasserbyClient.HttpCallback() {
                     @Override
@@ -1027,12 +1082,12 @@ public class ClinicalFragment extends BaseFragment {
                         clinicalClassifyData = clinicalClassifyBean.data;
 
                         data.clear();
-                        for(ClinicalClassifyBean.ClinicalClassifyData datas : clinicalClassifyData) {
+                        for (ClinicalClassifyBean.ClinicalClassifyData datas : clinicalClassifyData) {
                             if (!datas.userid.equals("0")) {
                                 data.add(datas);
                             }
                         }
-                        tv_classify_all_num.setText("共" + (data != null ? data.size() : 0) +"个分类");
+                        tv_classify_all_num.setText("共" + (data != null ? data.size() : 0) + "个分类");
 //                    showPopup(v);
 
                         flowlayout_classify.setAdapter(new TagAdapter(data) {// clinicalClassifyData
@@ -1091,7 +1146,7 @@ public class ClinicalFragment extends BaseFragment {
         }
     }
 
-    private void getMaxPictureNumber(){
+    private void getMaxPictureNumber() {
         NetApi.getMaxPictureNumber(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {

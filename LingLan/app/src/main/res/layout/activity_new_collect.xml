@@ -5,22 +5,46 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
+
     <include layout="@layout/page_head" />
 
-    <com.android.linglan.widget.CustomPullToRefreshRecyclerView
-        android:id="@+id/refresh_more_every"
+    <com.chanven.lib.cptr.PtrClassicFrameLayout
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/recycler_view_collect"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@null"
-        android:dividerHeight="@dimen/dp0"
-        android:scrollbars="none"
-        app:ptrDrawableEnd="@drawable/ptr_rotate"
-        app:ptrDrawableStart="@drawable/ptr_flip"
-        app:ptrMode="both"
-        app:ptr_animation_style_end="rotate"
-        app:ptr_animation_style_start="flip" />
+        cube_ptr:ptr_duration_to_close="200"
+        cube_ptr:ptr_duration_to_close_header="700"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.8">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rec_collect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.chanven.lib.cptr.PtrClassicFrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_no_collect_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="184dp"
+        android:paddingLeft="150dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp62"
+            android:layout_height="@dimen/dp50"
+            android:src="@drawable/no_collect_subject"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp10"
+            android:text="暂无数据"/>
+    </LinearLayout>
 
     <include layout="@layout/layout_no_network"
         android:visibility="gone"/>

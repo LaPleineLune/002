@@ -1,2 +1,2 @@
-include ':app', ':pulltorefresh_library', ':PushSDK', ':cptr', ':multi-image-selector'
+include ':app', ':PushSDK', ':cptr', ':multi-image-selector'
 include ':social_sdk_library_project'

@@ -7,13 +7,10 @@ import android.widget.TextView;
 
 import com.android.linglan.base.BaseActivity;
 import com.android.linglan.fragment.PictureContrastAffectedPartFragment;
+import com.android.linglan.fragment.PictureContrastOtherFragment;
 import com.android.linglan.fragment.PictureContrastPrescribedFragment;
 import com.android.linglan.fragment.PictureContrastTonguePictureFragment;
-import com.android.linglan.http.NetApi;
-import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
-import com.android.linglan.utils.HttpCodeJugementUtil;
-import com.android.linglan.utils.LogUtil;
 
 /**
  * Created by LeeMy on 2016/4/14 0014.
@@ -23,13 +20,15 @@ public class PictureContrastActivity extends BaseActivity {
     private TextView tv_prescribed;
     private TextView tv_affected_part;
     private TextView tv_tongue_picture;
+    private TextView tv_other_picture;
 
     private FragmentManager fragmentManager;
     private PictureContrastPrescribedFragment prescribedFragment;
-    private PictureContrastAffectedPartFragment affectedPartFragment;
     private PictureContrastTonguePictureFragment tonguePictureFragment;
+    private PictureContrastAffectedPartFragment affectedPartFragment;
+    private PictureContrastOtherFragment otherFragment;
 
-//    private String category = "1"; //分类（处方默认1、患处2、舌象3）
+    //    private String category = "1"; //分类（处方默认1、患处2、舌象3）
 //    private String illnesscaseid = "";//病历
     @Override
     protected void setView() {
@@ -41,6 +40,7 @@ public class PictureContrastActivity extends BaseActivity {
         tv_prescribed = (TextView) findViewById(R.id.tv_prescribed);
         tv_affected_part = (TextView) findViewById(R.id.tv_affected_part);
         tv_tongue_picture = (TextView) findViewById(R.id.tv_tongue_picture);
+        tv_other_picture = (TextView) findViewById(R.id.tv_other_picture);
     }
 
     @Override
@@ -60,6 +60,7 @@ public class PictureContrastActivity extends BaseActivity {
         tv_prescribed.setOnClickListener(this);
         tv_affected_part.setOnClickListener(this);
         tv_tongue_picture.setOnClickListener(this);
+        tv_other_picture.setOnClickListener(this);
     }
 
     @Override
@@ -71,13 +72,18 @@ public class PictureContrastActivity extends BaseActivity {
 //                category = "1";
 //                getComparePicture(category, illnesscaseid);
                 break;
-            case R.id.tv_affected_part:
+            case R.id.tv_tongue_picture:
                 setTabSelection(1);
+//                category = "3";
+//                getComparePicture(category, illnesscaseid);
+                break;
+            case R.id.tv_affected_part:
+                setTabSelection(2);
 //                category = "2";
 //                getComparePicture(category, illnesscaseid);
                 break;
-            case R.id.tv_tongue_picture:
-                setTabSelection(2);
+            case R.id.tv_other_picture:
+                setTabSelection(3);
 //                category = "3";
 //                getComparePicture(category, illnesscaseid);
                 break;
@@ -93,26 +99,29 @@ public class PictureContrastActivity extends BaseActivity {
         tv_prescribed.setTextColor(getResources().getColor(R.color.no_text_color_fragment_title));
         tv_affected_part.setTextColor(getResources().getColor(R.color.no_text_color_fragment_title));
         tv_tongue_picture.setTextColor(getResources().getColor(R.color.no_text_color_fragment_title));
-
+        tv_other_picture.setTextColor(getResources().getColor(R.color.no_text_color_fragment_title));
     }
 
     /**
      * 将所有的Fragment都置为隐藏状态。
      *
-     * @param transaction
-     *            用于对Fragment执行操作的事务
+     * @param transaction 用于对Fragment执行操作的事务
      */
 
     private void hideFragments(FragmentTransaction transaction) {
         if (prescribedFragment != null) {
             transaction.hide(prescribedFragment);
         }
-        if (affectedPartFragment != null) {
-            transaction.hide(affectedPartFragment);
-        }
         if (tonguePictureFragment != null) {
             transaction.hide(tonguePictureFragment);
         }
+        if (affectedPartFragment != null) {
+            transaction.hide(affectedPartFragment);
+        }
+        if (otherFragment != null) {
+            transaction.hide(otherFragment);
+        }
+
     }
 
     private void setTabSelection(int index) {
@@ -124,27 +133,37 @@ public class PictureContrastActivity extends BaseActivity {
                 tv_prescribed.setTextColor(getResources().getColor(R.color.carminum));
                 if (prescribedFragment == null) {
                     prescribedFragment = new PictureContrastPrescribedFragment();
-                    transaction.add(R.id.picture_contrast, prescribedFragment,"tag1");
+                    transaction.add(R.id.picture_contrast, prescribedFragment, "tag1");
                 } else {
                     transaction.show(prescribedFragment);
                 }
                 break;
             case 1:
+                tv_tongue_picture.setTextColor(getResources().getColor(R.color.carminum));
+                if (tonguePictureFragment == null) {
+                    tonguePictureFragment = new PictureContrastTonguePictureFragment();
+                    transaction.add(R.id.picture_contrast, tonguePictureFragment, "tag2");
+                } else {
+                    transaction.show(tonguePictureFragment);
+                }
+                break;
+            case 2:
                 tv_affected_part.setTextColor(getResources().getColor(R.color.carminum));
                 if (affectedPartFragment == null) {
                     affectedPartFragment = new PictureContrastAffectedPartFragment();
-                    transaction.add(R.id.picture_contrast, affectedPartFragment,"tag2");
+                    transaction.add(R.id.picture_contrast, affectedPartFragment, "tag3");
                 } else {
                     transaction.show(affectedPartFragment);
                 }
                 break;
-            case 2:
-                tv_tongue_picture.setTextColor(getResources().getColor(R.color.carminum));
-                if (tonguePictureFragment == null) {
-                    tonguePictureFragment = new PictureContrastTonguePictureFragment();
-                    transaction.add(R.id.picture_contrast, tonguePictureFragment,"tag2");
+
+            case 3:
+                tv_other_picture.setTextColor(getResources().getColor(R.color.carminum));
+                if (otherFragment == null) {
+                    otherFragment = new PictureContrastOtherFragment();
+                    transaction.add(R.id.picture_contrast, otherFragment,"tag4");
                 } else {
-                    transaction.show(tonguePictureFragment);
+                    transaction.show(otherFragment);
                 }
                 break;
         }

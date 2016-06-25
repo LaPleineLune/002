@@ -1,5 +1,6 @@
 package com.android.linglan.adapter;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,11 @@ import android.widget.TextView;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
+import com.android.linglan.ui.fm.RadioActivity;
 import com.android.linglan.ui.study.SearchActivity;
+import com.android.linglan.ui.study.SearchMoreArticleActivity;
+import com.android.linglan.ui.study.SearchMoreFmActivity;
+import com.android.linglan.ui.study.SearchMoreSubjectActivity;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;
@@ -26,8 +31,9 @@ import com.android.linglan.widget.flowlayout.TagFlowLayout;
  */
 public class SearchAdapter extends RecyclerView.Adapter {
     private SearchActivity context;
-    static final int VIEW_TYPE_SUBJECT = 0;
-    static final int VIEW_TYPE_ARTICLE = 1;
+    static final int VIEW_TYPE_Title = 0;
+    static final int VIEW_TYPE_SUBJECT = 1;
+    static final int VIEW_TYPE_ARTICLE = 2;
 
     private String[] hotsearch = new String[]{};
     public String[] historysearch = new String[]{};
@@ -42,6 +48,9 @@ public class SearchAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
         switch (viewType) {
+            case VIEW_TYPE_Title:
+                view = createTitleView(parent);
+                break;
             case VIEW_TYPE_SUBJECT:
                 view = createHotSearchView(parent);
                 break;
@@ -53,6 +62,12 @@ public class SearchAdapter extends RecyclerView.Adapter {
         }
 
         return new SearchViewHolder(view);
+    }
+
+    //搜索头部
+    private View createTitleView(ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_homepage_search_header, parent, false);
+        return view;
     }
 
     //热门搜索
@@ -67,7 +82,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
         return view;
     }
 
-    public void upDate(String[] hotsearch,String[] historysearch) {
+    public void upDate(String[] hotsearch, String[] historysearch) {
         this.hotsearch = hotsearch;
         this.historysearch = historysearch;
         notifyDataSetChanged();
@@ -80,7 +95,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -100,8 +115,9 @@ public class SearchAdapter extends RecyclerView.Adapter {
             View.OnClickListener {
         private TagFlowLayout mFlowLayout;
         private RelativeLayout rl_history_search;
-        private LinearLayout ll_no_history_search,ll_history_search;
+        private LinearLayout ll_no_history_search, ll_history_search;
         private View rootView;
+        private LinearLayout ll_study_article, ll_study_subject, ll_study_fm;
 
         public SearchViewHolder(View rootView) {
             super(rootView);
@@ -114,11 +130,45 @@ public class SearchAdapter extends RecyclerView.Adapter {
             ll_no_history_search = (LinearLayout) rootView.findViewById(R.id.ll_no_history_search);
             ll_history_search = (LinearLayout) rootView.findViewById(R.id.ll_history_search);
             rl_history_search = (RelativeLayout) rootView.findViewById(R.id.rl_history_search);
+            ll_study_article = (LinearLayout) rootView.findViewById(R.id.ll_study_article);
+            ll_study_subject = (LinearLayout) rootView.findViewById(R.id.ll_study_subject);
+            ll_study_fm = (LinearLayout) rootView.findViewById(R.id.ll_study_fm);
         }
 
         TextView tv;
+
         private void bindData(int index) {
             switch (index) {
+                case VIEW_TYPE_Title:
+
+                    ll_study_article.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.StudySelectArticle);
+                            Intent intent = new Intent(context, SearchMoreArticleActivity.class);
+//                            intent.putExtra("key", "一");
+                            context.startActivity(intent);
+                        }
+                    });
+
+                    ll_study_subject.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.StudySelectSubject);
+                            Intent intent = new Intent(context, SearchMoreSubjectActivity.class);
+//                            intent.putExtra("key", "一");
+                            context.startActivity(intent);
+                        }
+                    });
+
+                    ll_study_fm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, SearchMoreFmActivity.class);
+                            context.startActivity(intent);
+                        }
+                    });
+                    break;
                 case VIEW_TYPE_SUBJECT:
                     final LayoutInflater mInflater = LayoutInflater.from(context);
                     mFlowLayout.setAdapter(new TagAdapter<String>(hotsearch) {
@@ -154,7 +204,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
                     rec_history_search.setLayoutManager(new SyLinearLayoutManager(context));
                     rec_history_search.setHasFixedSize(true);
 
-                    historySearchAdapter = new NewHistorySearchAdapter(context,historysearch);
+                    historySearchAdapter = new NewHistorySearchAdapter(context, historysearch);
                     rec_history_search.setAdapter(historySearchAdapter);
 
                     rootView.findViewById(R.id.tv_delete_history_search).setOnClickListener(new View.OnClickListener() {
@@ -163,7 +213,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
                             NetApi.clearHistory(new PasserbyClient.HttpCallback() {
                                 @Override
                                 public void onSuccess(String result) {
-                                    if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result,context)) {
+                                    if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, context)) {
                                         return;
                                     }
                                     ll_no_history_search.setVisibility(View.VISIBLE);
@@ -182,11 +232,11 @@ public class SearchAdapter extends RecyclerView.Adapter {
 
                     if (SharedPreferencesUtil.getString("token", null) == null) {
                         ll_history_search.setVisibility(View.GONE);
-                    }else{
-                        if(historysearch ==null || historysearch.length == 0){
+                    } else {
+                        if (historysearch == null || historysearch.length == 0) {
                             ll_no_history_search.setVisibility(View.VISIBLE);
                             rl_history_search.setVisibility(View.GONE);
-                        }else{
+                        } else {
                             ll_no_history_search.setVisibility(View.GONE);
                             rl_history_search.setVisibility(View.VISIBLE);
                             historySearchAdapter.updateAdapter(historysearch);

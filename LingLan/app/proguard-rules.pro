@@ -211,7 +211,7 @@
 -dontwarn com.umeng.**
 -dontwarn com.tencent.weibo.sdk.**
 -dontwarn com.facebook.**
-#-libraryjars libs/SocialSDK_QQZone_2.jar
+
 -keep enum com.facebook.**
 -keepattributes Exceptions,InnerClasses,Signature
 -keepattributes *Annotation*
@@ -293,3 +293,7 @@
     public static final int *;
 }
 -dontwarn com.squareup.okhttp.**
+#-libraryjars libs/cyberplayer-sdk.jar
+-keep class com.baidu.cyberplayer.**
+#-keep class com.baidu.cyberplayer.** { *; }
+-dontwarn  com.baidu.cyberplayer.**

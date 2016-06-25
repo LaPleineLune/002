@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.android.linglan.http.bean.SearchArticleBean;
 import com.android.linglan.http.bean.SearchSubjectBean;
 import com.android.linglan.ui.R;
-import com.android.linglan.ui.study.SearchMoreActivity;
+import com.android.linglan.ui.study.SearchMoreFmActivity;
 import com.android.linglan.widget.SyLinearLayoutManager;
 
 import java.util.ArrayList;
@@ -20,11 +20,11 @@ import java.util.ArrayList;
 /**
  * Created by wuiqngci on 2016/1/6 0006.
  */
-public class SearchAllAdapter extends
-        RecyclerView.Adapter {
+public class SearchAllAdapter extends RecyclerView.Adapter {
     private Context context;
-    static final int VIEW_TYPE_ARTICLE = 1;
     static final int VIEW_TYPE_SUBJECT = 0;
+    static final int VIEW_TYPE_ARTICLE = 1;
+    static final int VIEW_TYPE_FM = 2;
     private String keyArticle;
     private String keySpecial;
     ArrayList<SpecialItem> specialItemList = new ArrayList<SpecialItem>();
@@ -49,12 +49,22 @@ public class SearchAllAdapter extends
             case VIEW_TYPE_ARTICLE:
                 view = createArticleView(parent);
                 break;
+            case VIEW_TYPE_FM:
+                view = createFmView(parent);
+                break;
             default:
                 break;
         }
 
         return new HomePageViewHolder(view);
     }
+
+    //专题布局
+    private View createSubjectView(ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(R.layout.search_subject_layout, parent, false);
+        return view;
+    }
+
 
     //推荐文章布局
     private View createArticleView(ViewGroup parent) {
@@ -63,9 +73,11 @@ public class SearchAllAdapter extends
         return view;
     }
 
-    //专题布局
-    private View createSubjectView(ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.search_subject_layout, parent, false);
+
+    //推荐音频布局
+    private View createFmView(ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(R.layout.search_fm_layout, parent, false);
+
         return view;
     }
 
@@ -77,12 +89,29 @@ public class SearchAllAdapter extends
     @Override
     public int getItemCount() {
         return specialItemList.size();
+//        return 3;
     }
 
     @Override
     public int getItemViewType(int position) {
         return specialItemList.get(position).itemType;
     }
+
+    //插入推荐专题数据
+    public void insertSubjectData(ArrayList<SearchSubjectBean.SubjectClassifyListBean> special) {
+        SpecialItem specialItem;
+        this.special = special;
+        //如果是电台页面转来或者是文章页面转来
+        if (!specialItemList.isEmpty()) {
+            specialItem = specialItemList.get(VIEW_TYPE_SUBJECT);
+            specialItemList.remove(specialItem);
+        }
+        specialItem = new SpecialItem(VIEW_TYPE_SUBJECT);
+        specialItem.special = special;
+        specialItemList.add(VIEW_TYPE_SUBJECT, specialItem);
+        notifyDataSetChanged();
+    }
+
 
     //插入推荐文章数据
     public void insertArticlesData(ArrayList<SearchArticleBean.ArticleClassifyListBean> article) {
@@ -98,22 +127,12 @@ public class SearchAllAdapter extends
         specialItem.ArticlesData = article;
         specialItemList.add(VIEW_TYPE_ARTICLE, specialItem);
 
+        specialItem = new SpecialItem(VIEW_TYPE_FM);
+        specialItemList.add(VIEW_TYPE_FM, specialItem);
         notifyDataSetChanged();
     }
 
-    //插入推荐专题数据
-    public void insertSubjectData(ArrayList<SearchSubjectBean.SubjectClassifyListBean> special) {
-        SpecialItem specialItem;
-        this.special = special;
-        if (!specialItemList.isEmpty()) {
-            specialItem = specialItemList.get(VIEW_TYPE_SUBJECT);
-            specialItemList.remove(specialItem);
-        }
-        specialItem = new SpecialItem(VIEW_TYPE_SUBJECT);
-        specialItem.special = special;
-        specialItemList.add(VIEW_TYPE_SUBJECT, specialItem);
-        notifyDataSetChanged();
-    }
+
 
     //更新文章数据
     public void updateArticle(ArrayList<SearchArticleBean.ArticleClassifyListBean> searchArticleBean, String keyArticle) {
@@ -126,20 +145,12 @@ public class SearchAllAdapter extends
 
     //更新文章数据
     public void updateSpecial(SearchSubjectBean searchSubjectBean) {
-        insertSubjectData(searchSubjectBean.special);
+        insertSubjectData(searchSubjectBean.list);
         this.keyArticle = keyArticle;
 //        insertSubjectData(allSearchListBean.data.special);
 
     }
-//    public void update(ArrayList<AllSearchListBean.SubjectClassifyListBean> SubjectsData,ArrayList<AllSearchListBean.ArticleClassifyListBean> ArticlesData) {
-//        SpecialItem specialItem;
-//        if (specialItemList.size() >= 2) {
-//            specialItemList.clear();
-//            insertSubjectData(SubjectsData);
-//            insertArticlesData(ArticlesData);
-//        }
 
-//        }
 
     class HomePageViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
@@ -193,7 +204,7 @@ public class SearchAllAdapter extends
                     tv_more_search_subject.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent moreIntent = new Intent(context, SearchMoreActivity.class);
+                            Intent moreIntent = new Intent(context, SearchMoreFmActivity.class);
                             moreIntent.putExtra("moreSubject", "moreSubject");
                             moreIntent.putExtra("key", keyArticle);
                             context.startActivity(moreIntent);
@@ -211,12 +222,15 @@ public class SearchAllAdapter extends
                     tv_more_search_article.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent moreIntent = new Intent(context, SearchMoreActivity.class);
+                            Intent moreIntent = new Intent(context, SearchMoreFmActivity.class);
                             moreIntent.putExtra("moreArticle", "moreArticle");
                             moreIntent.putExtra("key", keyArticle);
                             context.startActivity(moreIntent);
                         }
                     });
+                    break;
+
+                case VIEW_TYPE_FM:
                     break;
 
                 default:

@@ -4,29 +4,22 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/dp16"
     android:layout_marginRight="@dimen/dp16"
-    android:layout_marginBottom="@dimen/dp2"
-    android:layout_marginTop="@dimen/dp2"
-    android:paddingBottom="@dimen/dp6"
-    android:paddingTop="@dimen/dp6"
+    android:layout_marginBottom="@dimen/dp4"
+    android:layout_marginTop="@dimen/dp6"
     android:gravity="center" >
-
-    <ImageView
-        android:padding="@dimen/dp4"
-        android:id="@+id/iv_item_article_image1"
-        android:layout_width="@dimen/dp22"
-        android:layout_height="@dimen/dp22"
-        android:src="@drawable/hot_search"
-        android:paddingLeft="10dp"
-        android:layout_marginRight="@dimen/dp2"
-        />
 
     <TextView
         android:id="@+id/tv_hot_search_context"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="4dp"
+        android:paddingRight="6dp"
+        android:paddingLeft="@dimen/dp6"
+        android:paddingTop="@dimen/dp4"
+        android:paddingBottom="@dimen/dp4"
         android:textColor="#666666"
-        android:text="Helloworld"
+        android:background="@drawable/frame_grey_hot_search"
+        android:textSize="@dimen/sp12"
+        android:text="中医大师"
         />
 
 </LinearLayout>

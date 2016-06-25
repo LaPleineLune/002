@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/page_head"
+        layout="@layout/page_head" />
+
+    <WebView
+        android:id="@+id/web_study_more"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hardwareAccelerated="true"
+        android:scrollbars="none">
+    </WebView>
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:visibility="gone" >-->
+
+        <!--<include-->
+            <!--android:id="@+id/page_head"-->
+            <!--layout="@layout/page_head" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/dp82"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:text="功能预告"-->
+            <!--android:textColor="@color/text_title_color"-->
+            <!--android:textSize="@dimen/sp18" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/dp18"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:lineSpacingMultiplier="1.5"-->
+            <!--android:text="@string/function_trailer"-->
+            <!--android:textColor="@color/text_title_color"-->
+            <!--android:textSize="@dimen/sp16" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/dp50"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:text="更多精彩功能即将推出，敬请期待！"-->
+            <!--android:textColor="@color/text_title_color"-->
+            <!--android:textSize="@dimen/sp18" />-->
+    <!--</LinearLayout>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="@dimen/dp18"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:text="打造中医师成长一站式平台"-->
+        <!--android:textColor="@color/blue"-->
+        <!--android:textSize="@dimen/sp14"-->
+        <!--android:visibility="gone" />-->
+
+</LinearLayout>

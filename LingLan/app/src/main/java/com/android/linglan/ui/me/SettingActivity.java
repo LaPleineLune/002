@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.linglan.base.BaseActivity;
-import com.android.linglan.http.Constants;
+import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
@@ -18,8 +18,10 @@ import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.android.linglan.utils.UmengSnsUtil;
 import com.android.linglan.widget.UpdateDialog;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.listener.SocializeListeners;
@@ -109,6 +111,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         super.onClick(v);
         switch (v.getId()) {
             case R.id.clean_buffer_item:
+                MobclickAgent.onEvent(SettingActivity.this, UmengBuriedPointUtil.MyWipeCache);
                 clear();
                 clean_buffer.setText(getCache());
                 clean_buffer_item.postDelayed(new Runnable() {
@@ -119,13 +122,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }, 300);
                 break;
             case R.id.text_size_item:
+                MobclickAgent.onEvent(SettingActivity.this, UmengBuriedPointUtil.MyFont);
                 startActivity(new Intent(SettingActivity.this, SetFontSizeActivity.class));
                 break;
             case R.id.check_update_item:
+                MobclickAgent.onEvent(SettingActivity.this, UmengBuriedPointUtil.MyUpdate);
                 SharedPreferencesUtil.saveBoolean("settingVersionNumber", true);
                 new AppUpdaterUtil().getUpdate(SettingActivity.this);
                 break;
             case R.id.about_item:
+                MobclickAgent.onEvent(SettingActivity.this, UmengBuriedPointUtil.MyAbout);
                 startActivity(new Intent(SettingActivity.this, AboutActivity.class));
                 break;
             case R.id.exit_btn:
@@ -147,6 +153,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         exitLoginDialog = new UpdateDialog(this, "确定退出当前账号吗", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(SettingActivity.this, UmengBuriedPointUtil.MyExit);
                 getUserExit();
                 exitLoginDialog.dismiss();
             }
@@ -256,6 +263,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 //                Intent intent = new Intent(SettingActivity.this, RegisterActivity.class);
 //                startActivity(intent);
                 finish();
+                ClinicalFragment.ISREFRESHDATA = 1;
+                ClinicalFragment.isAllClassify = true;
             }
 
             @Override

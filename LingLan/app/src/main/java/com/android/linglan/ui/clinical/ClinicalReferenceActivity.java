@@ -6,13 +6,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.linglan.adapter.RecycleHomeRecommendAdapter;
-import com.android.linglan.adapter.RecycleStudyAdapter;
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.http.Constants;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.HomepageRecommendBean;
@@ -22,11 +23,16 @@ import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
 import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.chanven.lib.cptr.recyclerview.RecyclerAdapterWithHF;
+import com.umeng.analytics.MobclickAgent;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +61,8 @@ public class ClinicalReferenceActivity extends BaseActivity {
 //    private CustomPullToRefreshRecyclerView refresh_more_every;
 
     private List<String> mData = new ArrayList<String>();
+    private String instruction = "";// 临证问号的说明  cr_info
+    private String noContentInstruction = "";// 临证无内容页面的说明  cr_none
 
     private Handler handler = new Handler() {
         @Override
@@ -64,24 +72,33 @@ public class ClinicalReferenceActivity extends BaseActivity {
                 case REQUEST_FAILURE:
                     //原页面GONE掉，提示网络不好的页面出现
 //                    recycler_view_home_recommend.setVisibility(View.GONE);
-                    ll_clinical_reference.setVisibility(View.GONE);
                     ll_no_network.setVisibility(View.VISIBLE);
+                    ll_clinical_reference.setVisibility(View.GONE);
+//                    tv_clinical_classify_no_content.setVisibility(View.GONE);
                     break;
                 case REQUEST_SUCCESS:
                     //原页面GONE掉，提示网络不好的页面出现
 //                    recycler_view_home_recommend.setVisibility(View.VISIBLE);
-                    ll_clinical_reference.setVisibility(View.VISIBLE);
                     ll_no_network.setVisibility(View.GONE);
+                    ll_clinical_reference.setVisibility(View.VISIBLE);
+                    tv_clinical_classify_no_content.setVisibility(View.GONE);
                     break;
                 case REQUEST_SUCCESS_CONTENT:
-                    tv_clinical_classify_no_content.setVisibility(View.GONE);
-//                    recycler_view_home_recommend.setVisibility(View.VISIBLE);
+                    ll_no_network.setVisibility(View.GONE);
                     ll_clinical_reference_list.setVisibility(View.VISIBLE);
+                    tv_clinical_classify_no_content.setVisibility(View.GONE);
                     break;
                 case REQUEST_SUCCESS_NO_CONTENT:
-                    tv_clinical_classify_no_content.setVisibility(View.VISIBLE);
-//                    recycler_view_home_recommend .setVisibility(View.GONE);
+                    ll_no_network.setVisibility(View.GONE);
+                    ll_clinical_reference.setVisibility(View.VISIBLE);
                     ll_clinical_reference_list .setVisibility(View.GONE);
+                    tv_clinical_classify_no_content.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(noContentInstruction)) {
+                        tv_clinical_classify_no_content.setText(noContentInstruction);
+                    } else {
+                        tv_clinical_classify_no_content.setText(R.string.clinical_reference_no_content);
+                    }
+//                    recycler_view_home_recommend .setVisibility(View.GONE);
                     break;
             }
         }
@@ -115,8 +132,10 @@ public class ClinicalReferenceActivity extends BaseActivity {
         right.setCompoundDrawables(collectTopDrawable, null, null, null);
 
         intent = new Intent();
+        getPrompt("cr_info");
+        getPrompt("cr_none");
+        data = new ArrayList<HomepageRecommendBean.HomepageRecommendBeanData>();
         page = 1;
-
         getClinicalReference(page);
         adapter = new RecycleHomeRecommendAdapter(this);
         mAdapter = new RecyclerAdapterWithHF(adapter);
@@ -159,8 +178,10 @@ public class ClinicalReferenceActivity extends BaseActivity {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(ClinicalReferenceActivity.this, UmengBuriedPointUtil.ClinicalReferenceSearch);
                 intent.setClass(ClinicalReferenceActivity.this, SearchActivity.class);
                 intent.putExtra("clinicalReference", "clinicalReference");
+                intent.putExtra("searchEdit", Constants.HOME);
                 startActivity(intent);
             }
         });
@@ -168,7 +189,9 @@ public class ClinicalReferenceActivity extends BaseActivity {
         title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MobclickAgent.onEvent(ClinicalReferenceActivity.this, UmengBuriedPointUtil.ClinicalReferenceClickExplain);
                 intent = new Intent(ClinicalReferenceActivity.this, ClinicalReferenceInstructionActivity.class);
+                intent.putExtra("instruction", instruction);
                 startActivity(intent);
             }
         });
@@ -185,9 +208,10 @@ public class ClinicalReferenceActivity extends BaseActivity {
                 recycler_view_home_recommend.setLoadMoreEnable(true);
                 LogUtil.e("getClinicalReference=" + result);
 
+                LogUtil.e("page=" + page);
                 if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ClinicalReferenceActivity.this)){
                     recycler_view_home_recommend.loadMoreComplete(false);
-                    if (HttpCodeJugementUtil.code == 1) {
+                    if (HttpCodeJugementUtil.code == 1 && page == 1) {
                         handler.sendEmptyMessage(REQUEST_SUCCESS_NO_CONTENT);
                     }
                     return;
@@ -199,12 +223,23 @@ public class ClinicalReferenceActivity extends BaseActivity {
                 HomepageRecommendBean homepageRecommendBean = JsonUtil.json2Bean(result, HomepageRecommendBean.class);
 
                 if (page == 1) {
-                    data = homepageRecommendBean.data;
+//                    data = homepageRecommendBean.data;
+                    data.clear();
+                    for (HomepageRecommendBean.HomepageRecommendBeanData hrd : homepageRecommendBean.data) {
+                        if (hrd.type.equals(Constants.ARTICLE) || hrd.type.equals(Constants.SUBJECT) || hrd.type.equals(Constants.RADIO_SPECIAL)|| hrd.type.equals(Constants.RADIO_SINGLE)) {
+                            data.add(hrd);
+                        }
+                    }
                 } else {
                     if (homepageRecommendBean.data == null || (homepageRecommendBean.data).size() == 0) {
                         ToastUtil.show("没有数据了");
                     } else {
-                        data.addAll(homepageRecommendBean.data);
+//                        data.addAll(homepageRecommendBean.data);
+                        for (HomepageRecommendBean.HomepageRecommendBeanData hrd : homepageRecommendBean.data) {
+                            if (hrd.type.equals(Constants.ARTICLE) || hrd.type.equals(Constants.SUBJECT) || hrd.type.equals(Constants.RADIO_SPECIAL)|| hrd.type.equals(Constants.RADIO_SINGLE)) {
+                                data.add(hrd);
+                            }
+                        }
                     }
                 }
 
@@ -224,6 +259,36 @@ public class ClinicalReferenceActivity extends BaseActivity {
                 handler.sendEmptyMessage(REQUEST_FAILURE);
             }
         }, page + "");
+    }
+
+    public void getPrompt(final String type) {
+        NetApi.getPrompt(new PasserbyClient.HttpCallback() {
+            @Override
+            public void onSuccess(String result) {
+                LogUtil.e("getPrompt=" + result);
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, ClinicalReferenceActivity.this)) {
+                    return;
+                }
+                try {
+                    JSONObject json = new JSONObject(result);
+                    String dataInstruction = json.getString("data");
+                    if (type.equals("cr_info")) {
+                        instruction = dataInstruction;
+                        LogUtil.e("getPromptMsg===instruction=" + dataInstruction);
+                    } else if (type.equals("cr_none")) {
+                        noContentInstruction = dataInstruction;
+                        LogUtil.e("getPromptMsg===noContentInstruction=" + dataInstruction);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        }, type);
     }
 
 }

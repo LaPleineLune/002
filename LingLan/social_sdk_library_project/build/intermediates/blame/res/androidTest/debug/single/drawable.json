@@ -244,12 +244,12 @@
         "source": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\bundles\\debug\\res\\drawable\\umeng_socialize_action_unlike.png"
     },
     {
-        "merged": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\umeng_socialize_location_grey.png",
-        "source": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\bundles\\debug\\res\\drawable\\umeng_socialize_location_grey.png"
-    },
-    {
         "merged": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\shake_umeng_socialize_close_pressed.png",
         "source": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\bundles\\debug\\res\\drawable\\shake_umeng_socialize_close_pressed.png"
+    },
+    {
+        "merged": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\umeng_socialize_location_grey.png",
+        "source": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\bundles\\debug\\res\\drawable\\umeng_socialize_location_grey.png"
     },
     {
         "merged": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\social_sdk_library_project\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\umeng_socialize_sidebar_selector.xml",

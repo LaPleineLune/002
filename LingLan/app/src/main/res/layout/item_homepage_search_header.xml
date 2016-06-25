@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_study_subject"
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_textview"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp14"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/search_subject"
+                android:layout_marginBottom="@dimen/dp4"/>
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="专题"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sp14" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/px1"
+            android:layout_height="74dp"
+            android:background="@drawable/clinical_div_line" />
+        <LinearLayout
+            android:id="@+id/ll_study_fm"
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_textview"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp14"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/search_fm"
+                android:layout_marginBottom="@dimen/dp4"/>
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电台"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sp14" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="@dimen/px1"
+            android:layout_height="74dp"
+            android:background="@drawable/clinical_div_line" />
+
+        <LinearLayout
+            android:id="@+id/ll_study_article"
+            android:layout_width="0dp"
+            android:layout_height="110dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_bottom_textview"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp14"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/search_article"
+                android:layout_marginBottom="@dimen/dp4"/>
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="文章"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sp14" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/px1"
+            android:layout_height="74dp"
+            android:background="@drawable/clinical_div_line" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/gainsboro" />
+
+</LinearLayout>

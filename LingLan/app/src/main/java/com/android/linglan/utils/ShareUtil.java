@@ -7,8 +7,10 @@ import android.text.TextUtils;
 import com.android.linglan.http.Constants;
 import com.android.linglan.ui.R;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
@@ -48,6 +50,8 @@ public class ShareUtil {
             shareUrl = Constants.SERVER + "/Api/Open/article?articleid=" + aesCryptUtil.encrypt(id);
         } else if (Constants.SUBJECT.equals(articleORsubject)) {
             shareUrl = Constants.SERVER + "/Api/Open/special?specialid=" + aesCryptUtil.encrypt(id);
+        } else if (Constants.RADIO_SINGLE.equals(articleORsubject)) {
+            shareUrl = Constants.SERVER + "Api/Open/audio?audioid=" + aesCryptUtil.encrypt(id);
         }
 //        String shareTitle = "分享文章的标题";//分享文章的标题
 //        String shareUrl = "http://zhongyishuyou.com";//分享文章的地址
@@ -101,7 +105,7 @@ public class ShareUtil {
     /**
      * 添加到友盟分享平台
      */
-    public static void umengPlatforms(Activity context){
+    public static void umengPlatforms(final Activity context){
         // 添加微信平台
         addWXPlatform(context);
 //        mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
@@ -111,19 +115,58 @@ public class ShareUtil {
         // 是否只有已登录用户才能打开分享选择页
         mController.openShare(context, false);
 
-    };
+
+    }
 
     public static void addWXPlatform(Context context) {
         // Weichat
-        UMWXHandler wxHandler;
-        wxHandler = new UMWXHandler(context, Constants.WEICHAT_APP_ID, Constants.WEICHAT_APP_KEY);
+        UMWXHandler wxHandler = new UMWXHandler(context, Constants.WEICHAT_APP_ID, Constants.WEICHAT_APP_KEY);
         wxHandler.addToSocialSDK();
         wxHandler.showCompressToast(false);
 
-        UMWXHandler wxCircleHandler =
-                new UMWXHandler(context, Constants.WEICHAT_APP_ID, Constants.WEICHAT_APP_KEY);
+        UMWXHandler wxCircleHandler = new UMWXHandler(context, Constants.WEICHAT_APP_ID, Constants.WEICHAT_APP_KEY);
         wxCircleHandler.setToCircle(true);
         wxCircleHandler.addToSocialSDK();
         wxCircleHandler.showCompressToast(false);
     }
+
+    public static void performShare(Activity context, SHARE_MEDIA platform) {
+        addWXPlatform(context);
+//        if (SHARE_MEDIA.WEIXIN.equals(platform)) {
+//            // Weichat
+//            UMWXHandler wxHandler = new UMWXHandler(context, Constants.WEICHAT_APP_ID, Constants.WEICHAT_APP_KEY);
+//            wxHandler.addToSocialSDK();
+//            wxHandler.showCompressToast(false);
+//        } else if (SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform)) {
+//            UMWXHandler wxCircleHandler = new UMWXHandler(context, Constants.WEICHAT_APP_ID, Constants.WEICHAT_APP_KEY);
+//            wxCircleHandler.setToCircle(true);
+//            wxCircleHandler.addToSocialSDK();
+//            wxCircleHandler.showCompressToast(false);
+//        }
+        mController.postShare(context, platform, new SocializeListeners.SnsPostListener() {
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA platform, int eCode, SocializeEntity entity) {
+            }
+        });
+
+//        mController.directShare(context, platform, new SocializeListeners.SnsPostListener() {
+//            @Override
+//            public void onStart() {
+//
+//            }
+//
+//            @Override
+//            public void onComplete(SHARE_MEDIA share_media, int i, SocializeEntity socializeEntity) {
+//
+//            }
+//        });
+    }
+
+
 }

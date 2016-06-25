@@ -33,10 +33,12 @@ import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.android.linglan.widget.SyLinearLayoutManager;
 import com.android.linglan.widget.flowlayout.FlowLayout;
 import com.android.linglan.widget.flowlayout.TagAdapter;
 import com.android.linglan.widget.flowlayout.TagFlowLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -307,6 +309,7 @@ public class ClinicalAdapter extends RecyclerView.Adapter {
 
                     break;
                 case R.id.tv_clinical_reference:
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.ClinicalReferenceSearch);
                     intent.setClass(context, ClinicalReferenceActivity.class);
                     context.startActivity(intent);
                     break;
@@ -315,6 +318,7 @@ public class ClinicalAdapter extends RecyclerView.Adapter {
                     context.startActivity(intent);
                     break;
                 case R.id.tv_tcm_search:
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.ClinicalSelectSoso);
                     intent.setClass(context, TCMSearchActivity.class);
                     context.startActivity(intent);
                     break;
@@ -324,8 +328,6 @@ public class ClinicalAdapter extends RecyclerView.Adapter {
                     context.startActivity(intent);
                     break;
                 case R.id.ll_clinical_classify:
-//                    intent.setClass(context, ClinicalClassifyActivity.class);
-//                    context.startActivity(intent);
                     ll_clinical_classify.setFocusable(false);
                     ll_clinical_classify.setClickable(false);
                     tv_classify1.setText("");

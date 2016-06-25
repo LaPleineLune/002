@@ -1,7 +1,6 @@
 package com.android.linglan.widget;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -18,8 +17,8 @@ import com.android.linglan.ui.MainActivity;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.GuideViewUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
-import com.android.linglan.utils.ToastUtil;
-
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by changyizhang on 12/15/14.
@@ -47,11 +46,25 @@ public class TestFixedTabPageIndicator extends LinearLayout implements TestPageI
     private final OnClickListener mTabClickListener = new OnClickListener() {
         public void onClick(View view) {
             int index = (Integer) view.getTag();
-            if (index == 1) {
-                if (!SharedPreferencesUtil.getBoolean("isClinicalShowed", false)) {
-                    mGuideViewUtil = new GuideViewUtil(context, R.drawable.guide_clinical_0);
-                }
+            switch (index) {
+                case 0:
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.ManualStudy);
+                    break;
+                case 1:
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.ManualClinical);
+                    if (!SharedPreferencesUtil.getBoolean("isClinicalShowed", false)) {
+                        mGuideViewUtil = new GuideViewUtil(context, R.drawable.guide_clinical_0);
+                    }
+                    break;
+                case 2:
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.ManualMy);
+                    break;
             }
+//            if (index == 1) {
+//                if (!SharedPreferencesUtil.getBoolean("isClinicalShowed", false)) {
+//                    mGuideViewUtil = new GuideViewUtil(context, R.drawable.guide_clinical_0);
+//                }
+//            }
             mViewPager.setCurrentItem(index);
         }
     };

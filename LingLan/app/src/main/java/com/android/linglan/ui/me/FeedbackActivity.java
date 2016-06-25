@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
@@ -12,14 +11,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.linglan.base.BaseActivity;
-import com.android.linglan.http.Constants;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.KeyBoardUtils;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SoftKeyboardUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +63,17 @@ public class FeedbackActivity extends BaseActivity {
         emailEdit.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        KeyBoardUtils.openKeybord(contentEdit, this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        KeyBoardUtils.closeKeybord(contentEdit, this);
+    }
     @Override
     protected void initData() {
         setTitle("意见反馈", "提交");
@@ -146,6 +158,7 @@ public class FeedbackActivity extends BaseActivity {
 
                try {
                    JSONObject resultJson = new JSONObject(result);
+                   MobclickAgent.onEvent(FeedbackActivity.this, UmengBuriedPointUtil.MyOpinionSubmit);
                    String msg = resultJson.getString("msg");
                    ToastUtil.show("发送" + msg);
                    finish();

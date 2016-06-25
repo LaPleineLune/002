@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.android.linglan.adapter.clinical.ClinicalDetailsAdapter;
 import com.android.linglan.adapter.clinical.CourseOfDiseaseListAdapter;
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.http.GsonTools;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
@@ -33,6 +34,7 @@ import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.android.linglan.widget.AlertDialoginter;
 import com.android.linglan.widget.AlertDialogs;
 import com.chanven.lib.cptr.PtrClassicFrameLayout;
@@ -40,6 +42,7 @@ import com.chanven.lib.cptr.PtrDefaultHandler;
 import com.chanven.lib.cptr.PtrFrameLayout;
 import com.chanven.lib.cptr.loadmore.OnLoadMoreListener;
 import com.chanven.lib.cptr.recyclerview.RecyclerAdapterWithHF;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -79,6 +82,8 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
     private int classifyFlag = 0;
     public String courseid;// 病程id
     private int isdemo = 0;
+    private int position;
+
 
     private Handler handler = new Handler() {
         @Override
@@ -155,9 +160,11 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
         collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
         right.setCompoundDrawables(collectTopDrawable, null, null, null);
         intent = new Intent();
+        position = getIntent().getIntExtra("page",-1);
         illnesscaseid = getIntent().getStringExtra("illnesscaseid");
         isdemo = getIntent().getIntExtra("isdemo", 0);
         if (1 == isdemo) {
+            MobclickAgent.onEvent(ClinicalDetailsActivity.this, UmengBuriedPointUtil.ClinicalMedicalHistoryClickExample);
             bt_course_of_disease.setVisibility(View.GONE);
         } else {
             bt_course_of_disease.setVisibility(View.VISIBLE);
@@ -235,6 +242,7 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
                 initData();
                 break;
             case R.id.bt_course_of_disease:
+                MobclickAgent.onEvent(ClinicalDetailsActivity.this, UmengBuriedPointUtil.ClinicalMedicalHistoryAdd);
                 addCourseFlag = 1;
                 intent.setClass(this, CourseOfDiseaseActivity.class);
                 intent.putExtra("illnesscaseid",illnesscaseid);
@@ -245,12 +253,14 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
                 startActivity(intent);
                 break;
             case R.id.tv_picture_contrast:
+                MobclickAgent.onEvent(ClinicalDetailsActivity.this, UmengBuriedPointUtil.ClinicalMedicalHistoryPhotoContrast);
                 intent.setClass(this, PictureContrastActivity.class);
                 intent.putExtra("illnesscaseid",illnesscaseid);
                 startActivity(intent);
                 popupWindow.dismiss();
                 break;
             case R.id.tv_add_classify:
+                MobclickAgent.onEvent(ClinicalDetailsActivity.this, UmengBuriedPointUtil.ClinicalMedicalHistoryClass);
                 if (NetApi.getToken() != null) {
                     classifyFlag = 1;
                     intent.setClass(this, ClinicalAddClassifyActivity.class);
@@ -266,6 +276,7 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
                 popupWindow.dismiss();
                 break;
             case R.id.tv_clinical_sort:
+                MobclickAgent.onEvent(ClinicalDetailsActivity.this, UmengBuriedPointUtil.ClinicalMedicalHistorySort);
 //                ToastUtil.show("我是时间排序");
                 if (sort.equals("desc")) {
                     page = 1;
@@ -279,6 +290,11 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
                 popupWindow.dismiss();
                 break;
             case R.id.tv_clinical_delete:
+                if (isdemo == 1) {
+                    MobclickAgent.onEvent(ClinicalDetailsActivity.this, UmengBuriedPointUtil.ClinicalMedicalHistoryDeleteExample);
+                } else {
+                    MobclickAgent.onEvent(ClinicalDetailsActivity.this, UmengBuriedPointUtil.ClinicalMedicalHistoryDelete);
+                }
                 if (NetApi.getToken() != null) {
                     AlertDialogs.alert(ClinicalDetailsActivity.this, "提示", "确认删除此病历？", "取消", "确定");
                 } else {
@@ -308,15 +324,13 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
     }
 
     private void showPopup(View v) {
-        int w = View.MeasureSpec.makeMeasureSpec(0,
-                View.MeasureSpec.UNSPECIFIED);
-        int h = View.MeasureSpec.makeMeasureSpec(0,
-                View.MeasureSpec.UNSPECIFIED);
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         popView.measure(w, h);
 
-        int height = popView.getMeasuredHeight();
-        int width = popView.getMeasuredWidth();
-        popupWindow = new PopupWindow(popView, width, (int)height);
+        int height = popView.getMeasuredHeight() * 3 / 4;
+        int width = popView.getMeasuredWidth() * 3 / 4;
+        popupWindow = new PopupWindow(popView, width, height);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -394,6 +408,8 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
                     return;
                 }
                 ToastUtil.show("已删除");
+                ClinicalFragment.ISREFRESHDATA = 2;
+                ClinicalFragment.position = position;
                 finish();
             }
 
@@ -427,6 +443,7 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
             }
         },illnesscaseid);
     }
+
     private ArrayList<String> mDataMediaId = new ArrayList<String>();
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -434,6 +451,20 @@ public class ClinicalDetailsActivity extends BaseActivity implements AlertDialog
         if (requestCode == 100) {
             mDataMediaId = data.getStringArrayListExtra("mDataMediaId");
             courseid = data.getStringExtra("courseid");
+        }
+    }
+
+    public void sortClinical() {
+        MobclickAgent.onEvent(ClinicalDetailsActivity.this, UmengBuriedPointUtil.ClinicalMedicalHistorySort);
+//                ToastUtil.show("我是时间排序");
+        if (sort.equals("desc")) {
+            page = 1;
+            sort = "asc";
+            getClinicalDetailsList(sort, page);
+        } else {
+            page = 1;
+            sort = "desc";
+            getClinicalDetailsList(sort, page);
         }
     }
 

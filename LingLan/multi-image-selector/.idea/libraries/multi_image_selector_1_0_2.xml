@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="multi-image-selector-1.0.2">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../app/build/intermediates/exploded-aar/me.nereo.multi_image_selector/multi-image-selector/1.0.2/res" />
+      <root url="jar://$PROJECT_DIR$/../app/build/intermediates/exploded-aar/me.nereo.multi_image_selector/multi-image-selector/1.0.2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.nereo.multi_image_selector/multi-image-selector/1.0.2/f8a1e635f0ff041263fb454a3cc99f9139d52476/multi-image-selector-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

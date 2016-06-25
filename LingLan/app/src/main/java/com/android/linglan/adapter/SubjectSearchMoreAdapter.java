@@ -13,6 +13,8 @@ import com.android.linglan.http.bean.RecommendSubjects;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.study.SubjectDetailsActivity;
 import com.android.linglan.utils.ImageUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -45,13 +47,7 @@ public class SubjectSearchMoreAdapter extends
 
     @Override
     public int getItemCount() {
-        if(RecommendSubjects == null){
-            return 0;
-        }else if(RecommendSubjects.size() < 3){
-            return RecommendSubjects.size();
-        }else{
-            return 3;
-        }
+        return RecommendSubjects == null ? 0 :RecommendSubjects.size();
 //        return RecommendSubjects.size();
     }
 
@@ -94,8 +90,8 @@ public class SubjectSearchMoreAdapter extends
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,
-                            SubjectDetailsActivity.class);
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.StudySubjectContent);
+                    Intent intent = new Intent(context, SubjectDetailsActivity.class);
                     intent.putExtra("specialid", recommendSubjects.specialid);
                     intent.putExtra("specialname", recommendSubjects.specialname);
                     intent.putExtra("photo", recommendSubjects.photo);

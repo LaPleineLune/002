@@ -13,7 +13,6 @@
         android:background="@drawable/dialog_login_edit_bg"
         android:divider="@drawable/subjectline"
         android:dividerHeight="@dimen/px1">
-        <!--android:divider="#19ffffff"-->
     </ListView>
 
 </LinearLayout>

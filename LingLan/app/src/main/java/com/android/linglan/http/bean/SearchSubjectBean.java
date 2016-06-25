@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class SearchSubjectBean {
 
-    public ArrayList<SubjectClassifyListBean> special;
+    public ArrayList<SubjectClassifyListBean> list;
 
     public static class SubjectClassifyListBean implements Serializable {
         public String specialid;// 分类ID（必须）

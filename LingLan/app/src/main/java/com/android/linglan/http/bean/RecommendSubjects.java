@@ -20,6 +20,7 @@ public ArrayList<RecommendSubject> data;
         public String orderid;//排序
         public String content_title;// 最新添加的文章标题
         public String isnew;// 是否是今日更新
+        public String page;
 
         @Override
         public String toString() {

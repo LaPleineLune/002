@@ -23,6 +23,8 @@ import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -80,6 +82,7 @@ public class CollectSubjectFragment extends BaseFragment implements AdapterView.
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        MobclickAgent.onEvent(getActivity(), UmengBuriedPointUtil.StudySubjectContent);
         intent.setClass(getActivity(), SubjectDetailsActivity.class);
         intent.putExtra("specialid", data.get(position).specialid);
         intent.putExtra("specialname", data.get(position).specialname);

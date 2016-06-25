@@ -73,13 +73,13 @@
             android:layout_below="@+id/view_div" />
 
         <TextView
+            android:gravity="center"
             android:id="@+id/tv_delete_history_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rec_history_search"
             android:paddingTop="@dimen/dp10"
             android:paddingBottom="@dimen/dp10"
-            android:drawableLeft="@drawable/delete"
             android:drawablePadding="@dimen/dp4"
             android:background="@drawable/bg_bottom_textview"
             android:text="清除历史搜索记录"

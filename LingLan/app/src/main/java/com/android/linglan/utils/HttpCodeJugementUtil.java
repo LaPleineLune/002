@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.CommonProtocol;
@@ -143,6 +144,8 @@ public class HttpCodeJugementUtil {
                 @Override
                 public void onClick(View v) {
                     exitLoginDialog.dismiss();
+                    markotherlogin(context);
+                    ClinicalFragment.ISREFRESHDATA = 1;
                     Intent intent = new Intent();
                     intent.setClass(context, MainActivity.class);
                     context.startActivity(intent);
@@ -158,6 +161,7 @@ public class HttpCodeJugementUtil {
                 public void onClick(View v) {
                     exitLoginDialog.dismiss();
                     markotherlogin(context);
+                    ClinicalFragment.ISREFRESHDATA = 1;
                     Intent intent = new Intent();
                     intent.setClass(context, MainActivity.class);
                     context.startActivity(intent);
@@ -165,6 +169,7 @@ public class HttpCodeJugementUtil {
             });
             exitLoginDialog.setTitle("提示");
             exitLoginDialog.setEnterText("确定");
+            ClinicalFragment.ISREFRESHDATA = 1;
             exitLoginDialog.show();
         }
     }

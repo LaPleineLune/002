@@ -9,6 +9,7 @@ import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.LogUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
  */
 public class TermsOfServiceActivity extends BaseActivity {
     private TextView terms_of_service;
+    private String termsOfService;
 
     private android.os.Handler handler = new android.os.Handler() {
         @Override
@@ -47,7 +49,9 @@ public class TermsOfServiceActivity extends BaseActivity {
     @Override
     protected void initData() {
         setTitle("服务条款", "");
-        getAppAgreement();
+        termsOfService = getIntent().getStringExtra("termsOfService");
+        terms_of_service.setText(termsOfService);
+//        getAppAgreement();
     }
 
     @Override
@@ -59,7 +63,7 @@ public class TermsOfServiceActivity extends BaseActivity {
         NetApi.getAppAgreement(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
-
+                LogUtil.e("getAppAgreement:"  + result);
                 if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,TermsOfServiceActivity.this)){
                     return;
                 }

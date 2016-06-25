@@ -13,10 +13,14 @@ import android.widget.LinearLayout;
 
 import com.android.linglan.base.BaseActivity;
 import com.android.linglan.broadcast.SMSBroadcastReceiver;
+import com.android.linglan.fragment.ClinicalFragment;
+import com.android.linglan.http.Constants;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.RegisterBean;
 import com.android.linglan.ui.R;
+import com.android.linglan.ui.study.SubjectActivity;
+import com.android.linglan.ui.study.SubjectDetailsActivity;
 import com.android.linglan.utils.AESCryptUtil;
 import com.android.linglan.utils.HttpCodeJugementUtil;
 import com.android.linglan.utils.JsonUtil;
@@ -29,6 +33,9 @@ import com.android.linglan.utils.UmengSnsUtil;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.listener.SocializeListeners;
 import com.umeng.socialize.exception.SocializeException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -43,11 +50,14 @@ public class RegisterActivity extends BaseActivity {
     private Button submit;
     private ImageView weichat_login_icon;
     private LinearLayout registerDeal;
+    //    private RelativeLayout registerDeal;
     private String registerPhone;
+    private String agreement = "";
     private SMSBroadcastReceiver mSMSBroadcastReceiver;
     private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
     public RegisterBean.RegisterData data;
     private AESCryptUtil aesCryptUtil = new AESCryptUtil();
+    private String subjectActivity;
 
     @Override
     protected void setView() {
@@ -73,6 +83,8 @@ public class RegisterActivity extends BaseActivity {
     protected void initData() {
 //        setTitle("注册", "");
         setTitle("登录", "");
+        subjectActivity = getIntent().getStringExtra("subjectActivity");
+        getAppAgreement();
         UmengSnsUtil.init(this);
     }
 
@@ -81,7 +93,7 @@ public class RegisterActivity extends BaseActivity {
         requestCode.setOnClickListener(this);
         submit.setOnClickListener(this);
 //        weichat_login_icon.setOnClickListener(this);
-        registerDeal.setOnClickListener(null);
+        registerDeal.setOnClickListener(this);
 //        String str = aesCryptUtil.decrypt("hdpxUvAjTfNO7z7g6WU9EScmSJuDU4zUXeNeosW5whHvcgMVWOHfe79FV/2bQ8CG10gEX5JXc0CMbi1qxOAndnqF6E8EMZlPVHcILEkSJmE=");
 //        LogUtil.e("=======" + str);
     }
@@ -132,7 +144,9 @@ public class RegisterActivity extends BaseActivity {
                 }
                 break;
             case R.id.register_deal:
-                startActivity(new Intent(RegisterActivity.this, TermsOfServiceActivity.class));
+                Intent intent = new Intent(RegisterActivity.this, TermsOfServiceActivity.class);
+                intent.putExtra("termsOfService", agreement);
+                startActivity(intent);
                 break;
 //            case R.id.qq_login_icon:
 //            case R.id.sina_login_icon:
@@ -189,7 +203,7 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
                 LogUtil.e("登录请求成功" + result);
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,RegisterActivity.this)){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, RegisterActivity.this)) {
                     return;
                 }
                 if (!TextUtils.isEmpty(result)) {
@@ -206,35 +220,23 @@ public class RegisterActivity extends BaseActivity {
                         SharedPreferencesUtil.saveString("alias", data.alias);// 用户昵称
                         SharedPreferencesUtil.saveString("isfamilymember", data.isfamilymember);// 亲情会员
 
-//                        ToastUtil.show("登录成功");
-
                         Intent intent = new Intent();
                         intent.putExtra("face", data.face == null || TextUtils.isEmpty(data.face) ? "" : data.face);
                         setResult(RESULT_OK, intent);
+                        if (subjectActivity != null && subjectActivity.equals("subjectActivity")) {
+                            Constants.isSubjectActivity = true;
 
-//                        Intent intent2 = new Intent(RegisterActivity.this, MainActivity.class);
-//                        startActivity(intent2);
-                        finish();
+                            finish();
+                        }else {
+                            finish();
+                        }
+                        ClinicalFragment.ISREFRESHDATA = 1;//是否刷新数据
+                        ClinicalFragment.ISLOGIN = 1;//是否登录
                     } else {
                         ToastUtil.show(register.msg);
                     }
 
                 }
-
-
-//                if (!TextUtils.isEmpty(result)) {
-//                    Body checkCode = JsonUtil.json2Bean(
-//                            result, Body.class);
-//                    if (checkCode.code.equals("1")) {
-//                        // Intent intent = new Intent(getActivity(),
-//                        // RegisterPasswordFragment.class);
-//                        // intent.putExtra("phoneNumber", registerPhone);
-//                        // startActivity(intent);
-//                        RegisterPasswordFragment.show(getActivity(), registerPhone);
-//                    } else {
-//                        ToastUtil.show(checkCode.message);
-//                    }
-//                }
 
             }
 
@@ -255,7 +257,7 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
                 LogUtil.e("getUserCode=" + result);
-                if(!HttpCodeJugementUtil.HttpCodeJugementUtil(result,RegisterActivity.this)){
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, RegisterActivity.this)) {
                     return;
                 }
                 sendVerifyCodeCountDown.start();
@@ -279,9 +281,9 @@ public class RegisterActivity extends BaseActivity {
         sendVerifyCodeCountDown.cancel();
 //        sendVerifyCodeCountDown.start();
         String requesContent = requestCode.getText().toString().trim();
-        if(requesContent.equals("获取验证码")){
+        if (requesContent.equals("获取验证码")) {
             requestCode.setEnabled(true);
-        }else {
+        } else {
             requestCode.setEnabled(false);
         }
     }
@@ -318,56 +320,6 @@ public class RegisterActivity extends BaseActivity {
         }
     };
 
-//    private PasserbyClient.HttpCallback loginCallback = new PasserbyClient.HttpCallback() {
-//        @Override
-//        public void onSuccess(String result) {
-//            ProgressUtil.dismiss();
-//            Login login = JsonUtil.json2Bean(result, Login.class);
-//            if (login.code.equals("1")) {
-//                Login.UserInfo userInfo = login.userinfo;
-//                SharedPreferencesUtil.saveString("uid", userInfo.id);
-//                SharedPreferencesUtil.saveString(
-//                        "nickname", userInfo.nickname);
-//                SharedPreferencesUtil.saveString(
-//                        "platid", userInfo.platid);
-//                SharedPreferencesUtil.saveString(
-//                        "gender", userInfo.sex);
-//                SharedPreferencesUtil.saveString(
-//                        "province", userInfo.province);
-//                SharedPreferencesUtil.saveString(
-//                        "city", userInfo.city);
-//                SharedPreferencesUtil.saveString(
-//                        "district", userInfo.district);
-//                SharedPreferencesUtil.saveString(
-//                        "birthday", userInfo.birthyear + "-" + userInfo.birthmonth + "-"
-//                                + userInfo.birthday);
-//                SharedPreferencesUtil.saveString(
-//                        "token", userInfo.token);
-//                SharedPreferencesUtil.saveBoolean(
-//                        "isLogin", true);
-//                SharedPreferencesUtil.saveString(
-//                        "phoneNumber", inputPhonenumber.getText()
-//                                .toString());
-//                SharedPreferencesUtil.saveString(
-//                        "avatar",
-//                        userInfo.headpath.W180);
-//                getActivity().finish();
-//                return;
-//
-//            }
-//        }
-//
-//        @Override
-//        public void onFailure(String message) {
-//            ProgressUtil.dismiss();
-//        }
-//    };
-
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        sendVerifyCodeCountDown.cancel();
-//    }
 
     private void launchBroadcast() {
         if (TelephonyUtil.isCanUseSim()) {
@@ -383,6 +335,43 @@ public class RegisterActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    private void getAppAgreement() {
+        NetApi.getAppAgreement(new PasserbyClient.HttpCallback() {
+            @Override
+            public void onSuccess(String result) {
+                LogUtil.e("getAppAgreement:" + result);
+                if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, RegisterActivity.this)) {
+                    return;
+                }
+                try {
+                    JSONObject resultJson = new JSONObject(result);
+                    JSONObject data = resultJson.getJSONObject("data");
+                    String termsOfService = data.getString("content");
+                    if (termsOfService != null && !termsOfService.equals("")) {
+                        registerDeal.setVisibility(View.VISIBLE);
+                        agreement = termsOfService;
+                    } else {
+                        registerDeal.setVisibility(View.GONE);
+                    }
+//                    Message message = new Message();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("termsOfService",termsOfService);
+//                    message.setData(bundle);
+//                    handler.sendMessage(message);
+//                    message.what = 1;// 标志是哪个线程传数据
+//                    ToastUtil.show(about);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
     }
 
 }

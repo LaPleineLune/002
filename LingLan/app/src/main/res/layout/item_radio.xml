@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp16"
+    android:paddingRight="@dimen/dp16"
+    android:paddingTop="@dimen/dp12">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_radio_logo"
+            android:layout_width="@dimen/dp84"
+            android:layout_height="@dimen/dp64"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/default_image" />
+
+        <LinearLayout
+            android:layout_width="@dimen/dp0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp12"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_radio_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp0"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="标题"
+                android:textColor="@color/text_title_color"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:id="@+id/tv_radio_description"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp0"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:singleLine="true"
+                android:text="音频简介"
+                android:textColor="@color/read_text_title_color"
+                android:textSize="@dimen/sp14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp0"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/dp10"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_radio_play_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/radio_play_num"
+                    android:drawablePadding="@dimen/dp6"
+                    android:text="播放次数"
+                    android:textColor="@color/read_text_title_color"
+                    android:textSize="@dimen/sp12" />
+
+                    <TextView
+                        android:id="@+id/tv_radio_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp22"
+                        android:layout_marginRight="@dimen/dp22"
+                        android:drawableLeft="@drawable/radio_duration"
+                        android:drawablePadding="@dimen/dp6"
+                        android:text="时长"
+                        android:textColor="@color/read_text_title_color"
+                        android:textSize="@dimen/sp12" />
+
+                    <TextView
+                        android:id="@+id/tv_radio_update"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="时间"
+                        android:textColor="@color/read_text_title_color"
+                        android:textSize="@dimen/sp12" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="#cccccc" />
+</LinearLayout>

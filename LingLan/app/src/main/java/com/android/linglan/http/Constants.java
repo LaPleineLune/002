@@ -16,12 +16,14 @@ public class Constants {
     /**
      * App密钥
      */
-    public static String SECRET = "c!$X?Ss552:3`;w$-60^}h-,stz9Tu|zd+&:hIjyG#bFdxk(YN";
+//    public static String SECRET = "c!$X?Ss552:3`;w$-60^}h-,stz9Tu|zd+&:hIjyG#bFdxk(YN";
+    public static String SECRET = "TZn-8KL3-skWWqsltv8OO2QvgSzXvnJj";// V1.1.0
 
     /**
      * 加密
      */
-    public static String SEED_16_CHARACTER = "d.7r+[6D,4[]2cQ?|!>xE6d#{]3v%d{K@q#pVbU*Vm/SRDYsIl";// 正式
+//    public static String SEED_16_CHARACTER = "d.7r+[6D,4[]2cQ?|!>xE6d#{]3v%d{K@q#pVbU*Vm/SRDYsIl";// 正式
+    public static String SEED_16_CHARACTER = "z)oq?Ymd6j^voo3XifpF;*|EbgL+`$}iBoEuFQM3FiIR~*92YA/Zda9Sb|lx>`}!";// 正式V1.1.0
 
     /**
      * App版本号
@@ -34,12 +36,22 @@ public class Constants {
 //    public static final String WEICHAT_APP_KEY = "388390da3f578df26b5274c0cde36954"; // 微信（正式）
     public static final String WEICHAT_APP_KEY = "0620bdd874be1a4dcc54d0c6cf60c7cf"; // 微信（正式）
 
+    /**
+     * 您的AK
+     * 请到http://console.bce.baidu.com/iam/#/iam/accesslist获取
+     */
+    public static final String AK = "f818d332115b4ba0aa6b33d10b9af19d";   // 百度开放云的AK
+
     public static final String FONT_SIZE = "fontsize"; // 字体大小
-    public static final int HOME = 0;// 首页的搜索
-    public static final int ALLSUBJECT = 1;// 全部专题页的搜索
-    public static final int ALLARTICLE = 2;// 全部文章页的搜索
+    public static final int HOME = -1;// 首页的搜索   0文章 4专题 5电台 -1首页
+    public static final int ALLSUBJECT = 4;// 全部专题页的搜索
+    public static final int ALLARTICLE = 0;// 全部文章页的搜索
+    public static final int ALLFM = 5;// 全部音频页的搜索
     public static final String ARTICLE = "0";// 0文章
     public static final String SUBJECT = "4";// 4专题
+    public static final String RADIO_SINGLE = "5";// 5单音频
+    public static final String RADIO_SPECIAL = "6";// 6音频专辑
+    public static boolean isSubjectActivity = false;//到登录页面是否是由SubjectActivity页面跳转过去的
 
     //    public static final String SERVER = "http://192.168.1.117:8082";//测试服务亲
 //    public static final String SERVER = "http://101.200.122.79";// 外网测试服务器
@@ -50,7 +62,7 @@ public class Constants {
     /**
      * 获取AppKey
      */
-    public static final String URL_APP_KEY = Constants.SERVER + "/Api/Sys/appkey?secret=%s&device=%s&version=%s&mac=%s";
+    public static final String URL_APP_KEY = Constants.SERVER + "/Api/Sys/appkey?secret=%s&device=%s&version=%s&mac=%s&mode=%s";
 
     /**
      * 用户登录
@@ -124,9 +136,19 @@ public class Constants {
     public static final String URL_RECOMMEND_SUBJECT = Constants.SERVER + "/Api/Special/recspeclist?token=";
 
     /**
+     * 专题详情文章列表
+     */
+    public static final String URL_DETAILS_SUBJECT_ARTICLE = Constants.SERVER + "/Api/Special/specialarticles?appkey=%s&token=%s&specialid=%s&page=%s";
+
+    /**
+     * 专题详情音频列表
+     */
+    public static final String URL_DETAILS_FM_ARTICLE = Constants.SERVER + "/Api/Special/specialaudios?appkey=%s&token=%s&specialid=%s&page=%s";
+
+    /**
      * 专题详情
      */
-    public static final String URL_DETAILS_SUBJECT = Constants.SERVER + "/Api/Special/specailcontent?appkey=%s&token=%s&specialid=%s&page=%s";
+    public static final String URL_DETAILS_SUBJECT = Constants.SERVER + "/Api/Special/specialinfo?appkey=%s&token=%s&specialid=%s";
 
     /**
      * 专题详情用户写（添加）笔记
@@ -199,14 +221,23 @@ public class Constants {
     public static final String URL_SEARCH_ALL = Constants.SERVER + "/Api/Index/searchall?appkey=%s&token=%s&key=%s&page=%s";
 
     /**
+     * 新全局搜索
+     */
+    public static final String URL_SEARCH_NEW_ALL = Constants.SERVER + "/Api/Index/searchall_new?appkey=%s&token=%s&key=%s&page=%s&sourcepage=%s";
+
+    /**
      * 清除全局历史搜索
      */
     public static final String URL_CLEAR_HISTORY = Constants.SERVER + "/Api/Index/clearhistory?appkey=%s&token=%s";
 
     /**
-     * 获取专题热门搜索/历史搜索（统计）
+     * 获取专题热门搜索
      */
-    public static final String URL_SUBJECT_STATISTIC = Constants.SERVER + "/Api/Special/statistic?appkey=%s&token=%s";
+    public static final String URL_SUBJECT_HOT = Constants.SERVER + "/Api/Special/hotsearch?appkey=%s&token=%s";
+    /**
+     * 获取音频热门搜索
+     */
+    public static final String URL_FM_HOT = Constants.SERVER + "/Api/Audio/hotsearch?appkey=%s&token=%s";
 
     /**
      * 专题搜索
@@ -214,9 +245,14 @@ public class Constants {
     public static final String URL_SEARCH_SUBJECT = Constants.SERVER + "/Api/Special/searchkey?appkey=%s&token=%s&key=%s&page=%s";
 
     /**
-     * 获取文章热门搜索/历史搜索（统计）
+     * 音频搜索
      */
-    public static final String URL_ARTICLE_STATISTIC = Constants.SERVER + "/Api/Article/statistic?token=%s";
+    public static final String URL_SEARCH_FM = Constants.SERVER + "/Api/Audio/searchkey?appkey=%s&token=%s&key=%s&page=%s";
+
+    /**
+     * 获取文章热门搜索
+     */
+    public static final String URL_ARTICLE_HOT = Constants.SERVER + "/Api/Article/hotsearch?appkey=%s&token=%s";
 
     /**
      * 文章搜索
@@ -441,4 +477,48 @@ public class Constants {
      */
     public static final String URL_MARKOTHER_LOGIN = Constants.SERVER + "/Api/User/markotherlogin?appkey=%s";
 
+    /**
+     * 从后台获取app的相关提示
+     */
+    public static final String URL_PROMPT = Constants.SERVER + "/Api/Sys/prompt?appkey=%s&type=%s";
+
+    /**
+     * 全部音频分类列表
+     */
+    public static final String URL_RADIO_CLASSIFY = Constants.SERVER + "/Api/Audio/catelist?appkey=%s&token=%s";
+
+    /**
+     * 音频分类对应的列表
+     */
+    public static final String URL_RADIO_LIST = Constants.SERVER + "/Api/Audio/audiolist?appkey=%s&token=%s&cateid=%s&page=%s";
+
+    /**
+     * 专辑详情（头部）
+     */
+    public static final String URL_RADIO_SPECIAL_INFO = Constants.SERVER + "/Api/Audio/albuminfo?appkey=%s&token=%s&albumid=%s";
+
+    /**
+     * 专辑详情（列表）
+     */
+    public static final String URL_RADIO_SPECIAL_LIST = Constants.SERVER + "/Api/Audio/albumcontent?appkey=%s&token=%s&albumid=%s&page=%s";
+
+    /**
+     * 专辑收藏
+     */
+    public static final String URL_RADIO_SPECIAL_COLLECT = Constants.SERVER + "/Api/Audio/albumcollect?appkey=%s&token=%s&albumid=%s&iscancel=%s";
+
+    /**
+     * 音频播放详情（头部）
+     */
+    public static final String URL_RADIO_PLAY_INFO = Constants.SERVER + "/Api/Audio/audioinfo?appkey=%s&token=%s&audioid=%s";
+
+    /**
+     * 音频播放详情（列表）
+     */
+    public static final String URL_RADIO_PLAY_LIST = Constants.SERVER + "/Api/Audio/albumaudios?appkey=%s&token=%s&albumid=%s&page=%s";
+
+    /**
+     * 音频收藏
+     */
+    public static final String URL_RADIO_PLAY_COLLECT = Constants.SERVER + "/Api/Audio/audiocollect?appkey=%s&token=%s&audioid=%s&iscancel=%s";
 }

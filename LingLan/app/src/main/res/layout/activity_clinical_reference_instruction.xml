@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_instruction"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_instruction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.3"
+        android:layout_margin="@dimen/dp16"
+        android:padding="@dimen/dp20"
+        android:background="@drawable/frame_grey_wane"
+        android:textColor="@color/text_title_color"
+        android:textSize="@dimen/sp16" />
+
+    <!--android:text="@string/clinical_instruction"-->
+
+</LinearLayout>

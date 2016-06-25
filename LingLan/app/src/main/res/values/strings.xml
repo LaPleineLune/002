@@ -43,7 +43,10 @@
     <string name="slogan">致力于中医成长</string>
 
     <string name="register">《<u>服务条款</u>》</string>
-    <string name="clinical_no_content">添加属于您的病历吧</string>
+    <string name="me_register">灵兰中医用户协议</string>
+    <!--<string name="clinical_no_content">添加属于您的病历吧</string>-->
+    <string name="clinical_no_content">"创建属于你的私人云端病历库吧
+临证之后的复盘能让你高效成长"</string>
     <string name="clinical_classify_no_content">可进入【管理分类】新建属于您的分类</string>
     <string name="clinical_reference_no_content">本部分内容将根据您的病历信息进行智能推荐，建议您先使用【病历】功能，并完善“病证名称”等重要信息。</string>
     <string name="picture_no_content">无对比内容，请完善【相关图片】功能</string>
@@ -56,7 +59,7 @@
 
     <string name="tcm_disclaimer">说明：本功能之数据库接口由[中医搜搜]开发小组提供，仅供用户学习参考，数据版权与本平台无关。</string>
     <string name="tcm_search_request">共返回结果%1$s条，耗时约%2$s秒</string>
-    <string name="classify_hint">提示：建议使用待随访、精彩病历、治愈、好转、无效等分类</string>
+    <string name="classify_hint">提示：可使用待随访、待总结、精彩个案等分类</string>
     <string name="function_trailer">"【中医百科】百科全书式中医知识集合
 【有声电台】文章看累了？听听电台吧
 【经典视频】中医名家视频资源，学习更高效
@@ -124,6 +127,7 @@
 
     <string name="my_followed">我的关注</string>
     <string name="my_collect">我的收藏</string>
+    <string name="my_radio_download">我的下载</string>
     <string name="my_note">我的笔记</string>
     <string name="my_coupon">答谢券</string>
     <string name="album">纪念册</string>

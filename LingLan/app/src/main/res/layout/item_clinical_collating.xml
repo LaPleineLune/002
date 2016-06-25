@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp16"
+    android:paddingRight="@dimen/dp16">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp12">
+
+        <ImageView
+            android:id="@+id/img_item_article_delete"
+            android:layout_width="@dimen/dp18"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dp16"
+            android:src="@drawable/delete"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_item_article"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_item_patient_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="未命名"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/text_title_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp6">
+
+                <TextView
+                    android:id="@+id/tv_item_patient_feature"
+                    android:layout_width="@dimen/dp0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingRight="@dimen/dp10"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/sp14"
+                    android:text="病证" />
+
+                <TextView
+                    android:id="@+id/tv_item_visit_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/french_grey"
+                    android:textSize="@dimen/sp14"
+                    android:lines="1"
+                    android:text="2016-04-08" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginTop="@dimen/dp12"
+        android:background="@color/gainsboro" />
+</LinearLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp72"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp16"
+    android:paddingRight="@dimen/dp16">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp70"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_radio_download"
+            android:layout_width="@dimen/dp26"
+            android:layout_height="@dimen/dp26"
+            android:src="@drawable/radio_batch_download_selected_icon" />
+
+        <TextView
+            android:id="@+id/tv_radio_download_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp20"
+            android:textSize="@dimen/sp16"
+            android:textColor="@color/text_title_color"
+            android:text="柴火桂枝汤加味/第88期柴火桂枝汤加味/第88期" />
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px1"
+        android:background="@color/gainsboro" />
+</LinearLayout>

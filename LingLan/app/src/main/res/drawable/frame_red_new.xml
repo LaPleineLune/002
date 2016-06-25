@@ -13,7 +13,7 @@
 
     <stroke
         android:width="@dimen/px1"
-        android:color="@color/red" />
+        android:color="@color/carminum" />
     <!--<size android:width="@dimen/dp12"-->
         <!--android:height="@dimen/dp12" />-->
 </shape>

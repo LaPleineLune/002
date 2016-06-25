@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.linglan.http.Constants;
 import com.android.linglan.http.bean.SubjectDetailsBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.ImageUtil;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class AuthorArticleAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
-    private ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData;
+    private ArrayList<SubjectDetailsBean.SubjectList> subjectData;
 
     public AuthorArticleAdapter(Context context) {
         this.context = context;
@@ -35,7 +36,7 @@ public class AuthorArticleAdapter extends BaseAdapter {
     }
 
     @Override
-    public SubjectDetailsBean.SubjectData.SubjectList getItem(int position) {
+    public SubjectDetailsBean.SubjectList getItem(int position) {
         return subjectData.get(position);
     }
 
@@ -44,7 +45,7 @@ public class AuthorArticleAdapter extends BaseAdapter {
         return position;
     }
 
-    public void upDateAdapter(ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData){
+    public void upDateAdapter(ArrayList<SubjectDetailsBean.SubjectList> subjectData){
         this.subjectData = subjectData;
         notifyDataSetChanged();
     }
@@ -66,24 +67,25 @@ public class AuthorArticleAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        try {
-            ImageUtil.loadImageAsync(viewHolder.iv_item_article_image, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, getItem(position).photo, null);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+//        if (subjectData.get(position).type.equals(Constants.ARTICLE)) {// 文章
+            try {
+                ImageUtil.loadImageAsync(viewHolder.iv_item_article_image, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, getItem(position).photo, null);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
 //        viewHolder.iv_item_article_image.setBackgroundResource(draw[position]);
-        viewHolder. ll_item_article_title.setText(getItem(position).content_title);
-        viewHolder.ll_item_article_time.setText(getItem(position).addtime);
-        if (!TextUtils.isEmpty(getItem(position).author)) {
-            Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
-            collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
-            viewHolder.ll_item_article_name.setCompoundDrawables(collectTopDrawable, null, null, null);
-            viewHolder.ll_item_article_name.setCompoundDrawablePadding(12);
-            viewHolder.ll_item_article_name.setText(getItem(position).author);
-        } else {
-            viewHolder.ll_item_article_name.setVisibility(View.GONE);
-        }
+            viewHolder.ll_item_article_title.setText(getItem(position).title);
+            viewHolder.ll_item_article_time.setText(getItem(position).publishtime);
+            if (!TextUtils.isEmpty(getItem(position).authornames)) {
+                Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.article);
+                collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+                viewHolder.ll_item_article_name.setCompoundDrawables(collectTopDrawable, null, null, null);
+                viewHolder.ll_item_article_name.setCompoundDrawablePadding(12);
+                viewHolder.ll_item_article_name.setText(getItem(position).authornames);
+            } else {
+                viewHolder.ll_item_article_name.setVisibility(View.GONE);
+            }
+//        }
         return convertView;
     }
 

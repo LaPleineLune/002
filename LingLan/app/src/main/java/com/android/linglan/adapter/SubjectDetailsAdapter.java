@@ -12,8 +12,12 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.linglan.http.Constants;
+import com.android.linglan.http.bean.RadioListBean;
 import com.android.linglan.http.bean.SubjectDetailsBean;
+import com.android.linglan.http.bean.SubjectInfoBean;
 import com.android.linglan.ui.R;
+import com.android.linglan.ui.study.SubjectDetailsActivity;
 import com.android.linglan.utils.ImageUtil;
 import com.android.linglan.widget.SyLinearLayoutManager;
 import com.android.linglan.widget.flowlayout.TagFlowLayout;
@@ -28,9 +32,12 @@ public class SubjectDetailsAdapter extends RecyclerView.Adapter {
     static final int VIEW_SUBJECT_LIST = 1;
     private Activity context;
     private SubjectDetailsListAdapter subjectDetailsListAdapter;
+    private SearchAllRadioAdapter searchAllRadioAdapter;
     private String description;
     private String photo;
-    private ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData;
+    private ArrayList<SubjectDetailsBean.SubjectList> subjectData;
+    private ArrayList<RadioListBean.RadioListData> fmList;
+    private ArrayList<SubjectInfoBean.Data.typeClassisy> navi;
 
     public SubjectDetailsAdapter(Activity context, String description, String photo) {
         this.description = description;
@@ -38,8 +45,18 @@ public class SubjectDetailsAdapter extends RecyclerView.Adapter {
         this.context = context;
     }
 
-    public void upDateAdapter(ArrayList<SubjectDetailsBean.SubjectData.SubjectList> subjectData) {
+    public void updateArticleAdapter(ArrayList<SubjectDetailsBean.SubjectList> subjectData) {
         this.subjectData = subjectData;
+        notifyDataSetChanged();
+    }
+
+    public void updateFmAdapter(ArrayList<RadioListBean.RadioListData> fmList) {
+        this.fmList = fmList;
+        notifyDataSetChanged();
+    }
+
+    public void updateTypeAdapter(ArrayList<SubjectInfoBean.Data.typeClassisy> navi) {
+        this.navi = navi;
         notifyDataSetChanged();
     }
 
@@ -89,7 +106,7 @@ public class SubjectDetailsAdapter extends RecyclerView.Adapter {
     class SubjectDetailsViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
         private ImageView img_subject_details;
-        private TextView subject_description;
+        private TextView subject_description,subject_related_articles,subject_related_fm;
 
         private TagFlowLayout mFlowLayout;
         private RelativeLayout rl_history_search;
@@ -105,6 +122,9 @@ public class SubjectDetailsAdapter extends RecyclerView.Adapter {
         private void initView(View rootView) {
             img_subject_details = (ImageView) rootView.findViewById(R.id.img_subject_details);
             subject_description = (TextView) rootView.findViewById(R.id.subject_description);
+            subject_related_articles =  (TextView) rootView.findViewById(R.id.subject_related_articles);
+            subject_related_fm =  (TextView) rootView.findViewById(R.id.subject_related_fm);
+
 //            mFlowLayout = (TagFlowLayout) rootView.findViewById(R.id.id_flowlayout);
 //            ll_no_history_search = (LinearLayout) rootView.findViewById(R.id.ll_no_history_search);
 //            ll_history_search = (LinearLayout) rootView.findViewById(R.id.ll_history_search);
@@ -126,15 +146,61 @@ public class SubjectDetailsAdapter extends RecyclerView.Adapter {
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
+
                     break;
                 case VIEW_SUBJECT_LIST:
 
-                    RecyclerView rec_history_search = (RecyclerView) rootView.findViewById(R.id.rec_subject_details_list);
+                    final RecyclerView rec_history_search = (RecyclerView) rootView.findViewById(R.id.rec_subject_details_list);
                     rec_history_search.setLayoutManager(new SyLinearLayoutManager(context));
                     rec_history_search.setHasFixedSize(true);
-
                     subjectDetailsListAdapter = new SubjectDetailsListAdapter(context, subjectData);
-                    rec_history_search.setAdapter(subjectDetailsListAdapter);
+                    searchAllRadioAdapter = new SearchAllRadioAdapter(context);
+                    if(!subject_related_articles.isSelected() && !subject_related_fm.isSelected()){
+                        subject_related_articles.setSelected(true);
+                        subject_related_fm.setSelected(false);
+                    }
+
+                        if(navi != null && navi.size() != 2){
+                            subject_related_fm.setVisibility(View.GONE);
+                            if((navi.get(0).type) == Integer.parseInt(Constants.ARTICLE)){
+                                subject_related_articles.setText("相关文章");
+                                rec_history_search.setAdapter(subjectDetailsListAdapter);
+                            }else if((navi.get(0).type) == Integer.parseInt(Constants.RADIO_SINGLE)){
+                                subject_related_articles.setText("相关音频");
+                                rec_history_search.setAdapter(searchAllRadioAdapter);
+                                searchAllRadioAdapter.updateAdapter(fmList);
+                            }
+                        }else if(navi != null && navi.size() == 2){
+                            if(subject_related_articles.isSelected()){
+                                rec_history_search.setAdapter(subjectDetailsListAdapter);
+                            }else if(subject_related_fm.isSelected()){
+                                rec_history_search.setAdapter(searchAllRadioAdapter);
+                                searchAllRadioAdapter.updateAdapter(fmList);
+                            }
+                        }
+
+
+                    subject_related_articles.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SubjectDetailsActivity.FLAG_TYPE = Constants.ALLARTICLE;
+                            subject_related_articles.setSelected(true);
+                            subject_related_fm.setSelected(false);
+                            rec_history_search.setAdapter(subjectDetailsListAdapter);
+                        }
+                    });
+
+                    subject_related_fm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SubjectDetailsActivity.FLAG_TYPE = Constants.ALLFM;
+                            subject_related_fm.setSelected(true);
+                            subject_related_articles.setSelected(false);
+                            rec_history_search.setAdapter(searchAllRadioAdapter);
+                            searchAllRadioAdapter.updateAdapter(fmList);
+                        }
+                    });
+
                     break;
                 default:
                     break;

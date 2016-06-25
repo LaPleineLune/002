@@ -38,7 +38,6 @@
             android:id="@+id/bt_profile_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8"
             android:padding="@dimen/dp10"
             android:background="@color/white"
             android:text="取消"

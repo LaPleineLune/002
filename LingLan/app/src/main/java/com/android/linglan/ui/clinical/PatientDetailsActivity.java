@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.http.bean.PatientDetailsBean;
@@ -186,6 +187,7 @@ public class PatientDetailsActivity extends BaseActivity {
                     return;
                 }
                 ToastUtil.show("已保存");
+                ClinicalFragment.ISREFRESHDATA = 1;
                 if (!isCollating) {
                     finish();
                 } else {

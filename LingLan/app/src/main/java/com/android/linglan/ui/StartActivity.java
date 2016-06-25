@@ -81,15 +81,6 @@ public class StartActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-//        String encrypt = "";
-//        String decrypt = "";
-//        AESCryptUtil aesCryptUtil = new AESCryptUtil();
-//        encrypt = aesCryptUtil.encryptPost("top secret message");
-//        decrypt = aesCryptUtil.decrypt(encrypt);
-////		String decrypt = aesCryptUtil.decrypt("hdpxUvAjTfNO7z7g6WU9EcDzDWTK9GbBNL0Z0xd+XCTq+lXY+Hm6EyaIhUWQE0VXN0kRMuK3fJu3Zg2T+/ysa299kxdj3944a1BLWgT6P+Q=");
-//        System.out.println("测试加密打印值：" + encrypt + "测试解密打印值：" + decrypt);
-//        LogUtil.e("测试加密打印值：" + encrypt + "测试解密打印值：" + decrypt);
-
         //友盟推送
 //        initUMeng();
         PushAgent mPushAgent = PushAgent.getInstance(this);
@@ -108,64 +99,31 @@ public class StartActivity extends BaseActivity {
 //        mPushAgent.enable();
         mPushAgent.setPushCheck(false);
         String device_token = UmengRegistrar.getRegistrationId(this);
-//        LogUtil.e("device_token哈哈哈哈哈?????" +device_token );
 
         mPushAgent.setPushIntentServiceClass(MyPushIntentService.class);
-
-//        if (SharedPreferencesUtil.getString("appkey", null) != null) {
-//            getAppKey();
-//        }
-
-//        String token2 =
-//                (SharedPreferencesUtil.getString("token", null) != null) ? // token 的值为null 吗？
-//                        SharedPreferencesUtil.getString("token", null) : // 不为空则为token 的值
-//                        SharedPreferencesUtil.getString("visittoken", null);// 为空则为 visittoken 的值
-//        LogUtil.e("token 的值：" + token2);
-//        String visittoken = SharedPreferencesUtil.getString("visittoken", null);
         token = SharedPreferencesUtil.getString("token", null);
         appkey = SharedPreferencesUtil.getString("appkey", null);
         LogUtil.e("token=" + token + ":::appkey=" + appkey);
-//        String m_szAndroidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-//        LogUtil.e("android_id=" + m_szAndroidID);
-//        LogUtil.e("自生成ID=" + id(this));
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (SharedPreferencesUtil.getString("appkey", null) != null) {
                     if (!SharedPreferencesUtil.getBoolean("isGuideShowed", false)) {
-//                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
                         Intent intent = new Intent(StartActivity.this, GuideImageIndicatorActivity.class);
                         startActivity(intent);
                     } else {
-//                        Intent intent = new Intent(StartActivity.this, GuideImageIndicatorActivity.class);
                         Intent intent = new Intent(StartActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
-//                    Intenit intent = new Intent(StartActivity.this, MainActivity.class);
-//                    Intent intent = new Intent(StartActivity.this, GuideImageIndicatorActivity.class);
-//                    startActvity(intent);
                     finish();
                 } else {
+//                    DeviceUtil.getAppKey(StartActivity.this);
                     getAppKey();
                 }
             }
         }, 3000);
 
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//            if (token != null) {
-//                Intent intent = new Intent(StartActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            } else {
-//                Intent intent = new Intent(StartActivity.this, RegisterActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//            }
-//        }, 3000);
     }
 
 
@@ -191,6 +149,7 @@ public class StartActivity extends BaseActivity {
     }
 
     private void getAppKey() {
+        String mode = android.os.Build.MODEL + ",API:" + android.os.Build.VERSION.SDK_INT + ",RELEASE:" + android.os.Build.VERSION.RELEASE;
         NetApi.getAppKey(new PasserbyClient.HttpCallback() {
             @Override
             public void onSuccess(String result) {
@@ -206,6 +165,7 @@ public class StartActivity extends BaseActivity {
                         JSONObject json = new JSONObject(result);
                         SharedPreferencesUtil.saveString("appkey", json.getJSONObject("data").getString("appkey"));
                         LogUtil.e("获取AppKey保存成功" + json.getJSONObject("data").getString("appkey"));
+                        LogUtil.e("设备型号：" + android.os.Build.MODEL + "\n设备API:" + android.os.Build.VERSION.SDK + "\n设备RELEASE:" + android.os.Build.VERSION.RELEASE);
                         if (!SharedPreferencesUtil.getBoolean("isGuideShowed", false)) {
 //                        Intent intent = new Intent(StartActivity.this, MainActivity.class);
                             Intent intent = new Intent(StartActivity.this, GuideImageIndicatorActivity.class);
@@ -226,7 +186,7 @@ public class StartActivity extends BaseActivity {
             public void onFailure(String message) {
 
             }
-        }, DeviceUtil.getDeviceId(this));
+        }, DeviceUtil.getDeviceId(this), mode);
     }
 
     /**

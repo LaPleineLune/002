@@ -22,6 +22,7 @@ import com.android.linglan.adapter.clinical.EditCourseOfDiseaseImageAdapter;
 import com.android.linglan.adapter.clinical.EditCourseOfDiseaseMouldAdapter;
 import com.android.linglan.adapter.clinical.MouldAdapter;
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.http.GsonTools;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
@@ -36,10 +37,12 @@ import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.TimeStampConversionUtil;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.android.linglan.widget.AlertDialoginter;
 import com.android.linglan.widget.AlertDialogs;
 import com.android.linglan.widget.ListViewForScrollView;
 import com.android.linglan.widget.SyLinearLayoutManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -121,7 +124,8 @@ public class CourseOfDiseaseActivity extends BaseActivity implements AlertDialog
                             clinical_mould.addView(title);
                             clinical_mould.addView(content);
                             title.setText("[" + clinicalMouldData.templetname + "] :");
-                            title.setTextColor(Color.parseColor("#48558f"));
+//                            title.setTextColor(Color.parseColor("#48558f"));
+                            title.setTextColor(content.getResources().getColor(R.color.blue));
 //                            int dp8 = getResources().getDimensionPixelSize(R.dimen.dp8);
                             title.setTextSize(16);
                             content.setTextSize(16);
@@ -272,7 +276,8 @@ public class CourseOfDiseaseActivity extends BaseActivity implements AlertDialog
                         title.setTextSize(16);
                         content.setTextSize(16);
                         title.setText("[" + clinicalDetailsPathography.templetname + "] :");
-                        title.setTextColor(Color.parseColor("#48558f"));
+//                        title.setTextColor(Color.parseColor("#48558f"));
+                        title.setTextColor(content.getResources().getColor(R.color.blue));
                         if (clinicalDetailsPathography.content != null && !clinicalDetailsPathography.content.equals("")) {
                             content.setText(clinicalDetailsPathography.content);
 //                            SharedPreferencesUtil.saveString(clinicalDetailsPathography.templetname, clinicalDetailsPathography.content);
@@ -419,9 +424,13 @@ public class CourseOfDiseaseActivity extends BaseActivity implements AlertDialog
                 if (clinicalDetailsData != null && clinicalDetailsData.courseid != null) {
                     saveDiseaseCourseInfo(clinicalDetailsData.courseid, course);
                 } else {
-                    addDiseaseCourseInfo(illnesscaseid, course);
+                    if (!isEmptyClinical()) {
+                        ToastUtil.show("请填写病程内容");
+                    }else{
+                        addDiseaseCourseInfo(illnesscaseid, course);
+                    }
                 }
-                finish();
+
                 break;
             case R.id.back:
                 if (clinicalDetailsData != null && clinicalDetailsData.courseid != null) {
@@ -539,6 +548,8 @@ public class CourseOfDiseaseActivity extends BaseActivity implements AlertDialog
 
                 if (!pathography.equals("")) {
                     pathographymap.put(1 + "", pathography);
+                }else{
+                    pathographymap.put(1 + "", "");
                 }
 //              LogUtil.e("有没有取到edittext里的内容啊" + pathography);
             }
@@ -554,15 +565,20 @@ public class CourseOfDiseaseActivity extends BaseActivity implements AlertDialog
                     }
                 }
             } else {
-                pathographymap.put(1 + "", pathography);
-//              LogUtil.e("有没有取到edittext里的内容啊" + pathography);
+                if (!pathography.equals("")) {
+                    pathographymap.put(1 + "", pathography);
+                }else{
+                    pathographymap.put(1 + "", "");
+                }
+//                pathographymap.put(1 + "", pathography);
+              LogUtil.e("有没有取到edittext里的内容啊" + pathography);
             }
         }
 
         coursemap.put("pathography", pathographymap);
         course = GsonTools.createGsonString(coursemap);
 
-//        LogUtil.e("我要看的coursemap数据11=" + course);
+        LogUtil.e("我要看的coursemap数据11=" + course);
     }
 
     //上传编辑病程信息
@@ -573,7 +589,9 @@ public class CourseOfDiseaseActivity extends BaseActivity implements AlertDialog
                 if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, CourseOfDiseaseActivity.this)) {
                     return;
                 }
-
+                ToastUtil.show("已保存");
+                ClinicalFragment.ISREFRESHDATA = 1;
+                ClinicalCollatingActivity.ISREFRESHDATA = 1;
                 if (clinicalMouldBean != null && clinicalMouldBean.data != null && clinicalMouldBean.data.size() != 0) {
                     for (int i = 0; i < clinicalMouldBean.data.size(); i++) {
                         SharedPreferencesUtil.saveString(clinicalMouldBean.data.get(i).templetname, null);
@@ -585,6 +603,8 @@ public class CourseOfDiseaseActivity extends BaseActivity implements AlertDialog
                         SharedPreferencesUtil.saveString(clinicalDetailsPathography.templetname, null);
                     }
                 }
+
+                finish();
 
             }
 
@@ -603,13 +623,16 @@ public class CourseOfDiseaseActivity extends BaseActivity implements AlertDialog
                 if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, CourseOfDiseaseActivity.this)) {
                     return;
                 }
-
+                MobclickAgent.onEvent(CourseOfDiseaseActivity.this, UmengBuriedPointUtil.ClinicalMedicalHistoryAddSucceed);
+                ToastUtil.show("已保存");
+                ClinicalFragment.ISREFRESHDATA = 1;
+                ClinicalCollatingActivity.ISREFRESHDATA = 1;
                 if (clinicalMouldBean != null && clinicalMouldBean.data != null && clinicalMouldBean.data.size() != 0) {
                     for (int i = 0; i < clinicalMouldBean.data.size(); i++) {
                         SharedPreferencesUtil.saveString(clinicalMouldBean.data.get(i).templetname, null);
                     }
                 }
-
+                finish();
             }
 
             @Override
@@ -629,6 +652,7 @@ public class CourseOfDiseaseActivity extends BaseActivity implements AlertDialog
                     return;
                 }
                 ToastUtil.show("已删除");
+                ClinicalFragment.ISREFRESHDATA = 1;
                 finish();
             }
 

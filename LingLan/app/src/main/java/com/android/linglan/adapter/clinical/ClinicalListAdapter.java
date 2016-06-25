@@ -13,6 +13,7 @@ import com.android.linglan.http.NetApi;
 import com.android.linglan.http.bean.ClinicalCollatingBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.clinical.ClinicalDetailsActivity;
+import com.android.linglan.utils.ToastUtil;
 
 import java.util.ArrayList;
 
@@ -47,7 +48,12 @@ public class ClinicalListAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
 //        return this.clinicalCollatingData != null ? this.clinicalCollatingData.size() : 0 ;
-        return this.clinicalCollatingList != null ? this.clinicalCollatingList.size() : 1;
+        if(clinicalCollatingData == null ){
+            return 0;
+        }else{
+            return this.clinicalCollatingList != null ? this.clinicalCollatingList.size() : Integer.parseInt(clinicalCollatingData.democasecon);
+        }
+
     }
 
     @Override
@@ -90,7 +96,7 @@ public class ClinicalListAdapter extends RecyclerView.Adapter {
                 String feature = clinicalCollatingList.get(position).feature != null && !clinicalCollatingList.get(position).feature.equals("") ? clinicalCollatingList.get(position).feature :  "无内容";
                 tv_item_patient_feature.setText("病证：" + feature);
                 tv_item_visit_time.setText(clinicalCollatingList.get(position).lastvisittime);
-                if (clinicalCollatingData.usercasecon != null && clinicalCollatingData.usercasecon.equals("0")) {
+                if (clinicalCollatingData.usercasecon != null && clinicalCollatingData.usercasecon.equals("0") && (position == ((Integer.parseInt(clinicalCollatingData.democasecon))) - 1)) {
                     tv_item_clinical_no_content.setVisibility(View.VISIBLE);
                 } else {
                     tv_item_clinical_no_content.setVisibility(View.GONE);
@@ -107,6 +113,7 @@ public class ClinicalListAdapter extends RecyclerView.Adapter {
                         Intent intent = new Intent();
                         intent.putExtra("illnesscaseid", clinicalCollatingList.get(position).illnesscaseid);
                         intent.putExtra("isdemo", clinicalCollatingList.get(position).isdemo);
+                        intent.putExtra("page", clinicalCollatingList.get(position).page);
                         intent.setClass(context, ClinicalDetailsActivity.class);
                         context.startActivity(intent);
                     }

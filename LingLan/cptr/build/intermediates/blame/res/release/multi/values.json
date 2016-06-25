@@ -34,9 +34,9 @@
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
-                        "startOffset": 604,
+                        "startOffset": 606,
                         "endColumn": 57,
-                        "endOffset": 657
+                        "endOffset": 659
                     }
                 }
             },
@@ -53,9 +53,9 @@
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
-                        "startOffset": 421,
+                        "startOffset": 423,
                         "endColumn": 60,
-                        "endOffset": 477
+                        "endOffset": 479
                     }
                 }
             },
@@ -72,9 +72,9 @@
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
-                        "startOffset": 543,
+                        "startOffset": 545,
                         "endColumn": 59,
-                        "endOffset": 598
+                        "endOffset": 600
                     }
                 }
             },
@@ -83,8 +83,8 @@
                     "startLine": 8,
                     "startColumn": 4,
                     "startOffset": 887,
-                    "endColumn": 49,
-                    "endOffset": 932
+                    "endColumn": 51,
+                    "endOffset": 934
                 },
                 "from": {
                     "file": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\cptr\\res\\values\\strings.xml",
@@ -92,8 +92,8 @@
                         "startLine": 4,
                         "startColumn": 4,
                         "startOffset": 121,
-                        "endColumn": 49,
-                        "endOffset": 166
+                        "endColumn": 51,
+                        "endOffset": 168
                     }
                 }
             },
@@ -101,18 +101,18 @@
                 "to": {
                     "startLine": 9,
                     "startColumn": 4,
-                    "startOffset": 937,
+                    "startOffset": 939,
                     "endColumn": 62,
-                    "endOffset": 995
+                    "endOffset": 997
                 },
                 "from": {
                     "file": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\cptr\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
-                        "startOffset": 172,
+                        "startOffset": 174,
                         "endColumn": 62,
-                        "endOffset": 230
+                        "endOffset": 232
                     }
                 }
             },
@@ -120,18 +120,18 @@
                 "to": {
                     "startLine": 10,
                     "startColumn": 4,
-                    "startOffset": 1000,
+                    "startOffset": 1002,
                     "endColumn": 59,
-                    "endOffset": 1055
+                    "endOffset": 1057
                 },
                 "from": {
                     "file": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\cptr\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
-                        "startOffset": 354,
+                        "startOffset": 356,
                         "endColumn": 59,
-                        "endOffset": 409
+                        "endOffset": 411
                     }
                 }
             },
@@ -139,18 +139,18 @@
                 "to": {
                     "startLine": 11,
                     "startColumn": 4,
-                    "startOffset": 1060,
+                    "startOffset": 1062,
                     "endColumn": 54,
-                    "endOffset": 1110
+                    "endOffset": 1112
                 },
                 "from": {
                     "file": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\cptr\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
-                        "startOffset": 298,
+                        "startOffset": 300,
                         "endColumn": 54,
-                        "endOffset": 348
+                        "endOffset": 350
                     }
                 }
             },
@@ -158,18 +158,18 @@
                 "to": {
                     "startLine": 12,
                     "startColumn": 4,
-                    "startOffset": 1115,
+                    "startOffset": 1117,
                     "endColumn": 60,
-                    "endOffset": 1171
+                    "endOffset": 1173
                 },
                 "from": {
                     "file": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\cptr\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
-                        "startOffset": 236,
+                        "startOffset": 238,
                         "endColumn": 60,
-                        "endOffset": 292
+                        "endOffset": 294
                     }
                 }
             },
@@ -177,213 +177,18 @@
                 "to": {
                     "startLine": 13,
                     "startColumn": 4,
-                    "startOffset": 1176,
+                    "startOffset": 1178,
                     "endColumn": 53,
-                    "endOffset": 1225
+                    "endOffset": 1227
                 },
                 "from": {
                     "file": "E:\\AndroidStudioProjects\\Linglan\\LingLan\\cptr\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
-                        "startOffset": 483,
+                        "startOffset": 485,
                         "endColumn": 58,
-                        "endOffset": 537
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "E:\\github\\LingLan\\cptr\\build\\intermediates\\res\\merged\\release\\values\\values.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 4,
-                    "startColumn": 4,
-                    "startOffset": 662,
-                    "endColumn": 60,
-                    "endOffset": 718
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 59,
-                        "endColumn": 60,
-                        "endOffset": 115
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 5,
-                    "startColumn": 4,
-                    "startOffset": 723,
-                    "endColumn": 52,
-                    "endOffset": 771
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 13,
-                        "startColumn": 4,
-                        "startOffset": 604,
-                        "endColumn": 57,
-                        "endOffset": 657
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 6,
-                    "startColumn": 4,
-                    "startOffset": 776,
-                    "endColumn": 55,
-                    "endOffset": 827
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 10,
-                        "startColumn": 4,
-                        "startOffset": 421,
-                        "endColumn": 60,
-                        "endOffset": 477
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 7,
-                    "startColumn": 4,
-                    "startOffset": 832,
-                    "endColumn": 54,
-                    "endOffset": 882
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 12,
-                        "startColumn": 4,
-                        "startOffset": 543,
-                        "endColumn": 59,
-                        "endOffset": 598
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 8,
-                    "startColumn": 4,
-                    "startOffset": 887,
-                    "endColumn": 49,
-                    "endOffset": 932
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 121,
-                        "endColumn": 49,
-                        "endOffset": 166
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 9,
-                    "startColumn": 4,
-                    "startOffset": 937,
-                    "endColumn": 62,
-                    "endOffset": 995
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 4,
-                        "startOffset": 172,
-                        "endColumn": 62,
-                        "endOffset": 230
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 10,
-                    "startColumn": 4,
-                    "startOffset": 1000,
-                    "endColumn": 59,
-                    "endOffset": 1055
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 8,
-                        "startColumn": 4,
-                        "startOffset": 354,
-                        "endColumn": 59,
-                        "endOffset": 409
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 11,
-                    "startColumn": 4,
-                    "startOffset": 1060,
-                    "endColumn": 54,
-                    "endOffset": 1110
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 7,
-                        "startColumn": 4,
-                        "startOffset": 298,
-                        "endColumn": 54,
-                        "endOffset": 348
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 12,
-                    "startColumn": 4,
-                    "startOffset": 1115,
-                    "endColumn": 60,
-                    "endOffset": 1171
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 6,
-                        "startColumn": 4,
-                        "startOffset": 236,
-                        "endColumn": 60,
-                        "endOffset": 292
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 13,
-                    "startColumn": 4,
-                    "startOffset": 1176,
-                    "endColumn": 53,
-                    "endOffset": 1225
-                },
-                "from": {
-                    "file": "E:\\github\\LingLan\\cptr\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 11,
-                        "startColumn": 4,
-                        "startOffset": 483,
-                        "endColumn": 58,
-                        "endOffset": 537
+                        "endOffset": 539
                     }
                 }
             }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_radio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" >
+
+        <com.chanven.lib.cptr.PtrClassicFrameLayout
+            xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/recycler_view_radio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            cube_ptr:ptr_duration_to_close="200"
+            cube_ptr:ptr_duration_to_close_header="700"
+            cube_ptr:ptr_keep_header_when_refresh="true"
+            cube_ptr:ptr_pull_to_fresh="false"
+            cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+            cube_ptr:ptr_resistance="1.8" >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recy_radio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"/>
+        </com.chanven.lib.cptr.PtrClassicFrameLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_no_collect_subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="184dp"
+        android:paddingLeft="150dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp62"
+            android:layout_height="@dimen/dp50"
+            android:src="@drawable/no_collect_subject"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp10"
+            android:text="暂无数据"/>
+    </LinearLayout>
+
+    <include layout="@layout/layout_no_network"
+        android:visibility="gone"/>
+
+</LinearLayout>

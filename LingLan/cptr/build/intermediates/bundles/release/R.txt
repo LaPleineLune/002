@@ -8,8 +8,9 @@ int attr ptr_ratio_of_header_height_to_refresh 0x7f010004
 int attr ptr_resistance 0x7f010003
 int attr ptr_rotate_ani_time 0x7f010000
 int drawable ptr_rotate_arrow 0x7f020000
-int id loadmore_default_footer_progressbar 0x7f050005
-int id loadmore_default_footer_tv 0x7f050006
+int id loadmore_default_footer_ll 0x7f050005
+int id loadmore_default_footer_progressbar 0x7f050006
+int id loadmore_default_footer_tv 0x7f050007
 int id ptr_classic_header_rotate_view 0x7f050003
 int id ptr_classic_header_rotate_view_header_last_update 0x7f050002
 int id ptr_classic_header_rotate_view_header_text 0x7f050000

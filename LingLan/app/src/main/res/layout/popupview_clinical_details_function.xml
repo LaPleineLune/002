@@ -66,11 +66,13 @@
         android:paddingBottom="@dimen/dp8"
         android:textSize="@dimen/sp16"
         android:textColor="@color/gray"
-        android:text="病程排序"/>
+        android:text="病程排序"
+        android:visibility="gone"/>
     <View
         android:layout_width="110dp"
         android:layout_height="@dimen/px1"
-        android:background="@drawable/clinical_div_line_hor"/>
+        android:background="@drawable/clinical_div_line_hor"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/tv_clinical_delete"
         android:layout_width="wrap_content"

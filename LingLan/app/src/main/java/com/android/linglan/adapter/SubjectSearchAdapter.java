@@ -13,6 +13,8 @@ import com.android.linglan.http.bean.SearchSubjectBean;
 import com.android.linglan.ui.R;
 import com.android.linglan.ui.study.SubjectDetailsActivity;
 import com.android.linglan.utils.ImageUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -45,14 +47,14 @@ public class SubjectSearchAdapter extends
 
     @Override
     public int getItemCount() {
-        if(RecommendSubjects == null){
-            return 0;
-        }else if(RecommendSubjects.size() < 2){
-            return RecommendSubjects.size();
-        }else{
-            return 1;
-        }
-//        return RecommendSubjects.size();
+//        if(RecommendSubjects == null){
+//            return 0;
+//        }else if(RecommendSubjects.size() < 2){
+//            return RecommendSubjects.size();
+//        }else{
+//            return 1;
+//        }
+        return RecommendSubjects== null ? 0:RecommendSubjects.size();
     }
 
     class SubjectViewHolder extends RecyclerView.ViewHolder implements
@@ -61,7 +63,7 @@ public class SubjectSearchAdapter extends
         private ImageView logo;
         private TextView title;
         private TextView description;
-        private TextView date;
+//        private TextView date;
 
 //        private TextView tv_subject_title;
         private View rootView;
@@ -76,26 +78,26 @@ public class SubjectSearchAdapter extends
             logo = (ImageView) rootView.findViewById(R.id.img_homepage_subject_logo);
             title = (TextView) rootView.findViewById(R.id.tv_homepage_subject_title);
             description = (TextView) rootView.findViewById(R.id.tv_homepage_subject_description);
-            date = (TextView) rootView.findViewById(R.id.tv_homepage_subject_date);
+//            date = (TextView) rootView.findViewById(R.id.tv_homepage_subject_date);
 
         }
         public void bindData(final SearchSubjectBean.SubjectClassifyListBean recommendSubjects) {
 //            this.recommendSubjects = recommendSubjects;
 //            tv_subject_title.setText(recommendSubjects.specialname);
             try {
-                ImageUtil.loadImageAsync(logo, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, recommendSubjects.logo, null);
+//                ImageUtil.loadImageAsync(logo, R.dimen.dp84, R.dimen.dp68, R.drawable.default_image, recommendSubjects.logo, null);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
             title.setText(recommendSubjects.specialname);
             description.setText(recommendSubjects.content_title);
-            date.setText(recommendSubjects.updatetime);
+//            date.setText(recommendSubjects.updatetime);
 
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,
-                            SubjectDetailsActivity.class);
+                    MobclickAgent.onEvent(context, UmengBuriedPointUtil.StudySubjectContent);
+                    Intent intent = new Intent(context, SubjectDetailsActivity.class);
                     intent.putExtra("specialid", recommendSubjects.specialid);
                     intent.putExtra("specialname", recommendSubjects.specialname);
                     intent.putExtra("photo", recommendSubjects.photo);

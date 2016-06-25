@@ -29,13 +29,15 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_marginTop="@dimen/dp22"
             android:orientation="vertical">
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/px1"
                 android:layout_marginTop="@dimen/dp22"
-                android:background="@color/french_grey" />
+                android:background="@color/french_grey"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/profile_panel"
@@ -158,13 +160,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
-                android:background="@color/french_grey" />
+                android:background="@color/gainsboro" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
-                android:layout_marginTop="@dimen/dp22"
-                android:background="@color/french_grey" />
+                android:layout_marginTop="@dimen/dp14"
+                android:background="@color/gainsboro" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -209,7 +211,7 @@
                 <RelativeLayout
                     android:id="@+id/my_collect"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp48"
+                    android:layout_height="@dimen/dp52"
                     android:layout_marginLeft="@dimen/dp10"
                     android:layout_marginRight="@dimen/dp10">
 
@@ -248,6 +250,48 @@
                     android:layout_height="@dimen/px1"
                     android:background="@color/gainsboro" />
 
+                <RelativeLayout
+                    android:id="@+id/my_radio_download"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp52"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10">
+
+                    <TextView
+                        android:id="@+id/radio_download_label"
+                        style="@style/project_detail_item_label_style"
+                        android:layout_marginRight="@dimen/dp0"
+                        android:drawableLeft="@drawable/my_collect"
+                        android:text="@string/my_radio_download" />
+
+                    <TextView
+                        android:id="@+id/radio_download_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:layout_toRightOf="@id/radio_download_label"
+                        android:text=""
+                        android:textSize="@dimen/sp14" />
+
+                    <ImageView
+                        android:id="@+id/radio_download_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/radio_download_label"
+                        android:layout_toRightOf="@id/radio_download_count"
+                        android:src="@drawable/message_indicator_icon"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        style="@style/me_ImageView_arrow_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px1"
+                    android:background="@color/gainsboro" />
+
                 <!--<View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px1"
@@ -256,7 +300,7 @@
                 <RelativeLayout
                     android:id="@+id/settings"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp48"
+                    android:layout_height="@dimen/dp52"
                     android:layout_marginLeft="@dimen/dp10"
                     android:layout_marginRight="@dimen/dp10">
 
@@ -336,13 +380,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
-                android:background="@color/french_grey" />
+                android:background="@color/gainsboro" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
-                android:layout_marginTop="@dimen/dp22"
-                android:background="@color/french_grey" />
+                android:layout_marginTop="@dimen/dp14"
+                android:background="@color/gainsboro" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -354,7 +398,7 @@
                 <RelativeLayout
                     android:id="@+id/feedback"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp48"
+                    android:layout_height="@dimen/dp52"
                     android:layout_marginLeft="@dimen/dp10"
                     android:layout_marginRight="@dimen/dp10">
 
@@ -376,8 +420,8 @@
                         android:layout_toLeftOf="@id/arrow_right"
                         android:layout_centerVertical="true"
                         android:text="期待您的意见"
-                        android:textSize="@dimen/sp14"
-                        android:textColor="@color/french_grey"/>
+                        android:textSize="@dimen/sp12"
+                        android:textColor="@color/gray"/>
 
                     <ImageView
                         android:id="@+id/feedback_indicator"
@@ -435,19 +479,57 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px1"
-                    android:background="@color/gainsboro"
-                    android:visibility="gone"/>
+                    android:background="@color/gainsboro" />
 
                 <RelativeLayout
                     android:id="@+id/share"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp48"
+                    android:layout_height="@dimen/dp52"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:visibility="gone" >
+                    android:layout_marginRight="@dimen/dp10">
 
                     <TextView
                         android:id="@+id/share_label"
+                        style="@style/project_detail_item_label_style"
+                        android:layout_marginRight="@dimen/dp0"
+                        android:drawableLeft="@drawable/my_feedback"
+                        android:text="@string/share_text" />
+
+                    <!--my_share-->
+
+                    <TextView
+                        android:id="@+id/share_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:layout_toRightOf="@id/share_label"
+                        android:text=""
+                        android:textSize="@dimen/sp14" />
+
+                    <ImageView
+                        android:id="@+id/share_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/share_label"
+                        android:layout_toRightOf="@id/share_count"
+                        android:src="@drawable/message_indicator_icon"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        style="@style/me_ImageView_arrow_right" />
+
+
+                </RelativeLayout>
+
+                <!--<RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp52"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10" >
+
+                    <TextView
+
                         style="@style/project_detail_item_label_style"
                         android:layout_marginRight="@dimen/dp0"
                         android:drawableLeft="@drawable/my_share"
@@ -474,12 +556,12 @@
 
                     <ImageView
                         style="@style/me_ImageView_arrow_right" />
-                </RelativeLayout>
+                </RelativeLayout>-->
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px1"
-                android:background="@color/french_grey" />
+                android:background="@color/gainsboro" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

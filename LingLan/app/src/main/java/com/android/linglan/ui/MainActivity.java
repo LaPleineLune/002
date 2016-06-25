@@ -10,11 +10,9 @@ import android.support.v4.view.ViewPager;
 
 import com.android.linglan.base.BaseActivity;
 import com.android.linglan.fragment.ClinicalFragment;
-import com.android.linglan.fragment.HomePageFragment;
 import com.android.linglan.fragment.MeFragment;
 import com.android.linglan.fragment.StudyFragment;
-import com.android.linglan.fragment.TestStudyFragment;
-import com.android.linglan.fragment.TestTabFragmentDelegate;
+import com.android.linglan.fragment.TabFragmentDelegate;
 import com.android.linglan.utils.AppUpdaterUtil;
 import com.android.linglan.utils.ToastUtil;
 import com.android.linglan.widget.TestFixedTabPageIndicator;
@@ -24,7 +22,7 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
-    private List<TestTabFragmentDelegate> fragmentDelegates = new ArrayList<TestTabFragmentDelegate>();
+    private List<TabFragmentDelegate> fragmentDelegates = new ArrayList<TabFragmentDelegate>();
     private boolean doubleBackToExitPressedOnce;
     private static TestFixedTabPageIndicator indicator;
     private ViewPager pager;
@@ -43,15 +41,8 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-//        Intent intent = getIntent();
-//        int index = intent.getIntExtra("index", 0);
-//        if (index < fragmentDelegates.size()) {
-//            pager.setCurrentItem(index);
-//        }
-
         String clinicalDetails = getIntent().getStringExtra("clinicalDetails");
-        if(clinicalDetails != null && clinicalDetails.equals("clinicalDetails")){
+        if (clinicalDetails != null && clinicalDetails.equals("clinicalDetails")) {
             pager.setCurrentItem(1);
         }
     }
@@ -68,7 +59,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-//        SharedPreferencesUtil.saveString("appkey", "2b021b82e2974cfe39d3da53fca63d8e");
 
     }
 
@@ -78,16 +68,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-        TestTabFragmentDelegate fragmentDelegate =
-                new TestTabFragmentDelegate(StudyFragment.class, null, R.drawable.bottom_home_icon, R.string.study);
-//                new TestTabFragmentDelegate(HomePageFragment.class, null, R.drawable.bottom_home_icon, R.string.study);
+        TabFragmentDelegate fragmentDelegate =
+                new TabFragmentDelegate(StudyFragment.class, null, R.drawable.bottom_home_icon, R.string.study);
         fragmentDelegates.add(fragmentDelegate);
 
         fragmentDelegate =
-                new TestTabFragmentDelegate(ClinicalFragment.class, null, R.drawable.bottom_consilia_icon, R.string.clinical);
+                new TabFragmentDelegate(ClinicalFragment.class, null, R.drawable.bottom_consilia_icon, R.string.clinical);
         fragmentDelegates.add(fragmentDelegate);
 
-        fragmentDelegate = new TestTabFragmentDelegate(MeFragment.class, null, R.drawable.bottom_me_icon, R.string.mine);
+        fragmentDelegate = new TabFragmentDelegate(MeFragment.class, null, R.drawable.bottom_me_icon, R.string.mine);
         fragmentDelegates.add(fragmentDelegate);
 
         adapter = new MainTabAdapter(getSupportFragmentManager());
@@ -99,6 +88,7 @@ public class MainActivity extends BaseActivity {
         redirectTo();
         indicator.getMainContext(this);
     }
+
 
     class MainTabAdapter extends FragmentPagerAdapter
             implements

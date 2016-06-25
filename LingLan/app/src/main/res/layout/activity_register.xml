@@ -66,20 +66,36 @@
         android:paddingRight="@dimen/dp16"
         android:paddingTop="@dimen/dp10"
         android:paddingBottom="@dimen/dp10"
-        android:visibility="gone">
+        android:visibility="visible">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
-            android:text="登录即表示您同意"
+            android:text="点击“登录”即表示您同意并愿意遵守"
             android:textSize="@dimen/sp12"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register"
+            android:textStyle="bold"
+            android:text="灵兰中医用户协议"
             android:textSize="@dimen/sp12"
             android:textColor="@color/carminum"
             android:lineSpacingExtra="4dp"/>
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@color/gray"-->
+            <!--android:text="登录即表示您同意"-->
+            <!--android:textSize="@dimen/sp12"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/register"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:textColor="@color/carminum"-->
+            <!--android:lineSpacingExtra="4dp"/>-->
     </LinearLayout>
 
     <LinearLayout

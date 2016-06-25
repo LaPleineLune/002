@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black">
+
+    <include
+        android:id="@+id/page_head"
+        layout="@layout/page_head" />
+
+    <RelativeLayout
+        android:id="@+id/videoviewholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/page_head"
+        android:layout_centerInParent="true" >
+
+        <com.baidu.cyberplayer.core.BVideoView
+            android:id="@+id/video_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_controller_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp171"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/radio_play_image_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/controller_root1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="@dimen/dp4"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/img_radio_like1"
+                android:layout_width="@dimen/dp28"
+                android:layout_height="@dimen/dp28"
+                android:layout_gravity="left|center"
+                android:background="@drawable/play_selector"
+                android:src="@drawable/radio_like" />
+
+            <!--android:layout_marginRight="@dimen/dp30"-->
+
+            <RelativeLayout
+                android:id="@+id/controller_btn_root1"
+                android:layout_width="@dimen/dp0"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/img_play_previous1"
+                    android:layout_width="@dimen/dp50"
+                    android:layout_height="@dimen/dp50"
+                    android:background="@drawable/play_selector"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/radio_play_previous" />
+
+                <ImageView
+                    android:id="@+id/img_play1"
+                    android:layout_width="@dimen/dp74"
+                    android:layout_height="@dimen/dp74"
+                    android:layout_alignTop="@id/img_play_previous1"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp24"
+                    android:layout_marginRight="@dimen/dp24"
+                    android:layout_toRightOf="@id/img_play_previous1"
+                    android:background="@drawable/play_selector"
+                    android:src="@drawable/radio_play_stop" />
+
+                <!--<com.android.linglan.widget.MultiStateView
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_alignTop="@id/play_previous"
+                    android:layout_marginLeft="@dimen/dp16"
+                    android:layout_toRightOf="@id/play_previous"
+                    android:background="@drawable/play_selector" />-->
+
+                <ImageView
+                    android:id="@+id/img_play_next1"
+                    android:layout_width="@dimen/dp50"
+                    android:layout_height="@dimen/dp50"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/img_play1"
+                    android:background="@drawable/play_selector"
+                    android:src="@drawable/radio_play_next" />
+                <!--android:layout_alignTop="@id/play"-->
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/img_radio_special1"
+                android:layout_width="@dimen/dp28"
+                android:layout_height="@dimen/dp28"
+                android:layout_gravity="right|center"
+                android:background="@drawable/play_selector"
+                android:src="@drawable/radio_special" />
+
+        </LinearLayout>
+
+        <!--174dp-->
+
+        <!--FrameLayout-->
+
+        <RelativeLayout
+            android:id="@+id/controller_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp16"
+            android:paddingTop="@dimen/dp16"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/controller_play_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="@dimen/dp16"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_curtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp8"
+                    android:shadowColor="#000"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="4"
+                    android:textColor="@color/gainsboro"
+                    android:text="00:00" />
+
+                <com.android.linglan.widget.HintSeekBar
+                    android:id="@+id/sb_progress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxHeight="@dimen/dp2"
+                    android:progressDrawable="@drawable/progress"
+                    android:thumb="@drawable/progress_thumb" />
+
+                <TextView
+                    android:id="@+id/tv_totaltime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp8"
+                    android:shadowColor="#000"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="4"
+                    android:textColor="@color/gainsboro"
+                    android:text="00:00" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/controller_play_root"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginBottom="@dimen/dp4"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/img_radio_like"
+                    android:layout_width="@dimen/dp28"
+                    android:layout_height="@dimen/dp28"
+                    android:layout_gravity="left|center"
+                    android:background="@drawable/play_selector"
+                    android:src="@drawable/radio_like" />
+
+                <!--android:layout_marginRight="@dimen/dp30"-->
+
+                <RelativeLayout
+                    android:id="@+id/controller_btn_root"
+                    android:layout_width="@dimen/dp0"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/img_play_previous"
+                        android:layout_width="@dimen/dp50"
+                        android:layout_height="@dimen/dp50"
+                        android:background="@drawable/play_selector"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/radio_play_previous" />
+
+                    <ImageView
+                        android:id="@+id/img_play"
+                        android:layout_width="@dimen/dp74"
+                        android:layout_height="@dimen/dp74"
+                        android:layout_alignTop="@id/img_play_previous"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp24"
+                        android:layout_marginRight="@dimen/dp24"
+                        android:layout_toRightOf="@id/img_play_previous"
+                        android:background="@drawable/play_selector"
+                        android:src="@drawable/radio_play_stop" />
+
+                    <!--<com.android.linglan.widget.MultiStateView
+                        android:layout_width="@dimen/dp40"
+                        android:layout_height="@dimen/dp40"
+                        android:layout_alignTop="@id/play_previous"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:layout_toRightOf="@id/play_previous"
+                        android:background="@drawable/play_selector" />-->
+
+                    <ImageView
+                        android:id="@+id/img_play_next"
+                        android:layout_width="@dimen/dp50"
+                        android:layout_height="@dimen/dp50"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/img_play"
+                        android:background="@drawable/play_selector"
+                        android:src="@drawable/radio_play_next" />
+                    <!--android:layout_alignTop="@id/play"-->
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/img_radio_special"
+                    android:layout_width="@dimen/dp28"
+                    android:layout_height="@dimen/dp28"
+                    android:layout_gravity="right|center"
+                    android:background="@drawable/play_selector"
+                    android:src="@drawable/radio_special" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_radio_play_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/page_head"
+        android:layout_above="@id/ll_controller_root" />
+
+    <FrameLayout
+        android:id="@+id/radio_play_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/page_head"
+        android:layout_above="@id/ll_controller_root" >
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/img_radio_play_change"
+        android:layout_width="@dimen/dp32"
+        android:layout_height="@dimen/dp26"
+        android:paddingRight="@dimen/dp6"
+        android:layout_marginBottom="@dimen/dp185"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/radio_play_change_text" />
+    <!--android:layout_above="@id/ll_controller_root"-->
+
+</RelativeLayout>

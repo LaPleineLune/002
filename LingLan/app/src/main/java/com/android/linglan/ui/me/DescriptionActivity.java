@@ -13,6 +13,7 @@ import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.HttpCodeJugementUtil;
+import com.android.linglan.utils.KeyBoardUtils;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
 
@@ -35,6 +36,19 @@ public class DescriptionActivity extends BaseActivity {
         description_num = (TextView) findViewById(R.id.description_num);
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        KeyBoardUtils.openKeybord(description_edt, this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        KeyBoardUtils.closeKeybord(description_edt, this);
+    }
+
 
     @Override
     protected void initData() {

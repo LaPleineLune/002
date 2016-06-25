@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingTop="@dimen/dp20"-->
+        <!--android:paddingLeft="@dimen/dp26"-->
+        <!--android:paddingBottom="@dimen/dp10"-->
+        <!--android:textSize="@dimen/sp16"-->
+        <!--android:textColor="@color/text_title_color"-->
+        <!--android:text="自定义分类"/>-->
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/px1"-->
+        <!--android:layout_marginLeft="@dimen/dp16"-->
+        <!--android:layout_marginRight="@dimen/dp16"-->
+        <!--android:background="@color/gainsboro" />-->
+
+    <TextView
+        android:id="@+id/tv_classify_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp16"
+        android:paddingLeft="@dimen/dp26"
+        android:paddingBottom="@dimen/dp14"
+        android:textColor="@color/gainsboro"
+        android:textSize="@dimen/sp14"
+        android:text="新建分类"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="@color/gainsboro" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_classify_customize_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

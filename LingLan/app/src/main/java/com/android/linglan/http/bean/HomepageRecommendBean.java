@@ -16,7 +16,7 @@ public class HomepageRecommendBean implements Serializable {
 
         public String articleid;// 文章ID（必须）
         public String title;// 文章标题（必须）
-        public String author;// 文章作者
+//        public String author;// 文章作者
         public String authornames;// 文章作者
         public String publishtime;// 文章发布时间
         public String catename;// 文章主分类
@@ -29,6 +29,24 @@ public class HomepageRecommendBean implements Serializable {
         public String addtime;// 创建时间
         public String orderid;// 排序
         public String content_title;// 最新添加的文章标题
+        public String page;
+
+        //合辑
+        public String albumid;//合辑id
+        public String albumname;//合辑标题
+        public String count_chapter;//合辑个数
+        public String count_play;//播放次数
+
+        //音频
+        public String audioid;//音频id
+        public String count_view;
+        public String duration;
+        public String content;
+        public String url;
+        public String author;
+        public String url_createtime;
+        public String boskey;
+        public String bucket;
 
     }
 

@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 import com.android.linglan.adapter.clinical.PatientSelectAdapter;
 import com.android.linglan.base.BaseActivity;
+import com.android.linglan.fragment.ClinicalFragment;
 import com.android.linglan.http.NetApi;
 import com.android.linglan.http.PasserbyClient;
-import com.android.linglan.http.bean.ClinicalCollatingBean;
+import com.android.linglan.http.bean.ClinicalCollatingPatientSelectBean;
 import com.android.linglan.http.bean.SortModel;
 import com.android.linglan.ui.R;
 import com.android.linglan.utils.CharacterParser;
@@ -24,15 +25,15 @@ import com.android.linglan.utils.JsonUtil;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.PinyinComparator;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
 import com.android.linglan.widget.UpdateDialog;
 import com.android.linglan.widget.sortlistview.ClearEditText;
 import com.android.linglan.widget.sortlistview.SideBar;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by LeeMy on 2016/4/7 0007.
@@ -52,7 +53,7 @@ public class PatientSelectActivity extends BaseActivity {
     private Intent intent = null;
     private String nonamecaseid = "";// 病历ID
     private int mPosition;
-    private ClinicalCollatingBean clinicalCollatingBean;
+    private ClinicalCollatingPatientSelectBean clinicalCollatingBean;
     private ClearEditText filter_edit;
     private UpdateDialog exitLoginDialog;
 
@@ -188,29 +189,32 @@ public class PatientSelectActivity extends BaseActivity {
 
     private List<SortModel> filledData(ArrayList<SortModel> date) {
         mSortList = new ArrayList<SortModel>();
-        for (int i = 0; i < date.size(); i++) {
-            SortModel sortModel = new SortModel();
-            sortModel.setName(date.get(i).getName());
-            sortModel.setId(date.get(i).getId());
-            sortModel.setFeature(date.get(i).getFeature());
-            sortModel.setLastvisittime(date.get(i).getLastvisittime());
-            // 汉字转换成拼音
-            String pinyin = characterParser.getSelling(date.get(i).getName());
+        if(date != null && date.size() != 0){
+            for (int i = 0; i < date.size(); i++) {
+                SortModel sortModel = new SortModel();
+                sortModel.setName(date.get(i).getName());
+                sortModel.setId(date.get(i).getId());
+                sortModel.setFeature(date.get(i).getFeature());
+                sortModel.setLastvisittime(date.get(i).getLastvisittime());
+                // 汉字转换成拼音
+                String pinyin = characterParser.getSelling(date.get(i).getName());
 
-            String sortString = "";
-            if (pinyin != null && pinyin.length() > 1) {
-                sortString = pinyin.substring(0, 1).toUpperCase();
-                // 正则表达式，判断首字母是否是英文字母
-                if (sortString.matches("[A-Z]")) {
-                    sortModel.setSortLetters(sortString.toUpperCase());
+                String sortString = "";
+                if (pinyin != null && pinyin.length() > 1) {
+                    sortString = pinyin.substring(0, 1).toUpperCase();
+                    // 正则表达式，判断首字母是否是英文字母
+                    if (sortString.matches("[A-Z]")) {
+                        sortModel.setSortLetters(sortString.toUpperCase());
+                    } else {
+                        sortModel.setSortLetters("#");
+                    }
                 } else {
                     sortModel.setSortLetters("#");
                 }
-            } else {
-                sortModel.setSortLetters("#");
+                mSortList.add(sortModel);
             }
-            mSortList.add(sortModel);
         }
+
         return mSortList;
 
     }
@@ -227,7 +231,8 @@ public class PatientSelectActivity extends BaseActivity {
                     return;
                 }
                 handler.sendEmptyMessage(REQUEST_SUCCESS_CONTENT);
-                clinicalCollatingBean = JsonUtil.json2Bean(result, ClinicalCollatingBean.class);
+                clinicalCollatingBean = JsonUtil.json2Bean(result, ClinicalCollatingPatientSelectBean.class);
+//                LogUtil.e("嘿嘿嘿嘿嘿clinicalCollatingBean.data.list.size() =" + clinicalCollatingBean.data.list.size());
                 if (clinicalCollatingBean != null && clinicalCollatingBean.data.list.size() != 0) {
 //                    date = new String[clinicalCollatingBean.data.size()];
 
@@ -238,11 +243,16 @@ public class PatientSelectActivity extends BaseActivity {
                         sortModel.setId(clinicalCollatingBean.data.list.get(i).illnesscaseid);
                         sortModel.setFeature(clinicalCollatingBean.data.list.get(i).feature);
                         sortModel.setLastvisittime(clinicalCollatingBean.data.list.get(i).lastvisittime);
-                        date.add(i, sortModel);
+                        date.add(sortModel);
 //                        date[i] = clinicalCollatingBean.data.get(i).patientname;
 //                        LogUtil.e(date[i]);
                     }
                 }
+
+//                for(SortModel sortModel : date){
+//                    LogUtil.e(sortModel.getName());
+//                }
+
                 handler.sendEmptyMessage(LOADDATA_SUCCESS);
 
             }
@@ -262,8 +272,10 @@ public class PatientSelectActivity extends BaseActivity {
                 if (!HttpCodeJugementUtil.HttpCodeJugementUtil(result, PatientSelectActivity.this)) {
                     return;
                 }
+                MobclickAgent.onEvent(PatientSelectActivity.this, UmengBuriedPointUtil.ClinicalUnnamedRelevanceSucceed);
                 handler.sendEmptyMessage(RELATE_SUCCESS);
                 ToastUtil.show("已关联");
+                ClinicalFragment.ISREFRESHDATA = 1;
             }
 
             @Override

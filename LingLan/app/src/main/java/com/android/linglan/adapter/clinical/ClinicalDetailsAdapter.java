@@ -2,6 +2,7 @@ package com.android.linglan.adapter.clinical;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.android.linglan.http.bean.ClinicalClassifyBean;
 import com.android.linglan.http.bean.ClinicalDetailsBean;
 import com.android.linglan.http.bean.PatientDetailsBean;
 import com.android.linglan.ui.R;
+import com.android.linglan.ui.clinical.ClinicalDetailsActivity;
 import com.android.linglan.ui.clinical.PatientDetailsActivity;
 import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.ToastUtil;
@@ -109,7 +111,9 @@ public class ClinicalDetailsAdapter extends RecyclerView.Adapter {
         private TextView tv_name;
         private TextView tv_sex;
         private TextView tv_age;
+        private TextView tv_clinical_sort;
         private int isdemo = 0;
+        private String sort = "desc";// {visittime:asc}-------(asc升序 desc降序）（visittime:就诊时间）
 
         private RecyclerView rec_clinical_details_list;
 
@@ -127,6 +131,7 @@ public class ClinicalDetailsAdapter extends RecyclerView.Adapter {
             tv_name = (TextView) rootView.findViewById(R.id.tv_name);
             tv_sex = (TextView) rootView.findViewById(R.id.tv_sex);
             tv_age = (TextView) rootView.findViewById(R.id.tv_age);
+            tv_clinical_sort = (TextView) rootView.findViewById(R.id.tv_clinical_sort);
 
             rec_clinical_details_list = (RecyclerView) rootView.findViewById(R.id.rec_clinical_details_list);
         }
@@ -156,6 +161,7 @@ public class ClinicalDetailsAdapter extends RecyclerView.Adapter {
                         tv_classify1.setVisibility(View.GONE);
                         tv_classify2.setVisibility(View.GONE);
                     }
+                    tv_clinical_sort.setOnClickListener(this);
                     rl_patient_info.setOnClickListener(this);
                     if (patientDetailsData != null) {
                         tv_name.setText(patientDetailsData.patientname);
@@ -207,6 +213,21 @@ public class ClinicalDetailsAdapter extends RecyclerView.Adapter {
                         bundle.putSerializable("patientDetailsData", patientDetailsData);
                         intent.putExtras(bundle);
                         context.startActivity(intent);
+                    }
+                    break;
+                case R.id.tv_clinical_sort:
+//                    ToastUtil.show("我是排序啊。。。");
+                    ((ClinicalDetailsActivity) context).sortClinical();
+                    if (sort.equals("desc")) {
+                        sort = "asc";
+                        Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.clinical_sort_asc);
+                        collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+                        tv_clinical_sort.setCompoundDrawables(null, null, collectTopDrawable, null);
+                    } else if (sort.equals("asc")) {
+                        sort = "desc";
+                        Drawable collectTopDrawable = context.getResources().getDrawable(R.drawable.clinical_sort_desc);
+                        collectTopDrawable.setBounds(0, 0, collectTopDrawable.getMinimumWidth(), collectTopDrawable.getMinimumHeight());
+                        tv_clinical_sort.setCompoundDrawables(null, null, collectTopDrawable, null);
                     }
                     break;
             }

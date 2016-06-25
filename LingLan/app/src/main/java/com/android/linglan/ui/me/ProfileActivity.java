@@ -2,8 +2,10 @@ package com.android.linglan.ui.me;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,6 +43,8 @@ import com.android.linglan.utils.LogUtil;
 import com.android.linglan.utils.SharedPreferencesUtil;
 import com.android.linglan.utils.StorageManager;
 import com.android.linglan.utils.ToastUtil;
+import com.android.linglan.utils.UmengBuriedPointUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,10 +54,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 
 /**
  * Created by LeeMy on 2016/1/6 0006.
- * 个人信息
+ * 个人中心
  */
 public class ProfileActivity extends BaseActivity {
     protected static final int REQUEST_SUCCESS = 0;
@@ -195,6 +201,12 @@ public class ProfileActivity extends BaseActivity {
         bt_profile_picture = (Button) popView.findViewById(R.id.bt_profile_picture);
         bt_profile_gallery = (Button) popView.findViewById(R.id.bt_profile_gallery);
         bt_profile_cancel = (Button) popView.findViewById(R.id.bt_profile_cancel);
+
+        int dp8 = (int)getResources().getDimension(R.dimen.dp8);
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) bt_profile_cancel.getLayoutParams();
+        layoutParams.bottomMargin=getNavigationBarHeight() + dp8;
+        bt_profile_cancel.setLayoutParams(layoutParams);
     }
 
     @Override
@@ -234,7 +246,7 @@ public class ProfileActivity extends BaseActivity {
 
                 int[] location = new int[2];
                 v.getLocationOnScreen(location);
-                popupWindow.showAtLocation(v, Gravity.BOTTOM, location[0], location[1] - popupWindow.getHeight());
+                popupWindow.showAtLocation(v, Gravity.BOTTOM, 0,0);
 
                 break;
             case R.id.bt_profile_picture:// 拍照
@@ -289,22 +301,27 @@ public class ProfileActivity extends BaseActivity {
 
             switch (requestCode) {
                 case REQUEST_NICK_NAME:
+                    MobclickAgent.onEvent(ProfileActivity.this, UmengBuriedPointUtil.MyHomeNickname);
                     alias = (String) data.getSerializableExtra("nickname");
                     showArea();
                     break;
                 case REQUEST_NAME:
+                    MobclickAgent.onEvent(ProfileActivity.this, UmengBuriedPointUtil.MyHomeName);
                     userName = (String) data.getSerializableExtra("userName");
                     showArea();
                     break;
                 case REQUEST_ABOUT:
+                    MobclickAgent.onEvent(ProfileActivity.this, UmengBuriedPointUtil.MyHomeMessage);
                     about = (String) data.getSerializableExtra("about");
                     showArea();
                     break;
                 case REQUEST_CODE_AREA:
+                    MobclickAgent.onEvent(ProfileActivity.this, UmengBuriedPointUtil.MyHomeCity);
                     cityName = (String) data.getSerializableExtra("cityName");
                     showArea();
                     break;
                 case REQUEST_COMPANY:
+                    MobclickAgent.onEvent(ProfileActivity.this, UmengBuriedPointUtil.MyHomeCompany);
                     companyName = (String) data.getSerializableExtra("companyName");
                     showArea();
                     break;
@@ -502,22 +519,13 @@ public class ProfileActivity extends BaseActivity {
 
                 try {
                     JSONObject json = new JSONObject(result);
+                    MobclickAgent.onEvent(ProfileActivity.this, UmengBuriedPointUtil.MyHomeIcon);
                     JSONObject data = json.getJSONObject("data");
                     String url = data.getString("url");
                     SharedPreferencesUtil.saveString("face", url);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-//                SharedPreferencesUtil.saveString("avatar",
-//                        avatar.headpath.W180);
-//                        LogUtil.e("getUserPhotoUpdate????????????result=" + result);
-//                Avatar avatar = JsonUtil.json2Bean(result, Avatar.class);
-//                if (avatar != null && "1".equals(avatar.code)) {
-//                    SharedPreferencesUtil.saveString("avatar",
-//                            avatar.headpath.W180);
-//                }
             }
 
             @Override
@@ -548,29 +556,6 @@ public class ProfileActivity extends BaseActivity {
         return CameraUtil.isCameraEnable()
                 && PackageManager.PERMISSION_GRANTED == checkCallingOrSelfPermission(permission);
     }
-
-//    private void dispatchTakePictureIntent() {
-//        if (!verifyPermission("android.permission.CAMERA")) {
-//            ToastUtil.show("摄像头打开失败，请检查设备并开放权限");
-//            return;
-//        }
-//
-//        Intent captureIntent = new Intent(
-//                MediaStore.ACTION_IMAGE_CAPTURE);
-//        File captureFile;
-//        try {
-//            captureFile = createImageFile();
-//            captureIntent.putExtra(
-//                    MediaStore.EXTRA_OUTPUT,
-//                    Uri.fromFile(captureFile));
-//            captureAvatarPath = captureFile
-//                    .getPath();
-//            startActivityForResult(captureIntent,
-//                    REQUEST_TAKE_PHOTO);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -633,5 +618,38 @@ public class ProfileActivity extends BaseActivity {
             }
         });
     }
+    //虚拟导航栏的高度
+    private  int getNavigationBarHeight() {
+        int navigationBarHeight = 0;
+        Resources rs = ProfileActivity.this.getResources();
+        int id = rs.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (id > 0 && checkDeviceHasNavigationBar(ProfileActivity.this)) {
+            navigationBarHeight = rs.getDimensionPixelSize(id);
+        }
+        return navigationBarHeight;
+    }
+    //是否有虚拟导航栏
+    private  boolean checkDeviceHasNavigationBar(Context context) {
+        boolean hasNavigationBar = false;
+        Resources rs = context.getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method m = systemPropertiesClass.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+            if ("1".equals(navBarOverride)) {
+                hasNavigationBar = false;
+            } else if ("0".equals(navBarOverride)) {
+                hasNavigationBar = true;
+            }
+        } catch (Exception e) {
+//            Log.w(TAG, e);
+        }
 
+        return hasNavigationBar;
+
+    }
 }

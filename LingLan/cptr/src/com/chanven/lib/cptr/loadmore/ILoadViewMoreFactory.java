@@ -48,6 +48,11 @@ public interface ILoadViewMoreFactory {
         public void showNormal();
 
         /**
+         * 显示第一页数据已经加载完成，没有更多数据的布局（不显示已加载完成）
+         */
+        public void showPage1Nomore();
+
+        /**
          * 显示已经加载完成，没有更多数据的布局
          */
         public void showNomore();

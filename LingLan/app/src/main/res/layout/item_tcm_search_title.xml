@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp36"
+        android:layout_marginTop="@dimen/dp16"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:gravity="center_vertical"
+        android:layout_below="@id/img_tcm_search_text"
+        android:background="@drawable/tcm_search_edit_bg"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edt_tcm_search"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="@dimen/dp40"
+            android:layout_weight="1"
+            android:background="@null"
+            android:paddingLeft="@dimen/dp10"
+            android:hint="请输入搜索关键词"
+            android:textColorHint="@color/gainsboro"
+            android:textSize="@dimen/sp18"
+            android:textColor="@color/text_title_color"/>
+
+        <TextView
+            android:id="@+id/tv_tcm_search"
+            android:layout_width="@dimen/dp36"
+            android:layout_height="@dimen/dp36"
+            android:background="@drawable/tcm_search_bt"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_tcm_search_request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/french_grey"
+        android:paddingTop="@dimen/dp10"
+        android:paddingLeft="@dimen/dp16"
+        android:text="@string/tcm_search_request"
+        android:visibility="gone"/>
+
+</LinearLayout>
